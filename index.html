@@ -96,4 +96,24 @@
 		// Draw the score
 		function drawScore() {
 			context.font = "20px Arial";
-			context.fillStyle = "black";
+					context.fillStyle = "black";
+			context.fillText("Score: " + score, 10, 30);
+		}
+
+		// Draw the snake
+		function drawSnake() {
+			context.fillStyle = "green";
+			for (var i = 0; i < snake.length; i++) {
+				context.fillRect(snake[i].x * blockSize, snake[i].y * blockSize, blockSize, blockSize);
+			}
+		}
+
+		// Draw the food
+		function drawFood() {
+			context.fillStyle = "red";
+			context.fillRect(food.x * blockSize, food.y * blockSize, blockSize, blockSize);
+		}
+	</script>
+</body>
+</html>
+
