@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backgammon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fafafa;
+        }
+
+        #gameBoard {
+            width: 600px;
+            height: 400px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 2px;
+        }
+
+        .point {
+            background-color: #d3b9a3;
+            border: 1px solid #000;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .piece {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .piece.white {
+            background-color: #ffffff;
+            border: 1px solid #000;
+        }
+
+        .piece.black {
+            background-color: #000000;
+            border: 1px solid #ffffff;
+        }
+
+        .dice {
+            margin-top: 20px;
+        }
+
+        .dice span {
+            font-size: 30px;
+            margin: 0 10px;
+        }
+
+        .status {
+            margin-top: 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameBoard"></div>
+    <div class="dice">
+        <span id="dice1">0</span> <span id="dice2">0</span>
+    </div>
+    <div class="status">
+        <span id="turn">Player: White</span>
+    </div>
+    <div class="controls">
+        <button onclick="rollDice()">Roll Dice</button>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
