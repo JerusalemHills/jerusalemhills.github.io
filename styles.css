@@ -1,88 +1,255 @@
-/* styles.css */
-body {
-    font-family: Arial, sans-serif;
+/* General Reset */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
     background-color: #f4f4f4;
     color: #333;
+    margin: 0;
   }
   
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Header Section */
   header {
+    position: relative;
+    width: 100%;
     text-align: center;
-    padding: 20px;
+    background-color: #333;
   }
   
-  .logo {
-    border-radius: 50%;
-    height: 100px;
+  header .logo {
+    width: 200px;
+    margin: 20px 0;
   }
   
-  .city-walls {
+  header .city-walls {
     width: 100%;
     height: auto;
+    max-height: 400px;
   }
   
+  /* Search Bar */
   .search-bar-container {
+    padding: 20px;
     text-align: center;
-    margin: 20px 0;
+    background-color: #fff;
   }
   
   .search-bar {
     width: 80%;
+    max-width: 600px;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
   }
   
+  .search-bar::placeholder {
+    color: #aaa;
+  }
+  
+  /* Main Content */
   .main-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 20px;
-  }
-  
-  .ads-section, .news-section {
-    width: 45%;
     padding: 20px;
-    margin: 10px;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  section {
+    margin-bottom: 30px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Forum, Marketplace, Ads, News */
+  .forum-section, .marketplace-section, .ads-section, .news-section {
+    background-color: #fff;
+    padding: 15px;
     border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   
-  .ads-section {
-    order: 1;
+  .forum-link, .marketplace-link {
+    color: #3366ff;
+    font-weight: bold;
   }
   
+  .forum-link:hover, .marketplace-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* RSS Feed Styling */
   .news-section {
-    order: 2;
+    padding: 0;
   }
   
+  #rss-feed-container {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  
+  .rss-feed-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .rss-feed-item:last-child {
+    border-bottom: none;
+  }
+  
+  .rss-feed-item-title {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .rss-feed-item-description {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+  }
+  
+  .rss-feed-item-title a {
+    color: #3366ff;
+    text-decoration: none;
+  }
+  
+  .rss-feed-item-title a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Games Section */
   .games-section {
-    margin: 20px;
-    text-align: center;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   
   .game-link {
     display: inline-block;
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 14px;
+    margin-right: 15px;
+    padding: 10px;
+    background-color: #3366ff;
+    color: #fff;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
   }
   
   .game-link:hover {
-    background-color: #0056b3;
+    background-color: #2851a3;
   }
   
+  /* Map Section */
+  .map-section {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  #google-map {
+    height: 300px;
+    border-radius: 8px;
+  }
+  
+  /* Footer Section */
   footer {
+    background-color: #333;
+    color: #fff;
     text-align: center;
-    padding: 10px;
-    background-color: #222;
-    color: white;
+    padding: 20px 0;
+  }
+  
+  footer p {
+    margin-bottom: 10px;
+  }
+  
+  footer ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  footer ul li {
+    display: inline;
+    margin: 0 10px;
+  }
+  
+  footer a {
+    color: #fff;
+  }
+  
+  footer a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive Styling */
+  @media screen and (max-width: 768px) {
+    header .logo {
+      width: 150px;
+    }
+  
+    .search-bar {
+      width: 90%;
+    }
+  
+    .main-content {
+      padding: 10px;
+    }
+  
+    .games-section {
+      text-align: center;
+    }
+  
+    .game-link {
+      display: block;
+      margin: 10px auto;
+      width: 80%;
+    }
+  
+    #google-map {
+      height: 250px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    header .logo {
+      width: 120px;
+    }
+  
+    .search-bar {
+      width: 100%;
+    }
+  
+    .rss-feed-item-title {
+      font-size: 14px;
+    }
+  
+    .rss-feed-item-description {
+      font-size: 12px;
+    }
+  
+    .game-link {
+      width: 100%;
+      margin: 10px 0;
+    }
+  
+    #google-map {
+      height: 200px;
+    }
   }
   
