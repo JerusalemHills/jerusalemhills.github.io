@@ -1,0 +1,88 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  header {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .logo {
+    border-radius: 50%;
+    height: 100px;
+  }
+  
+  .city-walls {
+    width: 100%;
+    height: auto;
+  }
+  
+  .search-bar-container {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .search-bar {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .main-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .ads-section, .news-section {
+    width: 45%;
+    padding: 20px;
+    margin: 10px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .ads-section {
+    order: 1;
+  }
+  
+  .news-section {
+    order: 2;
+  }
+  
+  .games-section {
+    margin: 20px;
+    text-align: center;
+  }
+  
+  .game-link {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .game-link:hover {
+    background-color: #0056b3;
+  }
+  
+  footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #222;
+    color: white;
+  }
+  
