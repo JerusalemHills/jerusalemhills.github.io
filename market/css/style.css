@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #2E8B57;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+header img {
+    width: 100%;
+    height: auto;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-size: 1.2rem;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+main {
+    padding: 2rem;
+}
+
+#filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+#filters select, #filters input {
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+#items-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.item {
+    background-color: white;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.item h3 {
+    font-size: 1.5rem;
+}
+
+form {
+    background-color: white;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form input, form select, form textarea {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+button {
+    background-color: #2E8B57;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1c6e43;
+}

@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Handmade Wooden Bowl",
+        "category": "Products",
+        "price": "25.00",
+        "description": "Beautifully handcrafted wooden bowl.",
+        "contact": "seller@example.com"
+    },
+    {
+        "title": "Cultural Tour in Jerusalem",
+        "category": "Services",
+        "price": "100.00",
+        "description": "Guided walking tour through the Old City.",
+        "contact": "tourguide@example.com"
+    }
+]

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2E8B57">
+    <title>Jerusalem Hills Marketplace</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="img/favicon.ico">
+</head>
+<body>
+    <header>
+        <img src="/img/Jerusalem_Old_City_market.jpg" alt="Marketplace" class="header-img">
+        <h1>Jerusalem Hills Marketplace</h1>
+        <nav>
+            <a href="#products">Products</a>
+            <a href="#services">Services</a>
+            <a href="#free">Free Exchange</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Items for Sale</h2>
+            <div id="filters">
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="Products">Products</option>
+                    <option value="Services">Services</option>
+                    <option value="Free">Free Exchange</option>
+                </select>
+                <input type="text" id="searchBar" placeholder="Search items...">
+            </div>
+            <div id="items-list"></div>
+        </section>
+
+        <section>
+            <h2>Submit Your Listing</h2>
+            <form id="itemForm">
+                <label for="title">Item Title:</label>
+                <input type="text" id="title" required>
+                
+                <label for="category">Category:</label>
+                <select id="category" required>
+                    <option value="Products">Products</option>
+                    <option value="Services">Services</option>
+                    <option value="Free">Free Exchange</option>
+                </select>
+                
+                <label for="price">Price (BTC):</label>
+                <input type="number" id="price" required>
+                
+                <label for="description">Description:</label>
+                <textarea id="description" required></textarea>
+                
+                <label for="contact">Contact Info:</label>
+                <input type="email" id="contact" required>
+
+                <button type="submit">Submit Listing</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Jerusalem Hills Marketplace. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
