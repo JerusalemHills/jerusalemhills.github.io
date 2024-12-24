@@ -3,33 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Form</title>
+    <title>Data Collection</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            text-align: center;
             padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
+            line-height: 1.6;
         }
-        form {
-            display: flex;
-            flex-direction: column;
+        h1 {
+            color: #333;
         }
-        label {
-            margin-bottom: 5px;
+        p {
+            color: #555;
+        }
+        .highlight {
+            color: red;
             font-weight: bold;
         }
-        input, textarea, button {
-            margin-bottom: 15px;
+        #data-display {
+            margin-top: 20px;
             padding: 10px;
-            font-size: 16px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            display: inline-block;
+            text-align: left;
+            max-width: 600px;
+            word-wrap: break-word;
         }
         button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
             background-color: #007bff;
             color: white;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
         }
         button:hover {
             background-color: #0056b3;
@@ -37,49 +46,80 @@
     </style>
 </head>
 <body>
-    <h1>Contact Us</h1>
-    <form id="contact-form">
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required>
+    <h1>Data Collection</h1>
+    <p>
+        This website collects basic information about your visit and displays it below. If you press the button, 
+        we will gather additional information (e.g., precise location) that requires your permission.
+    </p>
+    <button id="collect-permission">Give Permission</button>
 
-        <label for="email">Your Email:</label>
-        <input type="email" id="email" name="email" required>
+    <div id="data-display">
+        <h3>Collected Data:</h3>
+        <pre id="collected-data">Loading data...</pre>
+    </div>
 
-        <label for="message">Your Message:</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-
-        <button type="submit">Send Message</button>
-    </form>
-
-    <div id="status"></div>
-
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
-        // Initialize EmailJS
-        emailjs.init("YOUR_USER_ID");
-
-        // Handle form submission
-        const form = document.getElementById("contact-form");
-        form.addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            // Collect form data
-            const formData = {
-                name: form.name.value,
-                email: form.email.value,
-                message: form.message.value,
+        // Function to collect data that doesn't require permission
+        async function collectBasicData() {
+            const data = {
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                screenResolution: `${window.screen.width}x${window.screen.height}`,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                timestamp: new Date().toISOString(),
             };
 
-            // Send email using EmailJS
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", formData)
-                .then(() => {
-                    document.getElementById("status").textContent = "Message sent successfully!";
-                    form.reset();
-                })
-                .catch((error) => {
-                    document.getElementById("status").textContent = "Failed to send message. Please try again.";
-                    console.error("EmailJS error:", error);
-                });
+            // Fetch IP and location data from an external service
+            try {
+                const ipData = await fetch("https://ipapi.co/json/").then((res) => res.json());
+                data.ip = ipData.ip;
+                data.location = `${ipData.city}, ${ipData.region}, ${ipData.country}`;
+                data.isp = ipData.org;
+            } catch (error) {
+                data.ip = "Unavailable";
+                data.location = "Unavailable";
+                data.isp = "Unavailable";
+            }
+
+            displayData(data);
+            return data;
+        }
+
+        // Function to collect additional data with permission
+        async function collectAdditionalData(existingData) {
+            // Add geolocation data
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        existingData.preciseLocation = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+                        displayData(existingData);
+                    },
+                    (error) => {
+                        existingData.preciseLocation = "Permission denied or unavailable.";
+                        displayData(existingData);
+                    }
+                );
+            } else {
+                existingData.preciseLocation = "Geolocation not supported.";
+                displayData(existingData);
+            }
+        }
+
+        // Function to display data on the page
+        function displayData(data) {
+            const display = document.getElementById("collected-data");
+            display.textContent = JSON.stringify(data, null, 2);
+        }
+
+        // Collect basic data on page load
+        let collectedData = {};
+        window.onload = async () => {
+            collectedData = await collectBasicData();
+        };
+
+        // Add event listener for the button to collect additional data
+        document.getElementById("collect-permission").addEventListener("click", () => {
+            collectAdditionalData(collectedData);
         });
     </script>
 </body>
