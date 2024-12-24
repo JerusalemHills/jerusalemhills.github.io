@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Play live backgammon on Jerusalem Hills">
+    <title>Live Backgammon | Jerusalem Hills</title>
+    <link rel="stylesheet" href="css/backgammon.css">
+    <script src="js/backgammon.js" defer></script>
+    <!-- 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header, footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        header nav ul li {
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            text-decoration: none;
+            color: white;
+        }
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(14, 50px);
+            grid-template-rows: repeat(14, 50px);
+            width: 700px;
+            height: 700px;
+            background-color: #f0d9b5;
+            margin: 20px auto;
+            border: 2px solid black;
+        }
+
+        .point {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .piece {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            cursor: grab;
+        }
+
+        #controls {
+            text-align: center;
+            margin: 20px;
+        }
+
+        footer ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        footer ul li {
+            margin: 0 10px;
+        }
+
+        footer ul li a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo {
+            max-width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .search-bar {
+            width: 80%;
+            max-width: 400px;
+            padding: 10px;
+            margin: 20px auto;
+            display: block;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.4.7/dist/peer.min.js"></script>
+    
+</head>
+<body>
+    <header>
+        <img src="img/1.svg" alt="Jerusalem Hills Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/forum">Forum</a></li>
+                <li><a href="/market/index.html">Marketplace</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <input type="text" class="search-bar" placeholder="Search for Jerusalem gifts, tours, and more...">
+
+    <div id="board"></div>
+
+    <div id="controls">
+        <button id="connectBtn">Connect</button>
+        <input type="text" id="peerIdInput" placeholder="Enter opponent ID">
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Jerusalem Hills. All rights reserved.</p>
+        <ul>
+            <li><a href="/privacy-policy">Privacy Policy</a></li>
+            <li><a href="/terms-of-service">Terms of Service</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        const board = document.getElementById("board");
+        const connectBtn = document.getElementById("connectBtn");
+        const peerIdInput = document.getElementById("peerIdInput");
+
+        const peer = new Peer();
+        let connection;
+
+        peer.on("open", (id) => {
+            alert(`Your Peer ID: ${id}. Share this with your opponent.`);
+        });
+
+        peer.on("connection", (conn) => {
+            connection = conn;
+            setupConnectionHandlers();
+        });
+
+        connectBtn.addEventListener("click", () => {
+            const peerId = peerIdInput.value;
+            if (peerId) {
+                connection = peer.connect(peerId);
+                setupConnectionHandlers();
+            }
+        });
+
+        function setupConnectionHandlers() {
+            connection.on("data", (data) => {
+                const { type, payload } = JSON.parse(data);
+                if (type === "move") {
+                    updateBoard(payload);
+                }
+            });
+        }
+
+        function sendMove(move) {
+            if (connection && connection.open) {
+                connection.send(JSON.stringify({ type: "move", payload: move }));
+            }
+        }
+
+        function generateBoard() {
+            for (let i = 0; i < 24; i++) {
+                const point = document.createElement("div");
+                point.classList.add("point");
+                point.dataset.index = i;
+                board.appendChild(point);
+
+                if (i === 0 || i === 23) {
+                    for (let j = 0; j < 5; j++) {
+                        const piece = document.createElement("div");
+                        piece.classList.add("piece");
+                        piece.draggable = true;
+
+                        piece.addEventListener("dragstart", (e) => {
+                            e.dataTransfer.setData("pieceIndex", i);
+                        });
+
+                        point.appendChild(piece);
+                    }
+                }
+            }
+        }
+
+        board.addEventListener("dragover", (e) => e.preventDefault());
+
+        board.addEventListener("drop", (e) => {
+            const targetPoint = e.target.closest(".point");
+            if (targetPoint) {
+                const fromIndex = parseInt(e.dataTransfer.getData("pieceIndex"), 10);
+                const toIndex = parseInt(targetPoint.dataset.index, 10);
+
+                if (isValidMove(fromIndex, toIndex)) {
+                    const piece = document.querySelector(
+                        `.point[data-index="${fromIndex}"] .piece:last-child`
+                    );
+                    if (piece) {
+                        targetPoint.appendChild(piece);
+                        sendMove({ from: fromIndex, to: toIndex });
+                    }
+                }
+            }
+        });
+
+        function isValidMove(from, to) {
+            return true; // Simplified for this example.
+        }
+
+        function updateBoard(move) {
+            const fromPoint = document.querySelector(`.point[data-index="${move.from}"]`);
+            const toPoint = document.querySelector(`.point[data-index="${move.to}"]`);
+            const piece = fromPoint.querySelector(".piece:last-child");
+
+            if (piece) {
+                toPoint.appendChild(piece);
+            }
+        }
+
+        generateBoard();
+    </script>
+</body>
+</html>
