@@ -35,6 +35,15 @@
 
   <!-- Web Manifest -->
   <link rel="manifest" href="/img/site.webmanifest">
+
+  <!-- PWA setup -->
+  <link rel="manifest" href="/market/manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  
+  <!-- Apple-specific meta for PWA -->
+  <meta name="apple-mobile-web-app-title" content="Jerusalem Hills Marketplace">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 </head>
   
 <body>
@@ -117,7 +126,6 @@
         rssfeed_cache = "c94ffa2cfe76b4c6b20bcc4efb23cf00"; 
       </script> 
       <script type="text/javascript" src="//feed.surfing-waves.com/js/rss-feed.js"></script> 
-      <!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. --> 
       <div style="color:#FEFEFE;font-size:10px; text-align:right; width:330px;">powered by <a href="https://surfing-waves.com" rel="noopener" target="_blank" style="color:#FEFEFE;">Surfing Waves</a></div> 
     </section>
   </div>
@@ -145,13 +153,25 @@
     </ul>
   </footer>
   
-
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
   <script>
     function initMap() {
       var map = new google.maps.Map(document.getElementById('google-map'), {
         center: { lat: 31.7683, lng: 35.2137 }, // Coordinates of Jerusalem
         zoom: 12
+      });
+    }
+  </script>
+  
+  <!-- PWA Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+          console.log('Service Worker registered with scope: ', registration.scope);
+        }).catch(function(error) {
+          console.log('Service Worker registration failed: ', error);
+        });
       });
     }
   </script>
