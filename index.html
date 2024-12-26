@@ -3,34 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Jerusalem Hills offers the best of Jerusalem's nature, culture, history, and unique products from the hills of Jerusalem.">
-  <meta name="keywords" content="Jerusalem Hills, Jerusalem heritage, Jerusalem tourism, Jerusalem history, Jerusalem gifts">
+  <meta name="description" content="Jerusalem Hills offers the best of Jerusalem's nature, culture, history, and unique products from the hills of Jerusalem. Explore our marketplace for authentic Jerusalem experiences and gifts.">
+  <meta name="keywords" content="Jerusalem Hills, Jerusalem heritage, Jerusalem tourism, Jerusalem history, Jerusalem hiking, Dead Sea products, Jerusalem crafts, Jerusalem marketplace, Jerusalem gifts, Jerusalem wellness, Jerusalem cultural tours, Jerusalem souvenirs">
   <meta name="author" content="Jerusalem Hills">
   <meta property="og:title" content="Jerusalem Hills - Explore Jerusalem, Discover Unique Gifts & Products">
   <meta property="og:description" content="Explore Jerusalem's rich heritage, nature, and unique products. Visit Jerusalem Hills for authentic gifts and experiences.">
-  <meta property="og:image" content="/img/jerusalem-hills-hero.jpg">
+  <meta property="og:image" content="https://www.jerusalemhills.com/images/jerusalem-hills-hero.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <title>Jerusalem Hills - Explore Jerusalem, Discover Unique Gifts</title>
+  <meta name="twitter:title" content="Jerusalem Hills - Explore Jerusalem, Discover Unique Gifts & Products">
+  <meta name="twitter:description" content="Explore Jerusalem's rich heritage, nature, and unique products. Visit Jerusalem Hills for authentic gifts and experiences.">
+  <meta name="twitter:image" content="https://www.jerusalemhills.com/images/jerusalem-hills-hero.jpg">
+  <title>Jerusalem Hills - Explore Jerusalem, Discover Unique Gifts & Products</title>
   
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- General Favicon -->
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+
+  <!-- Favicon for 32x32 -->
+  <link rel="icon" href="/img/favicon-32x32.png" sizes="32x32" type="image/png">
+
+  <!-- Favicon for 16x16 -->
+  <link rel="icon" href="/img/favicon-16x16.png" sizes="16x16" type="image/png">
+
+  <!-- Apple Touch Icon -->
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+
+  <!-- Android Chrome Icons -->
+  <link rel="icon" href="/img/android-chrome-192x192.png" sizes="192x192" type="image/png">
+  <link rel="icon" href="/img/android-chrome-512x512.png" sizes="512x512" type="image/png">
+
+  <!-- Web Manifest -->
   <link rel="manifest" href="/img/site.webmanifest">
+
+  <!-- PWA setup -->
+  <link rel="manifest" href="/market/manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  
+  <!-- Apple-specific meta for PWA -->
+  <meta name="apple-mobile-web-app-title" content="Jerusalem Hills Marketplace">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 </head>
+  
 <body>
   <header>
-    <div class="top-header">
-      <a href="/"><img src="/img/1.svg" alt="Jerusalem Hills Logo" class="logo"></a>
-      <div class="header-icons">
-        <a href="/account"><img src="/img/account-icon.svg" alt="Account"></a>
-        <a href="/cart"><img src="/img/cart-icon.svg" alt="Cart"></a>
-      </div>
-    </div>
-    <div class="search-bar-container">
-      <input type="text" class="search-bar" placeholder="Search for Jerusalem gifts, tours, and more...">
-      <button class="search-button"><img src="/img/search-icon.svg" alt="Search"></button>
-    </div>
-    <nav class="main-nav">
+    <img src="img/1.svg" alt="Jerusalem Hills Logo - Connecting you to the heart of Jerusalem" class="logo">
+    <img src="img/David's_Tower_11.jpg" alt="Old City Walls of Jerusalem - Historic and iconic landmarks" class="city-walls">
+    <nav>
       <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/about.html">About</a></li>
@@ -40,72 +60,118 @@
     </nav>
   </header>
 
-  <div class="category-bar">
-    <a href="#gifts">Gifts</a>
-    <a href="#tours">Tours</a>
-    <a href="#crafts">Crafts</a>
-    <a href="#wellness">Wellness</a>
+  <div class="search-bar-container">
+    <input type="text" class="search-bar" placeholder="Search for Jerusalem gifts, tours, and more...">
   </div>
 
-  <main>
-    <section class="hero-banner">
-      <img src="/img/jerusalem-hills-hero.jpg" alt="Discover the beauty of Jerusalem Hills">
-      <div class="hero-text">
-        <h1>Explore Jerusalem, Discover Unique Gifts</h1>
-        <p>Experience the beauty of Jerusalem through its nature, culture, and handmade products.</p>
-      </div>
+  <div class="main-content">
+    <section class="forum-section">
+      <h2>Jerusalem Hills Forum</h2>
+      <p>Join our uncensored, anonymous forum to share thoughts, experiences, and discussions related to Jerusalem and beyond.</p>
+      <a href="/forum" class="forum-link">Go to Forum</a>
     </section>
 
-    <section class="featured-sections">
-      <div class="section-card">
-        <h2>Forum</h2>
-        <p>Share your experiences and connect with others in our community forum.</p>
-        <a href="/forum" class="btn">Visit Forum</a>
-      </div>
-      <div class="section-card">
-        <h2>Marketplace</h2>
-        <p>Browse our unique collection of gifts and crafts from Jerusalem's hills.</p>
-        <a href="/market/index.html" class="btn">Explore Marketplace</a>
-      </div>
+    <section class="marketplace-section">
+      <h2>Jerusalem Hills Marketplace</h2>
+      <p>Explore our curated collection of unique products, from Dead Sea skincare to handmade Jerusalem crafts.</p>
+      <a href="/market/index.html" class="marketplace-link">Visit Marketplace</a>
     </section>
 
     <section class="ads-section">
       <h2>Sponsored Ads</h2>
-      <p>Interested in advertising? <a href="/advertise">Learn more</a>.</p>
-      <div class="ad-placeholder">[Ad Content]</div>
+      <p>Ad content goes here. Interested in advertising? <a href="/advertise">Learn more</a>.</p>
     </section>
 
-    <section class="map-section">
-      <h2>Explore with Our Interactive Map</h2>
-      <div id="google-map"></div>
+    <section class="news-section">
+      <h2>Latest News</h2>
+      <script type="text/javascript">
+        rssfeed_url = new Array(); 
+        rssfeed_url[0]="https://www.jpost.com/rss/rssfeedsjerusalem.aspx"; 
+        rssfeed_url[1]="https://www.jpost.com/rss/rssfeedsheadlines.aspx"; 
+        rssfeed_url[2]="https://www.jpost.com/rss/rssfeedsinternational"; 
+        rssfeed_url[3]="https://www.jpost.com/rss/rssfeedschristiannews";  
+        rssfeed_frame_width="330"; 
+        rssfeed_frame_height="260"; 
+        rssfeed_scroll="on"; 
+        rssfeed_scroll_step="6"; 
+        rssfeed_scroll_bar="off"; 
+        rssfeed_target="_top"; 
+        rssfeed_font_size="12"; 
+        rssfeed_font_face=""; 
+        rssfeed_border="on"; 
+        rssfeed_css_url=""; 
+        rssfeed_title="off"; 
+        rssfeed_title_name=""; 
+        rssfeed_title_bgcolor="#3366ff"; 
+        rssfeed_title_color="#fff"; 
+        rssfeed_title_bgimage=""; 
+        rssfeed_footer="off"; 
+        rssfeed_footer_name="rss feed"; 
+        rssfeed_footer_bgcolor="#fff"; 
+        rssfeed_footer_color="#333"; 
+        rssfeed_footer_bgimage=""; 
+        rssfeed_item_title_length="50"; 
+        rssfeed_item_title_color="#666"; 
+        rssfeed_item_bgcolor="#fff"; 
+        rssfeed_item_bgimage=""; 
+        rssfeed_item_border_bottom="on"; 
+        rssfeed_item_source_icon="off"; 
+        rssfeed_item_date="off"; 
+        rssfeed_item_description="on"; 
+        rssfeed_item_description_length="120"; 
+        rssfeed_item_description_color="#666"; 
+        rssfeed_item_description_link_color="#333"; 
+        rssfeed_item_description_tag="off"; 
+        rssfeed_no_items="0"; 
+        rssfeed_cache = "c94ffa2cfe76b4c6b20bcc4efb23cf00"; 
+      </script> 
+      <script type="text/javascript" src="//feed.surfing-waves.com/js/rss-feed.js"></script> 
+      <div style="color:#FEFEFE;font-size:10px; text-align:right; width:330px;">powered by <a href="https://surfing-waves.com" rel="noopener" target="_blank" style="color:#FEFEFE;">Surfing Waves</a></div> 
     </section>
-  </main>
+  </div>
+
+  <section class="games-section">
+    <h2>Games</h2>
+    <p>Challenge your friends or play against our AI in popular games!</p>
+    <a href="games/backgammon/backgammon.html" class="game-link">Backgammon</a>
+    <a href="#" class="game-link">Chess</a>
+    <a href="#" class="game-link">Poker</a>
+    <a href="#" class="game-link">Remi</a>
+    <a href="#" class="game-link">Ludo</a>
+  </section>
+
+  <section class="map-section">
+    <h2>Explore Jerusalem with Our Interactive Map</h2>
+    <div id="google-map" style="height: 400px; width: 100%;">[Google Map Embed]</div>
+  </section>
 
   <footer>
-    <div class="footer-nav">
-      <ul>
-        <li><a href="/privacy-policy">Privacy Policy</a></li>
-        <li><a href="/terms-of-service">Terms of Service</a></li>
-      </ul>
-    </div>
     <p>© 2024 Jerusalem Hills. All rights reserved.</p>
+    <ul>
+      <li><a href="/privacy-policy">Privacy Policy</a></li>
+      <li><a href="/terms-of-service">Terms of Service</a></li>
+    </ul>
   </footer>
-
+  
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
   <script>
     function initMap() {
       var map = new google.maps.Map(document.getElementById('google-map'), {
-        center: { lat: 31.7683, lng: 35.2137 }, // Jerusalem
+        center: { lat: 31.7683, lng: 35.2137 }, // Coordinates of Jerusalem
         zoom: 12
       });
     }
   </script>
+  
+  <!-- PWA Registration -->
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js').then(function(reg) {
-        console.log('Service Worker registered:', reg.scope);
-      }).catch(function(err) {
-        console.error('Service Worker registration failed:', err);
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+          console.log('Service Worker registered with scope: ', registration.scope);
+        }).catch(function(error) {
+          console.log('Service Worker registration failed: ', error);
+        });
       });
     }
   </script>
