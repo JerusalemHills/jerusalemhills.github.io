@@ -8,14 +8,15 @@ header {
   z-index: 1000; /* Ensures it stays on top of other content */
   display: flex;
   align-items: center;
-  padding: 20px 20px; /* Increased padding for taller navbar */
-  height: 80px; /* Optional: Set a specific height for the navbar */
+  padding: 20px 20px; /* Padding for spacing */
+  height: 80px; /* Set specific height for the navbar */
 }
 
 /* Style for the logo */
 .logo {
   margin-right: 20px; /* Space between logo and nav */
-  height: 40px; /* Optional: Adjusts the logo size */
+  height: 100%; /* Logo height fills 75% of the header's height */
+  object-fit: contain; /* Ensures the logo maintains its aspect ratio */
 }
 
 /* Remove list styles and display nav items horizontally */
@@ -33,5 +34,29 @@ nav ul li {
 
 /* Optional: Add some padding to the body to avoid content being hidden under the fixed navbar */
 body {
-  padding-top: 90px; /* Adjust based on navbar height */
+  padding-top: 100px; /* Adjust based on navbar height */
+}
+
+/* Style the search bar container */
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Style the search bar */
+.search-bar {
+  width: 50%; /* Adjust the width as needed */
+  padding: 15px; /* Add padding to make it larger */
+  font-size: 18px; /* Larger font size for the search text */
+  border: 2px solid #333; /* Bold border */
+  border-radius: 25px; /* Rounded corners */
+  outline: none; /* Remove the default outline */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for a 3D effect */
+}
+
+/* Optional: Add focus effect */
+.search-bar:focus {
+  border-color: #0078d4; /* Change border color when focused */
+  box-shadow: 0 0 5px rgba(0, 120, 212, 0.5); /* Optional: Add a focus shadow */
 }
