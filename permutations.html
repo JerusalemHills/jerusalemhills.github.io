@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Permutation Search Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .input-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .input-row input {
+      flex: 1;
+      padding: 5px;
+      margin-right: 5px;
+    }
+    .input-row button {
+      margin-right: 5px;
+    }
+    .output {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .running-indicator {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .running {
+      color: green;
+    }
+    .stopped {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Permutation Search Tool</h1>
+  <div id="input-container">
+    <div class="input-row">
+      <input type="text" placeholder="Enter text">
+      <button onclick="addInputBox()">+</button>
+    </div>
+  </div>
+  <div>
+    <label><input type="checkbox" id="skip-2"> Skip Length 2</label>
+    <label><input type="checkbox" id="skip-3"> Skip Length 3</label>
+  </div>
+  <button onclick="initializeSearch()">Start Search</button>
+  <button onclick="stopSearch()">Stop Search</button>
+  <button onclick="downloadResults()">Download Results</button>
+  <div class="running-indicator" id="status-indicator">Status: <span class="stopped">Stopped</span></div>
+  <div class="output" id="output"></div>
+  <script src="app.js"></script>
+</body>
+</html>
