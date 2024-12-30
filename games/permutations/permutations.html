@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>צירופים Game Solver</title>
+    <script src="app.js" defer></script>
+    <style>
+        /* Basic styling for the virtual keyboard */
+        #virtual-keyboard button {
+            background-color: #f9f3c2;
+            border: 1px solid #d4af37;
+            color: #4b3832;
+            width: 50px;
+            height: 50px;
+        }
+        #virtual-keyboard button:hover {
+            background-color: #f4d03f;
+        }
+        #input-container {
+            margin-bottom: 20px;
+        }
+        .input-row {
+            margin-bottom: 10px;
+        }
+        .input-row input {
+            padding: 10px;
+            font-size: 1rem;
+            width: 200px;
+        }
+        .input-row button {
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .running {
+            color: green;
+        }
+        .stopped {
+            color: red;
+        }
+        /* New styles for the fixed size result window */
+        #output {
+            width: 100%;
+            height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f4f4f4;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <!-- Dynamic Header will be inserted here by JavaScript -->
+    <div id="status-indicator">Status: <span class="stopped">Stopped</span></div>
+
+    <div id="input-container">
+        <input type="text" placeholder="Enter Hebrew letters">
+        <button onclick="addInputBox()">+</button>
+    </div>
+
+    <div>
+        <label><input type="checkbox" id="skip-2"> Skip 2-length permutations</label>
+        <label><input type="checkbox" id="skip-3"> Skip 3-length permutations</label>
+    </div>
+
+    <div>
+        <button onclick="initializeSearch()">Start Search</button>
+        <button onclick="stopSearch()">Stop Search</button>
+        <button onclick="downloadResults()">Download Results</button>
+    </div>
+    
+    <div id="output"></div>
+
+    <script>
+        // Load header dynamically
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const response = await fetch('/index.html');
+                const htmlText = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlText, "text/html");
+                const header = doc.querySelector("header");
+                if (header) {
+                    document.body.insertAdjacentElement("afterbegin", header.cloneNode(true));
+                }
+            } catch (error) {
+                console.error("Failed to load the header:", error);
+            }
+        });
+    </script>
+</body>
+</html>

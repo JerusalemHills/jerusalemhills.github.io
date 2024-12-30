@@ -1,0 +1,26 @@
+/* CSS for layout */
+#output {
+    height: 40vh;  /* Set height to 40% of the viewport height */
+    max-height: none;  /* Remove the max-height constraint */
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+#virtual-keyboard {
+    position: fixed;
+    bottom: 50px;
+    width: 100%;
+    z-index: 1;
+}
+
+#input-container, #virtual-keyboard {
+    z-index: 2;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    justify-content: flex-start;
+}
