@@ -5,15 +5,15 @@ header {
   z-index: 1000; /* Optional: Ensures it stays on top of other content */
   display: flex;
   align-items: center;
-  padding: 20px 20px; /* Padding for spacing */
-  height: 80px; /* Set specific height for the navbar */
+  padding: 20px 20px; 
+  height: 220px; /* Set specific height for the navbar */
   position: relative; /* Change from fixed to relative */
 }
 
 /* Style for the logo */
 .logo {
-  margin-right: 20px; /* Space between logo and nav */
-  height: 75%; /* Logo height fills 75% of the header's height */
+  margin-right: 280px; /* Space between logo and nav */
+  height: 100%; /* Logo height fills 75% of the header's height */
   object-fit: contain; /* Ensures the logo maintains its aspect ratio */
 }
 
@@ -25,9 +25,13 @@ nav ul {
   display: flex;
 }
 
-/* Style for each nav item */
-nav ul li {
-  margin-left: 20px;
+/* Navbar link styles */
+nav ul li a {
+  font-size: 18px; /* Match the font size to the search bar */
+  font-family: Arial, sans-serif; /* Match the font family to the search bar */
+  text-decoration: none; /* Remove underline */
+  color: #333; /* Set text color */
+  margin-left: 20px; /* Space between links */
 }
 
 /* Remove the padding-top from the body as it is no longer needed */
@@ -45,7 +49,7 @@ body {
 .search-bar-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 2px;
 }
 
 /* Style the search bar */
@@ -57,6 +61,7 @@ body {
   border-radius: 25px; /* Rounded corners */
   outline: none; /* Remove the default outline */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for a 3D effect */
+  font-family: Arial, sans-serif;
 }
 
 /* Optional: Add focus effect */
