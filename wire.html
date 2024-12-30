@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore Jerusalem's nature, culture, history, and unique products. Enjoy a seamless experience at Jerusalem Hills.">
+  <meta name="keywords" content="Jerusalem Hills, Marketplace, News, Games, Interactive Map">
+  <title>Jerusalem Hills</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo-container">
+      <img src="img/logo.svg" alt="Jerusalem Hills Logo" class="logo">
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#marketplace">Marketplace</a></li>
+          <li><a href="#news">News</a></li>
+          <li><a href="#games">Games</a></li>
+          <li><a href="#map">Map</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Ticker Section -->
+  <section class="ticker">
+    <div class="ticker-container">
+      <p>Latest Updates: <span>Jerusalem Market sees growth...</span> | <span>New handmade products added...</span></p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main>
+    <div class="content-wrapper">
+      <!-- Left Column -->
+      <div class="left-column">
+        <!-- Marketplace Section -->
+        <section id="marketplace" class="marketplace">
+          <h2>Marketplace</h2>
+          <p>Explore curated products and unique Jerusalem crafts.</p>
+          <div class="marketplace-grid">
+            <!-- Example items -->
+            <div class="marketplace-item">Dead Sea Skincare</div>
+            <div class="marketplace-item">Handmade Basket</div>
+            <div class="marketplace-item">Jewelry Collection</div>
+          </div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="news">
+          <h2>News</h2>
+          <p>Stay updated with the latest from Jerusalem.</p>
+          <ul class="news-list">
+            <li><a href="#">Headline 1: Jerusalem culture events...</a></li>
+            <li><a href="#">Headline 2: New discoveries in the city...</a></li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Right Column -->
+      <div class="right-column">
+        <!-- Ads Section -->
+        <section class="ads">
+          <h2>Sponsored Ads</h2>
+          <p>Ad space available for local businesses.</p>
+        </section>
+
+        <!-- Games Section -->
+        <section id="games" class="games">
+          <h2>Games</h2>
+          <p>Play exciting games online!</p>
+          <div class="games-links">
+            <a href="#">Backgammon</a>
+            <a href="#">Chess</a>
+            <a href="#">Poker</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Interactive Map -->
+  <section id="map" class="map">
+    <h2>Interactive Map</h2>
+    <div id="google-map" style="height: 400px; width: 100%;">[Google Map Embed]</div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 Jerusalem Hills. All rights reserved.</p>
+    <ul>
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms of Service</a></li>
+    </ul>
+  </footer>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+  <script>
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('google-map'), {
+        center: { lat: 31.7683, lng: 35.2137 }, // Coordinates of Jerusalem
+        zoom: 12
+      });
+    }
+  </script>
+</body>
+</html>
