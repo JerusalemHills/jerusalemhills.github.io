@@ -65,17 +65,13 @@
     <!-- TradingView Widget BEGIN -->
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+      <!-- <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div> -->
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
       {
       "symbols": [
         {
           "proName": "FOREXCOM:SPXUSD",
           "title": "S&P 500 Index"
-        },
-        {
-          "proName": "FOREXCOM:NSXUSD",
-          "title": "US 100 Cash CFD"
         },
         {
           "proName": "FX_IDC:EURUSD",
@@ -90,23 +86,11 @@
           "title": "Ethereum"
         },
         {
-          "description": "Dow",
-          "proName": "DJ:DJI"
-        },
-        {
-          "description": "Vix",
-          "proName": "TVC:VIX"
-        },
-        {
-          "description": "Gold",
-          "proName": "COMEX:GSP02F2025"
-        },
-        {
-          "description": "ILS",
-          "proName": "ICEUS:ILS1!"
+          "description": "Gold $/Oz.",
+          "proName": "TVC:GOLD"
         }
       ],
-      "showSymbolLogo": true,
+      "showSymbolLogo": false,
       "isTransparent": true,
       "displayMode": "adaptive",
       "colorTheme": "light",
@@ -126,10 +110,10 @@
         rssfeed_url[2]="https://www.jpost.com/rss/rssfeedsinternational"; 
         rssfeed_url[3]="https://www.jpost.com/rss/rssfeedschristiannews";  
         rssfeed_frame_width="720"; 
-        rssfeed_frame_height="160"; 
+        rssfeed_frame_height="120"; 
         rssfeed_scroll="on"; 
         rssfeed_scroll_step="6"; 
-        rssfeed_scroll_bar="off"; 
+        rssfeed_scroll_bar="on"; 
         rssfeed_target="_top"; 
         rssfeed_font_size="15"; 
         rssfeed_font_face=""; 
@@ -145,15 +129,15 @@
         rssfeed_footer_bgcolor="#fff"; 
         rssfeed_footer_color="#333"; 
         rssfeed_footer_bgimage=""; 
-        rssfeed_item_title_length="50"; 
+        rssfeed_item_title_length="100"; 
         rssfeed_item_title_color="#666"; 
         rssfeed_item_bgcolor="#fff"; 
         rssfeed_item_bgimage=""; 
         rssfeed_item_border_bottom="on"; 
         rssfeed_item_source_icon="off"; 
-        rssfeed_item_date="off"; 
+        rssfeed_item_date="on"; 
         rssfeed_item_description="on"; 
-        rssfeed_item_description_length="120"; 
+        rssfeed_item_description_length="500"; 
         rssfeed_item_description_color="#666"; 
         rssfeed_item_description_link_color="#333"; 
         rssfeed_item_description_tag="off"; 
