@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LibreTranslate Test</title>
+</head>
+<body>
+    <h1>LibreTranslate API Test</h1>
+    <div id="output"></div>
+
+    <script>
+        async function translateLibre(text) {
+            const url = "https://libretranslate.com/translate";
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        q: text,
+                        source: "he",
+                        target: "en",
+                        format: "text"
+                    }),
+                });
+
+                const data = await response.json();
+                return data.translatedText;
+            } catch (error) {
+                console.error("Translation error:", error);
+                return "Error during translation";
+            }
+        }
+
+        async function testTranslation() {
+            const inputTexts = [
+                "שְׂלָו עוף קטן, דומה במעט במראהו לחוגלה ומשתייך למשפחת הפסיוניים",
+                "שׁוּל לשון המקרא קצה הבגד, שפת הבגד התחתונה",
+                "מָשַׁל א שלט בכוחו",
+                "מוּשׁ קיצור של המילה מושלם",
+                "מוּל גם מוֹל לשון המקרא מילת יחס, הימצאות בקרבה ונוכחות בקו ישר לאחר",
+                "מָלוֹשׁ לשון חז\"ל הקערה שבה שמים את רכיבי הבצק ולשים אותם עד שהם הופכים לבצק אחיד"
+            ];
+
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = "<strong>Translating...</strong>";
+
+            for (const text of inputTexts) {
+                const translation = await translateLibre(text);
+                const paragraph = document.createElement("p");
+                paragraph.textContent = `Original: ${text}\nTranslation: ${translation}`;
+                outputDiv.appendChild(paragraph);
+            }
+        }
+
+        // Run the test
+        testTranslation();
+    </script>
+</body>
+</html>
