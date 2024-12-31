@@ -25,12 +25,14 @@
                 });
 
                 const data = await response.json();
-                return data.translatedText;
+                console.log("API Response:", data); // Log the full response
+                return data.translatedText || "No translation received";
             } catch (error) {
                 console.error("Translation error:", error);
                 return "Error during translation";
             }
         }
+
 
         async function testTranslation() {
             const inputTexts = [
