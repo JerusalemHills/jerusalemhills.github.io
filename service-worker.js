@@ -5,8 +5,17 @@ const urlsToCache = [
   '/index.html',
   '/styles.css',
   '/img/1.svg',
-  '/js/main.js', // If you have a main JavaScript file
-  '/manifest.json'
+  '/js/main.js',
+  '/js/pwa.js',
+  '/js/rss-feed-config.js',
+  '/favicon.ico',
+  '/img/favicon-32x32.png',
+  '/img/favicon-16x16.png',
+  '/img/apple-touch-icon.png',
+  '/img/android-chrome-192x192.png',
+  '/img/android-chrome-512x512.png',
+  '/img/site.webmanifest',
+  '/market/manifest.json'
 ];
 
 // Install event: cache all necessary resources
@@ -66,7 +75,10 @@ self.addEventListener('fetch', (event) => {
 
             return response;
           }
-        );
+        ).catch(() => {
+          // If there's an error while fetching, serve the offline page if available
+          return caches.match('/offline.html'); // Note: You would need to add and create an offline.html
+        });
       })
   );
 });
@@ -77,7 +89,7 @@ self.addEventListener('push', (event) => {
   const options = {
     body: 'New updates on Jerusalem Hills!',
     icon: '/img/1.svg', // Path to your icon
-    badge: '/img/badge.png' // Path to your badge icon
+    badge: '/img/badge.png' // Path to your badge icon, make sure this file exists
   };
 
   event.waitUntil(

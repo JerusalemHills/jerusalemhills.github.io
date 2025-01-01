@@ -2,19 +2,20 @@
 header {
   width: 100%;
   background-color: #fff; /* Optional: Sets a background color for the navbar */
-  z-index: 1000; /* Optional: Ensures it stays on top of other content */
+  z-index: 1000; /* Ensures it stays on top of other content */
   display: flex;
   align-items: center;
-  padding: 20px 20px; 
-  height: 220px; /* Set specific height for the navbar */
+  padding: 10px 20px; /* Reduced padding for a more compact look */
+  height: auto; /* Let content dictate height */
   position: relative; /* Change from fixed to relative */
 }
 
 /* Style for the logo */
 .logo {
-  margin-right: 280px; /* Space between logo and nav */
-  height: 100%; /* Logo height fills 75% of the header's height */
+  max-width: 150px; /* Limit logo size for responsiveness */
+  height: auto; /* Maintain aspect ratio */
   object-fit: contain; /* Ensures the logo maintains its aspect ratio */
+  margin-right: 20px; /* Adjusted for better spacing */
 }
 
 /* Remove list styles and display nav items horizontally */
@@ -23,74 +24,135 @@ nav ul {
   margin: 0;
   padding: 0;
   display: flex;
+  flex-wrap: wrap; /* Wrap on smaller screens */
 }
 
 /* Navbar link styles */
 nav ul li a {
-  font-size: 18px; /* Match the font size to the search bar */
-  font-family: Arial, sans-serif; /* Match the font family to the search bar */
-  text-decoration: none; /* Remove underline */
-  color: #333; /* Set text color */
-  margin-left: 20px; /* Space between links */
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+  color: #333;
+  margin-left: 10px; /* Reduced space between links for smaller screens */
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
 }
 
-/* Remove the padding-top from the body as it is no longer needed */
-body {
-  padding-top: 0;
+nav ul li a:hover {
+  color: #0078d4; /* Change color on hover */
 }
 
-
-/* Optional: Add some padding to the body to avoid content being hidden under the fixed navbar */
+/* Body styles */
 body {
-  padding-top: 1px; /* Adjust based on navbar height */
+  padding-top: 0; /* No need for padding if header is not fixed */
+  margin: 0; /* Reset default margin */
+  font-family: Arial, sans-serif; /* Consistent font across page */
 }
 
 /* Style the search bar container */
 .search-bar-container {
   display: flex;
   justify-content: center;
-  margin-top: 2px;
+  margin-top: 20px; /* Space from header */
 }
 
 /* Style the search bar */
 .search-bar {
-  width: 50%; /* Adjust the width as needed */
-  padding: 15px; /* Add padding to make it larger */
-  font-size: 18px; /* Larger font size for the search text */
-  border: 2px solid #333; /* Bold border */
-  border-radius: 25px; /* Rounded corners */
-  outline: none; /* Remove the default outline */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for a 3D effect */
+  width: calc(100% - 20px); /* Full width minus padding */
+  max-width: 600px; /* Cap width on larger screens */
+  padding: 15px;
+  font-size: 18px;
+  border: 2px solid #333;
+  border-radius: 25px;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
 }
 
-/* Optional: Add focus effect */
 .search-bar:focus {
-  border-color: #0078d4; /* Change border color when focused */
-  box-shadow: 0 0 5px rgba(0, 120, 212, 0.5); /* Optional: Add a focus shadow */
+  border-color: #0078d4;
+  box-shadow: 0 0 5px rgba(0, 120, 212, 0.5);
 }
 
-
-                           /* news ticker */
-
+/* News ticker */
+.news-section {
+  overflow: hidden; /* Prevent overflow from scrolling content */
+}
 
 #news-ticker {
-    animation: ticker 20s linear infinite;
-    font-size: 14px;
+  animation: ticker 20s linear infinite;
+  font-size: 14px;
+  white-space: nowrap; /* Ensure text doesn't wrap */
 }
 
 #news-ticker a {
-    color: #333;
-    text-decoration: none;
-    margin: 0 5px;
+  color: #333;
+  text-decoration: none;
+  margin: 0 5px;
 }
 
 #news-ticker a:hover {
-    color: #000;
-    text-decoration: underline;
+  color: #000;
+  text-decoration: underline;
 }
 
 @keyframes ticker {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Pause animation on hover */
+#news-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    height: auto;
+  }
+  .logo {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  nav ul {
+    flex-direction: column;
+  }
+  nav ul li {
+    margin: 5px 0; /* Space items vertically */
+  }
+  .search-bar {
+    width: 100%; /* Full width on mobile */
+    max-width: none;
+  }
+}
+
+/* General styles for better layout control */
+.main-content {
+  padding: 20px; /* Add some padding for content */
+}
+
+footer {
+  background-color: #f0f0f0;
+  padding: 20px;
+  text-align: center;
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+footer ul li a {
+  color: #333;
+  text-decoration: none;
+}
+
+footer ul li a:hover {
+  text-decoration: underline;
 }

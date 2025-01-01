@@ -54,18 +54,16 @@
       <ul>
         <li><a href="/index.html">Home</a></li>
         <li><a href="/about.html">About</a></li>
-        <li><a href="/forum">Forum</a></li>
+        <li><a href="/forum/forum.html">Forum</a></li>
         <li><a href="/market/index.html">Marketplace</a></li>
       </ul>
     </nav>
   </header>
   
-  
-  <div Class="news">
+  <div class="news">
     <!-- TradingView Widget BEGIN -->
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
-      <!-- <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div> -->
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
       {
       "symbols": [
@@ -100,50 +98,9 @@
     </div>
     <!-- TradingView Widget END -->
     
-    
     <section class="news-section">
       <!-- <h1>Latest News</h1> -->
-      <script type="text/javascript">
-        rssfeed_url = new Array(); 
-        rssfeed_url[0]="https://www.jpost.com/rss/rssfeedsjerusalem.aspx"; 
-        rssfeed_url[1]="https://www.jpost.com/rss/rssfeedsheadlines.aspx"; 
-        rssfeed_url[2]="https://www.jpost.com/rss/rssfeedsinternational"; 
-        rssfeed_url[3]="https://www.jpost.com/rss/rssfeedschristiannews";  
-        rssfeed_frame_width="720"; 
-        rssfeed_frame_height="120"; 
-        rssfeed_scroll="on"; 
-        rssfeed_scroll_step="6"; 
-        rssfeed_scroll_bar="on"; 
-        rssfeed_target="_top"; 
-        rssfeed_font_size="15"; 
-        rssfeed_font_face=""; 
-        rssfeed_border="off"; 
-        rssfeed_css_url=""; 
-        rssfeed_title="off"; 
-        rssfeed_title_name=""; 
-        rssfeed_title_bgcolor="#3366ff"; 
-        rssfeed_title_color="#fff"; 
-        rssfeed_title_bgimage=""; 
-        rssfeed_footer="off"; 
-        rssfeed_footer_name="rss feed"; 
-        rssfeed_footer_bgcolor="#fff"; 
-        rssfeed_footer_color="#333"; 
-        rssfeed_footer_bgimage=""; 
-        rssfeed_item_title_length="100"; 
-        rssfeed_item_title_color="#666"; 
-        rssfeed_item_bgcolor="#fff"; 
-        rssfeed_item_bgimage=""; 
-        rssfeed_item_border_bottom="on"; 
-        rssfeed_item_source_icon="off"; 
-        rssfeed_item_date="on"; 
-        rssfeed_item_description="on"; 
-        rssfeed_item_description_length="500"; 
-        rssfeed_item_description_color="#666"; 
-        rssfeed_item_description_link_color="#333"; 
-        rssfeed_item_description_tag="off"; 
-        rssfeed_no_items="0"; 
-        rssfeed_cache = "c94ffa2cfe76b4c6b20bcc4efb23cf00"; 
-      </script> 
+      <script src="js/rss-feed-config.js"></script>
       <script type="text/javascript" src="//feed.surfing-waves.com/js/rss-feed.js"></script> 
       <div style="color:#FEFEFE;font-size:10px; text-align:right; width:330px;">powered by <a href="https://surfing-waves.com" rel="noopener" target="_blank" style="color:#FEFEFE;">Surfing Waves</a></div> 
     </section>
@@ -157,7 +114,7 @@
     <section class="forum-section">
       <h2>Jerusalem Hills Forum</h2>
       <p>Join our uncensored, anonymous forum to share thoughts, experiences, and discussions related to Jerusalem and beyond.</p>
-      <a href="/forum" class="forum-link">Go to Forum</a>
+      <a href="/forum/forum.html" class="forum-link">Go to Forum</a>
     </section>
 
     <section class="marketplace-section">
@@ -197,26 +154,7 @@
   </footer>
   
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
-  <script>
-    function initMap() {
-      var map = new google.maps.Map(document.getElementById('google-map'), {
-        center: { lat: 31.7683, lng: 35.2137 }, // Coordinates of Jerusalem
-        zoom: 12
-      });
-    }
-  </script>
-  
-  <!-- PWA Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-          console.log('Service Worker registered with scope: ', registration.scope);
-        }).catch(function(error) {
-          console.log('Service Worker registration failed: ', error);
-        });
-      });
-    }
-  </script>
+  <script src="js/main.js" defer></script>
+  <script src="js/pwa.js" defer></script>
 </body>
 </html>
