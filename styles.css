@@ -1,71 +1,76 @@
-/* Style for the header and navbar */
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: Arial, sans-serif;
+  padding-top: 0;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+/* Header Section */
 header {
   width: 100%;
-  background-color: #fff; /* Optional: Sets a background color for the navbar */
-  z-index: 1000; /* Ensures it stays on top of other content */
+  background-color: #fff;
+  z-index: 1000;
   display: flex;
   align-items: center;
-  padding: 10px 20px; /* Reduced padding for a more compact look */
-  height: auto; /* Let content dictate height */
-  position: relative; /* Change from fixed to relative */
+  padding: 10px 20px;
+  height: auto;
+  position: relative;
 }
 
-/* Style for the logo */
+/* Logo Styling */
 .logo {
-  max-width: 150px; /* Limit logo size for responsiveness */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: contain; /* Ensures the logo maintains its aspect ratio */
-  margin-right: 20px; /* Adjusted for better spacing */
+  max-width: 150px;
+  height: auto;
+  object-fit: contain;
+  margin-right: 20px;
 }
 
-/* Remove list styles and display nav items horizontally */
+/* Navbar Styling */
 nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   display: flex;
-  flex-wrap: wrap; /* Wrap on smaller screens */
+  flex-wrap: wrap;
 }
 
-/* Navbar link styles */
 nav ul li a {
   font-size: 18px;
   font-family: Arial, sans-serif;
   text-decoration: none;
   color: #333;
-  margin-left: 10px; /* Reduced space between links for smaller screens */
-  transition: color 0.3s ease; /* Smooth transition for hover effect */
+  margin-left: 10px;
+  transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-  color: #0078d4; /* Change color on hover */
+  color: #0078d4;
 }
 
-/* Body styles */
-body {
-  padding-top: 0; /* No need for padding if header is not fixed */
-  margin: 0; /* Reset default margin */
-  font-family: Arial, sans-serif; /* Consistent font across page */
-}
-
-/* Style the search bar container */
+/* Search Bar Styling */
 .search-bar-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px; /* Space from header */
+  margin-top: 20px;
 }
 
-/* Style the search bar */
 .search-bar {
-  width: calc(100% - 20px); /* Full width minus padding */
-  max-width: 600px; /* Cap width on larger screens */
+  width: calc(100% - 20px);
+  max-width: 600px;
   padding: 15px;
   font-size: 18px;
   border: 2px solid #333;
   border-radius: 25px;
   outline: none;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
 }
 
 .search-bar:focus {
@@ -73,65 +78,105 @@ body {
   box-shadow: 0 0 5px rgba(0, 120, 212, 0.5);
 }
 
-/* News ticker */
-.news-section {
-  overflow: hidden; /* Prevent overflow from scrolling content */
+
+
+/* News Ticker */
+.ticker-tape {
+  width: 100%;
+  height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #fff;
 }
 
-#news-ticker {
-  animation: ticker 20s linear infinite;
+.ticker-item {
+  display: inline-block;
+  margin-right: 20px;
   font-size: 14px;
-  white-space: nowrap; /* Ensure text doesn't wrap */
 }
 
-#news-ticker a {
+.ticker-item a {
   color: #333;
   text-decoration: none;
-  margin: 0 5px;
 }
 
-#news-ticker a:hover {
+.ticker-item a:hover {
   color: #000;
   text-decoration: underline;
 }
 
-@keyframes ticker {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
-
-/* Pause animation on hover */
-#news-ticker:hover {
+.ticker-tape:hover .ticker-content {
   animation-play-state: paused;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    height: auto;
-  }
-  .logo {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-  nav ul {
-    flex-direction: column;
-  }
-  nav ul li {
-    margin: 5px 0; /* Space items vertically */
-  }
-  .search-bar {
-    width: 100%; /* Full width on mobile */
-    max-width: none;
-  }
+.ticker-content {
+    display: inline-block;
+    padding-right: 200%; /* Increase width of content */
+    animation: ticker 6s linear infinite;
 }
 
-/* General styles for better layout control */
-.main-content {
-  padding: 20px; /* Add some padding for content */
+@keyframes ticker {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-200%); } /* Move further left for slower effect */
 }
 
+
+
+/* Marketplace Section */
+.marketplace {
+  padding: 20px;
+}
+
+.marketplace-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.marketplace-item {
+  flex: 1 1 calc(33.333% - 15px);
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  text-align: center;
+}
+
+/* News Section */
+.news ul {
+  padding: 20px;
+}
+
+.news ul li {
+  margin-bottom: 10px;
+}
+
+.news ul li a {
+  text-decoration: none;
+  color: #0078d4;
+}
+
+/* Games Section */
+.games {
+  padding: 20px;
+}
+
+.games a {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #0078d4;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+/* Map Section */
+.map {
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+/* Footer Section */
 footer {
   background-color: #f0f0f0;
   padding: 20px;
@@ -155,4 +200,26 @@ footer ul li a {
 
 footer ul li a:hover {
   text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    height: auto;
+  }
+  .logo {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  nav ul {
+    flex-direction: column;
+  }
+  nav ul li {
+    margin: 5px 0;
+  }
+  .search-bar {
+    width: 100%;
+    max-width: none;
+  }
 }
