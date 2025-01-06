@@ -1,7 +1,5 @@
 /* General Reset */
-* {
-  margin: 0;
-  padding: 0;
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
@@ -10,7 +8,7 @@ body {
   font-family: Arial, sans-serif;
   padding-top: 0;
   margin: 0;
-  background-color: #f0f0f0;
+  background-color: var(--background-color, #f0f0f0);
   line-height: 1.6; /* Improved readability */
 }
 
@@ -25,7 +23,7 @@ header {
   padding: 10px 20px;
   height: auto;
   position: relative;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for header separation */
+  box-shadow: var(--box-shadow, 0 2px 5px rgba(0, 0, 0, 0.1)); /* Subtle shadow for header separation */
 }
 
 /* Logo Styling */
@@ -53,12 +51,12 @@ nav ul li a {
   font-size: 18px;
   font-family: Arial, sans-serif;
   text-decoration: none;
-  color: #333;
+  color: var(--text-color, #333);
   transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-  color: #0078d4;
+  color: var(--primary-color, #0078d4);
 }
 
 /* Search Bar Styling */
@@ -69,18 +67,18 @@ nav ul li a:hover {
 }
 
 .search-bar {
-  width: calc(100% - 20px);
+  width: 100%;
   max-width: 600px;
   padding: 15px;
   font-size: 18px;
-  border: 2px solid #333;
+  border: 2px solid var(--text-color, #333);
   border-radius: 25px;
   outline: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow, 0 2px 5px rgba(0, 0, 0, 0.1));
 }
 
 .search-bar:focus {
-  border-color: #0078d4;
+  border-color: var(--primary-color, #0078d4);
   box-shadow: 0 0 5px rgba(0, 120, 212, 0.5);
 }
 
@@ -102,7 +100,7 @@ nav ul li a:hover {
   padding: 15px;
   text-align: center;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow, 0 2px 5px rgba(0, 0, 0, 0.1));
 }
 
 /* News Section */
@@ -116,7 +114,7 @@ nav ul li a:hover {
 
 .news ul li a {
   text-decoration: none;
-  color: #0078d4;
+  color: var(--primary-color, #0078d4);
 }
 
 /* Games Section */
@@ -128,7 +126,7 @@ nav ul li a:hover {
   display: inline-block;
   margin-right: 10px;
   padding: 5px 10px;
-  background-color: #0078d4;
+  background-color: var(--primary-color, #0078d4);
   color: #fff;
   border-radius: 5px;
   text-decoration: none;
@@ -136,7 +134,7 @@ nav ul li a:hover {
 }
 
 .games a:hover {
-  background-color: #005bb5;
+  background-color: var(--secondary-color, #005bb5);
 }
 
 /* Map Section */
@@ -147,7 +145,7 @@ nav ul li a:hover {
 
 /* Footer Section */
 footer {
-  background-color: #f0f0f0;
+  background-color: var(--background-color, #f0f0f0);
   padding: 20px;
   text-align: center;
   border-top: 1px solid #ddd;
@@ -165,7 +163,7 @@ footer ul li {
 }
 
 footer ul li a {
-  color: #333;
+  color: var(--text-color, #333);
   text-decoration: none;
 }
 
@@ -176,31 +174,28 @@ footer ul li a:hover {
 /* Responsive Design */
 @media (max-width: 768px) {
   header {
-    flex-direction: column;
-    height: auto;
+      flex-direction: column;
+      height: auto;
   }
   .logo {
-    margin-right: 0;
-    margin-bottom: 10px;
+      margin-right: 0;
+      margin-bottom: 10px;
   }
   nav ul {
-    flex-direction: column;
-    align-items: center;
+      flex-direction: column;
+      align-items: center;
   }
   nav ul li {
-    margin: 5px 0;
+      margin: 5px 0;
   }
   .search-bar {
-    width: 100%;
-    max-width: none;
+      width: 100%;
+      max-width: none;
   }
   .marketplace-item {
-    flex: 1 1 100%; /* Full width on smaller screens */
+      flex: 1 1 100%; /* Full width on smaller screens */
   }
-  
 }
-
-/* Ticker Tape Section (Moved to the Bottom) */
 
 /* News Ticker */
 .ticker-tape {
@@ -220,7 +215,7 @@ footer ul li a:hover {
 }
 
 .ticker-item a {
-  color: #333;
+  color: var(--text-color, #333);
   text-decoration: none;
 }
 
@@ -236,10 +231,14 @@ footer ul li a:hover {
 .ticker-content {
   display: inline-block;
   padding-right: 10%; /* Ensures smooth animation */
-  animation: ticker 500s linear infinite; /* Adjusted for slower scroll */
+  animation: ticker linear infinite;
 }
 
 @keyframes ticker {
   0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
+}
+
+.ticker-content {
+  animation-duration: calc(var(--ticker-width) / 50s); /* Dynamic speed */
 }

@@ -13,17 +13,30 @@ const feedUrls = [
 
 const apiUrl = "https://api.rss2json.com/v1/api.json?rss_url=";
 
+async function fetchFeedWithRetry(url, retries = 3) {
+    let attempt = 0;
+    while (attempt < retries) {
+        try {
+            const response = await fetch(apiUrl + encodeURIComponent(url));
+            if (!response.ok) {
+                console.warn(`Failed to fetch URL: ${url}`);
+                break; // Exit the loop on a non-2xx status
+            }
+            return await response.json();
+        } catch (error) {
+            console.error(`Error fetching URL: ${url}`, error);
+            if (attempt === retries - 1) throw error; // Re-throw after max retries
+            attempt++;
+        }
+    }
+}
+
 async function fetchFeeds() {
     let allItems = [];
 
     for (const url of feedUrls) {
         try {
-            const response = await fetch(apiUrl + encodeURIComponent(url));
-            if (!response.ok) {
-                console.warn(`Failed to fetch URL: ${url}`);
-                continue;
-            }
-            const feed = await response.json();
+            const feed = await fetchFeedWithRetry(url);
             if (feed && feed.items) {
                 allItems.push(...feed.items);
             }
@@ -33,13 +46,26 @@ async function fetchFeeds() {
     }
 
     // Sort by publication date
-    allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+    allItems.sort((a, b) => {
+        const dateA = new Date(a.pubDate);
+        const dateB = new Date(b.pubDate);
+        return isNaN(dateB) - isNaN(dateA) || dateB - dateA;
+    });
 
     // Generate ticker items
     const tickerContent = document.getElementById('ticker-content');
-    tickerContent.innerHTML = allItems.map(item =>
-        `<span class="ticker-item"><a href="${item.link}" target="_blank">${item.title}</a></span>`
-    ).join('');
+    if (allItems.length === 0) {
+        tickerContent.innerHTML = "<span class='ticker-item'>No recent news available.</span>";
+    } else {
+        const fragment = document.createDocumentFragment();
+        allItems.forEach(item => {
+            const span = document.createElement('span');
+            span.className = 'ticker-item';
+            span.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a>`;
+            fragment.appendChild(span);
+        });
+        tickerContent.appendChild(fragment);
+    }
 }
 
-window.onload = fetchFeeds;
+document.addEventListener("DOMContentLoaded", fetchFeeds);

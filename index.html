@@ -59,9 +59,14 @@
   <!-- Main Content -->
   <main class="main-content">
     <!-- Search Bar -->
-    <div class="search-bar-container">
-      <input type="text" class="search-bar" placeholder="Search for Jerusalem gifts, tours, and more...">
-    </div>
+    <section class="search-bar-container">
+      <form action="/search" method="get" role="search">
+        <label for="search-input" class="visually-hidden">Search the site</label>
+        <input type="text" id="search-input" name="q" class="search-bar" 
+              placeholder="Search for Jerusalem gifts, tours, and more..." 
+              autocomplete="on" aria-label="Search for Jerusalem gifts, tours, and more">
+      </form>
+    </section>
 
     <!-- Forum Section -->
     <section class="forum-section">
