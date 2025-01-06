@@ -237,11 +237,11 @@ footer ul li a:hover {
 
 .ticker-content {
   display: inline-block;
-  padding-right: 20%; /* Ensures smooth animation */
+  padding-right: 10%; /* Ensures smooth animation */
   animation: ticker 300s linear infinite; /* Adjusted for slower scroll */
 }
 
 @keyframes ticker {
-  0% { transform: translateX(10%); }
+  0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
 }

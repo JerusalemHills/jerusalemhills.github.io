@@ -11,11 +11,8 @@ const feedUrls = [
     "https://www.reutersagency.com/feed/?best-topics=business", // Reuters - Business
     "https://www.reutersagency.com/feed/?best-topics=technology", // Reuters - Technology
     "https://techcrunch.com/feed/", // TechCrunch
-    "https://hnrss.org/frontpage", // Hacker News
-    "https://stackoverflow.blog/feed/", // Stack Overflow Blog
     "https://finance.yahoo.com/news/rssindex", // Yahoo Finance
     "https://www.marketwatch.com/rss", // MarketWatch
-    "https://lifehacker.com/rss", // Lifehacker
     "https://medium.com/feed/@username" // Medium - Example User Feed
 ];
 
