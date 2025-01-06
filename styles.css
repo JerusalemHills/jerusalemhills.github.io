@@ -117,13 +117,13 @@ nav ul li a:hover {
 
 .ticker-content {
   display: inline-block;
-  padding-right: 100%; /* Ensure smooth scrolling */
-  animation: ticker 60s linear infinite; /* Slow down animation */
+  padding-right: 200%; /* Ensures smooth animation */
+  animation: ticker 30s linear infinite; /* Adjusted for slower scroll */
 }
 
 @keyframes ticker {
   0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+  100% { transform: translateX(-200%); }
 }
 
 /* Marketplace Section */
@@ -240,6 +240,6 @@ footer ul li a:hover {
     flex: 1 1 100%; /* Full width on smaller screens */
   }
   .ticker-content {
-    animation: ticker 90s linear infinite; /* Slow down animation further */
+    animation: ticker 150s linear infinite; /* Slow down animation for smaller screens */
   }
 }
