@@ -11,6 +11,7 @@ body {
   padding-top: 0;
   margin: 0;
   background-color: #f0f0f0;
+  line-height: 1.6; /* Improved readability */
 }
 
 /* Header Section */
@@ -20,9 +21,11 @@ header {
   z-index: 1000;
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Ensures balanced layout */
   padding: 10px 20px;
   height: auto;
   position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for header separation */
 }
 
 /* Logo Styling */
@@ -42,12 +45,15 @@ nav ul {
   flex-wrap: wrap;
 }
 
+nav ul li {
+  margin: 0 10px;
+}
+
 nav ul li a {
   font-size: 18px;
   font-family: Arial, sans-serif;
   text-decoration: none;
   color: #333;
-  margin-left: 10px;
   transition: color 0.3s ease;
 }
 
@@ -59,7 +65,7 @@ nav ul li a:hover {
 .search-bar-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px 0;
 }
 
 .search-bar {
@@ -78,8 +84,6 @@ nav ul li a:hover {
   box-shadow: 0 0 5px rgba(0, 120, 212, 0.5);
 }
 
-
-
 /* News Ticker */
 .ticker-tape {
   width: 100%;
@@ -87,6 +91,8 @@ nav ul li a:hover {
   overflow: hidden;
   white-space: nowrap;
   background-color: #fff;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .ticker-item {
@@ -110,17 +116,15 @@ nav ul li a:hover {
 }
 
 .ticker-content {
-    display: inline-block;
-    padding-right: 200%; /* Increase width of content */
-    animation: ticker 6s linear infinite;
+  display: inline-block;
+  padding-right: 200%; /* Ensures smooth animation */
+  animation: ticker 30s linear infinite; /* Adjusted for slower scroll */
 }
 
 @keyframes ticker {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-200%); } /* Move further left for slower effect */
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-200%); }
 }
-
-
 
 /* Marketplace Section */
 .marketplace {
@@ -139,6 +143,8 @@ nav ul li a:hover {
   border: 1px solid #ddd;
   padding: 15px;
   text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* News Section */
@@ -168,6 +174,11 @@ nav ul li a:hover {
   color: #fff;
   border-radius: 5px;
   text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.games a:hover {
+  background-color: #005bb5;
 }
 
 /* Map Section */
@@ -181,15 +192,17 @@ footer {
   background-color: #f0f0f0;
   padding: 20px;
   text-align: center;
+  border-top: 1px solid #ddd;
 }
 
 footer ul {
   list-style: none;
   padding: 0;
+  display: flex;
+  justify-content: center;
 }
 
 footer ul li {
-  display: inline;
   margin: 0 10px;
 }
 
@@ -214,6 +227,7 @@ footer ul li a:hover {
   }
   nav ul {
     flex-direction: column;
+    align-items: center;
   }
   nav ul li {
     margin: 5px 0;
@@ -221,5 +235,11 @@ footer ul li a:hover {
   .search-bar {
     width: 100%;
     max-width: none;
+  }
+  .marketplace-item {
+    flex: 1 1 100%; /* Full width on smaller screens */
+  }
+  .ticker-content {
+    animation: ticker 50s linear infinite; /* Slow down animation for smaller screens */
   }
 }

@@ -17,14 +17,8 @@
   
   <link rel="stylesheet" href="styles.css">
   
-  <!-- General Favicon -->
+  <!-- Favicon -->
   <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
-
-  <!-- Favicon for 32x32 -->
-  <link rel="icon" href="/img/favicon-32x32.png" sizes="32x32" type="image/png">
-
-  <!-- Favicon for 16x16 -->
-  <link rel="icon" href="/img/favicon-16x16.png" sizes="16x16" type="image/png">
 
   <!-- Apple Touch Icon -->
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
@@ -35,19 +29,11 @@
 
   <!-- Web Manifest -->
   <link rel="manifest" href="/img/site.webmanifest">
-
-  <!-- PWA setup -->
-  <link rel="manifest" href="/market/manifest.json">
-  <meta name="theme-color" content="#ffffff">
-  
-  <!-- Apple-specific meta for PWA -->
-  <meta name="apple-mobile-web-app-title" content="Jerusalem Hills Marketplace">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 </head>
   
 <body>
 
+  <!-- Header Section -->
   <header>
     <img src="img/1.svg" alt="Jerusalem Hills Logo - Connecting you to the heart of Jerusalem" class="logo">
     <nav>
@@ -60,75 +46,44 @@
     </nav>
   </header>
   
+  <!-- News Section -->
   <div class="news">
-    <!-- TradingView Widget BEGIN -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-      {
-      "symbols": [
-        {
-          "proName": "FOREXCOM:SPXUSD",
-          "title": "S&P 500 Index"
-        },
-        {
-          "proName": "FX_IDC:EURUSD",
-          "title": "EUR to USD"
-        },
-        {
-          "proName": "BITSTAMP:BTCUSD",
-          "title": "Bitcoin"
-        },
-        {
-          "proName": "BITSTAMP:ETHUSD",
-          "title": "Ethereum"
-        },
-        {
-          "description": "Gold $/Oz.",
-          "proName": "TVC:GOLD"
-        }
-      ],
-      "showSymbolLogo": false,
-      "isTransparent": true,
-      "displayMode": "adaptive",
-      "colorTheme": "light",
-      "locale": "en"
-    }
-      </script>
-    </div>
-    <!-- TradingView Widget END -->
-    
     <div class="ticker-tape">
-        <div class="ticker-content" id="ticker-content">
-        <!-- Dynamic content will be added here -->
-        </div>
+      <div class="ticker-content" id="ticker-content">
+        <!-- Dynamic RSS content will be added here -->
+      </div>
     </div>
-    
   </div>
-
-  <div class="main-content">
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Search Bar -->
     <div class="search-bar-container">
       <input type="text" class="search-bar" placeholder="Search for Jerusalem gifts, tours, and more...">
     </div>
 
+    <!-- Forum Section -->
     <section class="forum-section">
       <h2>Jerusalem Hills Forum</h2>
       <p>Join our uncensored, anonymous forum to share thoughts, experiences, and discussions related to Jerusalem and beyond.</p>
       <a href="/forum/forum.html" class="forum-link">Go to Forum</a>
     </section>
 
+    <!-- Marketplace Section -->
     <section class="marketplace-section">
       <h2>Jerusalem Hills Marketplace</h2>
       <p>Explore our curated collection of unique products, from Dead Sea skincare to handmade Jerusalem crafts.</p>
       <a href="/market/index.html" class="marketplace-link">Visit Marketplace</a>
     </section>
 
+    <!-- Ads Section -->
     <section class="ads-section">
       <h2>Sponsored Ads</h2>
       <p>Ad content goes here. Interested in advertising? <a href="/advertise">Learn more</a>.</p>
     </section>
-  </div>
+  </main>
 
+  <!-- Games Section -->
   <section class="games-section">
     <h2>Games</h2>
     <p>Challenge your friends or play against our AI in popular games!</p>
@@ -140,22 +95,23 @@
     <a href="games/permutations/permutations.html" class="game-link">צירופים</a>
   </section>
 
+  <!-- Map Section -->
   <section class="map-section">
     <h2>Explore Jerusalem with Our Interactive Map</h2>
-    <div id="google-map" style="height: 400px; width: 100%;">[Google Map Embed]</div>
+    <div id="google-map" style="height: 400px; width: 100%;"></div>
   </section>
 
+  <!-- Footer Section -->
   <footer>
-    <p>© 2024 Jerusalem Hills. All rights reserved.</p>
+    <p>&copy; 2024 Jerusalem Hills. All rights reserved.</p>
     <ul>
       <li><a href="/privacy-policy.html">Privacy Policy</a></li>
       <li><a href="/terms-of-service.html">Terms of Service</a></li>
     </ul>
   </footer>
   
+  <!-- Scripts -->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
-  <script src="js/main.js" defer></script>
-  <script src="js/pwa.js" defer></script>
   <script src="js/ticker.js"></script>
 </body>
 </html>
