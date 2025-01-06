@@ -238,7 +238,7 @@ footer ul li a:hover {
 .ticker-content {
   display: inline-block;
   padding-right: 10%; /* Ensures smooth animation */
-  animation: ticker 300s linear infinite; /* Adjusted for slower scroll */
+  animation: ticker 30s linear infinite; /* Adjusted for slower scroll */
 }
 
 @keyframes ticker {
