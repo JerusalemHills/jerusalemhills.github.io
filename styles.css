@@ -197,9 +197,7 @@ footer ul li a:hover {
   .marketplace-item {
     flex: 1 1 100%; /* Full width on smaller screens */
   }
-  .ticker-content {
-    animation: ticker 90s linear infinite; /* Slow down animation for smaller screens */
-  }
+  
 }
 
 /* Ticker Tape Section (Moved to the Bottom) */
