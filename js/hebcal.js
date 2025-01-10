@@ -38,6 +38,44 @@
 //   });
   
 
+// document.addEventListener("DOMContentLoaded", async () => {
+//   const hebrewDateElement = document.getElementById("hebrew-date");
+
+//   if (!hebrewDateElement) {
+//     console.error("Element with ID 'hebrew-date' not found");
+//     return;
+//   }
+
+//   try {
+//     // Fetch the Hebrew date
+//     const hebcalResponse = await fetch("https://www.hebcal.com/converter?cfg=json&gy=2025&gm=1&gd=10&g2h=1");
+//     if (!hebcalResponse.ok) {
+//       throw new Error("Failed to fetch Hebrew date");
+//     }
+//     const hebcalData = await hebcalResponse.json();
+//     const hebrewDate = hebcalData?.hebrew || "Unavailable";
+
+//     // Fetch the current time in Jerusalem
+//     const timeResponse = await fetch("https://worldtimeapi.org/api/timezone/Asia/Jerusalem");
+//     if (!timeResponse.ok) {
+//       throw new Error("Failed to fetch Jerusalem time");
+//     }
+//     const timeData = await timeResponse.json();
+//     const jerusalemTime = new Date(timeData.datetime).toLocaleTimeString("en-US", {
+//       hour: "2-digit",
+//       minute: "2-digit",
+//       hour12: true,
+//     });
+
+//     // Update the Hebrew date element with the time and date
+//     hebrewDateElement.textContent = `ACTUAL TIME IN JERUSALEM: ${jerusalemTime} ${hebrewDate}`;
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//     hebrewDateElement.textContent = "ACTUAL TIME IN JERUSALEM: Error fetching data";
+//   }
+// });
+
+
 document.addEventListener("DOMContentLoaded", async () => {
   const hebrewDateElement = document.getElementById("hebrew-date");
 
@@ -61,16 +99,21 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error("Failed to fetch Jerusalem time");
     }
     const timeData = await timeResponse.json();
-    const jerusalemTime = new Date(timeData.datetime).toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
+    const jerusalemDateTime = new Date(timeData.datetime);
 
-    // Update the Hebrew date element with the time and date
-    hebrewDateElement.textContent = `ACTUAL TIME IN JERUSALEM: ${jerusalemTime} ${hebrewDate}`;
+    // Format time as 24-hour clock with leading zeros
+    const hours = jerusalemDateTime.getHours().toString().padStart(2, "0");
+    const minutes = jerusalemDateTime.getMinutes().toString().padStart(2, "0");
+    const formattedTime = `${hours}:${minutes} PM`;
+
+    // Format the full date string
+    const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = jerusalemDateTime.toLocaleDateString("en-US", options);
+
+    // Update the Hebrew date element
+    hebrewDateElement.textContent = `${formattedTime} ${hebrewDate}\nJerusalem, Israel • ${formattedDate}`;
   } catch (error) {
     console.error("Error fetching data:", error);
-    hebrewDateElement.textContent = "ACTUAL TIME IN JERUSALEM: Error fetching data";
+    hebrewDateElement.textContent = "Error fetching data for Jerusalem time and Hebrew date.";
   }
 });

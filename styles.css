@@ -244,4 +244,5 @@ footer ul li a:hover {
   border-radius: 5px;
   color: #333;
   z-index: 10;
+  white-space: pre-line; /* Allows multiline text */
 }
