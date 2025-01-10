@@ -231,3 +231,17 @@ footer ul li a:hover {
 .ticker-tape:hover .ticker-content {
   animation-play-state: paused;
 }
+
+/* Style the Hebrew date display */
+.hebrew-date {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 5px;
+  border-radius: 5px;
+  color: #333;
+  z-index: 10;
+}
