@@ -246,3 +246,34 @@ footer ul li a:hover {
   z-index: 10;
   white-space: pre-line; /* Allows multiline text */
 }
+
+
+/*videos*/
+.videos-section {
+  padding: 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.video-gallery {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.video-item {
+  flex: 1 1 calc(33.333% - 20px);
+  max-width: calc(33.333% - 20px);
+}
+
+.video-item iframe {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+}
+
+.video-item p {
+  margin-top: 10px;
+  font-size: 14px;
+}
