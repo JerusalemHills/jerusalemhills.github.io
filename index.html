@@ -134,18 +134,16 @@
     <script src="js/ticker.js"></script>
     <script src="js/hebcal.js"></script>
 
-    <!-- Scripts -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5_m5vWCLhVcPKlItsT62fMB_bk2YyHIs&callback=initMap"></script>
-    <script src="js/ticker.js"></script>
-    <script src="js/hebcal.js"></script>
-
     <script>
       (() => {
         const API_KEY = 'AIzaSyCRe3yBhP6dm0_5CI8XUsH5jVXl0NNU7iA'; // Replace with your YouTube Data API key
         const PLAYLIST_ID = 'PLZkWvmItga8Uke86j0__CT5IxPACfvCFy'; // Replace with your YouTube Playlist ID
         const NUM_VIDEOS = 5; // Number of videos to display
         let currentIndex = 0;
-
+        let startX = 0; // For touch support
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+    
         // Fetch playlist videos from YouTube API
         async function fetchPlaylistVideos() {
           const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${NUM_VIDEOS}&key=${API_KEY}&cache_bust=${Date.now()}`;
@@ -157,67 +155,108 @@
             console.error('Error fetching YouTube playlist:', error);
           }
         }
-
+    
         // Populate the slider with fetched videos
         function populateSlider(videos) {
           const slider = document.getElementById('video-slider');
           videos.forEach(video => {
             const videoId = video.snippet.resourceId.videoId;
+            const iframeContainer = document.createElement('div');
+            iframeContainer.classList.add('slider-item');
             const iframe = document.createElement('iframe');
             iframe.src = `https://www.youtube.com/embed/${videoId}`;
             iframe.setAttribute('frameborder', '0');
             iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
             iframe.setAttribute('allowfullscreen', '');
-            slider.appendChild(iframe);
+            iframeContainer.appendChild(iframe);
+            slider.appendChild(iframeContainer);
           });
         }
-
+    
         // Slider navigation
         function slide(direction) {
           const slider = document.getElementById('video-slider');
           const items = slider.children;
           const itemWidth = items[0].offsetWidth + 16; // Add gap size
           const maxScroll = itemWidth * (items.length - NUM_VIDEOS);
-
+    
           currentIndex += direction;
-
+    
           if (currentIndex < 0) {
             currentIndex = 0;
           } else if (currentIndex > items.length - NUM_VIDEOS) {
             currentIndex = items.length - NUM_VIDEOS;
           }
-
+    
           slider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
         }
-
+    
         // Initialize slider buttons
         function initSliderControls() {
           const sliderSection = document.querySelector('.video-slider-section');
           const leftButton = document.createElement('button');
           const rightButton = document.createElement('button');
-
+    
           leftButton.textContent = '<';
           rightButton.textContent = '>';
-
+    
           leftButton.classList.add('slider-btn');
           rightButton.classList.add('slider-btn');
-
+    
           leftButton.onclick = () => slide(-1);
           rightButton.onclick = () => slide(1);
-
+    
           sliderSection.appendChild(leftButton);
           sliderSection.appendChild(rightButton);
         }
-
+    
+        // Handle touch events for mobile
+        function addTouchSupport() {
+          const slider = document.getElementById('video-slider');
+          slider.addEventListener('touchstart', touchStart);
+          slider.addEventListener('touchmove', touchMove);
+          slider.addEventListener('touchend', touchEnd);
+    
+          function touchStart(event) {
+            startX = event.touches[0].clientX;
+            slider.style.transition = 'none'; // Disable animation during touch
+            prevTranslate = currentTranslate;
+          }
+    
+          function touchMove(event) {
+            const currentX = event.touches[0].clientX;
+            const deltaX = currentX - startX;
+            currentTranslate = prevTranslate + deltaX;
+            slider.style.transform = `translateX(${currentTranslate}px)`;
+          }
+    
+          function touchEnd() {
+            slider.style.transition = 'transform 0.3s ease'; // Re-enable animation
+            const items = slider.children;
+            const itemWidth = items[0].offsetWidth + 16; // Add gap size
+            currentIndex = Math.round(-currentTranslate / itemWidth);
+    
+            if (currentIndex < 0) currentIndex = 0;
+            if (currentIndex >= items.length - NUM_VIDEOS) {
+              currentIndex = items.length - NUM_VIDEOS;
+            }
+    
+            currentTranslate = -currentIndex * itemWidth;
+            slider.style.transform = `translateX(${currentTranslate}px)`;
+          }
+        }
+    
         // Initialize everything on page load
         function init() {
           fetchPlaylistVideos();
           initSliderControls();
+          addTouchSupport();
         }
-
+    
         document.addEventListener('DOMContentLoaded', init);
       })();
     </script>
+    
 
   </body>
 </html>
