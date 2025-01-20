@@ -69,25 +69,17 @@
       <input type="text" class="search-bar" placeholder="Search for Jerusalem gifts, tours, and more...">
     </div>
 
-    <!-- Videos Section -->
-    <section class="videos-section">
-      <h2>Discover Jerusalem Through Videos</h2>
-      <p>Experience the beauty, history, and culture of Jerusalem through curated video content.</p>
-      <div class="video-gallery">
-        <div class="video-item">
-          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
-          <p>Explore the Old City</p>
-        </div>
-        <div class="video-item">
-          <iframe src="https://www.youtube.com/embed/dYw4w9WgXcZ" frameborder="0" allowfullscreen></iframe>
-          <p>Discover Jerusalem's Markets</p>
-        </div>
-        <div class="video-item">
-          <iframe src="https://youtu.be/sp5pzrx3te0?si=xaBpSiRqOrNH0rwy" frameborder="0" allowfullscreen></iframe>
-          <p>Jerusalem's Historical Sites</p>
+    
+    <!-- Video Slider Section -->
+    <section class="video-slider-section">
+      <h2>Latest Videos from Jerusalem Hills</h2>
+      <div class="slider-container">
+        <div class="slider" id="video-slider">
+          <!-- JavaScript will dynamically add iframes here -->
         </div>
       </div>
     </section>
+
 
     <!-- Forum Section -->
     <section class="forum-section">
@@ -141,5 +133,110 @@
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5_m5vWCLhVcPKlItsT62fMB_bk2YyHIs&callback=initMap"></script>
   <script src="js/ticker.js"></script>
   <script src="js/hebcal.js"></script>
+
+  <script>
+    const API_KEY = 'YOUR_YOUTUBE_API_KEY'; // Replace with your YouTube Data API key
+    const PLAYLIST_ID = 'YOUR_PLAYLIST_ID'; // Replace with your YouTube Playlist ID
+    const NUM_VIDEOS = 5; // Number of videos to display
+  
+    async function fetchPlaylistVideos() {
+      const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${NUM_VIDEOS}&key=${API_KEY}&cache_bust=${Date.now()}`;
+      try {
+        const response = await fetch(url, { cache: 'no-store' });
+        const data = await response.json();
+        populateSlider(data.items);
+      } catch (error) {
+        console.error('Error fetching YouTube playlist:', error);
+      }
+    }
+  
+    function populateSlider(videos) {
+      const slider = document.getElementById('video-slider');
+      videos.forEach(video => {
+        const videoId = video.snippet.resourceId.videoId;
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+        slider.appendChild(iframe);
+      });
+    }
+  
+    // Prevent caching by appending a timestamp to the request URL
+    fetchPlaylistVideos();
+  </script>
+
+  <script>
+    const API_KEY = 'YOUR_YOUTUBE_API_KEY'; // Replace with your YouTube Data API key
+    const PLAYLIST_ID = 'PLZkWvmItga8Uke86j0__CT5IxPACfvCFy'; // Replace with your YouTube Playlist ID
+    const NUM_VIDEOS = 5; // Number of videos to display
+
+    async function fetchPlaylistVideos() {
+      const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${NUM_VIDEOS}&key=${API_KEY}&cache_bust=${Date.now()}`;
+      try {
+        const response = await fetch(url, { cache: 'no-store' });
+        const data = await response.json();
+        populateSlider(data.items);
+      } catch (error) {
+        console.error('Error fetching YouTube playlist:', error);
+      }
+    }
+
+    function populateSlider(videos) {
+      const slider = document.getElementById('video-slider');
+      videos.forEach(video => {
+        const videoId = video.snippet.resourceId.videoId;
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+        slider.appendChild(iframe);
+      });
+    }
+
+    // Prevent caching by appending a timestamp to the request URL
+    fetchPlaylistVideos();
+  </script>
+
+  <script>
+    let currentIndex = 0;
+
+    function slide(direction) {
+      const slider = document.getElementById('video-slider');
+      const items = slider.children;
+      const itemWidth = items[0].offsetWidth + 16; // Add gap size
+      const maxScroll = itemWidth * (items.length - NUM_VIDEOS);
+
+      currentIndex += direction;
+
+      if (currentIndex < 0) {
+        currentIndex = 0;
+      } else if (currentIndex > items.length - NUM_VIDEOS) {
+        currentIndex = items.length - NUM_VIDEOS;
+      }
+
+      slider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+    }
+
+    // Optional: Add buttons for navigation
+    const sliderSection = document.querySelector('.video-slider-section');
+    const leftButton = document.createElement('button');
+    const rightButton = document.createElement('button');
+
+    leftButton.textContent = '<';
+    rightButton.textContent = '>';
+
+    leftButton.classList.add('slider-btn');
+    rightButton.classList.add('slider-btn');
+
+    leftButton.onclick = () => slide(-1);
+    rightButton.onclick = () => slide(1);
+
+    sliderSection.appendChild(leftButton);
+    sliderSection.appendChild(rightButton);
+  </script>
+  
 </body>
 </html>
