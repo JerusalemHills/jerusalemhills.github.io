@@ -65,7 +65,101 @@ async function fetchFeeds() {
             fragment.appendChild(span);
         });
         tickerContent.appendChild(fragment);
+        // Initialize the controlled scrolling after adding items
+        initTickerScroll();
     }
 }
 
-document.addEventListener("DOMContentLoaded", fetchFeeds);
+// Variables for controlling the ticker scroll
+let tickerPosition = 0;
+let currentItemIndex = 0;
+let itemPositions = [];
+let animationPaused = false;
+let tickerInterval;
+
+// Function to initialize controlled scrolling
+function initTickerScroll() {
+    const tickerContent = document.getElementById('ticker-content');
+    const items = document.querySelectorAll('.ticker-item');
+    
+    // Calculate positions of each item
+    itemPositions = [];
+    let currentPosition = 0;
+    
+    items.forEach((item, index) => {
+        itemPositions.push(currentPosition);
+        currentPosition += item.offsetWidth;
+    });
+    
+    // Add pause event on hover
+    const tickerTape = document.querySelector('.ticker-tape');
+    tickerTape.addEventListener('mouseenter', () => {
+        animationPaused = true;
+    });
+    
+    tickerTape.addEventListener('mouseleave', () => {
+        animationPaused = false;
+    });
+    
+    // Start the controlled scrolling
+    startScrolling();
+}
+
+// Function to handle controlled scrolling with pauses
+function startScrolling() {
+    const tickerContent = document.getElementById('ticker-content');
+    const items = document.querySelectorAll('.ticker-item');
+    
+    // Clear any existing interval
+    if (tickerInterval) {
+        clearInterval(tickerInterval);
+    }
+    
+    tickerInterval = setInterval(() => {
+        if (animationPaused) return;
+        
+        // Move the ticker
+        tickerPosition++;
+        tickerContent.style.transform = `translateX(-${tickerPosition}px)`;
+        
+        // When current item has scrolled completely out of view
+        if (tickerPosition >= itemPositions[currentItemIndex] + items[currentItemIndex].offsetWidth) {
+            currentItemIndex++;
+            
+            // If we've reached the end, reset to the beginning
+            if (currentItemIndex >= items.length) {
+                tickerPosition = 0;
+                currentItemIndex = 0;
+                tickerContent.style.transform = `translateX(0)`;
+                
+                // Pause briefly at the restart
+                animationPaused = true;
+                setTimeout(() => {
+                    animationPaused = false;
+                }, 1000);
+            } else {
+                // Pause briefly between items
+                animationPaused = true;
+                setTimeout(() => {
+                    animationPaused = false;
+                }, 1000); // 1 second pause between items
+            }
+        }
+    }, 30); // Controls the speed - higher number = slower scrolling
+}
+
+// Reload the ticker regularly to get fresh content
+function reloadTicker() {
+    setInterval(() => {
+        const tickerContent = document.getElementById('ticker-content');
+        if (tickerContent) {
+            tickerContent.innerHTML = '';
+            fetchFeeds();
+        }
+    }, 30 * 60 * 1000); // Reload every 30 minutes
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetchFeeds();
+    reloadTicker();
+});

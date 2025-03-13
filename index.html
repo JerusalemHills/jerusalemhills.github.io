@@ -29,6 +29,32 @@
 
     <!-- Web Manifest -->
     <link rel="manifest" href="/img/site.webmanifest">
+    
+    <!-- Updated Ticker Style -->
+    <style>
+      /* Updated ticker styling to override the default behavior */
+      .ticker-content {
+        display: inline-block;
+        padding-right: 100%;
+        /* Remove default animation - we'll control it with JS */
+        animation: none;
+        transition: transform 0.5s ease-in-out;
+      }
+      
+      .ticker-item {
+        display: inline-block;
+        margin-right: 20px;
+        font-size: 14px;
+        padding: 5px 10px;
+        border-right: 1px solid #eee;
+      }
+      
+      /* No longer needed as we control animation with JS */
+      @keyframes ticker {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+      }
+    </style>
   </head>
     
   <body>

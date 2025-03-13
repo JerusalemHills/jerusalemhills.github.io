@@ -20,12 +20,16 @@
         .ticker-content {
             display: inline-block;
             padding-right: 100%;
-            animation: ticker 30s linear infinite;
+            /* Removing the automatic animation since we'll control it with JS */
+            /* animation: ticker 30s linear infinite; */
+            transition: transform 0.5s ease-in-out;
         }
         .ticker-item {
             display: inline-block;
             margin-right: 20px;
             font-size: 14px;
+            padding: 5px 10px;
+            border-right: 1px solid #eee;
         }
         .ticker-item a {
             color: #333;
@@ -35,11 +39,8 @@
             color: #000;
             text-decoration: underline;
         }
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
         .ticker-tape:hover .ticker-content {
+            /* Pause the animation when hovered */
             animation-play-state: paused;
         }
     </style>
