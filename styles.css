@@ -19,32 +19,39 @@ header {
   z-index: 1000;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Ensures balanced layout */
+  position: relative;
   padding: 10px 20px;
   height: auto;
-  position: relative;
   box-shadow: var(--box-shadow, 0 2px 5px rgba(0, 0, 0, 0.1)); /* Subtle shadow for header separation */
+  gap: 20px;
 }
 
 /* Logo Styling */
+.left-header {
+  flex-shrink: 0;
+}
+
 .logo {
   max-width: 150px;
   height: auto;
   object-fit: contain;
-  margin-right: 20px;
 }
 
 /* Navbar Styling */
+nav {
+  margin-left: auto; /* Push nav to the right */
+}
+
 nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
 }
 
 nav ul li {
-  margin: 0 10px;
+  margin: 0 0 0 20px; /* Add margin only to the left */
 }
 
 nav ul li a {
@@ -53,10 +60,40 @@ nav ul li a {
   text-decoration: none;
   color: var(--text-color, #333);
   transition: color 0.3s ease;
+  display: block;
+  padding: 8px 0; /* Add padding to increase clickable area and visual height */
 }
 
 nav ul li a:hover {
   color: var(--primary-color, #0078d4);
+}
+
+/* Search Bar Container */
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  max-width: 300px;
+  margin: 0;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 8px 15px;
+  font-size: 16px;
+  border: 2px solid var(--text-color, #333);
+  border-radius: 25px;
+  outline: none;
+}
+
+.cart-button {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.cart-button img {
+  width: 24px;
+  height: 24px;
 }
 
 /* Search Bar Styling */
@@ -197,6 +234,40 @@ footer ul li a:hover {
   }
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .left-header {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .search-bar-container {
+    max-width: none;
+    width: 100%;
+    order: 3;
+  }
+  
+  nav {
+    width: 100%;
+    margin-left: 0;
+    order: 2;
+  }
+  
+  nav ul {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  nav ul li {
+    margin: 5px 10px;
+  }
+}
 
 /* ticker tape */
 .ticker-tape {
@@ -247,7 +318,6 @@ footer ul li a:hover {
   white-space: pre-line; /* Allows multiline text */
 }
 
-
 /*videos*/
 .video-slider-section {
   padding: 2rem;
@@ -274,7 +344,7 @@ footer ul li a:hover {
   border-radius: 8px;
 }
 
-.slider-container::before,
+slider-container::before,
 .slider-container::after {
   content: '';
   position: absolute;
@@ -312,7 +382,6 @@ footer ul li a:hover {
 .slider-btn:last-child {
   right: 10px;
 }
-
 
 .video-slider-section {
   position: relative;
