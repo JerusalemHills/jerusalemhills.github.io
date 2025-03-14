@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            margin: 20px;
+        }
+        .market-section {
+            margin-bottom: 15px;
+        }
+        .market-section h2 {
+            margin: 0 0 5px;
+            font-size: 14px;
+        }
+        .market-item {
+            margin: 5px 0;
+        }
+        .green {
+            color: green;
+        }
+        .yellow {
+            color: goldenrod;
+        }
+        .red {
+            color: red;
+        }
+        
+        /* Custom styling for the TradingView widget */
+        .tradingview-widget-container {
+            margin: 20px 0;
+        }
+        
+        /* This will help remove borders and reduce spacing when possible */
+        .tradingview-widget-container iframe {
+            border: none !important;
+        }
+        
+        /* Custom styles for compact market quotes widget */
+        .compact-market-widget {
+            font-size: 11px;
+            line-height: 1.2;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        .compact-market-widget h3 {
+            font-size: 12px;
+            margin: 10px 0 3px;
+            border-bottom: 1px solid #eee;
+        }
+        .compact-market-widget .symbol-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+        }
+        .compact-market-widget .symbol-name {
+            width: 60%;
+        }
+        .compact-market-widget .symbol-value {
+            width: 20%;
+            text-align: right;
+        }
+        .compact-market-widget .symbol-change {
+            width: 20%;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<div id="market-dashboard">
+    <!-- Market information will be inserted here -->
+</div>
+
+<script>
+    const marketData = {
+        "Global Indices": [
+            { name: "S&P 500", value: 4500, change: +0.5 },
+            { name: "Dow Jones", value: 35000, change: -0.3 },
+            { name: "NASDAQ", value: 15000, change: +1.2 },
+            { name: "FTSE 100", value: 7000, change: +0.1 },
+            { name: "DAX", value: 15000, change: -0.5 },
+            { name: "Nikkei 225", value: 30000, change: +0.3 }
+        ],
+        "Government Bonds": [
+            { name: "U.S. 10-year Treasury", value: 1.5, change: +0.02 },
+            { name: "German Bund", value: -0.3, change: +0.01 }
+        ],
+        "Commodities": [
+            { name: "Crude Oil (WTI)", value: 70, change: +1.5 },
+            { name: "Gold", value: 1800, change: -2 }
+        ],
+        "Currencies": [
+            { name: "EUR/USD", value: 1.18, change: +0.002 },
+            { name: "USD/JPY", value: 110, change: -0.1 }
+        ],
+        "Economic Indicators": [
+            { name: "GDP Growth Rate", value: "2.5%", change: 0 },
+            { name: "Inflation Rate (CPI)", value: "3%", change: +0.1 },
+            { name: "Unemployment Rate", value: "5%", change: -0.2 }
+        ],
+        "Market Sentiment": [
+            { name: "VIX (Volatility Index)", value: 20, change: +1 },
+            { name: "Investor Sentiment", value: "Neutral", change: 0 }
+        ],
+        "Central Bank Policies": [
+            { name: "Fed Interest Rate", value: "0.25%", change: 0 },
+            { name: "ECB Interest Rate", value: "0%", change: 0 }
+        ]
+    };
+
+    function getChangeClass(change) {
+        if (change > 0) return 'green';
+        if (change < 0) return 'red';
+        return 'yellow';
+    }
+
+    function renderMarketDashboard(data) {
+        const dashboard = document.getElementById('market-dashboard');
+        for (const section in data) {
+            const sectionDiv = document.createElement('div');
+            sectionDiv.classList.add('market-section');
+            const title = document.createElement('h2');
+            title.textContent = section;
+            sectionDiv.appendChild(title);
+
+            data[section].forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('market-item', getChangeClass(item.change));
+                itemDiv.textContent = `${item.name}: ${item.value} (${item.change > 0 ? '+' : ''}${item.change})`;
+                sectionDiv.appendChild(itemDiv);
+            });
+
+            dashboard.appendChild(sectionDiv);
+        }
+    }
+
+    renderMarketDashboard(marketData);
+</script>
+
+
+<!-- TradingView Ticker Tape (Compact Version) -->
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+    "symbols": [
+        {
+            "proName": "FOREXCOM:SPXUSD",
+            "title": "S&P 500"
+        },
+        {
+            "proName": "FOREXCOM:NSXUSD", 
+            "title": "Nasdaq 100"
+        },
+        {
+            "proName": "FX_IDC:EURUSD",
+            "title": "EUR/USD"
+        },
+        {
+            "proName": "BITSTAMP:BTCUSD",
+            "title": "BTC/USD"
+        },
+        {
+            "proName": "BITSTAMP:ETHUSD",
+            "title": "ETH/USD"
+        },
+        {
+            "description": "Dow",
+            "proName": "DJCFD"
+        },
+        {
+            "description": "Gold",
+            "proName": "TVC:GOLD"
+        },
+        {
+            "description": "FTSE",
+            "proName": "FOREXCOM:UKXGBP"
+        }
+    ],
+    "showSymbolLogo": false,
+    "colorTheme": "light",
+    "isTransparent": true,
+    "displayMode": "adaptive",
+    "locale": "en"
+    }
+    </script>
+</div>
+<!-- TradingView Widget END -->
+
+<!-- Compact Market Quotes Widget -->
+<div class="compact-market-widget">
+    <h3>Market Quotes</h3>
+    <div id="live-market-data">
+        <!-- Will be populated with real-time market data from TradingView -->
+    </div>
+</div>
+
+<!-- Original TradingView Market Quotes Widget (Reduced Size) -->
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Market quotes by TradingView</span></a></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+    {
+    "width": 400,
+    "height": 450,
+    "symbolsGroups": [
+      {
+        "name": "Indices",
+        "originalName": "Indices",
+        "symbols": [
+          {
+            "name": "FOREXCOM:SPXUSD",
+            "displayName": "S&P 500"
+          },
+          {
+            "name": "FOREXCOM:NSXUSD",
+            "displayName": "Nasdaq 100"
+          },
+          {
+            "name": "FOREXCOM:DJI",
+            "displayName": "Dow Jones"
+          },
+          {
+            "name": "INDEX:NKY",
+            "displayName": "Nikkei 225"
+          },
+          {
+            "name": "INDEX:DEU40",
+            "displayName": "DAX"
+          },
+          {
+            "name": "FOREXCOM:UKXGBP",
+            "displayName": "FTSE 100"
+          }
+        ]
+      },
+      {
+        "name": "Commodities",
+        "symbols": [
+          {
+            "name": "COMEX:GC1!",
+            "displayName": "Gold"
+          },
+          {
+            "name": "NYMEX:CL1!",
+            "displayName": "Crude Oil"
+          }
+        ]
+      },
+      {
+        "name": "Forex",
+        "symbols": [
+          {
+            "name": "FX:EURUSD",
+            "displayName": "EUR/USD"
+          },
+          {
+            "name": "FX:GBPUSD",
+            "displayName": "GBP/USD"
+          }
+        ]
+      },
+      {
+        "name": "Crypto",
+        "symbols": [
+          {
+            "name": "BITSTAMP:BTCUSD",
+            "displayName": "BTC/USD"
+          },
+          {
+            "name": "BITSTAMP:ETHUSD",
+            "displayName": "ETH/USD"
+          }
+        ]
+      }
+    ],
+    "showSymbolLogo": false,
+    "isTransparent": true,
+    "colorTheme": "light",
+    "locale": "en"
+  }
+    </script>
+</div>
+<!-- TradingView Widget END -->
+
+<!-- Script to update market data from TradingView data -->
+<script>
+    // Function to integrate TradingView data with our dashboard
+    function integrateMarketData() {
+        // This is a placeholder - TradingView doesn't provide an API for direct data access
+        // We'd need to use a separate financial data API to get this data in real-time
+        
+        // Create an observer to check when TradingView widget data is loaded
+        const observer = new MutationObserver((mutations, obs) => {
+            const tradingViewContainer = document.querySelector('.tradingview-widget-container__widget');
+            if (tradingViewContainer && tradingViewContainer.children.length > 0) {
+                updateDashboardWithExternalData();
+                obs.disconnect(); // Stop observing once loaded
+            }
+        });
+        
+        // Start observing
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    // Function to update our dashboard with external API data
+    // This would normally use a real financial API
+    function updateDashboardWithExternalData() {
+        const liveMarketData = document.getElementById('live-market-data');
+        
+        // Sample data structure (in a real implementation, this would come from an API)
+        const marketSymbols = [
+            { name: "S&P 500", value: 4508.24, change: +0.28 },
+            { name: "Nasdaq 100", value: 15735.34, change: +0.48 },
+            { name: "Dow Jones", value: 36068.87, change: +0.15 },
+            { name: "EUR/USD", value: 1.0932, change: -0.03 },
+            { name: "Gold", value: 2035.82, change: +0.64 },
+            { name: "Crude Oil", value: 72.43, change: -0.29 },
+            { name: "Bitcoin", value: 42186.50, change: +1.45 }
+        ];
+        
+        // Generate HTML for each symbol
+        liveMarketData.innerHTML = '';
+        marketSymbols.forEach(symbol => {
+            const row = document.createElement('div');
+            row.className = 'symbol-row';
+            const changeClass = symbol.change > 0 ? 'green' : symbol.change < 0 ? 'red' : 'yellow';
+            
+            row.innerHTML = `
+                <div class="symbol-name">${symbol.name}</div>
+                <div class="symbol-value">${symbol.value}</div>
+                <div class="symbol-change ${changeClass}">${symbol.change > 0 ? '+' : ''}${symbol.change}%</div>
+            `;
+            
+            liveMarketData.appendChild(row);
+        });
+    }
+
+    // Initialize when document is ready
+    document.addEventListener('DOMContentLoaded', integrateMarketData);
+</script>
+
+</body>
+</html>

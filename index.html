@@ -54,6 +54,27 @@
         0% { transform: translateX(0); }
         100% { transform: translateX(-100%); }
       }
+
+      /* Cart button next to search bar styling */
+      .search-bar-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0;
+        position: relative;
+      }
+      
+      .cart-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+      
+      .cart-button img {
+        width: 30px;
+        height: 30px;
+      }
     </style>
   </head>
     
@@ -63,8 +84,7 @@
     <header>
       <img src="img/1.svg" alt="Jerusalem Hills Logo - Connecting you to the heart of Jerusalem" class="logo">
       <div class="icons">
-        <a href="/account"><img src="/img/account-icon.svg" alt="Account"></a>
-        <a href="/cart"><img src="/img/cart-icon.svg" alt="Cart"></a>
+        <!-- Account icon moved to nav bar -->
       </div>
       <!-- Hebrew Date -->
       <div id="hebrew-date" class="hebrew-date"></div>
@@ -74,12 +94,12 @@
           <li><a href="/about.html">About</a></li>
           <li><a href="/forum/forum.html">Forum</a></li>
           <li><a href="/market/index.html">Marketplace</a></li>
+          <li><a href="/account" class="account-link"><img src="/img/account-icon.svg" alt="Account" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">Account</a></li>
         </ul>
       </nav>
     </header>
 
-    <!-- TradingView Ticker Widget -->
-    <!-- TradingView Widget BEGIN -->
+    <!-- TradingView Ticker Widget - Updated for more accurate data -->
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
       <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
@@ -111,27 +131,28 @@
           "proName": "NASDAQ:NDX"
         },
         {
-          "description": "nikkei",
-          "proName": "SPREADEX:NIKKEI"
+          "description": "Nikkei",
+          "proName": "INDEX:NKY"
         },
         {
-          "description": "ftse100",
-          "proName": "FTSE:UKX"
+          "description": "FTSE 100",
+          "proName": "FOREXCOM:UKXGBP"
         },
         {
-          "description": "Au$/Oz",
+          "description": "Gold",
           "proName": "TVC:GOLD"
         },
         {
-          "description": "gold futures",
-          "proName": "COMEX:GC1!"
+          "description": "Crude Oil",
+          "proName": "TVC:USOIL"
         }
       ],
       "showSymbolLogo": true,
-      "isTransparent": true,
-      "displayMode": "adaptive",
       "colorTheme": "light",
-      "locale": "en"
+      "isTransparent": false,
+      "displayMode": "adaptive",
+      "locale": "en",
+      "largeChartUrl": "https://www.tradingview.com/"
       }
       </script>
     </div>
@@ -149,9 +170,10 @@
     
     <!-- Main Content -->
     <main class="main-content">
-      <!-- Search Bar -->
+      <!-- Search Bar with Cart Button -->
       <div class="search-bar-container">
         <input type="text" class="search-bar" placeholder="Search for Jerusalem gifts, tours, and more...">
+        <a href="/cart" class="cart-button"><img src="/img/cart-icon.svg" alt="Cart"></a>
       </div>
 
       
