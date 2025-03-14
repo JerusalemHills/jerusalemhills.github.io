@@ -127,6 +127,66 @@
         font-size: 11px;
         color: #666;
       }
+
+      /* Video Slider Styles */
+      .slider-container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+
+      .slider {
+        position: relative;
+        width: 100%;
+      }
+
+      .slider-item {
+        position: absolute;
+        width: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        pointer-events: none;
+      }
+
+      .slider-item.active {
+        opacity: 1;
+        position: relative;
+        pointer-events: all;
+      }
+
+      .slider-item iframe {
+        width: 100%;
+        height: 450px;
+        border: none;
+      }
+
+      .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        z-index: 10;
+        font-size: 20px;
+        transition: background-color 0.3s ease;
+      }
+
+      .prev-btn {
+        left: 10px;
+      }
+
+      .next-btn {
+        right: 10px;
+      }
+
+      .slider-btn:hover {
+        background: rgba(0, 0, 0, 0.7);
+      }
     </style>
     
     <!-- Hebcal JavaScript API -->
@@ -240,11 +300,23 @@
         <h2>Latest Videos from Jerusalem Hills</h2>
         <div class="slider-container">
           <div class="slider" id="video-slider">
-            <!-- JavaScript will dynamically add iframes here -->
+            <div class="slider-item active">
+              <iframe src="https://www.youtube.com/embed/videoseries?list=PLZkWvmItga8Uke86j0__CT5IxPACfvCFy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="slider-item">
+              <iframe src="https://www.youtube.com/embed/PxZwWvzLs4g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="slider-item">
+              <iframe src="https://www.youtube.com/embed/O7TTPu6dmYM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="slider-item">
+              <iframe src="https://www.youtube.com/embed/3kl9AhwbKqE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
           </div>
+          <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&lt;</button>
+          <button class="slider-btn next-btn" onclick="moveSlide(1)">&gt;</button>
         </div>
       </section>
-
 
       <!-- Forum Section -->
       <section class="forum-section">
@@ -301,127 +373,34 @@
 
     <script>
       (() => {
-        const API_KEY = 'AIzaSyCRe3yBhP6dm0_5CI8XUsH5jVXl0NNU7iA'; // Replace with your YouTube Data API key
-        const PLAYLIST_ID = 'PLZkWvmItga8Uke86j0__CT5IxPACfvCFy'; // Replace with your YouTube Playlist ID
-        const NUM_VIDEOS = 5; // Number of videos to display
-        let currentIndex = 0;
-        let startX = 0; // For touch support
-        let currentTranslate = 0;
-        let prevTranslate = 0;
-    
-        // Fetch playlist videos from YouTube API
-        async function fetchPlaylistVideos() {
-          const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${NUM_VIDEOS}&key=${API_KEY}&cache_bust=${Date.now()}`;
-          try {
-            const response = await fetch(url, { cache: 'no-store' });
-            const data = await response.json();
-            populateSlider(data.items);
-          } catch (error) {
-            console.error('Error fetching YouTube playlist:', error);
-          }
-        }
-    
-        // Populate the slider with fetched videos
-        function populateSlider(videos) {
-          const slider = document.getElementById('video-slider');
-          videos.forEach(video => {
-            const videoId = video.snippet.resourceId.videoId;
-            const iframeContainer = document.createElement('div');
-            iframeContainer.classList.add('slider-item');
-            const iframe = document.createElement('iframe');
-            iframe.src = `https://www.youtube.com/embed/${videoId}`;
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-            iframe.setAttribute('allowfullscreen', '');
-            iframeContainer.appendChild(iframe);
-            slider.appendChild(iframeContainer);
-          });
-        }
-    
-        // Slider navigation
-        function slide(direction) {
-          const slider = document.getElementById('video-slider');
-          const items = slider.children;
-          const itemWidth = items[0].offsetWidth + 16; // Add gap size
-          const maxScroll = itemWidth * (items.length - NUM_VIDEOS);
-    
-          currentIndex += direction;
-    
-          if (currentIndex < 0) {
-            currentIndex = 0;
-          } else if (currentIndex > items.length - NUM_VIDEOS) {
-            currentIndex = items.length - NUM_VIDEOS;
-          }
-    
-          slider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-        }
-    
-        // Initialize slider buttons
-        function initSliderControls() {
-          const sliderSection = document.querySelector('.video-slider-section');
-          const leftButton = document.createElement('button');
-          const rightButton = document.createElement('button');
-    
-          leftButton.textContent = '<';
-          rightButton.textContent = '>';
-    
-          leftButton.classList.add('slider-btn');
-          rightButton.classList.add('slider-btn');
-    
-          leftButton.onclick = () => slide(-1);
-          rightButton.onclick = () => slide(1);
-    
-          sliderSection.appendChild(leftButton);
-          sliderSection.appendChild(rightButton);
-        }
-    
-        // Handle touch events for mobile
-        function addTouchSupport() {
-          const slider = document.getElementById('video-slider');
-          slider.addEventListener('touchstart', touchStart);
-          slider.addEventListener('touchmove', touchMove);
-          slider.addEventListener('touchend', touchEnd);
-    
-          function touchStart(event) {
-            startX = event.touches[0].clientX;
-            slider.style.transition = 'none'; // Disable animation during touch
-            prevTranslate = currentTranslate;
-          }
-    
-          function touchMove(event) {
-            const currentX = event.touches[0].clientX;
-            const deltaX = currentX - startX;
-            currentTranslate = prevTranslate + deltaX;
-            slider.style.transform = `translateX(${currentTranslate}px)`;
-          }
-    
-          function touchEnd() {
-            slider.style.transition = 'transform 0.3s ease'; // Re-enable animation
-            const items = slider.children;
-            const itemWidth = items[0].offsetWidth + 16; // Add gap size
-            currentIndex = Math.round(-currentTranslate / itemWidth);
-    
-            if (currentIndex < 0) currentIndex = 0;
-            if (currentIndex >= items.length - NUM_VIDEOS) {
-              currentIndex = items.length - NUM_VIDEOS;
-            }
-    
-            currentTranslate = -currentIndex * itemWidth;
-            slider.style.transform = `translateX(${currentTranslate}px)`;
-          }
-        }
-    
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slider-item');
+        
+        window.moveSlide = (direction) => {
+          slides[currentSlide].classList.remove('active');
+          currentSlide = (currentSlide + direction + slides.length) % slides.length;
+          slides[currentSlide].classList.add('active');
+        };
+
+        // Auto-advance slides every 30 seconds
+        setInterval(() => {
+          moveSlide(1);
+        }, 30000);
+
         // Initialize everything on page load
-        function init() {
-          fetchPlaylistVideos();
-          initSliderControls();
-          addTouchSupport();
-        }
-    
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', () => {
+          // Make sure first slide is active
+          slides[0].classList.add('active');
+          
+          const prevBtn = document.querySelector('.prev-btn');
+          const nextBtn = document.querySelector('.next-btn');
+          
+          // Show navigation buttons
+          if (prevBtn) prevBtn.style.display = 'block';
+          if (nextBtn) nextBtn.style.display = 'block';
+        });
       })();
     </script>
     
-
   </body>
 </html>
