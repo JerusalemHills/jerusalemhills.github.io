@@ -97,3 +97,183 @@ button {
 button:hover {
     background-color: #1c6e43;
 }
+
+/* Marketplace specific variables */
+:root {
+    --marketplace-primary: #2E8B57;
+    --marketplace-secondary: #1c6e43;
+}
+
+/* Marketplace Banner */
+.marketplace-banner {
+    position: relative;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.banner-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.marketplace-banner h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    font-size: 2.5rem;
+    z-index: 1;
+}
+
+/* Marketplace Content */
+.marketplace-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.marketplace-section {
+    background: white;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow, 0 2px 5px rgba(0,0,0,0.1));
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Filter Controls */
+.filter-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.category-select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color, #dcdde1);
+    border-radius: 4px;
+    font-size: 1rem;
+    min-width: 200px;
+}
+
+/* Marketplace Grid */
+.marketplace-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.item {
+    background: white;
+    border: 1px solid var(--border-color, #dcdde1);
+    border-radius: 8px;
+    padding: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.item h3 {
+    color: var(--primary-color, #0078d4);
+    margin-bottom: 0.5rem;
+}
+
+.item .price {
+    font-weight: bold;
+    color: var(--marketplace-primary);
+}
+
+/* Submit Section */
+.submit-section {
+    background: white;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow, 0 2px 5px rgba(0,0,0,0.1));
+    padding: 2rem;
+}
+
+.listing-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color, #333);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color, #dcdde1);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.submit-button {
+    background-color: var(--marketplace-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: var(--marketplace-secondary);
+}
+
+/* Cart Button */
+.cart-button {
+    position: relative;
+}
+
+.cart-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .marketplace-content {
+        padding: 1rem;
+    }
+
+    .marketplace-banner h1 {
+        font-size: 2rem;
+    }
+
+    .filter-controls {
+        flex-direction: column;
+    }
+
+    .marketplace-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px; /* Prevent zoom on mobile */
+    }
+}

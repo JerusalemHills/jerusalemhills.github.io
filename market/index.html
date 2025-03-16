@@ -1,81 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Discover unique products and services from the Jerusalem Hills. Shop, exchange, and explore the culture and heritage of Jerusalem.">
-    <meta name="keywords" content="Jerusalem Hills, Marketplace, Products, Services, Free Exchange, Jerusalem Culture">
-    <meta name="author" content="Jerusalem Hills">
-    <meta name="theme-color" content="#2E8B57">
+    <meta name="description" content="Jerusalem Hills Marketplace - Buy and sell items in our community marketplace">
     <title>Jerusalem Hills Marketplace</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="icon" href="/img/android-chrome-192x192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/img/android-chrome-512x512.png" sizes="512x512" type="image/png">
+    <link rel="manifest" href="/img/site.webmanifest">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="img/favicon.ico">
+    
+    <!-- Hebrew Date Support -->
+    <script src="/js/hebcal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 <body>
-    <header>
-        <img src="/img/Jerusalem_Old_City_market.jpg" alt="Marketplace" class="header-img">
-        <h1>Jerusalem Hills Marketplace</h1>
-        <nav>
-            <ul>
-                <li><a href="#products">Products</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#free">Free Exchange</a></li>
-                <li><a href="/">Home</a></li>
-            </ul>
-        </nav>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="/">
+                    <img src="/img/logo-xparant.png" alt="Jerusalem Hills Logo">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/services-directory.html">Services</a></li>
+                    <li><a href="/market/index.html" class="active">Marketplace</a></li>
+                    <li><a href="/forum/forum.html">Forum</a></li>
+                    <li><a href="/games/index.html">Games</a></li>
+                </ul>
+            </nav>
+            <div class="hebrew-date" id="hebrew-date">
+                <!-- Hebrew date will be inserted by JavaScript -->
+            </div>
+        </div>
     </header>
 
-    <main>
-        <section id="products">
-            <h2>Items for Sale</h2>
-            <div id="filters">
-                <select id="categoryFilter">
-                    <option value="">All Categories</option>
-                    <option value="Products">Products</option>
-                    <option value="Services">Services</option>
-                    <option value="Free">Free Exchange</option>
-                </select>
-                <input type="text" id="searchBar" placeholder="Search items...">
-            </div>
-            <div id="items-list"></div>
+    <!-- Marketplace Content -->
+    <main class="marketplace-content">
+        <section class="marketplace-banner">
+            <img src="/img/Jerusalem_Old_City_market.jpg" alt="Jerusalem Old City Market" class="banner-img">
+            <h1>Jerusalem Hills Marketplace</h1>
         </section>
 
-        <section id="submit-listing">
-            <h2>Submit Your Listing</h2>
-            <form id="itemForm">
-                <label for="title">Item Title:</label>
-                <input type="text" id="title" name="title" required>
-                
-                <label for="category">Category:</label>
-                <select id="category" name="category" required>
-                    <option value="Products">Products</option>
-                    <option value="Services">Services</option>
-                    <option value="Free">Free Exchange</option>
+        <section class="marketplace-section">
+            <div class="filter-controls">
+                <select id="categoryFilter" class="category-select">
+                    <option value="">All Categories</option>
+                    <option value="produce">Produce</option>
+                    <option value="crafts">Crafts</option>
+                    <option value="services">Services</option>
+                    <option value="judaica">Judaica</option>
+                    <option value="books">Books</option>
+                    <option value="other">Other</option>
                 </select>
-                
-                <label for="price">Price (BTC):</label>
-                <input type="number" id="price" name="price" required>
-                
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" required></textarea>
-                
-                <label for="contact">Contact Info:</label>
-                <input type="email" id="contact" name="contact" required>
+                <input type="text" id="searchBar" placeholder="Search items..." class="search-input">
+                <button class="cart-button">
+                    <img src="/img/cart-icon.svg" alt="Shopping Cart">
+                </button>
+            </div>
 
-                <button type="submit">Submit Listing</button>
+            <div id="items-list" class="marketplace-grid">
+                <!-- Items will be loaded here by JavaScript -->
+            </div>
+        </section>
+
+        <section class="submit-section">
+            <h2>Submit a New Listing</h2>
+            <form id="itemForm" class="listing-form">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="produce">Produce</option>
+                        <option value="crafts">Crafts</option>
+                        <option value="services">Services</option>
+                        <option value="judaica">Judaica</option>
+                        <option value="books">Books</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price (BTC)</label>
+                    <input type="number" id="price" name="price" step="0.00000001" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="contact">Contact Information</label>
+                    <input type="text" id="contact" name="contact" required>
+                </div>
+                <button type="submit" class="submit-button">Submit Listing</button>
             </form>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2024 Jerusalem Hills Marketplace. All Rights Reserved.</p>
-        <ul>
-            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="/terms-of-service.html">Terms of Service</a></li>
-        </ul>
-    </footer>
-
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+    <script src="/js/pwa.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
