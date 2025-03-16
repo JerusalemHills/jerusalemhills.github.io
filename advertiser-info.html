@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertiser Information - Jerusalem Hills</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VE3Z9354M2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-VE3Z9354M2');
+    </script>
+</head>
+<body>
+    <header>
+        <div class="left-header">
+            <a href="/"><img src="img/1.svg" alt="Jerusalem Hills Logo" class="logo"></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/forum/forum.html">Forum</a></li>
+                <li><a href="/games/index.html">Games</a></li>
+                <li><a href="/market/index.html">Marketplace</a></li>
+                <li><a href="/services-directory.html">Services</a></li>
+                <li><a href="/advertise.html">Advertise</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container advertiser-info-page">
+        <section class="hero">
+            <h1>Advertiser Information</h1>
+            <p class="subtitle">Reach our engaged community and grow your business</p>
+        </section>
+
+        <section class="traffic-stats">
+            <h2>Traffic Statistics</h2>
+            <p>Jerusalem Hills attracts a diverse audience interested in Jerusalem and Israeli culture, local services, games, and marketplace offerings. Here are some key statistics:</p>
+            <ul>
+                <li>Monthly Visitors: 50,000+</li>
+                <li>Page Views: 200,000+</li>
+                <li>Average Session Duration: 5 minutes</li>
+                <li>Bounce Rate: 40%</li>
+            </ul>
+        </section>
+
+        <section class="audience-demographics">
+            <h2>Audience Demographics</h2>
+            <p>Our audience consists of:</p>
+            <ul>
+                <li>Age: 25-45 years old</li>
+                <li>Gender: 60% Female, 40% Male</li>
+                <li>Location: Primarily from the United States, Israel, and Europe</li>
+                <li>Interests: Travel, culture, local services, and online shopping</li>
+            </ul>
+        </section>
+
+        <section class="ad-options">
+            <h2>Advertising Options</h2>
+            <p>We offer a variety of advertising options to suit your needs:</p>
+            <ul>
+                <li>Homepage Banner</li>
+                <li>Sidebar Ads</li>
+                <li>Game Section Sponsorship</li>
+                <li>Marketplace Featured Listings</li>
+                <li>Forum Sponsorship</li>
+            </ul>
+        </section>
+
+        <section class="ad-rates">
+            <h2>Advertising Rates</h2>
+            <p>Our rates are competitive and flexible to suit businesses of all sizes. Contact us for a custom quote.</p>
+        </section>
+
+        <section class="contact-form">
+            <h2>Get Started Today</h2>
+            <p>Interested in advertising with us? Fill out the form below and our team will contact you to discuss your advertising needs.</p>
+            <form id="advertiser-form">
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">Company *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="budget">Estimated Monthly Budget</label>
+                    <select id="budget" name="budget">
+                        <option value="">Please select</option>
+                        <option value="under-500">Under $500</option>
+                        <option value="500-1000">$500 - $1,000</option>
+                        <option value="1000-2000">$1,000 - $2,000</option>
+                        <option value="2000+">$2,000+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Tell us about your advertising goals</label>
+                    <textarea id="message" name="message" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn primary-btn">Submit Inquiry</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Jerusalem Hills</h3>
+                    <p>Connecting the Jerusalem Hills community through local services, games, and marketplace offerings.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/services-directory.html">Services</a></li>
+                        <li><a href="/market/">Market</a></li>
+                        <li><a href="/games/">Games</a></li>
+                        <li><a href="/forum/forum.html">Forum</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="/terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="/ad-policy.html">Advertising Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Jerusalem Hills. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+    <script>
+        // Simple form validation and submission handling
+        document.getElementById('advertiser-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would typically send the form data to a server
+            // For now, we'll just show a success message
+            alert('Thank you for your interest in advertising with Jerusalem Hills. Our team will contact you shortly.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
