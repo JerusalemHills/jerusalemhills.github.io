@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="מאגר גופנים עבריים חינמיים - אוסף של גופנים עבריים איכותיים לשימוש באתרי אינטרנט ועיצוב">
+    <meta name="keywords" content="גופנים עבריים, פונטים עבריים, עיצוב עברי, טיפוגרפיה עברית, Hebrew fonts, Hebrew typography">
+    <title>מאגר גופנים עבריים - Hebrew Fonts Library</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="icon" href="/img/android-chrome-192x192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="/img/android-chrome-512x512.png" sizes="512x512" type="image/png">
+    <link rel="manifest" href="/img/site.webmanifest">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@100;300;400;500;700;900&family=Rubik:wght@300;400;500;700&family=Secular+One&family=Suez+One&family=Assistant:wght@200;300;400;500;600;700;800&family=Varela+Round&family=Frank+Ruhl+Libre:wght@300;400;500;700&family=Arimo:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #f5f6fa;
+            --text-color: #2c3e50;
+            --border-color: #dcdde1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-family: 'Heebo', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            font-family: 'Assistant', sans-serif;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .fonts-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .font-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .font-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .font-name {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .font-sample {
+            margin: 1rem 0;
+            font-size: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .font-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 1rem;
+        }
+
+        .font-usage {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            background: #f7f9fc;
+            padding: 0.5rem;
+            border-radius: 5px;
+            direction: ltr;
+            font-family: monospace;
+        }
+
+        @media (max-width: 768px) {
+            .fonts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sample text variations */
+        .sample-paragraph {
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .sample-numbers {
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Controls styling */
+        .controls {
+            max-width: 800px;
+            margin: 0 auto 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .control-group label {
+            min-width: 120px;
+        }
+
+        .control-group input[type="range"] {
+            flex: 1;
+        }
+
+        .control-group input[type="text"] {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+        }
+
+        .size-display {
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .weight-selector {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: white;
+        }
+
+        .latin-sample {
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+            direction: ltr;
+            color: #444;
+        }
+
+        bold {
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>מאגר גופנים עבריים</h1>
+        <p class="description">
+            אוסף של גופנים עבריים חופשיים לשימוש, כולל דוגמאות וקוד להטמעה
+        </p>
+    </header>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="font-size">גודל גופן:</label>
+            <input type="range" id="font-size" min="12" max="72" value="24">
+            <span class="size-display">24px</span>
+        </div>
+        <div class="control-group">
+            <label for="custom-text">טקסט מותאם:</label>
+            <input type="text" id="custom-text" value="נסו להקליד כאן טקסט משלכם">
+        </div>
+        <div class="control-group">
+            <label for="font-weight">עובי גופן:</label>
+            <select id="font-weight" class="weight-selector">
+                <option value="300">דק - Light (300)</option>
+                <option value="400" selected>רגיל - Regular (400)</option>
+                <option value="500">בינוני - Medium (500)</option>
+                <option value="700">מודגש - Bold (700)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="fonts-container">
+        <!-- Heebo -->
+        <div class="font-card">
+            <div class="font-name">Heebo</div>
+            <div class="font-sample" style="font-family: 'Heebo', sans-serif;">
+                <div class="sample-text">שלום עולם! <bold>דגש חזק</bold></div>
+                <div class="sample-paragraph">הגופן היבו הוא גופן עברי מודרני ונקי</div>
+                <div class="sample-numbers">0123456789</div>
+                <div class="latin-sample">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn</div>
+            </div>
+            <div class="font-info">
+                גופן חינמי מבית Google Fonts, מתאים במיוחד לכותרות ולטקסט
+            </div>
+            <div class="font-usage">
+                font-family: 'Heebo', sans-serif;
+            </div>
+        </div>
+
+        <!-- Rubik -->
+        <div class="font-card">
+            <div class="font-name">Rubik</div>
+            <div class="font-sample" style="font-family: 'Rubik', sans-serif;">
+                <div class="sample-text">שלום עולם! <bold>דגש חזק</bold></div>
+                <div class="sample-paragraph">גופן רוביק מציע קריאות מעולה</div>
+                <div class="sample-numbers">0123456789</div>
+                <div class="latin-sample">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn</div>
+            </div>
+            <div class="font-info">
+                גופן גיאומטרי עם תמיכה מלאה בעברית
+            </div>
+            <div class="font-usage">
+                font-family: 'Rubik', sans-serif;
+            </div>
+        </div>
+
+        <!-- Assistant -->
+        <div class="font-card">
+            <div class="font-name">Assistant</div>
+            <div class="font-sample" style="font-family: 'Assistant', sans-serif;">
+                <div class="sample-text">שלום עולם! <bold>דגש חזק</bold></div>
+                <div class="sample-paragraph">אסיסטנט הוא גופן קריא במיוחד</div>
+                <div class="sample-numbers">0123456789</div>
+                <div class="latin-sample">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn</div>
+            </div>
+            <div class="font-info">
+                גופן המתאים במיוחד לטקסט רץ וממשקי משתמש
+            </div>
+            <div class="font-usage">
+                font-family: 'Assistant', sans-serif;
+            </div>
+        </div>
+
+        <!-- Secular One -->
+        <div class="font-card">
+            <div class="font-name">Secular One</div>
+            <div class="font-sample" style="font-family: 'Secular One', sans-serif;">
+                <div class="sample-text">שלום עולם! <bold>דגש חזק</bold></div>
+                <div class="sample-paragraph">גופן מודרני עם אופי ייחודי</div>
+                <div class="sample-numbers">0123456789</div>
+                <div class="latin-sample">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn</div>
+            </div>
+            <div class="font-info">
+                גופן עברי מודרני, מתאים לכותרות ולוגואים
+            </div>
+            <div class="font-usage">
+                font-family: 'Secular One', sans-serif;
+            </div>
+        </div>
+
+        <!-- Suez One -->
+        <div class="font-card">
+            <div class="font-name">Suez One</div>
+            <div class="font-sample" style="font-family: 'Suez One', serif;">
+                <div class="sample-text">שלום עולם! <bold>דגש חזק</bold></div>
+                <div class="sample-paragraph">גופן סואץ בעל נוכחות חזקה</div>
+                <div class="sample-numbers">0123456789</div>
+                <div class="latin-sample">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn</div>
+            </div>
+            <div class="font-info">
+                גופן סריפי חזק, מתאים לכותרות ראשיות
+            </div>
+            <div class="font-usage">
+                font-family: 'Suez One', serif;
+            </div>
+        </div>
+
+        <!-- Varela Round -->
+        <div class="font-card">
+            <div class="font-name">Varela Round</div>
+            <div class="font-sample" style="font-family: 'Varela Round', sans-serif;">
+                <div class="sample-text">שלום עולם! <bold>דגש חזק</bold></div>
+                <div class="sample-paragraph">גופן עגול ונעים לקריאה</div>
+                <div class="sample-numbers">0123456789</div>
+                <div class="latin-sample">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn</div>
+            </div>
+            <div class="font-info">
+                גופן עגול ונעים, מתאים למגוון שימושים
+            </div>
+            <div class="font-usage">
+                font-family: 'Varela Round', sans-serif;
+            </div>
+        </div>
+
+        <!-- Frank Ruhl Libre -->
+        <div class="font-card">
+            <div class="font-name">Frank Ruhl Libre</div>
+            <div class="font-sample" style="font-family: 'Frank Ruhl Libre', serif;">
+                <div class="sample-text">שלום עולם! <bold>דגש חזק</bold></div>
+                <div class="sample-paragraph">גופן פרנק רול - קלאסי ואלגנטי</div>
+                <div class="sample-numbers">0123456789</div>
+                <div class="latin-sample">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn</div>
+            </div>
+            <div class="font-info">
+                גופן סריפי קלאסי, מתאים לטקסט ארוך ולכותרות
+            </div>
+            <div class="font-usage">
+                font-family: 'Frank Ruhl Libre', serif;
+            </div>
+        </div>
+
+        <!-- Arimo -->
+        <div class="font-card">
+            <div class="font-name">Arimo</div>
+            <div class="font-sample" style="font-family: 'Arimo', sans-serif;">
+                <div class="sample-text">שלום עולם! <bold>דגש חזק</bold></div>
+                <div class="sample-paragraph">גופן ארימו - נקי ומקצועי</div>
+                <div class="sample-numbers">0123456789</div>
+                <div class="latin-sample">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn</div>
+            </div>
+            <div class="font-info">
+                גופן ללא סריפים המתאים למסמכים ואתרים מקצועיים
+            </div>
+            <div class="font-usage">
+                font-family: 'Arimo', sans-serif;
+            </div>
+        </div>
+
+        <!-- Open Sans Hebrew -->
+        <div class="font-card">
+            <div class="font-name">Open Sans</div>
+            <div class="font-sample" style="font-family: 'Open Sans', sans-serif;">
+                <div class="sample-text">שלום עולם! <bold>דגש חזק</bold></div>
+                <div class="sample-paragraph">גופן אופן סנס - פתוח וידידותי</div>
+                <div class="sample-numbers">0123456789</div>
+                <div class="latin-sample">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn</div>
+            </div>
+            <div class="font-info">
+                גופן פופולרי עם תמיכה מצוינת בעברית
+            </div>
+            <div class="font-usage">
+                font-family: 'Open Sans', sans-serif;
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Font controls functionality
+        const fontSizeInput = document.getElementById('font-size');
+        const sizeDisplay = document.querySelector('.size-display');
+        const customTextInput = document.getElementById('custom-text');
+        const fontWeightSelect = document.getElementById('font-weight');
+        const fontSamples = document.querySelectorAll('.font-sample');
+
+        fontSizeInput.addEventListener('input', (e) => {
+            const size = e.target.value;
+            sizeDisplay.textContent = size + 'px';
+            fontSamples.forEach(sample => {
+                sample.style.fontSize = size + 'px';
+            });
+        });
+
+        customTextInput.addEventListener('input', (e) => {
+            const text = e.target.value || 'שלום עולם! דגש חזק';
+            document.querySelectorAll('.sample-text').forEach(element => {
+                element.textContent = text;
+            });
+        });
+
+        fontWeightSelect.addEventListener('change', (e) => {
+            const weight = e.target.value;
+            fontSamples.forEach(sample => {
+                sample.style.fontWeight = weight;
+            });
+        });
+    </script>
+</body>
+</html>

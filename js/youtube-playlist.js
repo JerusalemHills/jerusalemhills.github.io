@@ -1,13 +1,83 @@
 // YouTube playlist configuration
 const PLAYLIST_ID = 'PLZkWvmItga8Uke86j0__CT5IxPACfvCFy';
-const VIDEO_IDS = [
-    'xWbqiJfjkaY',
-    'YpBR9vGQmGM',
-    'ZsRBQIzXtAs',
-    'lzDB35HiU_k',
-    'mMPF3tpqYbM',
-    'qJgWHxwKKqE'
-];
+let currentIndex = 0;
+let isTransitioning = false;
+let autoScrollInterval;
+
+const getSlidesToMove = () => {
+    if (window.innerWidth <= 768) return 1;
+    if (window.innerWidth <= 1200) return 2;
+    return 3;
+};
+
+function moveSlide(direction) {
+    if (isTransitioning) return;
+    
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slider-item');
+    const totalSlides = slides.length;
+    const visibleSlides = getSlidesToMove();
+    
+    currentIndex += direction;
+    
+    // If we reach the end
+    if (currentIndex >= totalSlides - visibleSlides) {
+        isTransitioning = true;
+        updateSlider();
+        
+        // Jump back to start
+        setTimeout(() => {
+            slider.style.transition = 'none';
+            currentIndex = 0;
+            updateSlider();
+            
+            setTimeout(() => {
+                slider.style.transition = 'transform 0.5s ease';
+                isTransitioning = false;
+            }, 50);
+        }, 500);
+    }
+    // If we reach the start
+    else if (currentIndex < 0) {
+        isTransitioning = true;
+        updateSlider();
+        
+        setTimeout(() => {
+            slider.style.transition = 'none';
+            currentIndex = totalSlides - visibleSlides - 1;
+            updateSlider();
+            
+            setTimeout(() => {
+                slider.style.transition = 'transform 0.5s ease';
+                isTransitioning = false;
+            }, 50);
+        }, 500);
+    }
+    else {
+        updateSlider();
+    }
+}
+
+function updateSlider() {
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slider-item');
+    if (!slider || !slides.length) return;
+    
+    const slideWidth = slides[0].offsetWidth + 15; // Match gap from CSS
+    slider.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
+}
+
+function startAutoScroll() {
+    // Clear any existing interval
+    if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+    }
+    
+    // Start new auto-scroll interval
+    autoScrollInterval = setInterval(() => {
+        moveSlide(1);
+    }, 5000);
+}
 
 function createVideoSlides() {
     const slider = document.querySelector('.slider');
@@ -16,41 +86,49 @@ function createVideoSlides() {
     // Clear existing content
     slider.innerHTML = '';
 
-    // Create duplicate videos at the start and end for smooth circular scrolling
-    const extendedVideoIds = [
-        ...VIDEO_IDS.slice(-3),  // Add last 3 videos at the start
-        ...VIDEO_IDS,            // Add all videos
-        ...VIDEO_IDS.slice(0, 3) // Add first 3 videos at the end
-    ];
-
-    // Create slides using direct video IDs
-    extendedVideoIds.forEach(videoId => {
+    // Create slides
+    for (let i = 0; i < 6; i++) {
         const slide = document.createElement('div');
         slide.className = 'slider-item';
+        
         slide.innerHTML = `
             <iframe 
-                src="https://www.youtube.com/embed/${videoId}?rel=0"
+                src="https://www.youtube.com/embed?listType=playlist&list=${PLAYLIST_ID}&index=${i + 1}&enablejsapi=1&origin=${window.location.origin}"
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen
             ></iframe>
         `;
         slider.appendChild(slide);
-    });
+    }
 
-    // Set initial position to show the first real slide (after the duplicates)
-    setTimeout(() => {
-        const slideWidth = document.querySelector('.slider-item').offsetWidth + 20;
-        slider.style.transition = 'none';
-        slider.style.transform = `translateX(${-3 * slideWidth}px)`;
-        window.currentIndex = 3; // Start at the first real video
+    // Initialize slider
+    currentIndex = 0;
+    updateSlider();
+    
+    // Set up auto-scroll and hover pause
+    startAutoScroll();
+    
+    const sliderContainer = document.querySelector('.slider-container');
+    if (sliderContainer) {
+        sliderContainer.addEventListener('mouseenter', () => {
+            clearInterval(autoScrollInterval);
+        });
         
-        // Re-enable transitions after setting initial position
-        setTimeout(() => {
-            slider.style.transition = 'transform 0.5s ease';
-        }, 50);
-    }, 100);
+        sliderContainer.addEventListener('mouseleave', () => {
+            startAutoScroll();
+        });
+    }
 }
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    currentIndex = 0;
+    updateSlider();
+});
+
+// Expose necessary functions to window
+window.moveSlide = moveSlide;
 
 // Initialize when the document is ready
 document.addEventListener('DOMContentLoaded', createVideoSlides);

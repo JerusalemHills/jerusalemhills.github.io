@@ -130,48 +130,52 @@
 
       /* Video Slider Styles */
       .video-slider-section {
-        width: 100vw;
-        max-width: 100%;
-        position: relative;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
         padding: 20px 0;
-        box-sizing: border-box;
+        max-width: 100%;
+        margin: 0 auto;
         overflow: visible;
       }
 
       .slider-wrapper {
-        max-width: 1600px;
-        width: 90vw;
-        margin: 0 auto;
+        width: 100%;
         position: relative;
+        padding: 0;
+        margin: 0 auto;
+        max-width: 1600px;
       }
 
       .slider-container {
         position: relative;
         width: 100%;
         margin: 0 auto;
+        padding: 0 50px; /* Increased padding for navigation buttons */
         overflow: visible;
       }
 
       .slider {
         display: flex;
         gap: 20px;
+        transition: transform 0.5s ease;
         width: max-content;
       }
 
       .slider-item {
-        width: calc((90vw - 120px) / 3);
-        max-width: 500px;
-        min-width: 280px;
+        position: relative;
+        width: calc((100vw - 240px) / 4); /* Adjusted to show 4 items, accounting for gaps and padding */
+        max-width: 360px;
+        min-width: 260px;
         flex: 0 0 auto;
+        aspect-ratio: 16/9;
       }
 
       .slider-item iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        aspect-ratio: 16/9;
+        height: 100%;
+        border-radius: 8px;
+        border: 1px solid #ddd;
       }
 
       .slider-btn {
@@ -185,35 +189,39 @@
         border: none;
         border-radius: 50%;
         cursor: pointer;
-        font-size: 20px;
+        z-index: 10;
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 10;
+        font-size: 20px;
       }
 
       .prev-btn {
-        left: -5px; /* Adjust button position */
+        left: 5px;
       }
 
       .next-btn {
-        right: -5px; /* Adjust button position */
+        right: 5px;
       }
 
-      @media (max-width: 1200px) {
+      @media (max-width: 1400px) {
         .slider-item {
-          width: calc((100vw - 100px) / 2);
+          width: calc((100vw - 200px) / 3); /* Show 3 items on medium screens */
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .slider-item {
+          width: calc((100vw - 160px) / 2); /* Show 2 items on smaller screens */
         }
       }
 
       @media (max-width: 768px) {
         .slider-item {
-          width: calc(100vw - 80px);
+          width: calc(100vw - 120px); /* Show 1 item on mobile */
         }
-        
         .slider-container {
-          width: calc(100% - 20px);
-          padding: 0 10px;
+          padding: 0 30px;
         }
       }
     </style>
@@ -388,104 +396,9 @@
     
     <!-- Scripts -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5_m5vWCLhVcPKlItsT62fMB_bk2YyHIs&callback=initMap"></script>
+    <script src="js/main.js"></script>
     <script src="js/ticker.js"></script>
     <script src="js/hebcal.js"></script>
     <script src="js/youtube-playlist.js"></script>
-
-    <script>
-      (() => {
-        let currentIndex = 3; // Start at the first real video (after the duplicates)
-        let isTransitioning = false;
-        
-        const getSlidesToMove = () => {
-          if (window.innerWidth <= 768) return 1;
-          if (window.innerWidth <= 1200) return 2;
-          return 3;
-        };
-
-        window.moveSlide = (direction) => {
-          if (isTransitioning) return;
-          
-          const slider = document.querySelector('.slider');
-          const slides = document.querySelectorAll('.slider-item');
-          const totalSlides = slides.length;
-          const visibleSlides = getSlidesToMove();
-          
-          currentIndex += direction;
-          
-          // If we reach the duplicate section at the end
-          if (currentIndex >= totalSlides - visibleSlides - 3) {
-            isTransitioning = true;
-            updateSlider();
-            
-            // After the transition, jump back to the real slides
-            setTimeout(() => {
-              slider.style.transition = 'none';
-              currentIndex = 3; // Jump back to the first real slide
-              updateSlider();
-              
-              setTimeout(() => {
-                slider.style.transition = 'transform 0.5s ease';
-                isTransitioning = false;
-              }, 50);
-            }, 500);
-          }
-          // If we reach the duplicate section at the start
-          else if (currentIndex < 3) {
-            isTransitioning = true;
-            updateSlider();
-            
-            setTimeout(() => {
-              slider.style.transition = 'none';
-              currentIndex = totalSlides - visibleSlides - 3; // Jump to the last real slide
-              updateSlider();
-              
-              setTimeout(() => {
-                slider.style.transition = 'transform 0.5s ease';
-                isTransitioning = false;
-              }, 50);
-            }, 500);
-          }
-          else {
-            updateSlider();
-          }
-        };
-
-        window.updateSlider = () => {
-          const slider = document.querySelector('.slider');
-          const slides = document.querySelectorAll('.slider-item');
-          if (!slider || !slides.length) return;
-          
-          const slideWidth = slides[0].offsetWidth + 20; // Include gap
-          slider.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
-        };
-
-        // Auto-advance slides every 5 seconds
-        let autoScrollInterval = setInterval(() => {
-          moveSlide(1);
-        }, 5000);
-
-        // Pause auto-scroll when hovering over slider
-        const sliderContainer = document.querySelector('.slider-container');
-        if (sliderContainer) {
-          sliderContainer.addEventListener('mouseenter', () => {
-            clearInterval(autoScrollInterval);
-          });
-          
-          sliderContainer.addEventListener('mouseleave', () => {
-            autoScrollInterval = setInterval(() => {
-              moveSlide(1);
-            }, 5000);
-          });
-        }
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-          currentIndex = 3; // Reset to first real slide
-          updateSlider();
-        });
-      })();
-    </script>
-    
   </body>
 </html>
