@@ -233,6 +233,16 @@
 
     <!-- Add preload for critical images -->
     <link rel="preload" as="image" href="https://ia601600.us.archive.org/BookReader/BookReaderImages.php?zip=/0/items/seder-tefilat-yeshurun-menahem-ben-mosheh-yehezqel-1935/Seder%20Tefilat%20Yeshurun%20%28Menahem%20ben%20Mosheh%20Yehezqel%201935%29_jp2.zip&file=Seder%20Tefilat%20Yeshurun%20%28Menahem%20ben%20Mosheh%20Yehezqel%201935%29_jp2/Seder%20Tefilat%20Yeshurun%20%28Menahem%20ben%20Mosheh%20Yehezqel%201935%29_0000.jp2&id=seder-tefilat-yeshurun-menahem-ben-mosheh-yehezqel-1935&scale=4&rotate=0">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VE3Z9354M2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-VE3Z9354M2');
+    </script>
 </head>
 <body>
     <header>
@@ -271,9 +281,10 @@
     <script>
         const TOTAL_PAGES = 635; // Total number of pages in the prayer book
         const BASE_URL = 'https://ia601600.us.archive.org/BookReader/BookReaderImages.php';
+        const LOCAL_FOLDER = 'img/sidur';
         const PARAMS = {
-            zip: '/0/items/seder-tefilat-yeshurun-menahem-ben-mosheh-yehezqel-1935/Seder%20Tefilat%20Yeshurun%20%28Menahem%20ben%20Mosheh%20Yehezqel%201935%29_jp2.zip',
-            base: 'Seder%20Tefilat%20Yeshurun%20%28Menahem%20ben%20Mosheh%20Yehezqel%201935%29_jp2/Seder%20Tefilat%20Yeshurun%20%28Menahem%20ben%20Mosheh%20Yehezqel%201935%29_',
+            zip: '/0/items/seder-tefilat-yeshurun-menahem-ben-mosheh-yehezqel-1935/Seder%20Tefilat%20Yeshurun%20%28Menahem%20ben%20Mosheh%20Yehezqel%201935%29_jpg.zip',
+            base: 'Seder%20Tefilat%20Yeshurun%20%28Menahem%20ben%20Mosheh%20Yehezqel%201935%29_jpg/Seder%20Tefilat%20Yeshurun%20%28Menahem%20ben%20Mosheh%20Yehezqel%201935%29_',
             id: 'seder-tefilat-yeshurun-menahem-ben-mosheh-yehezqel-1935',
             scale: 4,
             rotate: 0
@@ -284,7 +295,12 @@
 
         function getImageUrl(pageNum) {
             const paddedNum = pageNum.toString().padStart(4, '0');
-            return `${BASE_URL}?zip=${PARAMS.zip}&file=${PARAMS.base}${paddedNum}.jp2&id=${PARAMS.id}&scale=${PARAMS.scale}&rotate=${PARAMS.rotate}`;
+            return `${BASE_URL}?zip=${PARAMS.zip}&file=${PARAMS.base}${paddedNum}.jpg&id=${PARAMS.id}&scale=${PARAMS.scale}&rotate=${PARAMS.rotate}`;
+        }
+
+        function getLocalImageUrl(pageNum) {
+            const paddedNum = pageNum.toString().padStart(4, '0');
+            return `${LOCAL_FOLDER}/${paddedNum}.jpg`;
         }
 
         function loadImage(pageNum) {
@@ -310,9 +326,13 @@
             };
 
             img.onerror = () => {
-                placeholder.classList.remove('image-placeholder');
-                placeholder.classList.add('image-error');
-                placeholder.textContent = 'שגיאה בטעינת העמוד. אנא נסו שוב.';
+                console.log(`Failed to load image from URL, trying local file for page ${pageNum}`);
+                img.src = getLocalImageUrl(pageNum);
+                img.onerror = () => {
+                    placeholder.classList.remove('image-placeholder');
+                    placeholder.classList.add('image-error');
+                    placeholder.textContent = 'שגיאה בטעינת העמוד. אנא נסו שוב.';
+                };
             };
 
             container.appendChild(img);
