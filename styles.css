@@ -288,14 +288,30 @@ footer ul li a:hover {
   position: absolute;
   top: 10px;
   right: 20px;
-  font-size: 14px;
+  font-size: 12px;
   font-family: Arial, sans-serif;
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 5px;
-  border-radius: 5px;
   color: #333;
   z-index: 10;
-  white-space: pre-line; /* Allows multiline text */
+  line-height: 1.2;
+  text-align: right;
+}
+
+.hebrew-date .jerusalem-time {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.hebrew-date .hebrew-date-text {
+  font-weight: bold;
+  color: #0078d4;
+  margin: 0;
+}
+
+.hebrew-date .greg-date {
+  font-size: 11px;
+  color: #666;
+  margin: 0;
 }
 
 /*videos*/
