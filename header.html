@@ -23,3 +23,52 @@
     </ol>
   </nav>
 </header>
+<style>
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: white;
+  }
+  body {
+    padding-top: 100px; /* Adjust based on header height */
+  }
+  .breadcrumb {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .breadcrumb-item {
+    margin-right: 5px;
+  }
+  .breadcrumb-item a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  .breadcrumb-item.active {
+    color: #6c757d;
+  }
+  .search-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    position: relative;
+  }
+  .search-bar {
+    width: 200px;
+    padding: 5px;
+  }
+  .cart-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  .cart-button img {
+    width: 30px;
+    height: 30px;
+  }
+</style>
