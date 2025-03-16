@@ -22,13 +22,14 @@
     
     <!-- Favicon -->
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/favicon.ico" alt="Favicon" type="image/x-icon">
 
     <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" alt="Apple Touch Icon">
 
     <!-- Android Chrome Icons -->
-    <link rel="icon" href="/img/android-chrome-192x192.png" sizes="192x192" type="image/png">
-    <link rel="icon" href="/img/android-chrome-512x512.png" sizes="512x512" type="image/png">
+    <link rel="icon" href="/img/android-chrome-192x192.png" sizes="192x192" type="image/png" alt="Android Chrome Icon 192x192">
+    <link rel="icon" href="/img/android-chrome-512x512.png" sizes="512x512" type="image/png" alt="Android Chrome Icon 512x512">
 
     <!-- Web Manifest -->
     <link rel="manifest" href="/img/site.webmanifest">
@@ -335,6 +336,21 @@
 
       gtag('config', 'G-VE3Z9354M2');
     </script>
+
+    <!-- Schema.org markup for rich snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Jerusalem Hills",
+      "url": "https://www.jerusalemhills.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.jerusalemhills.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
     
   <body>
@@ -419,6 +435,14 @@
     
     <!-- Main Content -->
     <main class="main-content">
+      <!-- Breadcrumb Navigation -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/index.html">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Current Page</li>
+        </ol>
+      </nav>
+
       <!-- Video Slider Section -->
       <section class="video-slider-section">
         <h2>Latest Videos from Jerusalem Hills</h2>
