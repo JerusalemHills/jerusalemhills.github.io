@@ -4,27 +4,37 @@
 const HebrewCalendar = {
     months: ['Nisan', 'Iyar', 'Sivan', 'Tammuz', 'Av', 'Elul', 'Tishrei', 'Cheshvan', 'Kislev', 'Tevet', 'Shevat', 'Adar', 'Adar II'],
     
-    // Get Hebrew date
+    // Get Hebrew date with day of week
     getHebrewDate() {
         const now = new Date();
-        const formatter = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', {
+        const hebrewFormatter = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', {
+            weekday: 'long',
             year: 'numeric',
             month: 'long',
             day: 'numeric',
         });
         
-        return formatter.format(now);
+        return hebrewFormatter.format(now);
     },
     
-    // Get Jerusalem time
+    // Get Jerusalem time with AM/PM
     getJerusalemTime() {
         const options = {
             timeZone: 'Asia/Jerusalem',
             hour: '2-digit',
             minute: '2-digit',
-            hour12: false
+            hour12: true
         };
         return new Date().toLocaleTimeString('en-US', options);
+    },
+
+    // Get English day of week
+    getEnglishDayOfWeek() {
+        const options = {
+            timeZone: 'Asia/Jerusalem',
+            weekday: 'long'
+        };
+        return new Date().toLocaleDateString('en-US', options);
     },
     
     // Update the Hebrew date display
@@ -33,6 +43,7 @@ const HebrewCalendar = {
         if (dateElement) {
             const hebrewDate = this.getHebrewDate();
             const jerusalemTime = this.getJerusalemTime();
+            const englishDay = this.getEnglishDayOfWeek();
             const gregorianDate = new Date().toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
@@ -40,9 +51,9 @@ const HebrewCalendar = {
             });
             
             dateElement.innerHTML = `
-                <div class="jerusalem-time">Jerusalem Time: ${jerusalemTime}</div>
                 <div class="hebrew-date-text">${hebrewDate}</div>
-                <div class="greg-date">${gregorianDate}</div>
+                <div class="greg-date">${englishDay}, ${gregorianDate}</div>
+                <div class="hebrew-date-text jerusalem-time">Jerusalem Time: ${jerusalemTime}</div>
             `;
         }
     }

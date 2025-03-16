@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="סידור תפילה מקוון - תפילות יומיות, שבת וחגים">
+    <meta name="keywords" content="סידור, תפילה, שחרית, מנחה, ערבית, שבת, חגים, Jewish prayer book, Siddur">
+    <title>סידור תפילה - Jerusalem Hills</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700&family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Open Siddur Project Fonts -->
+    <style>
+        @font-face {
+            font-family: 'Shlomo SemiStam';
+            src: url('https://opensiddur.org/wp-content/uploads/fonts/ShlomoSemiStam.woff2') format('woff2'),
+                 url('https://opensiddur.org/wp-content/uploads/fonts/ShlomoSemiStam.woff') format('woff');
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Keter Aram Tzova';
+            src: url('https://opensiddur.org/wp-content/uploads/fonts/KeterAramTzova.woff2') format('woff2'),
+                 url('https://opensiddur.org/wp-content/uploads/fonts/KeterAramTzova.woff') format('woff');
+            font-display: swap;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #f5f6fa;
+            --text-color: #2c3e50;
+            --border-color: #dcdde1;
+            --prayer-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem;
+            font-family: 'Frank Ruhl Libre', serif;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-family: 'Heebo', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            font-family: 'Heebo', sans-serif;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .controls {
+            max-width: 800px;
+            margin: 0 auto 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .control-group label {
+            min-width: 120px;
+        }
+
+        .control-group select {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+        }
+
+        .prayers-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .prayer-card {
+            background: var(--prayer-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .prayer-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            font-family: 'Heebo', sans-serif;
+        }
+
+        .prayer-text {
+            font-family: 'Keter Aram Tzova', serif;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            margin: 1rem 0;
+            text-align: justify;
+        }
+
+        .prayer-instructions {
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 1rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .prayers-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .prayer-text {
+                font-size: 1.2rem;
+            }
+        }
+
+        .transliteration {
+            font-family: 'Frank Ruhl Libre', serif;
+            font-size: 1rem;
+            color: #666;
+            margin-top: 0.5rem;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .translation {
+            font-family: 'Frank Ruhl Libre', serif;
+            font-size: 1rem;
+            color: #444;
+            margin-top: 0.5rem;
+            direction: ltr;
+            text-align: left;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>סידור תפילה</h1>
+        <p class="description">
+            סידור תפילה מסורתי עם ניקוד, תעתיק ותרגום
+        </p>
+    </header>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="prayer-select">בחר תפילה:</label>
+            <select id="prayer-select">
+                <option value="all">כל התפילות</option>
+                <option value="shacharit">שחרית</option>
+                <option value="mincha">מנחה</option>
+                <option value="arvit">ערבית</option>
+                <option value="shabbat">שבת</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="display-options">אפשרויות תצוגה:</label>
+            <select id="display-options">
+                <option value="hebrew">עברית בלבד</option>
+                <option value="transliteration">עם תעתיק</option>
+                <option value="translation">עם תרגום</option>
+                <option value="all">הכל</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="prayers-container">
+        <!-- Morning Blessings -->
+        <div class="prayer-card" data-prayer="shacharit">
+            <div class="prayer-title">ברכות השחר</div>
+            <div class="prayer-text">
+                בָּרוּךְ אַתָּה ה׳ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר נָתַן לַשֶּׂכְוִי בִינָה לְהַבְחִין בֵּין יוֹם וּבֵין לָיְלָה.
+            </div>
+            <div class="transliteration">
+                Baruch atah Adonai Eloheinu melech ha'olam, asher natan lasechvi vinah l'havchin bein yom u'vein lailah.
+            </div>
+            <div class="translation">
+                Blessed are You, Lord our God, King of the universe, who has given the rooster understanding to distinguish between day and night.
+            </div>
+            <div class="prayer-instructions">
+                נאמרת בתחילת היום, מיד לאחר ההתעוררות
+            </div>
+        </div>
+
+        <!-- Shema -->
+        <div class="prayer-card" data-prayer="shacharit">
+            <div class="prayer-title">קריאת שמע</div>
+            <div class="prayer-text">
+                שְׁמַע יִשְׂרָאֵל ה׳ אֱלֹהֵינוּ ה׳ אֶחָד׃
+                בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד׃
+            </div>
+            <div class="transliteration">
+                Shema Yisrael, Adonai Eloheinu, Adonai Echad.
+                Baruch shem kevod malchuto le'olam va'ed.
+            </div>
+            <div class="translation">
+                Hear, O Israel: The Lord is our God, the Lord is One.
+                Blessed be the name of His glorious kingdom for ever and ever.
+            </div>
+            <div class="prayer-instructions">
+                נאמרת פעמיים ביום - בבוקר ובערב
+            </div>
+        </div>
+
+        <!-- Amidah -->
+        <div class="prayer-card" data-prayer="all">
+            <div class="prayer-title">תפילת העמידה</div>
+            <div class="prayer-text">
+                אֲדֹנָי שְׂפָתַי תִּפְתָּח וּפִי יַגִּיד תְּהִלָּתֶךָ׃
+                בָּרוּךְ אַתָּה ה׳ אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, אֱלֹהֵי אַבְרָהָם, אֱלֹהֵי יִצְחָק, וֵאלֹהֵי יַעֲקֹב
+            </div>
+            <div class="transliteration">
+                Adonai sefatai tiftach ufi yagid tehilatecha.
+                Baruch atah Adonai Eloheinu v'Elohei avoteinu, Elohei Avraham, Elohei Yitzchak, v'Elohei Ya'akov
+            </div>
+            <div class="translation">
+                Lord, open my lips, and my mouth shall declare Your praise.
+                Blessed are You, Lord our God and God of our fathers, God of Abraham, God of Isaac, and God of Jacob
+            </div>
+            <div class="prayer-instructions">
+                נאמרת בעמידה, בשלוש תפילות היום
+            </div>
+        </div>
+
+        <!-- Mincha -->
+        <div class="prayer-card" data-prayer="mincha">
+            <div class="prayer-title">אשרי</div>
+            <div class="prayer-text">
+                אַשְׁרֵי יוֹשְׁבֵי בֵיתֶךָ, עוֹד יְהַלְלוּךָ סֶּלָה׃
+                אַשְׁרֵי הָעָם שֶׁכָּכָה לּוֹ, אַשְׁרֵי הָעָם שֶׁה׳ אֱלֹהָיו׃
+            </div>
+            <div class="transliteration">
+                Ashrei yoshvei veitecha, od yehalelucha selah.
+                Ashrei ha'am shekacha lo, ashrei ha'am she'Adonai Elohav.
+            </div>
+            <div class="translation">
+                Happy are those who dwell in Your house; they will praise You forever.
+                Happy is the people for whom this is so, happy is the people whose God is the Lord.
+            </div>
+            <div class="prayer-instructions">
+                נאמרת בתחילת תפילת מנחה
+            </div>
+        </div>
+
+        <!-- Evening Prayer -->
+        <div class="prayer-card" data-prayer="arvit">
+            <div class="prayer-title">ברכות קריאת שמע ערבית</div>
+            <div class="prayer-text">
+                בָּרוּךְ אַתָּה ה׳ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר בִּדְבָרוֹ מַעֲרִיב עֲרָבִים,
+                בְּחָכְמָה פּוֹתֵחַ שְׁעָרִים, וּבִתְבוּנָה מְשַׁנֶּה עִתִּים
+            </div>
+            <div class="transliteration">
+                Baruch atah Adonai Eloheinu melech ha'olam, asher bidvaro ma'ariv aravim,
+                b'chochma pote'ach she'arim, uvitvunah m'shaneh itim
+            </div>
+            <div class="translation">
+                Blessed are You, Lord our God, King of the universe, who by His word brings on evenings,
+                with wisdom opens gates, and with understanding changes times
+            </div>
+            <div class="prayer-instructions">
+                נאמרת בתחילת תפילת ערבית
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Prayer filtering functionality
+        const prayerSelect = document.getElementById('prayer-select');
+        const displayOptions = document.getElementById('display-options');
+        const prayers = document.querySelectorAll('.prayer-card');
+
+        function updateDisplay() {
+            const selectedPrayer = prayerSelect.value;
+            const displayOption = displayOptions.value;
+
+            prayers.forEach(prayer => {
+                // Handle prayer type filtering
+                if (selectedPrayer === 'all' || prayer.dataset.prayer === selectedPrayer) {
+                    prayer.style.display = 'block';
+                } else {
+                    prayer.style.display = 'none';
+                    return;
+                }
+
+                // Handle display options
+                const transliteration = prayer.querySelector('.transliteration');
+                const translation = prayer.querySelector('.translation');
+
+                switch(displayOption) {
+                    case 'hebrew':
+                        transliteration.style.display = 'none';
+                        translation.style.display = 'none';
+                        break;
+                    case 'transliteration':
+                        transliteration.style.display = 'block';
+                        translation.style.display = 'none';
+                        break;
+                    case 'translation':
+                        transliteration.style.display = 'none';
+                        translation.style.display = 'block';
+                        break;
+                    case 'all':
+                        transliteration.style.display = 'block';
+                        translation.style.display = 'block';
+                        break;
+                }
+            });
+        }
+
+        prayerSelect.addEventListener('change', updateDisplay);
+        displayOptions.addEventListener('change', updateDisplay);
+
+        // Initialize display
+        updateDisplay();
+    </script>
+</body>
+</html>

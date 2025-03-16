@@ -102,6 +102,29 @@
         text-align: right;
       }
 
+      .siddur-link {
+        position: absolute;
+        top: 50px;
+        right: 20px;
+        z-index: 10;
+        background: white;
+        padding: 4px 12px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+
+      .siddur-link a {
+        font-family: 'Heebo', sans-serif;
+        font-size: 16px;
+        color: #0078d4;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .siddur-link a:hover {
+        color: #005a9e;
+      }
+
       .hebrew-date .jerusalem-time {
         font-size: 14px;
         font-weight: bold;
@@ -214,6 +237,80 @@
           padding: 0 30px;
         }
       }
+
+      /* Updated TradingView ticker styling */
+      .tradingview-widget-copyright {
+        display: none;
+      }
+
+      .tradingview-widget-container {
+        height: 25px !important;
+        margin-top: 5px;
+      }
+
+      iframe#tradingview_widget {
+        height: 25px !important;
+      }
+
+      .tradingview-widget-container__widget {
+        height: 25px !important;
+        overflow: hidden;
+      }
+
+      /* Override TradingView default styles */
+      .tv-embed-widget-wrapper__body {
+        font-size: 12px !important;
+        font-weight: bold !important;
+        line-height: 1.2 !important;
+      }
+
+      .tv-embed-widget-wrapper__widget {
+        background: transparent !important;
+        border: none !important;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-wrap: wrap;
+          gap: 10px;
+          align-items: center;
+        }
+        
+        .left-header {
+          width: 100%;
+          text-align: center;
+          margin-right: 0;
+        }
+        
+        .search-bar-container {
+          max-width: none;
+          width: 100%;
+          order: 3;
+          margin: 0;
+        }
+
+        .hebrew-date {
+          position: relative;
+          top: 0;
+          right: 0;
+          text-align: center;
+          margin: 10px 0;
+          width: 100%;
+        }
+
+        .siddur-link {
+          position: relative;
+          top: 0;
+          right: 0;
+          text-align: center;
+          margin: 10px auto;
+          width: fit-content;
+        }
+        
+        nav {
+          width: 100%;
+        }
+      }
     </style>
     
     <!-- Hebcal JavaScript API -->
@@ -240,76 +337,60 @@
       <!-- Hebrew Date -->
       <div id="hebrew-date" class="hebrew-date"></div>
       
+      <!-- Siddur Link -->
+      <div class="siddur-link">
+        <a href="/sidur.html" target="_blank" style="color: #0078d4; text-decoration: none; font-size: 16px; font-weight: bold;">סידור</a>
+      </div>
+      
       <nav>
         <ul>
           <li><a href="/index.html">Home</a></li>
           <li><a href="/about.html">About</a></li>
           <li><a href="/forum/forum.html">Forum</a></li>
+          <li><a href="/games/index.html">Games</a></li>
           <li><a href="/market/index.html">Marketplace</a></li>
           <li><a href="/account" class="account-link"><img src="/img/account-icon.svg" alt="Account" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;"></a></li>
         </ul>
       </nav>
     </header>
 
-    <!-- TradingView Ticker Widget - Updated for more accurate data -->
+    <!-- TradingView Ticker Widget - Updated for more compact display -->
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
       {
       "symbols": [
         {
           "proName": "FOREXCOM:SPXUSD",
-          "title": "S&P 500 Index"
+          "title": "S&P 500"
         },
         {
           "proName": "FOREXCOM:NSXUSD",
-          "title": "US 100 Cash CFD"
+          "title": "Nasdaq"
         },
         {
           "proName": "FX_IDC:EURUSD",
-          "title": "EUR to USD"
+          "title": "EUR/USD"
         },
         {
           "proName": "BITSTAMP:BTCUSD",
-          "title": "Bitcoin"
+          "title": "BTC"
         },
         {
           "proName": "BITSTAMP:ETHUSD",
-          "title": "Ethereum"
-        },
-        {
-          "description": "Nasdaq100",
-          "proName": "NASDAQ:NDX"
-        },
-        {
-          "description": "Nikkei",
-          "proName": "INDEX:NKY"
-        },
-        {
-          "description": "FTSE 100",
-          "proName": "FOREXCOM:UKXGBP"
-        },
-        {
-          "description": "Gold",
-          "proName": "TVC:GOLD"
-        },
-        {
-          "description": "Crude Oil",
-          "proName": "TVC:USOIL"
+          "title": "ETH"
         }
       ],
-      "showSymbolLogo": true,
+      "showSymbolLogo": false,
       "colorTheme": "light",
-      "isTransparent": false,
-      "displayMode": "adaptive",
+      "isTransparent": true,
+      "displayMode": "regular",
       "locale": "en",
-      "largeChartUrl": "https://www.tradingview.com/"
+      "largeChartUrl": ""
       }
       </script>
     </div>
-    <!-- TradingView Widget END -->
-    
+
     <!-- News Section -->
     <div class="news">
       <!-- News Ticker -->
@@ -361,18 +442,50 @@
     <section class="games-section">
       <h2>Games</h2>
       <p>Challenge your friends or play against our AI in popular games!</p>
-      <a href="games/backgammon/backgammon.html" class="game-link">Backgammon</a>
-      <a href="#" class="game-link">Chess</a>
-      <a href="#" class="game-link">Poker</a>
-      <a href="#" class="game-link">Remi</a>
-      <a href="#" class="game-link">Ludo</a>
-      <a href="games/permutations/permutations.html" class="game-link">צירופים</a>
+      <a href="/games/index.html" class="game-link">Play Games</a>
     </section>
 
     <!-- Map Section -->
     <section class="map-section">
       <h2>Explore Jerusalem with Our Interactive Map</h2>
       <div id="google-map" style="height: 400px; width: 100%;"></div>
+    </section>
+
+    <!-- Local Services Directory Section -->
+    <section class="services-directory-section">
+      <h2>Jerusalem Local Services Directory</h2>
+      <p>Access essential local resources, government offices, utilities, and services in Jerusalem.</p>
+      
+      <div class="services-categories">
+        <div class="service-category">
+          <h3>Government Offices</h3>
+          <ul>
+            <li><a href="#">Municipality Services</a></li>
+            <li><a href="#">Interior Ministry</a></li>
+            <li><a href="#">Tourist Information</a></li>
+          </ul>
+        </div>
+        
+        <div class="service-category">
+          <h3>Utilities</h3>
+          <ul>
+            <li><a href="#">Water Services</a></li>
+            <li><a href="#">Electricity Company</a></li>
+            <li><a href="#">Internet Providers</a></li>
+          </ul>
+        </div>
+        
+        <div class="service-category">
+          <h3>Transportation</h3>
+          <ul>
+            <li><a href="#">Public Transportation</a></li>
+            <li><a href="#">Taxi Services</a></li>
+            <li><a href="#">Train Schedule</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <a href="/services-directory.html" class="services-link">View Full Services Directory</a>
     </section>
 
     <!-- Footer Section -->
