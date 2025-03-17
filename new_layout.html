@@ -1,132 +1,924 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Online community and marketplace combining forums, a marketplace, and games.">
-  <title>Community & Marketplace</title>
-  <style>
-    /* Reset and Basics */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-      background: #f4f4f9;
-      color: #333;
-    }
-    header {
-      background: #0078D7;
-      color: white;
-      padding: 1rem 0.5rem;
-      text-align: center;
-    }
-    nav {
-      display: flex;
-      justify-content: space-around;
-      background: #005a9e;
-      color: white;
-      padding: 0.5rem;
-    }
-    nav a {
-      text-decoration: none;
-      color: white;
-      font-size: 1rem;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 1rem auto;
-      padding: 1rem;
-    }
-    .flex-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .card {
-      flex: 1 1 calc(33% - 1rem);
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    .card h3 {
-      margin-top: 0;
-    }
-    footer {
-      background: #005a9e;
-      color: white;
-      text-align: center;
-      padding: 0.5rem;
-    }
-    @media (max-width: 768px) {
-      .card {
-        flex: 1 1 calc(100% - 1rem);
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jerusalem Hills</title>
+    <!-- Include Hebcal for Hebrew date -->
+    <script src="https://download.hebcal.com/hebcal-js/hebcal-8.min.js"></script>
+    <!-- Include Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: rgb(249, 250, 251);
+            min-height: 100vh;
+        }
+
+        /* Header styles */
+        .header {
+            background: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 6rem;
+            padding: 0.5rem 0;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 0.5rem;
+        }
+
+        .logo img {
+            height: 90px;
+            width: auto;
+            transition: transform 0.2s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .logo img {
+                height: 72px;
+            }
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 32rem;
+            margin: 0 1rem;
+            position: relative;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .search-container {
+                display: block;
+            }
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border-radius: 9999px;
+            border: 1px solid rgb(229, 231, 235);
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: rgb(79, 70, 229);
+            box-shadow: 0 0 0 1px rgb(79, 70, 229);
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icon-button {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: rgb(75, 85, 99);
+        }
+
+        .icon-button:hover {
+            background-color: rgb(243, 244, 246);
+            color: rgb(17, 24, 39);
+        }
+
+        /* Navigation styles */
+        .main-nav {
+            display: none;
+            background: white;
+            border-bottom: 1px solid rgb(229, 231, 235);
+            position: fixed;
+            width: 100%;
+            top: 6rem;
+            z-index: 40;
+        }
+
+        @media (min-width: 768px) {
+            .main-nav {
+                display: block;
+            }
+        }
+
+        .nav-container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0.75rem;
+            color: rgb(55, 65, 81);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            color: rgb(79, 70, 229);
+            border-bottom-color: rgb(79, 70, 229);
+        }
+
+        .nav-link i {
+            margin-right: 0.5rem;
+        }
+
+        /* Date display styles */
+        .date-display {
+            text-align: right;
+            font-size: 0.75rem;
+            color: rgb(75, 85, 99);
+        }
+
+        .hebrew-date {
+            font-weight: 500;
+        }
+
+        /* Main content styles */
+        .main-content {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 10rem 1rem 4rem;
+        }
+
+        /* Featured section styles */
+        .featured-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgb(17, 24, 39);
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .featured-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .featured-card {
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .featured-card:hover {
+            transform: scale(1.02);
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            padding: 1rem;
+        }
+
+        .featured-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: rgb(17, 24, 39);
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-description {
+            color: rgb(75, 85, 99);
+        }
+
+        /* Products and Videos section styles */
+        .products-grid, .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .products-grid, .videos-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .product-card, .video-card {
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .video-card:hover {
+            transform: scale(1.02);
+        }
+
+        .product-image, .video-thumbnail {
+            width: 100%;
+            height: 10rem;
+            object-fit: cover;
+        }
+
+        .product-content, .video-content {
+            padding: 1rem;
+        }
+
+        .product-title, .video-title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: rgb(17, 24, 39);
+        }
+
+        .video-duration {
+            font-size: 0.75rem;
+            color: rgb(107, 114, 128);
+            margin-top: 0.25rem;
+        }
+
+        /* Discussion section styles */
+        .discussion-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .discussion-card:hover {
+            background-color: rgb(249, 250, 251);
+        }
+
+        .discussion-header {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+        }
+
+        .discussion-content {
+            flex: 1;
+        }
+
+        .discussion-title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: rgb(17, 24, 39);
+            margin-bottom: 0.25rem;
+        }
+
+        .discussion-preview {
+            font-size: 0.875rem;
+            color: rgb(75, 85, 99);
+            margin-bottom: 0.5rem;
+        }
+
+        .discussion-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: rgb(107, 114, 128);
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+            padding: 0.75rem 0;
+        }
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+        .mobile-link {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: rgb(55, 65, 81);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 0.375rem;
+        }
+
+        .mobile-link:hover {
+            background-color: rgb(243, 244, 246);
+            color: rgb(17, 24, 39);
+        }
+
+        @media (min-width: 768px) {
+            .menu-button {
+                display: none;
+            }
+        }
+
+        /* Map section styles */
+        .map-section {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .map-section-container {
+            display: flex;
+            gap: 2rem;
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .map-wrapper {
+            flex: 3;
+        }
+
+        .services-links {
+            flex: 1;
+            min-width: 250px;
+            border-left: 1px solid rgb(229, 231, 235);
+            padding-left: 2rem;
+        }
+
+        .services-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .services-category h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: rgb(17, 24, 39);
+            margin-bottom: 0.75rem;
+        }
+
+        .services-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .services-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .services-list a {
+            color: rgb(79, 70, 229);
+            text-decoration: none;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .services-list a:hover {
+            color: rgb(67, 56, 202);
+            text-decoration: underline;
+        }
+
+        .services-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .map-section-container {
+                flex-direction: column;
+            }
+
+            .services-links {
+                border-left: none;
+                border-top: 1px solid rgb(229, 231, 235);
+                padding-left: 0;
+                padding-top: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Community & Marketplace</h1>
-  </header>
-  <nav>
-    <a href="#marketplace">Marketplace</a>
-    <a href="#forum">Forum</a>
-    <a href="#games">Games</a>
-    <a href="#news">News</a>
-  </nav>
-  <div class="container">
-    <section id="marketplace" class="flex-grid">
-      <h2>Marketplace</h2>
-      <div class="card">
-        <h3>Item 1</h3>
-        <p>Short description of the item.</p>
-      </div>
-      <div class="card">
-        <h3>Item 2</h3>
-        <p>Short description of the item.</p>
-      </div>
-    </section>
-    <section id="forum" class="flex-grid">
-      <h2>Forum</h2>
-      <div class="card">
-        <h3>Topic 1</h3>
-        <p>Discussion details go here.</p>
-      </div>
-    </section>
-    <section id="games" class="flex-grid">
-      <h2>Games</h2>
-      <div class="card">
-        <h3>Game 1</h3>
-        <p>Description of the game.</p>
-      </div>
-    </section>
-    <section id="news" class="flex-grid">
-      <h2>News</h2>
-      <div class="card">
-        <h3>Featured Article</h3>
-        <p>A quick summary of the featured article here.</p>
-      </div>
-    </section>
-  </div>
-  <footer>
-    <p>&copy; 2025 Community & Marketplace. All rights reserved.</p>
-  </footer>
-  <script>
-    // Basic example for interactivity
-    document.querySelectorAll("nav a").forEach(link => {
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        const section = document.querySelector(link.getAttribute("href"));
-        if (section) {
-          section.scrollIntoView({ behavior: "smooth" });
+    <header class="header">
+        <div class="header-container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <button class="icon-button menu-button" aria-label="Menu">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    <a href="/" class="logo">
+                        <img src="img/1.svg" alt="Jerusalem Hills Logo" style="height: 90px; width: auto;">
+                    </a>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search everything...">
+                    <i data-lucide="search" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgb(156, 163, 175);"></i>
+                </div>
+
+                <div class="header-icons">
+                    <button class="icon-button" aria-label="Notifications">
+                        <i data-lucide="bell"></i>
+                    </button>
+                    <button class="icon-button" aria-label="User menu">
+                        <i data-lucide="user"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mobile-menu">
+                <a href="#marketplace" class="mobile-link">Marketplace</a>
+                <a href="#forum" class="mobile-link">Forum</a>
+                <a href="#games" class="mobile-link">Games</a>
+                <a href="#news" class="mobile-link">News</a>
+            </div>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="#marketplace" class="nav-link">
+                    <i data-lucide="shopping-bag"></i>
+                    Marketplace
+                </a>
+                <a href="#forum" class="nav-link">
+                    <i data-lucide="message-square"></i>
+                    Forum
+                </a>
+                <a href="#games" class="nav-link">
+                    <i data-lucide="gamepad-2"></i>
+                    Games
+                </a>
+                <a href="#news" class="nav-link">
+                    <i data-lucide="newspaper"></i>
+                    News
+                </a>
+            </div>
+
+            <div class="date-display">
+                <div class="hebrew-date"></div>
+                <div class="gregorian-date"></div>
+                <div class="current-time"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="trending-section">
+            <h2 class="section-title">Trending in Marketplace</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="img/pic01.jpg" alt="Product" class="product-image">
+                    <div class="product-content">
+                        <h3 class="product-title">Jerusalem Crafts</h3>
+                        <p class="product-price">₪299</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="img/pic02.jpg" alt="Product" class="product-image">
+                    <div class="product-content">
+                        <h3 class="product-title">Dead Sea Products</h3>
+                        <p class="product-price">₪199</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="img/pic01.jpg" alt="Product" class="product-image">
+                    <div class="product-content">
+                        <h3 class="product-title">Judaica Art</h3>
+                        <p class="product-price">₪399</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="img/pic02.jpg" alt="Product" class="product-image">
+                    <div class="product-content">
+                        <h3 class="product-title">Local Spices</h3>
+                        <p class="product-price">₪99</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="discussions-section">
+            <h2 class="section-title">Active Discussions</h2>
+            <div class="discussions-list">
+                <div class="discussion-card">
+                    <div class="discussion-header">
+                        <img src="img/logo.jpg" alt="Avatar" class="avatar">
+                        <div class="discussion-content">
+                            <h3 class="discussion-title">Jerusalem Culture and Heritage</h3>
+                            <p class="discussion-preview">Join our discussion about preserving and celebrating Jerusalem's rich cultural heritage...</p>
+                            <div class="discussion-meta">
+                                <span>24 replies</span>
+                                <span>•</span>
+                                <span>3 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="discussion-card">
+                    <div class="discussion-header">
+                        <img src="img/logo.jpg" alt="Avatar" class="avatar">
+                        <div class="discussion-content">
+                            <h3 class="discussion-title">Local Events This Week</h3>
+                            <p class="discussion-preview">Check out the upcoming events in Jerusalem this week...</p>
+                            <div class="discussion-meta">
+                                <span>15 replies</span>
+                                <span>•</span>
+                                <span>5 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="discussion-card">
+                    <div class="discussion-header">
+                        <img src="img/logo.jpg" alt="Avatar" class="avatar">
+                        <div class="discussion-content">
+                            <h3 class="discussion-title">Community Marketplace Tips</h3>
+                            <p class="discussion-preview">Share your experiences and tips for buying and selling in our marketplace...</p>
+                            <div class="discussion-meta">
+                                <span>32 replies</span>
+                                <span>•</span>
+                                <span>1 day ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-section">
+            <h2 class="section-title">Featured Articles</h2>
+            <div class="featured-grid">
+                <div class="featured-card">
+                    <img src="img/Jerusalem_Old_City_market.jpg" alt="Marketplace" class="featured-image">
+                    <div class="featured-content">
+                        <h3 class="featured-title">New Marketplace Features</h3>
+                        <p class="featured-description">Discover our latest AI-powered recommendations and seamless shopping experience.</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="img/David's_Tower_11.jpg" alt="Gaming" class="featured-image">
+                    <div class="featured-content">
+                        <h3 class="featured-title">Gaming Tournament</h3>
+                        <p class="featured-description">Join our weekly gaming tournaments and compete for amazing prizes!</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="img/header-bg-city-wall.jpg" alt="News" class="featured-image">
+                    <div class="featured-content">
+                        <h3 class="featured-title">Latest Updates</h3>
+                        <p class="featured-description">Stay updated with the latest Jerusalem news and community insights.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="videos-section">
+            <h2 class="section-title">Latest Videos</h2>
+            <div class="videos-grid">
+                <div class="video-card">
+                    <img src="img/header-bg-city-wall.jpg" alt="Jerusalem City Tour" class="video-thumbnail">
+                    <div class="video-content">
+                        <h3 class="video-title">Jerusalem Old City Tour</h3>
+                        <p class="video-duration">12:45</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <img src="img/Jerusalem_Old_City_market.jpg" alt="Market Tour" class="video-thumbnail">
+                    <div class="video-content">
+                        <h3 class="video-title">Market Shopping Guide</h3>
+                        <p class="video-duration">8:30</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <img src="img/David's_Tower_11.jpg" alt="Historical Sites" class="video-thumbnail">
+                    <div class="video-content">
+                        <h3 class="video-title">David's Tower History</h3>
+                        <p class="video-duration">15:20</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <img src="img/pic01.jpg" alt="Local Crafts" class="video-thumbnail">
+                    <div class="video-content">
+                        <h3 class="video-title">Artisan Workshop</h3>
+                        <p class="video-duration">10:15</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Map Section -->
+        <section class="map-section">
+            <div class="map-section-container">
+                <div class="map-wrapper">
+                    <h2 class="section-title">Explore Jerusalem</h2>
+                    <div class="map-controls">
+                        <button class="map-button active" data-category="attractions">Tourist Attractions</button>
+                        <button class="map-button" data-category="religious">Religious Sites</button>
+                        <button class="map-button" data-category="markets">Markets & Shopping</button>
+                        <button class="map-button" data-category="restaurants">Restaurants</button>
+                    </div>
+                    <div class="map-container">
+                        <div id="map"></div>
+                    </div>
+                </div>
+
+                <div class="services-links">
+                    <h2 class="section-title">Essential Services</h2>
+                    
+                    <div class="services-category">
+                        <h3>Government Offices</h3>
+                        <ul class="services-list">
+                            <li>
+                                <a href="https://www.jerusalem.muni.il/" target="_blank">
+                                    <i data-lucide="building"></i>
+                                    Jerusalem Municipality
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.gov.il/en/service/request_residency_status_in_israel" target="_blank">
+                                    <i data-lucide="id-card"></i>
+                                    Interior Ministry
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.tourist-israel.com/jerusalem-tourist-information/" target="_blank">
+                                    <i data-lucide="info"></i>
+                                    Tourist Information
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="services-category">
+                        <h3>Transportation</h3>
+                        <ul class="services-list">
+                            <li>
+                                <a href="https://www.rail.co.il/en" target="_blank">
+                                    <i data-lucide="train"></i>
+                                    Israel Railways
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.egged.co.il/en" target="_blank">
+                                    <i data-lucide="bus"></i>
+                                    Egged Bus Service
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.citypass.co.il/en/" target="_blank">
+                                    <i data-lucide="train-front"></i>
+                                    Light Rail
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="services-category">
+                        <h3>Utilities</h3>
+                        <ul class="services-list">
+                            <li>
+                                <a href="https://www.hagihon.co.il/english/" target="_blank">
+                                    <i data-lucide="droplets"></i>
+                                    Hagihon Water Company
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.iec.co.il/en/home" target="_blank">
+                                    <i data-lucide="zap"></i>
+                                    Electric Corporation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.bezeq.co.il/en/" target="_blank">
+                                    <i data-lucide="wifi"></i>
+                                    Bezeq Telecom
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="services-category">
+                        <h3>Emergency</h3>
+                        <ul class="services-list">
+                            <li>
+                                <a href="tel:100">
+                                    <i data-lucide="siren"></i>
+                                    Police - 100
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tel:101">
+                                    <i data-lucide="heart-pulse"></i>
+                                    Ambulance - 101
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tel:102">
+                                    <i data-lucide="flame"></i>
+                                    Fire Department - 102
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const menuButton = document.querySelector('.menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Date and time functions
+        function formatHebrewDate(date) {
+            const hDate = new Hebcal.HDate(date);
+            return `${hDate.toString('h')}`;
         }
-      });
-    });
-  </script>
+
+        function formatDate(date) {
+            return date.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function formatTime(date) {
+            return date.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+        }
+
+        // Update date and time displays
+        function updateDateTime() {
+            const now = new Date();
+            document.querySelector('.hebrew-date').textContent = formatHebrewDate(now);
+            document.querySelector('.gregorian-date').textContent = formatDate(now);
+            document.querySelector('.current-time').textContent = formatTime(now);
+        }
+
+        // Initial update and start interval
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Google Maps implementation
+        let map;
+        let markers = [];
+        const jerusalemCenter = { lat: 31.7683, lng: 35.2137 };
+
+        const locations = {
+            attractions: [
+                { name: "Tower of David", position: { lat: 31.7767, lng: 35.2297 } },
+                { name: "Garden Tomb", position: { lat: 31.7847, lng: 35.2288 } }
+            ],
+            religious: [
+                { name: "Western Wall", position: { lat: 31.7767, lng: 35.2342 } },
+                { name: "Church of the Holy Sepulchre", position: { lat: 31.7784, lng: 35.2297 } }
+            ],
+            markets: [
+                { name: "Mahane Yehuda Market", position: { lat: 31.7850, lng: 35.2120 } },
+                { name: "Old City Market", position: { lat: 31.7777, lng: 35.2297 } }
+            ],
+            restaurants: [
+                { name: "Machne Yehuda Restaurant", position: { lat: 31.7853, lng: 35.2123 } },
+                { name: "American Colony Hotel", position: { lat: 31.7890, lng: 35.2327 } }
+            ]
+        };
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: jerusalemCenter,
+                zoom: 14,
+                styles: [
+                    {
+                        featureType: "poi",
+                        elementType: "labels",
+                        stylers: [{ visibility: "off" }]
+                    }
+                ]
+            });
+
+            // Initial load of attractions
+            showLocations('attractions');
+
+            // Add click handlers for category buttons
+            document.querySelectorAll('.map-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.map-button').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    showLocations(button.dataset.category);
+                });
+            });
+        }
+
+        function showLocations(category) {
+            // Clear existing markers
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
+
+            // Add new markers
+            locations[category].forEach(location => {
+                const marker = new google.maps.Marker({
+                    position: location.position,
+                    map: map,
+                    title: location.name,
+                    animation: google.maps.Animation.DROP
+                });
+
+                const infowindow = new google.maps.InfoWindow({
+                    content: `<div style="padding: 10px;"><h3 style="font-weight: bold;">${location.name}</h3></div>`
+                });
+
+                marker.addListener('click', () => {
+                    infowindow.open(map, marker);
+                });
+
+                markers.push(marker);
+            });
+
+            // Center map on markers
+            const bounds = new google.maps.LatLngBounds();
+            markers.forEach(marker => bounds.extend(marker.getPosition()));
+            map.fitBounds(bounds);
+        }
+    </script>
+
+    <!-- Google Maps Script -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5_m5vWCLhVcPKlItsT62fMB_bk2YyHIs&callback=initMap">
+    </script>
 </body>
 </html>
