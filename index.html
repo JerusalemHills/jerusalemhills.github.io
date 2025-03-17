@@ -65,6 +65,20 @@
         position: relative;
       }
       
+      .search-bar {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        width: 250px;
+        font-size: 14px;
+        outline: none;
+      }
+      
+      .search-bar:focus {
+        border-color: #0078d4;
+        box-shadow: 0 0 3px rgba(0, 120, 212, 0.3);
+      }
+      
       .cart-button {
         background: none;
         border: none;
@@ -341,6 +355,13 @@
       <div class="left-header">
         <a href="/"><img src="img/1.svg" alt="Jerusalem Hills Logo" class="logo"></a>
       </div>
+      <!-- Search Bar with Cart Icon -->
+      <div class="search-bar-container">
+        <input type="text" placeholder="Search Jerusalem Hills..." class="search-bar">
+        <button class="cart-button">
+          <img src="img/cart-icon.svg" alt="Shopping Cart">
+        </button>
+      </div>
       <nav>
         <ul>
           <li><a href="/index.html">Home</a></li>
@@ -352,43 +373,51 @@
           <li><a href="/advertise.html">Advertise</a></li>
         </ul>
       </nav>
+      <!-- Hebrew Date Display -->
+      <div class="hebrew-date" id="hebrew-date">
+        <!-- Hebrew date will be dynamically loaded here -->
+      </div>
+      <div class="siddur-link">
+        <a href="/sidur.html">סידור תפילה</a>
+      </div>
     </header>
 
-    <!-- TradingView Ticker Widget - Updated for more compact display -->
+    <!-- TradingView Ticker Widget -->
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-      {
-      "symbols": [
-        {
-          "proName": "FOREXCOM:SPXUSD",
-          "title": "S&P 500"
-        },
-        {
-          "proName": "FOREXCOM:NSXUSD",
-          "title": "Nasdaq"
-        },
-        {
-          "proName": "FX_IDC:EURUSD",
-          "title": "EUR/USD"
-        },
-        {
-          "proName": "BITSTAMP:BTCUSD",
-          "title": "BTC"
-        },
-        {
-          "proName": "BITSTAMP:ETHUSD",
-          "title": "ETH"
-        }
-      ],
-      "showSymbolLogo": false,
-      "colorTheme": "light",
-      "isTransparent": true,
-      "displayMode": "regular",
-      "locale": "en",
-      "largeChartUrl": ""
-      }
+      <script type="text/javascript">
+        const widgetConfig = {
+          symbols: [
+            {
+              proName: "FOREXCOM:SPXUSD",
+              title: "S&P 500"
+            },
+            {
+              proName: "FOREXCOM:NSXUSD",
+              title: "Nasdaq"
+            },
+            {
+              proName: "FX_IDC:EURUSD",
+              title: "EUR/USD"
+            },
+            {
+              proName: "BITSTAMP:BTCUSD",
+              title: "BTC"
+            },
+            {
+              proName: "BITSTAMP:ETHUSD",
+              title: "ETH"
+            }
+          ],
+          showSymbolLogo: false,
+          colorTheme: "light",
+          isTransparent: true,
+          displayMode: "regular",
+          locale: "en",
+          largeChartUrl: ""
+        };
       </script>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async></script>
     </div>
 
     <!-- Homepage Banner Ad -->

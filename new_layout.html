@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Online community and marketplace combining forums, a marketplace, and games.">
+  <title>Community & Marketplace</title>
+  <style>
+    /* Reset and Basics */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background: #f4f4f9;
+      color: #333;
+    }
+    header {
+      background: #0078D7;
+      color: white;
+      padding: 1rem 0.5rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background: #005a9e;
+      color: white;
+      padding: 0.5rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 1rem auto;
+      padding: 1rem;
+    }
+    .flex-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .card {
+      flex: 1 1 calc(33% - 1rem);
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .card h3 {
+      margin-top: 0;
+    }
+    footer {
+      background: #005a9e;
+      color: white;
+      text-align: center;
+      padding: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .card {
+        flex: 1 1 calc(100% - 1rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Community & Marketplace</h1>
+  </header>
+  <nav>
+    <a href="#marketplace">Marketplace</a>
+    <a href="#forum">Forum</a>
+    <a href="#games">Games</a>
+    <a href="#news">News</a>
+  </nav>
+  <div class="container">
+    <section id="marketplace" class="flex-grid">
+      <h2>Marketplace</h2>
+      <div class="card">
+        <h3>Item 1</h3>
+        <p>Short description of the item.</p>
+      </div>
+      <div class="card">
+        <h3>Item 2</h3>
+        <p>Short description of the item.</p>
+      </div>
+    </section>
+    <section id="forum" class="flex-grid">
+      <h2>Forum</h2>
+      <div class="card">
+        <h3>Topic 1</h3>
+        <p>Discussion details go here.</p>
+      </div>
+    </section>
+    <section id="games" class="flex-grid">
+      <h2>Games</h2>
+      <div class="card">
+        <h3>Game 1</h3>
+        <p>Description of the game.</p>
+      </div>
+    </section>
+    <section id="news" class="flex-grid">
+      <h2>News</h2>
+      <div class="card">
+        <h3>Featured Article</h3>
+        <p>A quick summary of the featured article here.</p>
+      </div>
+    </section>
+  </div>
+  <footer>
+    <p>&copy; 2025 Community & Marketplace. All rights reserved.</p>
+  </footer>
+  <script>
+    // Basic example for interactivity
+    document.querySelectorAll("nav a").forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        const section = document.querySelector(link.getAttribute("href"));
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
