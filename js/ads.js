@@ -121,6 +121,13 @@ const JHAds = (function() {
             script.crossOrigin = 'anonymous';
             document.head.appendChild(script);
         }
+        
+        // AdSense configuration
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-1738161253720",
+            enable_page_level_ads: true,
+            crossorigin: "anonymous"
+        });
     }
     
     /**
