@@ -405,69 +405,42 @@
       });
     </script>
 
-    <!-- TradingView Ticker Widget -->
-    <div class="tradingview-widget-container">
+    <!-- TradingView Ticker Widget - Positioned right after header -->
+    <div class="tradingview-widget-container ticker-wrapper">
       <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript">
-        const widgetConfig = {
-          symbols: [
-            {
-              proName: "FOREXCOM:SPXUSD",
-              title: "S&P 500"
-            },
-            {
-              proName: "FOREXCOM:NSXUSD",
-              title: "Nasdaq"
-            },
-            {
-              proName: "FX_IDC:EURUSD",
-              title: "EUR/USD"
-            },
-            {
-              proName: "BITSTAMP:BTCUSD",
-              title: "BTC"
-            },
-            {
-              proName: "BITSTAMP:ETHUSD",
-              title: "ETH"
-            }
-          ],
-          showSymbolLogo: false,
-          colorTheme: "light",
-          isTransparent: true,
-          displayMode: "regular",
-          locale: "en",
-          largeChartUrl: ""
-        };
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      {
+        "symbols": [
+          {
+            "proName": "FOREXCOM:SPXUSD",
+            "title": "S&P 500"
+          },
+          {
+            "proName": "FOREXCOM:NSXUSD",
+            "title": "Nasdaq"
+          },
+          {
+            "proName": "FX_IDC:EURUSD",
+            "title": "EUR/USD"
+          },
+          {
+            "proName": "BITSTAMP:BTCUSD",
+            "title": "BTC"
+          },
+          {
+            "proName": "BITSTAMP:ETHUSD",
+            "title": "ETH"
+          }
+        ],
+        "showSymbolLogo": false,
+        "colorTheme": "light",
+        "isTransparent": true,
+        "displayMode": "regular",
+        "locale": "en"
+      }
       </script>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async></script>
     </div>
 
-    <!-- Homepage Banner Ad -->
-    <section class="ad-banner">
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-           data-ad-slot="XXXXXXXXXX"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-      <script>
-           (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-    </section>
-
-    <!-- News Section -->
-    <div class="news">
-      <!-- News Ticker -->
-      <div class="ticker-tape">
-        <div class="ticker-content" id="ticker-content">
-        <!-- Dynamic content will be added here -->
-        </div>
-      </div>
-    </div>
-    
-    <!-- Main Content -->
     <main class="main-content">
       <!-- Breadcrumb Navigation -->
       <nav aria-label="breadcrumb">

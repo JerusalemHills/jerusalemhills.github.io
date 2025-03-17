@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jerusalem Hills</title>
-    <!-- Include Hebcal for Hebrew date -->
+    
+    <!-- Other scripts -->
     <script src="https://unpkg.com/@hebcal/core@4.2.1/dist/bundle.min.js"></script>
-    <!-- Include Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* Reset and base styles */
@@ -130,7 +130,7 @@
             position: fixed;
             width: 100%;
             top: 6rem;
-            z-index: 40;
+            z-index: 46;
         }
 
         @media (min-width: 768px) {
@@ -210,6 +210,7 @@
             max-width: 80rem;
             margin: 0 auto;
             padding: 10rem 1rem 4rem;
+            margin-top: 160px; /* Adjusted to account for header + ticker */
         }
 
         /* Featured section styles */
@@ -623,6 +624,46 @@
                 padding: 0 30px;
             }
         }
+
+        /* Ticker wrapper styles */
+        .ticker-wrapper {
+            position: fixed;
+            top: 96px; /* Adjusted to sit right under the header */
+            left: 0;
+            width: 100%;
+            z-index: 45;
+            background: white;
+            height: 40px;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tradingview-widget-container,
+        .tradingview-widget-container__widget {
+            width: 100% !important;
+            height: 40px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .tradingview-widget-copyright {
+            display: none !important;
+        }
+
+        /* Adjust main content to account for header + ticker */
+        .main-content {
+            margin-top: 136px;
+        }
+
+        @media (max-width: 768px) {
+            .ticker-wrapper {
+                top: 80px;
+            }
+            .main-content {
+                margin-top: 120px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -666,41 +707,8 @@
         </div>
     </header>
 
-    <nav class="main-nav">
-        <div class="nav-container">
-            <div class="nav-links">
-                <a href="#marketplace" class="nav-link">
-                    <i data-lucide="shopping-bag"></i>
-                    Marketplace
-                </a>
-                <a href="#forum" class="nav-link">
-                    <i data-lucide="message-square"></i>
-                    Forum
-                </a>
-                <a href="#games" class="nav-link">
-                    <i data-lucide="gamepad-2"></i>
-                    Games
-                </a>
-                <a href="#news" class="nav-link">
-                    <i data-lucide="newspaper"></i>
-                    News
-                </a>
-                <a href="/sidur.html" class="nav-link">
-                    <i data-lucide="book-open"></i>
-                    Siddur
-                </a>
-            </div>
-
-            <div class="date-display top-date-display">
-                <div class="hebrew-date"></div>
-                <div class="gregorian-date"></div>
-                <div class="current-time"></div>
-            </div>
-        </div>
-    </nav>
-
     <!-- TradingView Ticker Widget -->
-    <div class="tradingview-widget-container" style="margin-top: 100px; width: 100%; background: white;">
+    <div class="tradingview-widget-container ticker-wrapper">
       <div class="tradingview-widget-container__widget"></div>
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
       {
@@ -734,6 +742,39 @@
       }
       </script>
     </div>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="#marketplace" class="nav-link">
+                    <i data-lucide="shopping-bag"></i>
+                    Marketplace
+                </a>
+                <a href="#forum" class="nav-link">
+                    <i data-lucide="message-square"></i>
+                    Forum
+                </a>
+                <a href="#games" class="nav-link">
+                    <i data-lucide="gamepad-2"></i>
+                    Games
+                </a>
+                <a href="#news" class="nav-link">
+                    <i data-lucide="newspaper"></i>
+                    News
+                </a>
+                <a href="/sidur.html" class="nav-link">
+                    <i data-lucide="book-open"></i>
+                    Siddur
+                </a>
+            </div>
+
+            <div class="date-display top-date-display">
+                <div class="hebrew-date"></div>
+                <div class="gregorian-date"></div>
+                <div class="current-time"></div>
+            </div>
+        </div>
+    </nav>
 
     <main class="main-content">
         <!-- Homepage Banner Ad -->
@@ -1200,39 +1241,5 @@
         onerror="gm_authFailure()">
     </script>
     <script src="js/youtube-playlist.js"></script>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-      {
-        "symbols": [
-          {
-            "proName": "FOREXCOM:SPXUSD",
-            "title": "S&P 500"
-          },
-          {
-            "proName": "FOREXCOM:NSXUSD",
-            "title": "Nasdaq"
-          },
-          {
-            "proName": "FX_IDC:EURUSD",
-            "title": "EUR/USD"
-          },
-          {
-            "proName": "BITSTAMP:BTCUSD",
-            "title": "BTC"
-          },
-          {
-            "proName": "BITSTAMP:ETHUSD",
-            "title": "ETH"
-          }
-        ],
-        "showSymbolLogo": false,
-        "colorTheme": "light",
-        "isTransparent": true,
-        "displayMode": "regular",
-        "locale": "en"
-      }
-      </script>
-    </div>
 </body>
 </html>

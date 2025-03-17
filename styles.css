@@ -6,7 +6,7 @@
 /* Body Styling */
 body {
   font-family: Arial, sans-serif;
-  padding-top: 0;
+  padding-top: 160px; /* Account for header + ticker height */
   margin: 0;
   background-color: var(--background-color, #f0f0f0);
   line-height: 1.6; /* Improved readability */
@@ -19,7 +19,8 @@ header {
   z-index: 1000;
   display: flex;
   align-items: flex-end;
-  position: relative;
+  position: fixed;
+  top: 0;
   padding: 10px 20px;
   height: auto;
   box-shadow: var(--box-shadow, 0 2px 5px rgba(0, 0, 0, 0.1)); /* Subtle shadow for header separation */
@@ -449,7 +450,7 @@ iframe {
 
 /* TradingView ticker minimal styling */
 .tradingview-widget-container {
-  height: 25px !important;
+  height: 40px !important;
   margin: 0 !important;
   overflow: visible !important;
   padding: 0 !important;
@@ -459,7 +460,7 @@ iframe {
 }
 
 .tradingview-widget-container__widget {
-  height: 25px !important;
+  height: 40px !important;
   background: transparent !important;
   display: flex !important;
   align-items: center !important;
@@ -662,4 +663,36 @@ iframe {
   .services-grid .service-category h2 {
     font-size: 1.2em;
   }
+}
+
+/* TradingView Ticker Wrapper */
+.ticker-wrapper {
+    position: fixed;
+    top: 120px; /* Right under the header */
+    left: 0;
+    width: 100%;
+    z-index: 45;
+    background: white;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    height: 40px;
+    overflow: hidden;
+}
+
+/* Main content spacing adjustment */
+.main-content {
+    margin-top: 160px;
+}
+
+@media (max-width: 768px) {
+    .ticker-wrapper {
+        top: 100px;
+    }
+    .main-content {
+        margin-top: 140px;
+    }
+}
+
+/* Hide TradingView branding */
+.tradingview-widget-copyright {
+    display: none !important;
 }
