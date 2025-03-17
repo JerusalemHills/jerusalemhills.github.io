@@ -10,6 +10,7 @@
             text-align: center;
             padding: 20px;
             line-height: 1.6;
+            padding-top: 100px; /* Adjust based on header height */
         }
         h1 {
             color: #333;
@@ -43,6 +44,29 @@
         button:hover {
             background-color: #0056b3;
         }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: white;
+        }
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .breadcrumb-item {
+            margin-right: 5px;
+        }
+        .breadcrumb-item a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .breadcrumb-item.active {
+            color: #6c757d;
+        }
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VE3Z9354M2"></script>
@@ -52,6 +76,15 @@
       gtag('js', new Date());
 
       gtag('config', 'G-VE3Z9354M2');
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        fetch("header.html")
+          .then(response => response.text())
+          .then(data => {
+            document.body.insertAdjacentHTML("afterbegin", data);
+          });
+      });
     </script>
 </head>
 <body>
@@ -66,6 +99,8 @@
         <h3>Collected Data:</h3>
         <pre id="collected-data">Loading data...</pre>
     </div>
+
+    <img src="img/1.svg" alt="Jerusalem Hills Logo" class="logo">
 
     <script>
         // Function to collect data that doesn't require permission

@@ -13,12 +13,46 @@
 
       gtag('config', 'G-VE3Z9354M2');
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        fetch("header.html")
+          .then(response => response.text())
+          .then(data => {
+            document.body.insertAdjacentHTML("afterbegin", data);
+          });
+      });
+    </script>
+    <style>
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: white;
+      }
+      body {
+        padding-top: 100px; /* Adjust based on header height */
+      }
+      .breadcrumb {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .breadcrumb-item {
+        margin-right: 5px;
+      }
+      .breadcrumb-item a {
+        text-decoration: none;
+        color: #007bff;
+      }
+      .breadcrumb-item.active {
+        color: #6c757d;
+      }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Terms of Service</h1>
-        <p>Effective Date: December 23, 2024</p>
-    </header>
+    <img src="img/1.svg" alt="Jerusalem Hills Logo" class="logo">
     <main>
         <section>
             <h2>1. Use of the Website</h2>

@@ -13,6 +13,8 @@
     <meta name="twitter:title" content="Jerusalem Hills - Explore Jerusalem, Discover Unique Gifts & Products">
     <meta name="twitter:description" content="Explore Jerusalem's rich heritage, nature, and unique products. Visit Jerusalem Hills for authentic gifts and experiences.">
     <meta name="twitter:image" content="https://www.jerusalemhills.com/images/jerusalem-hills-hero.jpg">
+    <meta name="google-site-verification" content="ZSCfkxbfCgbfz-qO3-L3cVpifny1S6dygLdSklzsgCU" />
+    <meta name="google-adsense-account" content="ca-pub-1738161253720" />
     <title>Jerusalem Hills - Explore Jerusalem, Discover Unique Gifts & Products</title>
     
     <link rel="stylesheet" href="styles.css">
@@ -20,13 +22,14 @@
     
     <!-- Favicon -->
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/favicon.ico" alt="Favicon" type="image/x-icon">
 
     <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" alt="Apple Touch Icon">
 
     <!-- Android Chrome Icons -->
-    <link rel="icon" href="/img/android-chrome-192x192.png" sizes="192x192" type="image/png">
-    <link rel="icon" href="/img/android-chrome-512x512.png" sizes="512x512" type="image/png">
+    <link rel="icon" href="/img/android-chrome-192x192.png" sizes="192x192" type="image/png" alt="Android Chrome Icon 192x192">
+    <link rel="icon" href="/img/android-chrome-512x512.png" sizes="512x512" type="image/png" alt="Android Chrome Icon 512x512">
 
     <!-- Web Manifest -->
     <link rel="manifest" href="/img/site.webmanifest">
@@ -326,10 +329,37 @@
           width: 100%;
         }
       }
+
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: white;
+      }
+      body {
+        padding-top: 100px; /* Adjust based on header height */
+      }
+      .breadcrumb {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .breadcrumb-item {
+        margin-right: 5px;
+      }
+      .breadcrumb-item a {
+        text-decoration: none;
+        color: #007bff;
+      }
+      .breadcrumb-item.active {
+        color: #6c757d;
+      }
     </style>
     
     <!-- Hebcal JavaScript API -->
-    <script src="https://download.hebcal.com/hebcal-js/hebcal-8.min.js"></script>
+    <script src="https://download.hebcal.com/hebcal-js/hebcal-8.min.js" type="application/javascript"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-Y"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -347,40 +377,33 @@
 
       gtag('config', 'G-VE3Z9354M2');
     </script>
+
+    <!-- Schema.org markup for rich snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Jerusalem Hills",
+      "url": "https://www.jerusalemhills.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.jerusalemhills.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
     
   <body>
-    <!-- Header Section -->
-    <header>
-      <div class="left-header">
-        <a href="/"><img src="img/1.svg" alt="Jerusalem Hills Logo" class="logo"></a>
-      </div>
-      <!-- Search Bar with Cart Icon -->
-      <div class="search-bar-container">
-        <input type="text" placeholder="Search Jerusalem Hills..." class="search-bar">
-        <button class="cart-button">
-          <img src="img/cart-icon.svg" alt="Shopping Cart">
-        </button>
-      </div>
-      <nav>
-        <ul>
-          <li><a href="/index.html">Home</a></li>
-          <li><a href="/about.html">About</a></li>
-          <li><a href="/forum/forum.html">Forum</a></li>
-          <li><a href="/games/index.html">Games</a></li>
-          <li><a href="/market/index.html">Marketplace</a></li>
-          <li><a href="/services-directory.html">Services</a></li>
-          <li><a href="/advertise.html">Advertise</a></li>
-        </ul>
-      </nav>
-      <!-- Hebrew Date Display -->
-      <div class="hebrew-date" id="hebrew-date">
-        <!-- Hebrew date will be dynamically loaded here -->
-      </div>
-      <div class="siddur-link">
-        <a href="/sidur.html">סידור תפילה</a>
-      </div>
-    </header>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        fetch("header.html")
+          .then(response => response.text())
+          .then(data => {
+            document.body.insertAdjacentHTML("afterbegin", data);
+          });
+      });
+    </script>
 
     <!-- TradingView Ticker Widget -->
     <div class="tradingview-widget-container">
@@ -446,6 +469,14 @@
     
     <!-- Main Content -->
     <main class="main-content">
+      <!-- Breadcrumb Navigation -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/index.html">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Current Page</li>
+        </ol>
+      </nav>
+
       <!-- Video Slider Section -->
       <section class="video-slider-section">
         <h2>Latest Videos from Jerusalem Hills</h2>

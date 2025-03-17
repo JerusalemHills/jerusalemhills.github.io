@@ -22,26 +22,45 @@
 
       gtag('config', 'G-VE3Z9354M2');
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        fetch("header.html")
+          .then(response => response.text())
+          .then(data => {
+            document.body.insertAdjacentHTML("afterbegin", data);
+          });
+      });
+    </script>
+    <style>
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: white;
+      }
+      body {
+        padding-top: 100px; /* Adjust based on header height */
+      }
+      .breadcrumb {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .breadcrumb-item {
+        margin-right: 5px;
+      }
+      .breadcrumb-item a {
+        text-decoration: none;
+        color: #007bff;
+      }
+      .breadcrumb-item.active {
+        color: #6c757d;
+      }
+    </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <div class="left-header">
-            <a href="/"><img src="img/1.svg" alt="Jerusalem Hills Logo" class="logo"></a>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="/index.html">Home</a></li>
-                <li><a href="/about.html">About</a></li>
-                <li><a href="/forum/forum.html">Forum</a></li>
-                <li><a href="/games/index.html">Games</a></li>
-                <li><a href="/market/index.html">Marketplace</a></li>
-                <li><a href="/services-directory.html">Services</a></li>
-                <li><a href="/advertise.html">Advertise</a></li>
-            </ul>
-        </nav>
-    </header>
-
     <main class="services-directory-page">
         <h1>Jerusalem Local Services Directory</h1>
         <p class="directory-intro">Your comprehensive guide to essential services and resources in Jerusalem.</p>
