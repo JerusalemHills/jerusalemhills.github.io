@@ -19,6 +19,23 @@
     <link rel="manifest" href="/img/site.webmanifest">
     
     <style>
+        /* Root level constraints */
+        html, body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        #root-wrapper {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            position: relative;
+        }
+
         /* Reset and base styles */
         * {
             margin: 0;
@@ -31,25 +48,33 @@
             background-color: rgb(249, 250, 251);
             min-height: 100vh;
             width: 100%;
+            max-width: 100%;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Header styles */
+        /* Header styles with width constraint */
         .header {
             background: white;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
             position: fixed;
             width: 100%;
+            max-width: 100vw;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 50;
-            height: 96px; /* Explicitly define the header height */
+            height: 96px;
+            overflow-x: hidden;
         }
 
         .header-container {
             width: 100%;
-            max-width: 80rem;
+            max-width: 100%;
             margin: 0 auto;
             padding: 0 0.5rem;
+            box-sizing: border-box;
+            overflow-x: hidden;
         }
 
         .header-content {
@@ -738,26 +763,31 @@
 
         /* Video Slider styles */
         .video-slider-section {
-            padding: 20px 0;
+            width: 100%;
             max-width: 100%;
             margin: 0 auto;
-            overflow: visible;
+            overflow: hidden;
+            padding: 20px 0;
+            position: relative;
         }
 
         .slider-wrapper {
             width: 100%;
+            max-width: 100%;
             position: relative;
             padding: 0;
             margin: 0 auto;
-            max-width: 1600px;
+            overflow: hidden;
         }
 
         .slider-container {
-            position: relative;
             width: 100%;
+            max-width: 100%;
+            position: relative;
             margin: 0 auto;
-            padding: 0 50px;
-            overflow: visible;
+            padding: 0 30px;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         .slider {
@@ -765,71 +795,71 @@
             gap: 20px;
             transition: transform 0.5s ease;
             width: max-content;
+            max-width: calc(100vw - 60px);
+            margin: 0 auto;
         }
 
         .slider-item {
             position: relative;
-            width: calc((100vw - 240px) / 4);
-            max-width: 360px;
+            width: 100%;
             min-width: 260px;
+            max-width: calc(100vw - 80px);
             flex: 0 0 auto;
             aspect-ratio: 16/9;
         }
 
-        .slider-item iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .prev-btn {
-            left: 5px;
-        }
-
-        .next-btn {
-            right: 5px;
-        }
-
-        @media (max-width: 1400px) {
-            .slider-item {
-                width: calc((100vw - 200px) / 3);
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .slider-item {
-                width: calc((100vw - 160px) / 2);
-            }
-        }
-
         @media (max-width: 768px) {
-            .slider-item {
-                width: calc(100vw - 120px);
+            .header {
+                height: 80px;
+                width: 100vw;
+                left: 0;
+                right: 0;
             }
+            
+            .header-content {
+                padding: 0.25rem;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            .slider-item {
+                width: calc(100vw - 60px);
+                min-width: unset;
+            }
+
             .slider-container {
-                padding: 0 30px;
+                padding: 0 15px;
+            }
+
+            .slider {
+                max-width: calc(100vw - 30px);
+            }
+
+            .middle-section {
+                max-width: calc(100vw - 120px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                height: 50px;
+            }
+
+            .header-content {
+                height: 50px;
+                padding: 0.25rem;
+            }
+
+            .slider-container {
+                padding: 0 10px;
+            }
+
+            .slider {
+                max-width: calc(100vw - 20px);
+            }
+
+            .slider-item {
+                width: calc(100vw - 40px);
             }
         }
 
@@ -1334,448 +1364,521 @@
                 margin-top: 176px;
             }
         }
+
+        /* Container constraints for mobile */
+        .header-container, 
+        .news-ticker,
+        .ticker-wrapper,
+        .main-content,
+        .featured-section,
+        .videos-section,
+        .discussions-section,
+        .map-section,
+        .footer {
+            width: 100vw;
+            max-width: 100vw;
+            overflow-x: hidden;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+            box-sizing: border-box;
+            left: 0;
+            right: 0;
+        }
+
+        /* Ensure all grid containers are contained */
+        .products-grid,
+        .videos-grid,
+        .featured-grid {
+            width: 100%;
+            max-width: 100vw;
+            margin: 0;
+            padding: 0.5rem;
+            box-sizing: border-box;
+            display: grid;
+            gap: 1rem;
+        }
+
+        /* Additional mobile constraints */
+        @media (max-width: 768px) {
+            body {
+                min-width: 320px;
+            }
+
+            .header-content {
+                width: 100%;
+                max-width: 100vw;
+                padding: 0 0.5rem;
+            }
+
+            .middle-section {
+                width: auto;
+                flex: 1;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: calc(100vw - 140px);
+            }
+
+            .header-icons {
+                min-width: fit-content;
+            }
+
+            /* Ensure ads don't cause overflow */
+            .ad-banner ins.adsbygoogle,
+            .sidebar-ad ins.adsbygoogle {
+                max-width: calc(100vw - 20px) !important;
+                width: 100% !important;
+                margin: 0 auto !important;
+                display: block !important;
+            }
+        }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="top-date-display">
-            <div class="hebrew-date"></div>
-            <div class="gregorian-date"></div>
-        </div>
-        <div class="header-container">
-            <div class="header-content">
-                <div class="logo-section">
-                    <button class="icon-button menu-button" aria-label="Menu">
-                        <i data-lucide="menu"></i>
-                    </button>
-                    <a href="/" class="logo">
-                        <img src="img/1.svg" alt="Jerusalem Hills Logo" style="height: 90px; width: auto;">
-                    </a>
-                </div>
-                
-                <div class="middle-section">
-                    <div class="search-container">
-                        <input type="text" class="search-input" placeholder="Search everything...">
-                        <i data-lucide="search" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgb(156, 163, 175);"></i>
+    <div id="root-wrapper">
+        <header class="header">
+            <div class="top-date-display">
+                <div class="hebrew-date"></div>
+                <div class="gregorian-date"></div>
+            </div>
+            <div class="header-container">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <button class="icon-button menu-button" aria-label="Menu">
+                            <i data-lucide="menu"></i>
+                        </button>
+                        <a href="/" class="logo">
+                            <img src="img/1.svg" alt="Jerusalem Hills Logo" style="height: 90px; width: auto;">
+                        </a>
                     </div>
                     
-                    <!-- Navigation moved to header -->
-                    <nav class="header-nav">
-                        <a href="#marketplace" class="header-nav-link">
-                            <i data-lucide="shopping-bag"></i>
-                            <span>Marketplace</span>
-                        </a>
-                        <a href="#forum" class="header-nav-link">
-                            <i data-lucide="message-square"></i>
-                            <span>Forum</span>
-                        </a>
-                        <a href="#games" class="header-nav-link">
-                            <i data-lucide="gamepad-2"></i>
-                            <span>Games</span>
-                        </a>
-                        <a href="#news" class="header-nav-link">
-                            <i data-lucide="newspaper"></i>
-                            <span>News</span>
-                        </a>
-                        <a href="/sidur.html" class="header-nav-link">
-                            <i data-lucide="book-open"></i>
-                            <span>Siddur</span>
-                        </a>
-                    </nav>
+                    <div class="middle-section">
+                        <div class="search-container">
+                            <input type="text" class="search-input" placeholder="Search everything...">
+                            <i data-lucide="search" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgb(156, 163, 175);"></i>
+                        </div>
+                        
+                        <!-- Navigation moved to header -->
+                        <nav class="header-nav">
+                            <a href="#marketplace" class="header-nav-link">
+                                <i data-lucide="shopping-bag"></i>
+                                <span>Marketplace</span>
+                            </a>
+                            <a href="#forum" class="header-nav-link">
+                                <i data-lucide="message-square"></i>
+                                <span>Forum</span>
+                            </a>
+                            <a href="#games" class="header-nav-link">
+                                <i data-lucide="gamepad-2"></i>
+                                <span>Games</span>
+                            </a>
+                            <a href="#news" class="header-nav-link">
+                                <i data-lucide="newspaper"></i>
+                                <span>News</span>
+                            </a>
+                            <a href="/sidur.html" class="header-nav-link">
+                                <i data-lucide="book-open"></i>
+                                <span>Siddur</span>
+                            </a>
+                        </nav>
+                    </div>
+
+                    <div class="header-icons">
+                        <button class="icon-button" aria-label="Shopping Cart">
+                            <i data-lucide="shopping-cart"></i>
+                        </button>
+                        <button class="icon-button" aria-label="Notifications">
+                            <i data-lucide="bell"></i>
+                        </button>
+                        <button class="icon-button" aria-label="User menu" onclick="window.open('/user_info.html', '_blank')">
+                            <i data-lucide="user"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="header-icons">
-                    <button class="icon-button" aria-label="Shopping Cart">
-                        <i data-lucide="shopping-cart"></i>
-                    </button>
-                    <button class="icon-button" aria-label="Notifications">
-                        <i data-lucide="bell"></i>
-                    </button>
-                    <button class="icon-button" aria-label="User menu" onclick="window.open('/user_info.html', '_blank')">
-                        <i data-lucide="user"></i>
-                    </button>
+                <div class="mobile-menu">
+                    <a href="#marketplace" class="mobile-link">Marketplace</a>
+                    <a href="#forum" class="mobile-link">Forum</a>
+                    <a href="#games" class="mobile-link">Games</a>
+                    <a href="#news" class="mobile-link">News</a>
+                    <a href="/sidur.html" class="mobile-link">Siddur</a>
                 </div>
             </div>
+        </header>
 
-            <div class="mobile-menu">
-                <a href="#marketplace" class="mobile-link">Marketplace</a>
-                <a href="#forum" class="mobile-link">Forum</a>
-                <a href="#games" class="mobile-link">Games</a>
-                <a href="#news" class="mobile-link">News</a>
-                <a href="/sidur.html" class="mobile-link">Siddur</a>
+        <!-- Removed main-nav section since navigation is now in header -->
+
+        <!-- News Ticker -->
+        <div class="news-ticker">
+            <div class="ticker-tape">
+                <div id="ticker-content" class="ticker-content">
+                    <!-- News items will be dynamically inserted here -->
+                    <span class="ticker-item">Welcome to Jerusalem Hills!</span>
+                    <span class="ticker-item">Explore our marketplace for unique Jerusalem products.</span>
+                    <span class="ticker-item">Join our forum discussions about Jerusalem culture.</span>
+                </div>
             </div>
         </div>
-    </header>
 
-    <!-- Removed main-nav section since navigation is now in header -->
-
-    <!-- News Ticker -->
-    <div class="news-ticker">
-        <div class="ticker-tape">
-            <div id="ticker-content" class="ticker-content">
-                <!-- News items will be dynamically inserted here -->
-                <span class="ticker-item">Welcome to Jerusalem Hills!</span>
-                <span class="ticker-item">Explore our marketplace for unique Jerusalem products.</span>
-                <span class="ticker-item">Join our forum discussions about Jerusalem culture.</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- TradingView Widget BEGIN -->
-    <div class="tradingview-widget-container ticker-wrapper">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-      {
-        "symbols": [
+        <!-- TradingView Widget BEGIN -->
+        <div class="tradingview-widget-container ticker-wrapper">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
           {
-            "proName": "FOREXCOM:SPXUSD",
-            "title": "S&P 500"
-          },
-          {
-            "proName": "FOREXCOM:NSXUSD",
-            "title": "Nasdaq"
-          },
-          {
-            "proName": "FX_IDC:EURUSD",
-            "title": "EUR/USD"
-          },
-          {
-            "proName": "BITSTAMP:BTCUSD",
-            "title": "BTC"
-          },
-          {
-            "proName": "BITSTAMP:ETHUSD",
-            "title": "ETH"
+            "symbols": [
+              {
+                "proName": "FOREXCOM:SPXUSD",
+                "title": "S&P 500"
+              },
+              {
+                "proName": "FOREXCOM:NSXUSD",
+                "title": "Nasdaq"
+              },
+              {
+                "proName": "FX_IDC:EURUSD",
+                "title": "EUR/USD"
+              },
+              {
+                "proName": "BITSTAMP:BTCUSD",
+                "title": "BTC"
+              },
+              {
+                "proName": "BITSTAMP:ETHUSD",
+                "title": "ETH"
+              }
+            ],
+            "showSymbolLogo": false,
+            "colorTheme": "light",
+            "isTransparent": true,
+            "displayMode": "regular",
+            "locale": "en"
           }
-        ],
-        "showSymbolLogo": false,
-        "colorTheme": "light",
-        "isTransparent": true,
-        "displayMode": "regular",
-        "locale": "en"
-      }
-      </script>
-    </div>
-    <!-- TradingView Widget END -->
-
-    <main class="main-content">
-        <!-- Homepage Banner Ad -->
-        <section class="ad-banner">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1738161253720" crossorigin="anonymous"></script>
-            <!-- Homepage Banner -->
-            <ins class="adsbygoogle"
-                 style="display:block;width:970px;height:250px;max-width:100%;margin:0 auto;"
-                 data-ad-client="ca-pub-1738161253720"
-                 data-ad-slot="XXXXXXXXXX"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </section>
-
-        <section class="trending-section">
-            <h2 class="section-title">Trending in Marketplace</h2>
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="img/pic01.jpg" alt="Product" class="product-image">
-                    <div class="product-content">
-                        <h3 class="product-title">Jerusalem Crafts</h3>
-                        <p class="product-price">₪299</p>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="img/pic02.jpg" alt="Product" class="product-image">
-                    <div class="product-content">
-                        <h3 class="product-title">Dead Sea Products</h3>
-                        <p class="product-price">₪199</p>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="img/pic01.jpg" alt="Product" class="product-image">
-                    <div class="product-content">
-                        <h3 class="product-title">Judaica Art</h3>
-                        <p class="product-price">₪399</p>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="img/pic02.jpg" alt="Product" class="product-image">
-                    <div class="product-content">
-                        <h3 class="product-title">Local Spices</h3>
-                        <p class="product-price">₪99</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="discussions-section">
-            <h2 class="section-title">Active Discussions</h2>
-            <div class="discussions-list">
-                <div class="discussion-card">
-                    <div class="discussion-header">
-                        <img src="img/logo.jpg" alt="Avatar" class="avatar">
-                        <div class="discussion-content">
-                            <h3 class="discussion-title">Jerusalem Culture and Heritage</h3>
-                            <p class="discussion-preview">Join our discussion about preserving and celebrating Jerusalem's rich cultural heritage...</p>
-                            <div class="discussion-meta">
-                                <span>24 replies</span>
-                                <span>•</span>
-                                <span>3 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="discussion-card">
-                    <div class="discussion-header">
-                        <img src="img/logo.jpg" alt="Avatar" class="avatar">
-                        <div class="discussion-content">
-                            <h3 class="discussion-title">Local Events This Week</h3>
-                            <p class="discussion-preview">Check out the upcoming events in Jerusalem this week...</p>
-                            <div class="discussion-meta">
-                                <span>15 replies</span>
-                                <span>•</span>
-                                <span>5 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="discussion-card">
-                    <div class="discussion-header">
-                        <img src="img/logo.jpg" alt="Avatar" class="avatar">
-                        <div class="discussion-content">
-                            <h3 class="discussion-title">Community Marketplace Tips</h3>
-                            <p class="discussion-preview">Share your experiences and tips for buying and selling in our marketplace...</p>
-                            <div class="discussion-meta">
-                                <span>32 replies</span>
-                                <span>•</span>
-                                <span>1 day ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="featured-section">
-            <h2 class="section-title">Featured Articles</h2>
-            <div class="featured-grid">
-                <div class="featured-card">
-                    <img src="img/Jerusalem_Old_City_market.jpg" alt="Marketplace" class="featured-image">
-                    <div class="featured-content">
-                        <h3 class="featured-title">New Marketplace Features</h3>
-                        <p class="featured-description">Discover our latest AI-powered recommendations and seamless shopping experience.</p>
-                    </div>
-                </div>
-                <div class="featured-card">
-                    <img src="img/David's_Tower_11.jpg" alt="Gaming" class="featured-image">
-                    <div class="featured-content">
-                        <h3 class="featured-title">Gaming Tournament</h3>
-                        <p class="featured-description">Join our weekly gaming tournaments and compete for amazing prizes!</p>
-                    </div>
-                </div>
-                <div class="featured-card">
-                    <img src="img/header-bg-city-wall.jpg" alt="News" class="featured-image">
-                    <div class="featured-content">
-                        <h3 class="featured-title">Latest Updates</h3>
-                        <p class="featured-description">Stay updated with the latest Jerusalem news and community insights.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="videos-section">
-            <h2 class="section-title">Latest Videos</h2>
-            <div class="videos-grid">
-                <div class="video-card">
-                    <img src="img/header-bg-city-wall.jpg" alt="Jerusalem City Tour" class="video-thumbnail">
-                    <div class="video-content">
-                        <h3 class="video-title">Jerusalem Old City Tour</h3>
-                        <p class="video-duration">12:45</p>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <img src="img/Jerusalem_Old_City_market.jpg" alt="Market Tour" class="video-thumbnail">
-                    <div class="video-content">
-                        <h3 class="video-title">Market Shopping Guide</h3>
-                        <p class="video-duration">8:30</p>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <img src="img/David's_Tower_11.jpg" alt="Historical Sites" class="video-thumbnail">
-                    <div class="video-content">
-                        <h3 class="video-title">David's Tower History</h3>
-                        <p class="video-duration">15:20</p>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <img src="img/pic01.jpg" alt="Local Crafts" class="video-thumbnail">
-                    <div class="video-content">
-                        <h3 class="video-title">Artisan Workshop</h3>
-                        <p class="video-duration">10:15</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="video-slider-section">
-            <h2>Latest Videos from Jerusalem Hills</h2>
-            <div class="slider-wrapper">
-                <div class="slider-container">
-                    <div class="slider" id="video-slider">
-                        <!-- Videos will be dynamically loaded here -->
-                    </div>
-                    <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&lt;</button>
-                    <button class="slider-btn next-btn" onclick="moveSlide(1)">&gt;</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Interactive Map Section -->
-        <section class="map-section">
-            <div class="map-section-container">
-                <div class="map-wrapper">
-                    <h2 class="section-title">Explore Jerusalem</h2>
-                    <div class="map-controls">
-                        <button class="map-button active" data-category="attractions">Tourist Attractions</button>
-                        <button class="map-button" data-category="religious">Religious Sites</button>
-                        <button class="map-button" data-category="markets">Markets & Shopping</button>
-                        <button class="map-button" data-category="restaurants">Restaurants</button>
-                    </div>
-                    <div class="map-container">
-                        <div id="map"></div>
-                    </div>
-                </div>
-
-                <div class="services-links">
-                    <h2 class="section-title">Services</h2>
-                    
-                    <div class="services-category">
-                        <h3>Government Offices</h3>
-                        <ul class="services-list">
-                            <li>
-                                <a href="https://www.jerusalem.muni.il/" target="_blank">
-                                    <i data-lucide="building"></i>
-                                    Jerusalem Municipality
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.gov.il/en/service/request_residency_status_in_israel" target="_blank">
-                                    <i data-lucide="id-card"></i>
-                                    Interior Ministry
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.tourist-israel.com/jerusalem-tourist-information/" target="_blank">
-                                    <i data-lucide="info"></i>
-                                    Tourist Information
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="services-category">
-                        <h3>Transportation</h3>
-                        <ul class="services-list">
-                            <li>
-                                <a href="https://www.rail.co.il/en" target="_blank">
-                                    <i data-lucide="train"></i>
-                                    Israel Railways
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.egged.co.il/en" target="_blank">
-                                    <i data-lucide="bus"></i>
-                                    Egged Bus Service
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.citypass.co.il/en/" target="_blank">
-                                    <i data-lucide="train-front"></i>
-                                    Light Rail
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="services-category">
-                        <h3>Utilities</h3>
-                        <ul class="services-list">
-                            <li>
-                                <a href="https://www.hagihon.co.il/english/" target="_blank">
-                                    <i data-lucide="droplets"></i>
-                                    Hagihon Water Company
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.iec.co.il/en/home" target="_blank">
-                                    <i data-lucide="zap"></i>
-                                    Electric Corporation
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.bezeq.co.il/en/" target="_blank">
-                                    <i data-lucide="wifi"></i>
-                                    Bezeq Telecom
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="services-category">
-                        <h3>Emergency</h3>
-                        <ul class="services-list">
-                            <li>
-                                <a href="tel:100">
-                                    <i data-lucide="siren"></i>
-                                    Police - 100
-                                </a>
-                            </li>
-                            <li>
-                                <a href="tel:101">
-                                    <i data-lucide="heart-pulse"></i>
-                                    Ambulance - 101
-                                </a>
-                            </li>
-                            <li>
-                                <a href="tel:102">
-                                    <i data-lucide="flame"></i>
-                                    Fire Department - 102
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sidebar Ad -->
-        <aside class="sidebar-ad">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1738161253720" crossorigin="anonymous"></script>
-            <!-- Sidebar Vertical -->
-            <ins class="adsbygoogle"
-                 style="display:block;width:300px;height:600px;margin:0 auto;"
-                 data-ad-client="ca-pub-1738161253720"
-                 data-ad-slot="XXXXXXXXXX"
-                 data-ad-format="vertical"
-                 data-full-width-responsive="false"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </aside>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-copyright">
-                © 2024 JerusalemHills.com. All rights reserved.
-            </div>
-            <div class="footer-links">
-                <a href="/privacy-policy.html" class="footer-link">Privacy Policy</a>
-                <a href="/terms-of-service.html" class="footer-link">Terms of Service</a>
-                <a href="/contact.html" class="footer-link">Contact Us</a>
-            </div>
+          </script>
         </div>
-    </footer>
+        <!-- TradingView Widget END -->
+
+        <main class="main-content">
+            <!-- Homepage Banner Ad -->
+            <section class="ad-banner">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1738161253720" crossorigin="anonymous"></script>
+                <!-- Homepage Banner -->
+                <ins class="adsbygoogle"
+                     style="display:block;width:970px;height:250px;max-width:100%;margin:0 auto;"
+                     data-ad-client="ca-pub-1738161253720"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </section>
+
+            <section class="trending-section">
+                <h2 class="section-title">Trending in Marketplace</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <img src="img/pic01.jpg" alt="Product" class="product-image">
+                        <div class="product-content">
+                            <h3 class="product-title">Jerusalem Crafts</h3>
+                            <p class="product-price">₪299</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="img/pic02.jpg" alt="Product" class="product-image">
+                        <div class="product-content">
+                            <h3 class="product-title">Dead Sea Products</h3>
+                            <p class="product-price">₪199</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="img/pic01.jpg" alt="Product" class="product-image">
+                        <div class="product-content">
+                            <h3 class="product-title">Judaica Art</h3>
+                            <p class="product-price">₪399</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="img/pic02.jpg" alt="Product" class="product-image">
+                        <div class="product-content">
+                            <h3 class="product-title">Local Spices</h3>
+                            <p class="product-price">₪99</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="discussions-section">
+                <h2 class="section-title">Active Discussions</h2>
+                <div class="discussions-list">
+                    <div class="discussion-card">
+                        <div class="discussion-header">
+                            <img src="img/logo.jpg" alt="Avatar" class="avatar">
+                            <div class="discussion-content">
+                                <h3 class="discussion-title">Jerusalem Culture and Heritage</h3>
+                                <p class="discussion-preview">Join our discussion about preserving and celebrating Jerusalem's rich cultural heritage...</p>
+                                <div class="discussion-meta">
+                                    <span>24 replies</span>
+                                    <span>•</span>
+                                    <span>3 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="discussion-card">
+                        <div class="discussion-header">
+                            <img src="img/logo.jpg" alt="Avatar" class="avatar">
+                            <div class="discussion-content">
+                                <h3 class="discussion-title">Local Events This Week</h3>
+                                <p class="discussion-preview">Check out the upcoming events in Jerusalem this week...</p>
+                                <div class="discussion-meta">
+                                    <span>15 replies</span>
+                                    <span>•</span>
+                                    <span>5 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="discussion-card">
+                        <div class="discussion-header">
+                            <img src="img/logo.jpg" alt="Avatar" class="avatar">
+                            <div class="discussion-content">
+                                <h3 class="discussion-title">Community Marketplace Tips</h3>
+                                <p class="discussion-preview">Share your experiences and tips for buying and selling in our marketplace...</p>
+                                <div class="discussion-meta">
+                                    <span>32 replies</span>
+                                    <span>•</span>
+                                    <span>1 day ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="featured-section">
+                <h2 class="section-title">Featured Articles</h2>
+                <div class="featured-grid">
+                    <div class="featured-card">
+                        <img src="img/Jerusalem_Old_City_market.jpg" alt="Marketplace" class="featured-image">
+                        <div class="featured-content">
+                            <h3 class="featured-title">New Marketplace Features</h3>
+                            <p class="featured-description">Discover our latest AI-powered recommendations and seamless shopping experience.</p>
+                        </div>
+                    </div>
+                    <div class="featured-card">
+                        <img src="img/David's_Tower_11.jpg" alt="Gaming" class="featured-image">
+                        <div class="featured-content">
+                            <h3 class="featured-title">Gaming Tournament</h3>
+                            <p class="featured-description">Join our weekly gaming tournaments and compete for amazing prizes!</p>
+                        </div>
+                    </div>
+                    <div class="featured-card">
+                        <img src="img/header-bg-city-wall.jpg" alt="News" class="featured-image">
+                        <div class="featured-content">
+                            <h3 class="featured-title">Latest Updates</h3>
+                            <p class="featured-description">Stay updated with the latest Jerusalem news and community insights.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="videos-section">
+                <h2 class="section-title">Latest Videos</h2>
+                <div class="videos-grid">
+                    <div class="video-card">
+                        <img src="img/header-bg-city-wall.jpg" alt="Jerusalem City Tour" class="video-thumbnail">
+                        <div class="video-content">
+                            <h3 class="video-title">Jerusalem Old City Tour</h3>
+                            <p class="video-duration">12:45</p>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <img src="img/Jerusalem_Old_City_market.jpg" alt="Market Tour" class="video-thumbnail">
+                        <div class="video-content">
+                            <h3 class="video-title">Market Shopping Guide</h3>
+                            <p class="video-duration">8:30</p>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <img src="img/David's_Tower_11.jpg" alt="Historical Sites" class="video-thumbnail">
+                        <div class="video-content">
+                            <h3 class="video-title">David's Tower History</h3>
+                            <p class="video-duration">15:20</p>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <img src="img/pic01.jpg" alt="Local Crafts" class="video-thumbnail">
+                        <div class="video-content">
+                            <h3 class="video-title">Artisan Workshop</h3>
+                            <p class="video-duration">10:15</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="video-slider-section">
+                <h2>Latest Videos from Jerusalem Hills</h2>
+                <div class="slider-wrapper">
+                    <div class="slider-container">
+                        <div class="slider" id="video-slider">
+                            <!-- Videos will be dynamically loaded here -->
+                        </div>
+                        <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&lt;</button>
+                        <button class="slider-btn next-btn" onclick="moveSlide(1)">&gt;</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Map Section -->
+            <section class="map-section">
+                <div class="map-section-container">
+                    <div class="map-wrapper">
+                        <h2 class="section-title">Explore Jerusalem</h2>
+                        <div class="map-controls">
+                            <button class="map-button active" data-category="attractions">Tourist Attractions</button>
+                            <button class="map-button" data-category="religious">Religious Sites</button>
+                            <button class="map-button" data-category="markets">Markets & Shopping</button>
+                            <button class="map-button" data-category="restaurants">Restaurants</button>
+                        </div>
+                        <div class="map-container">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+
+                    <div class="services-links">
+                        <h2 class="section-title">Services</h2>
+                        
+                        <div class="services-category">
+                            <h3>Government Offices</h3>
+                            <ul class="services-list">
+                                <li>
+                                    <a href="https://www.jerusalem.muni.il/" target="_blank">
+                                        <i data-lucide="building"></i>
+                                        Jerusalem Municipality
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.gov.il/en/service/request_residency_status_in_israel" target="_blank">
+                                        <i data-lucide="id-card"></i>
+                                        Interior Ministry
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.tourist-israel.com/jerusalem-tourist-information/" target="_blank">
+                                        <i data-lucide="info"></i>
+                                        Tourist Information
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="services-category">
+                            <h3>Transportation</h3>
+                            <ul class="services-list">
+                                <li>
+                                    <a href="https://www.rail.co.il/en" target="_blank">
+                                        <i data-lucide="train"></i>
+                                        Israel Railways
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.egged.co.il/en" target="_blank">
+                                        <i data-lucide="bus"></i>
+                                        Egged Bus Service
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.citypass.co.il/en/" target="_blank">
+                                        <i data-lucide="train-front"></i>
+                                        Light Rail
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="services-category">
+                            <h3>Utilities</h3>
+                            <ul class="services-list">
+                                <li>
+                                    <a href="https://www.hagihon.co.il/english/" target="_blank">
+                                        <i data-lucide="droplets"></i>
+                                        Hagihon Water Company
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.iec.co.il/en/home" target="_blank">
+                                        <i data-lucide="zap"></i>
+                                        Electric Corporation
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.bezeq.co.il/en/" target="_blank">
+                                        <i data-lucide="wifi"></i>
+                                        Bezeq Telecom
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="services-category">
+                            <h3>Emergency</h3>
+                            <ul class="services-list">
+                                <li>
+                                    <a href="tel:100">
+                                        <i data-lucide="siren"></i>
+                                        Police - 100
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="tel:101">
+                                        <i data-lucide="heart-pulse"></i>
+                                        Ambulance - 101
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="tel:102">
+                                        <i data-lucide="flame"></i>
+                                        Fire Department - 102
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sidebar Ad -->
+            <aside class="sidebar-ad">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1738161253720" crossorigin="anonymous"></script>
+                <!-- Sidebar Vertical -->
+                <ins class="adsbygoogle"
+                     style="display:block;width:300px;height:600px;margin:0 auto;"
+                     data-ad-client="ca-pub-1738161253720"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="vertical"
+                     data-full-width-responsive="false"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </aside>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-copyright">
+                    © 2024 JerusalemHills.com. All rights reserved.
+                </div>
+                <div class="footer-links">
+                    <a href="/privacy-policy.html" class="footer-link">Privacy Policy</a>
+                    <a href="/terms-of-service.html" class="footer-link">Terms of Service</a>
+                    <a href="/contact.html" class="footer-link">Contact Us</a>
+                </div>
+            </div>
+        </footer>
+    </div>
 
     <script>
         // Initialize Lucide icons
