@@ -1003,6 +1003,158 @@
             color: rgb(17, 24, 39);
             text-decoration: underline;
         }
+
+        /* Base header heights */
+        .header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 50;
+            height: 96px;
+            background: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* News Ticker Styles */
+        .news-ticker {
+            position: fixed;
+            top: 96px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: white;
+            z-index: 47;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+
+        /* Trading View Ticker Styles */
+        .ticker-wrapper {
+            position: fixed;
+            top: 136px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: white;
+            z-index: 46;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+
+        /* Widget container styles */
+        .tradingview-widget-container,
+        .tradingview-widget-container__widget {
+            width: 100% !important;
+            height: 40px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            display: block !important;
+        }
+
+        /* Main content spacing */
+        .main-content {
+            margin-top: 176px;
+            padding-top: 1rem;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            /* Adjust header for mobile */
+            .header {
+                height: 80px;
+            }
+            
+            .header-content {
+                height: 80px;
+                padding: 0.25rem 0;
+            }
+
+            /* Logo adjustments */
+            .logo img {
+                height: 60px;
+            }
+
+            /* Update ticker positions for mobile */
+            .news-ticker {
+                top: 80px; /* Align with reduced header height */
+            }
+
+            .ticker-wrapper {
+                top: 120px; /* header (80px) + news ticker (40px) */
+            }
+
+            /* Update main content margin */
+            .main-content {
+                margin-top: 160px; /* header (80px) + news ticker (40px) + trading ticker (40px) */
+                padding-top: 0.5rem;
+            }
+
+            /* Adjust search and navigation for mobile */
+            .middle-section {
+                margin: 0 0.5rem;
+            }
+
+            .search-container {
+                max-width: none;
+            }
+
+            /* Ensure mobile menu doesn't overlap */
+            .mobile-menu.open {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: white;
+                z-index: 49;
+                border-bottom: 1px solid rgb(229, 231, 235);
+            }
+
+            /* Hide desktop nav items */
+            .header-nav {
+                display: none;
+            }
+            
+            /* Adjust date display for mobile */
+            .top-date-display {
+                display: none; /* Hide on mobile to save space */
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            .header {
+                height: 70px;
+            }
+
+            .header-content {
+                height: 70px;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .news-ticker {
+                top: 70px;
+            }
+
+            .ticker-wrapper {
+                top: 110px; /* header (70px) + news ticker (40px) */
+            }
+
+            .main-content {
+                margin-top: 150px; /* header (70px) + news ticker (40px) + trading ticker (40px) */
+            }
+
+            .mobile-menu.open {
+                top: 70px;
+            }
+        }
     </style>
 </head>
 <body>
