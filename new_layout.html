@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jerusalem Hills</title>
     
     <!-- Load local scripts instead of CDNs to avoid MIME type issues -->
@@ -30,6 +30,8 @@
             font-family: system-ui, -apple-system, sans-serif;
             background-color: rgb(249, 250, 251);
             min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         /* Header styles */
@@ -44,9 +46,10 @@
         }
 
         .header-container {
+            width: 100%;
             max-width: 80rem;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 0.5rem;
         }
 
         .header-content {
@@ -271,8 +274,12 @@
 
         /* Main content spacing - Adjust for new header layout */
         .main-content {
+            width: 100%;
+            max-width: 80rem;
+            margin: 0 auto;
             margin-top: 176px; /* header (96px) + news ticker (40px) + trading view ticker (40px) */
             padding-top: 0;
+            overflow-x: hidden;
         }
 
         @media (max-width: 768px) {
@@ -326,6 +333,13 @@
 
         .ad-banner {
             margin: 0.5rem auto; /* Reduced margin */
+        }
+
+        .ad-banner ins.adsbygoogle {
+            width: 100% !important;
+            max-width: 970px !important;
+            height: auto !important;
+            min-height: 250px;
         }
 
         .trending-section {
@@ -441,14 +455,34 @@
         /* Products and Videos section styles */
         .products-grid, .videos-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr;
             gap: 1.5rem;
             margin-bottom: 3rem;
+            padding: 0.5rem;
+            width: 100%;
         }
 
         @media (min-width: 768px) {
             .products-grid, .videos-grid {
                 grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 640px) {
+            .products-grid, .videos-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .products-grid, .videos-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .header-container {
+                padding: 0 1rem;
+            }
+            .main-content {
+                padding: 1rem;
             }
         }
 
@@ -542,6 +576,9 @@
 
         .mobile-menu.open {
             display: block;
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
         }
 
         .mobile-link {
@@ -575,6 +612,9 @@
         }
 
         .map-section-container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0 0.5rem;
             display: flex;
             gap: 2rem;
             max-width: 80rem;
@@ -1128,31 +1168,170 @@
         /* Small mobile devices */
         @media (max-width: 480px) {
             .header {
-                height: 70px;
-            }
-
-            .header-content {
-                height: 70px;
-            }
-
-            .logo img {
                 height: 50px;
             }
 
+            .header-content {
+                height: 50px;
+                padding: 0.25rem;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
             .news-ticker {
-                top: 70px;
+                top: 50px;
+                height: 25px;
+                font-size: 12px;
+                padding: 0 0.5rem;
             }
 
             .ticker-wrapper {
-                top: 110px; /* header (70px) + news ticker (40px) */
+                top: 75px; /* header (50px) + news ticker (25px) */
+                height: 25px;
             }
 
             .main-content {
-                margin-top: 150px; /* header (70px) + news ticker (40px) + trading ticker (40px) */
+                margin-top: 100px; /* header (50px) + news ticker (25px) + trading ticker (25px) */
+                padding: 0.5rem;
             }
 
             .mobile-menu.open {
-                top: 70px;
+                top: 50px;
+            }
+
+            .search-container {
+                max-width: calc(100vw - 120px);
+            }
+
+            .header-icons {
+                gap: 0.5rem;
+            }
+
+            .icon-button {
+                padding: 0.25rem;
+            }
+        }
+
+        /* Base header styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Mobile-first approach */
+        @media (max-width: 768px) {
+            /* Header adjustments */
+            .header {
+                height: 60px; /* Reduced height for mobile */
+            }
+            
+            .header-content {
+                height: 60px;
+                padding: 0.5rem;
+            }
+
+            .logo img {
+                height: 45px; /* Smaller logo for mobile */
+            }
+
+            /* News ticker positioning */
+            .news-ticker {
+                top: 60px;
+                height: 30px; /* Smaller height for mobile */
+            }
+
+            /* Trading view ticker adjustments */
+            .ticker-wrapper {
+                top: 90px; /* header (60px) + news ticker (30px) */
+                height: 30px; /* Smaller height for mobile */
+            }
+
+            /* Widget container adjustments */
+            .tradingview-widget-container,
+            .tradingview-widget-container__widget {
+                height: 30px !important;
+            }
+
+            /* Main content spacing */
+            .main-content {
+                margin-top: 120px; /* header (60px) + news ticker (30px) + trading ticker (30px) */
+            }
+
+            /* Mobile menu adjustments */
+            .mobile-menu.open {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: white;
+                z-index: 49;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            .header {
+                height: 50px;
+            }
+
+            .header-content {
+                height: 50px;
+                padding: 0.25rem;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .news-ticker {
+                top: 50px;
+                height: 25px;
+            }
+
+            .ticker-wrapper {
+                top: 75px; /* header (50px) + news ticker (25px) */
+                height: 25px;
+            }
+
+            .tradingview-widget-container,
+            .tradingview-widget-container__widget {
+                height: 25px !important;
+            }
+
+            .main-content {
+                margin-top: 100px; /* header (50px) + news ticker (25px) + trading ticker (25px) */
+            }
+
+            .mobile-menu.open {
+                top: 50px;
+            }
+        }
+
+        /* Tablet and desktop styles */
+        @media (min-width: 769px) {
+            .header {
+                height: 96px;
+            }
+
+            .news-ticker {
+                top: 96px;
+                height: 40px;
+            }
+
+            .ticker-wrapper {
+                top: 136px;
+                height: 40px;
+            }
+
+            .main-content {
+                margin-top: 176px;
             }
         }
     </style>
