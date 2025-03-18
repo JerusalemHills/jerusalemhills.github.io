@@ -2,30 +2,67 @@ const feedUrls = [
     "https://www.jpost.com/rss/rssfeedsjerusalem.aspx",
     "https://www.jpost.com/rss/rssfeedsheadlines.aspx",
     "https://www.jpost.com/rss/rssfeedsinternational",
-    "https://www.jpost.com/rss/rssfeedschristiannews",
-    "http://feeds.bbci.co.uk/news/rss.xml", // BBC News - General News
-    "http://feeds.bbci.co.uk/news/technology/rss.xml", // BBC News - Technology
-    "http://feeds.bbci.co.uk/news/world/rss.xml", // BBC News - World News
-    "http://rss.cnn.com/rss/cnn_topstories.rss", // CNN - Top Stories
-    "http://rss.cnn.com/rss/cnn_world.rss", // CNN - World
-    "https://finance.yahoo.com/news/rssindex" // Yahoo Finance
+    "https://www.jpost.com/rss/rssfeedschristiannews"
 ];
 
-const apiUrl = "https://api.rss2json.com/v1/api.json?rss_url=";
+// Using multiple CORS proxies for redundancy
+const corsProxies = [
+    "https://api.allorigins.win/raw?url=",
+    "https://corsproxy.io/?",
+    "https://cors.eu.org/"
+];
+
+let currentProxyIndex = 0;
 
 async function fetchFeedWithRetry(url, retries = 3) {
     let attempt = 0;
     while (attempt < retries) {
         try {
-            const response = await fetch(apiUrl + encodeURIComponent(url));
-            if (!response.ok) {
-                console.warn(`Failed to fetch URL: ${url}`);
-                break; // Exit the loop on a non-2xx status
+            // Show loading state
+            const tickerContent = document.getElementById('ticker-content');
+            if (attempt === 0) {
+                tickerContent.innerHTML = "<span class='ticker-item'>Loading news...</span>";
             }
-            return await response.json();
+
+            const proxyUrl = corsProxies[currentProxyIndex] + encodeURIComponent(url);
+            const response = await fetch(proxyUrl);
+            
+            if (!response.ok) {
+                console.warn(`Failed to fetch URL with proxy ${currentProxyIndex}: ${url}`);
+                // Try next proxy
+                currentProxyIndex = (currentProxyIndex + 1) % corsProxies.length;
+                throw new Error('Fetch failed');
+            }
+            
+            const text = await response.text();
+            // Parse the XML manually since we're getting raw RSS feed
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(text, "text/xml");
+            
+            // Check if we got valid XML
+            if (xml.getElementsByTagName("parsererror").length > 0) {
+                throw new Error('Invalid XML');
+            }
+            
+            const items = Array.from(xml.querySelectorAll("item")).map(item => ({
+                title: item.querySelector("title")?.textContent || "",
+                link: item.querySelector("link")?.textContent || "",
+                pubDate: item.querySelector("pubDate")?.textContent || ""
+            }));
+            
+            return { items };
         } catch (error) {
             console.error(`Error fetching URL: ${url}`, error);
-            if (attempt === retries - 1) throw error; // Re-throw after max retries
+            if (attempt === retries - 1) {
+                // If all retries failed, try next proxy
+                currentProxyIndex = (currentProxyIndex + 1) % corsProxies.length;
+                if (currentProxyIndex === 0) {
+                    // If we've tried all proxies, show error
+                    const tickerContent = document.getElementById('ticker-content');
+                    tickerContent.innerHTML = "<span class='ticker-item'>Unable to load news feed. Please check back later.</span>";
+                    throw error;
+                }
+            }
             attempt++;
         }
     }
@@ -148,18 +185,34 @@ function startScrolling() {
     }, 30); // Controls the speed - higher number = slower scrolling
 }
 
-// Reload the ticker regularly to get fresh content
+// Update reloadTicker to handle errors better
 function reloadTicker() {
-    setInterval(() => {
-        const tickerContent = document.getElementById('ticker-content');
-        if (tickerContent) {
-            tickerContent.innerHTML = '';
-            fetchFeeds();
+    setInterval(async () => {
+        try {
+            const tickerContent = document.getElementById('ticker-content');
+            if (tickerContent) {
+                tickerContent.innerHTML = '';
+                await fetchFeeds();
+            }
+        } catch (error) {
+            console.error('Error reloading ticker:', error);
+            // Will show error message from fetchFeedWithRetry
         }
-    }, 30 * 60 * 1000); // Reload every 30 minutes
+    }, 20 * 60 * 1000); // Reload every 20 minutes
 }
 
+// Initialize immediately and set up reload interval
 document.addEventListener("DOMContentLoaded", () => {
-    fetchFeeds();
+    // Add loading state immediately
+    const tickerContent = document.getElementById('ticker-content');
+    if (tickerContent) {
+        tickerContent.innerHTML = "<span class='ticker-item'>Loading news...</span>";
+    }
+    
+    fetchFeeds().catch(error => {
+        console.error('Initial ticker load failed:', error);
+        // Error message will be shown by fetchFeedWithRetry
+    });
+    
     reloadTicker();
 });
