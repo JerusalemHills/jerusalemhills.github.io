@@ -377,7 +377,7 @@
             border-bottom: 1px solid rgb(229, 231, 235);
             z-index: 47; /* Higher than TradingView widget */
             overflow: hidden;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            box-shadow: none; /* Remove shadow to prevent gap appearance */
         }
 
         /* Rest of the styles remain unchanged */
@@ -915,10 +915,58 @@
             width: 100%;
             height: 40px;
             background: white;
-            border-bottom: 1px solid rgb(229, 231, 235);
-            z-index: 47; /* Higher than TradingView widget */
+            border-bottom: none; /* Remove border to prevent gap */
+            z-index: 47;
             overflow: hidden;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Trading View Ticker Styles */
+        .ticker-wrapper {
+            position: fixed;
+            top: 136px; /* Exactly header + news ticker height */
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: white;
+            z-index: 46;
+            overflow: hidden;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Remove any margins and padding from widget containers */
+        .tradingview-widget-container,
+        .tradingview-widget-container__widget {
+            width: 100% !important;
+            height: 40px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            display: block !important;
+        }
+
+        /* Main content spacing adjustment */
+        .main-content {
+            margin-top: 176px; /* header (96px) + news ticker (40px) + trading view ticker (40px) */
+            padding-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                height: 80px;
+            }
+            .news-ticker {
+                top: 80px;
+            }
+            .ticker-wrapper {
+                top: 120px; /* mobile header (80px) + news ticker (40px) */
+            }
+            .main-content {
+                margin-top: 160px; /* mobile header (80px) + news ticker (40px) + trading view ticker (40px) */
+            }
         }
 
         .ticker-tape {
