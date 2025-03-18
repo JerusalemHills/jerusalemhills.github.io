@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jerusalem Hills</title>
     
-    <!-- TradingView Widget -->
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async></script>
-    
-    <!-- Other scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@hebcal/core@4.2.1/dist/hebcal.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Load local scripts instead of CDNs to avoid MIME type issues -->
+    <script src="js/hebcal.js"></script>
     <script src="js/rss-feed-config.js"></script>
     <script src="js/ticker.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* Reset and base styles */
         * {
@@ -80,17 +77,82 @@
             }
         }
 
-        .search-container {
+        /* Updated header layout with nav buttons */
+        .middle-section {
+            display: flex;
+            align-items: center;
             flex: 1;
-            max-width: 32rem;
             margin: 0 1rem;
+        }
+
+        .search-container {
+            flex: 0.6;
+            max-width: 32rem;
             position: relative;
-            display: none;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+            margin-left: 1rem;
+            flex: 1;
+        }
+
+        .header-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: rgb(75, 85, 99);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+
+        .header-nav-link:hover {
+            color: rgb(17, 24, 39);
+            background-color: rgb(243, 244, 246);
+        }
+
+        .header-nav-link i {
+            width: 18px;
+            height: 18px;
         }
 
         @media (min-width: 768px) {
             .search-container {
                 display: block;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .header-nav-link span {
+                display: none;
+            }
+            
+            .header-nav {
+                gap: 0.5rem;
+            }
+            
+            .header-nav-link {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-nav {
+                display: none;
+            }
+            
+            .middle-section {
+                margin: 0;
+            }
+            
+            .search-container {
+                max-width: none;
+                width: 100%;
             }
         }
 
@@ -127,7 +189,7 @@
             color: rgb(17, 24, 39);
         }
 
-        /* Navigation styles */
+        /* Navigation styles - Modified for main-nav */
         .main-nav {
             display: block;
             background: white;
@@ -198,21 +260,18 @@
             }
         }
 
-        /* Main content spacing */
+        /* Main content spacing - Adjust for new header layout */
         .main-content {
-            margin-top: 192px; /* header (96px) + nav (48px) + ticker (40px) + spacing */
+            margin-top: 144px; /* Reduced margin since nav moved to header */
             padding-top: 0;
         }
 
         @media (max-width: 768px) {
-            .main-nav {
+            .ticker-wrapper {
                 top: 80px;
             }
-            .ticker-wrapper {
-                top: 128px;
-            }
             .main-content {
-                margin-top: 176px;
+                margin-top: 128px;
             }
         }
 
@@ -251,7 +310,8 @@
         /* Main content styles - consolidated */
         .main-content {
             max-width: 80rem;
-            margin: 130px auto 0; /* Reduced top margin */
+            margin: 0 auto;
+            margin-top: 130px; /* Adjusted for the new header layout */
             padding: 1rem;
         }
 
@@ -269,6 +329,46 @@
             }
         }
 
+        /* Ticker wrapper styles - Adjust based on new header */
+        .ticker-wrapper {
+            position: fixed;
+            top: 96px; /* Just below header since nav is now in header */
+            left: 0;
+            width: 100%;
+            z-index: 46;
+            background: white;
+            height: 40px;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .tradingview-widget-container,
+        .tradingview-widget-container__widget {
+            width: 100% !important;
+            height: 40px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .tradingview-widget-copyright {
+            display: none !important;
+        }
+
+        /* News Ticker Styles - Adjust based on new header */
+        .news-ticker {
+            position: fixed;
+            top: 136px; /* header (96px) + tradingview ticker (40px) */
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: white;
+            border-bottom: 1px solid rgb(229, 231, 235);
+            z-index: 47; /* Higher than TradingView widget */
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Rest of the styles remain unchanged */
         /* Featured section styles */
         .featured-section {
             margin-bottom: 3rem;
@@ -862,9 +962,35 @@
                     </a>
                 </div>
                 
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Search everything...">
-                    <i data-lucide="search" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgb(156, 163, 175);"></i>
+                <div class="middle-section">
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Search everything...">
+                        <i data-lucide="search" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgb(156, 163, 175);"></i>
+                    </div>
+                    
+                    <!-- Navigation moved to header -->
+                    <nav class="header-nav">
+                        <a href="#marketplace" class="header-nav-link">
+                            <i data-lucide="shopping-bag"></i>
+                            <span>Marketplace</span>
+                        </a>
+                        <a href="#forum" class="header-nav-link">
+                            <i data-lucide="message-square"></i>
+                            <span>Forum</span>
+                        </a>
+                        <a href="#games" class="header-nav-link">
+                            <i data-lucide="gamepad-2"></i>
+                            <span>Games</span>
+                        </a>
+                        <a href="#news" class="header-nav-link">
+                            <i data-lucide="newspaper"></i>
+                            <span>News</span>
+                        </a>
+                        <a href="/sidur.html" class="header-nav-link">
+                            <i data-lucide="book-open"></i>
+                            <span>Siddur</span>
+                        </a>
+                    </nav>
                 </div>
 
                 <div class="header-icons">
@@ -885,42 +1011,12 @@
                 <a href="#forum" class="mobile-link">Forum</a>
                 <a href="#games" class="mobile-link">Games</a>
                 <a href="#news" class="mobile-link">News</a>
+                <a href="/sidur.html" class="mobile-link">Siddur</a>
             </div>
         </div>
     </header>
 
-    <nav class="main-nav">
-        <div class="nav-container">
-            <div class="nav-links">
-                <a href="#marketplace" class="nav-link">
-                    <i data-lucide="shopping-bag"></i>
-                    Marketplace
-                </a>
-                <a href="#forum" class="nav-link">
-                    <i data-lucide="message-square"></i>
-                    Forum
-                </a>
-                <a href="#games" class="nav-link">
-                    <i data-lucide="gamepad-2"></i>
-                    Games
-                </a>
-                <a href="#news" class="nav-link">
-                    <i data-lucide="newspaper"></i>
-                    News
-                </a>
-                <a href="/sidur.html" class="nav-link">
-                    <i data-lucide="book-open"></i>
-                    Siddur
-                </a>
-            </div>
-
-            <div class="date-display top-date-display">
-                <div class="hebrew-date"></div>
-                <div class="gregorian-date"></div>
-                <div class="current-time"></div>
-            </div>
-        </div>
-    </nav>
+    <!-- Removed main-nav section since navigation is now in header -->
 
     <!-- News Ticker -->
     <div class="news-ticker">
@@ -934,7 +1030,37 @@
     <!-- TradingView Widget BEGIN -->
     <div class="tradingview-widget-container ticker-wrapper">
       <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      {
+        "symbols": [
+          {
+            "proName": "FOREXCOM:SPXUSD",
+            "title": "S&P 500"
+          },
+          {
+            "proName": "FOREXCOM:NSXUSD",
+            "title": "Nasdaq"
+          },
+          {
+            "proName": "FX_IDC:EURUSD",
+            "title": "EUR/USD"
+          },
+          {
+            "proName": "BITSTAMP:BTCUSD",
+            "title": "BTC"
+          },
+          {
+            "proName": "BITSTAMP:ETHUSD",
+            "title": "ETH"
+          }
+        ],
+        "showSymbolLogo": false,
+        "colorTheme": "light",
+        "isTransparent": true,
+        "displayMode": "regular",
+        "locale": "en"
+      }
+      </script>
     </div>
     <!-- TradingView Widget END -->
 
@@ -1261,133 +1387,118 @@
         // Initialize Lucide icons
         lucide.createIcons();
 
-        // TradingView Widget Configuration
-        new TradingView.widget({
-            "container_id": "tradingview-widget-container__widget",
-            "symbols": [
-                {
-                    "proName": "FOREXCOM:SPXUSD",
-                    "title": "S&P 500"
-                },
-                {
-                    "proName": "FOREXCOM:NSXUSD",
-                    "title": "Nasdaq"
-                },
-                {
-                    "proName": "FX_IDC:EURUSD",
-                    "title": "EUR/USD"
-                },
-                {
-                    "proName": "BITSTAMP:BTCUSD",
-                    "title": "BTC"
-                },
-                {
-                    "proName": "BITSTAMP:ETHUSD",
-                    "title": "ETH"
-                }
-            ],
-            "showSymbolLogo": false,
-            "colorTheme": "light",
-            "isTransparent": true,
-            "displayMode": "regular",
-            "locale": "en"
-        });
+        // Define jerusalemCenter at the global scope for the map
+        const jerusalemCenter = { lat: 31.7683, lng: 35.2137 };
+        let map;
+        let markers = [];
+
+        // Hebrew Date Update Function
+        function updateHebrewDate() {
+            try {
+                const hebrewDate = HebrewCalendar.getHebrewDate();
+                const hebrewDateElements = document.querySelectorAll('.hebrew-date');
+                
+                hebrewDateElements.forEach(el => {
+                    el.textContent = hebrewDate;
+                });
+            } catch (e) {
+                console.warn("Error updating Hebrew date:", e);
+            }
+        }
+
+        // Update Hebrew Date on page load and every minute
+        updateHebrewDate();
+        setInterval(updateHebrewDate, 60000);
 
         // Mobile menu toggle
         const menuButton = document.querySelector('.menu-button');
         const mobileMenu = document.querySelector('.mobile-menu');
         
-        menuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
-        });
-
-        // Date functions
-        function formatHebrewDate(date) {
-            const hDate = new Hebcal.HDate(date);
-            return hDate.render('h'); // This will return only the Hebrew date
-        }
-
-        function formatDate(date) {
-            return date.toLocaleDateString('en-US', {
-                weekday: 'long',
-                month: 'long',
-                day: 'numeric'
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
             });
         }
-
-        // Update date displays
-        function updateDateTime() {
-            const now = new Date();
-            const hebrewDateElements = document.querySelectorAll('.hebrew-date');
-            const gregorianDateElements = document.querySelectorAll('.gregorian-date');
-            
-            hebrewDateElements.forEach(el => {
-                el.textContent = formatHebrewDate(now);
-            });
-            
-            gregorianDateElements.forEach(el => {
-                el.textContent = formatDate(now);
-            });
-        }
-
-        // Initial update and start interval
-        updateDateTime();
-        setInterval(updateDateTime, 60000); // Update every minute
 
         // Google Maps implementation
-        const jerusalemCenter = { lat: 31.7683, lng: 35.2137 };
-        let map;
-        let markers = [];
-
-        const locations = {
-            attractions: [
-                { name: "Tower of David", position: { lat: 31.7767, lng: 35.2297 } },
-                { name: "Garden Tomb", position: { lat: 31.7847, lng: 35.2288 } }
-            ],
-            religious: [
-                { name: "Western Wall", position: { lat: 31.7767, lng: 35.2342 } },
-                { name: "Church of the Holy Sepulchre", position: { lat: 31.7784, lng: 35.2297 } }
-            ],
-            markets: [
-                { name: "Mahane Yehuda Market", position: { lat: 31.7850, lng: 35.2120 } },
-                { name: "Old City Market", position: { lat: 31.7777, lng: 35.2297 } }
-            ],
-            restaurants: [
-                { name: "Machne Yehuda Restaurant", position: { lat: 31.7853, lng: 35.2123 } },
-                { name: "American Colony Hotel", position: { lat: 31.7890, lng: 35.2327 } }
-            ]
-        };
-
         function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
-                center: jerusalemCenter,
-                zoom: 14,
-                styles: [
-                    {
-                        featureType: "poi",
-                        elementType: "labels",
-                        stylers: [{ visibility: "off" }]
-                    }
-                ]
-            });
-
-            // Initial load of attractions
-            showLocations('attractions');
-
-            // Add click handlers for category buttons
-            document.querySelectorAll('.map-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    document.querySelectorAll('.map-button').forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    showLocations(button.dataset.category);
+            try {
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: jerusalemCenter,
+                    zoom: 14,
+                    styles: [
+                        {
+                            featureType: "poi",
+                            elementType: "labels",
+                            stylers: [{ visibility: "off" }]
+                        }
+                    ]
                 });
-            });
+
+                // Map location categories
+                const locations = {
+                    attractions: [
+                        { name: "Tower of David", position: { lat: 31.7767, lng: 35.2297 } },
+                        { name: "Garden Tomb", position: { lat: 31.7847, lng: 35.2288 } }
+                    ],
+                    religious: [
+                        { name: "Western Wall", position: { lat: 31.7767, lng: 35.2342 } },
+                        { name: "Church of the Holy Sepulchre", position: { lat: 31.7784, lng: 35.2297 } }
+                    ],
+                    markets: [
+                        { name: "Mahane Yehuda Market", position: { lat: 31.7850, lng: 35.2120 } },
+                        { name: "Old City Market", position: { lat: 31.7777, lng: 35.2297 } }
+                    ],
+                    restaurants: [
+                        { name: "Machne Yehuda Restaurant", position: { lat: 31.7853, lng: 35.2123 } },
+                        { name: "American Colony Hotel", position: { lat: 31.7890, lng: 35.2327 } }
+                    ]
+                };
+
+                // Initial load of attractions
+                showLocations('attractions');
+
+                // Add click handlers for category buttons
+                document.querySelectorAll('.map-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        document.querySelectorAll('.map-button').forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        showLocations(button.dataset.category);
+                    });
+                });
+            } catch (e) {
+                console.error("Error initializing map:", e);
+                const mapDiv = document.getElementById('map');
+                if (mapDiv) {
+                    mapDiv.innerHTML = '<div style="text-align: center; padding: 20px;"><p>Failed to load Google Maps. Please try again later.</p></div>';
+                }
+            }
         }
 
         function showLocations(category) {
             // Clear existing markers
             markers.forEach(marker => marker.setMap(null));
             markers = [];
+
+            // Map location categories must be defined in the initMap function
+            const locations = {
+                attractions: [
+                    { name: "Tower of David", position: { lat: 31.7767, lng: 35.2297 } },
+                    { name: "Garden Tomb", position: { lat: 31.7847, lng: 35.2288 } }
+                ],
+                religious: [
+                    { name: "Western Wall", position: { lat: 31.7767, lng: 35.2342 } },
+                    { name: "Church of the Holy Sepulchre", position: { lat: 31.7784, lng: 35.2297 } }
+                ],
+                markets: [
+                    { name: "Mahane Yehuda Market", position: { lat: 31.7850, lng: 35.2120 } },
+                    { name: "Old City Market", position: { lat: 31.7777, lng: 35.2297 } }
+                ],
+                restaurants: [
+                    { name: "Machne Yehuda Restaurant", position: { lat: 31.7853, lng: 35.2123 } },
+                    { name: "American Colony Hotel", position: { lat: 31.7890, lng: 35.2327 } }
+                ]
+            };
 
             // Add new markers
             locations[category].forEach(location => {
@@ -1410,13 +1521,27 @@
             });
 
             // Center map on markers
-            const bounds = new google.maps.LatLngBounds();
-            markers.forEach(marker => bounds.extend(marker.getPosition()));
-            map.fitBounds(bounds);
+            if (markers.length > 0) {
+                const bounds = new google.maps.LatLngBounds();
+                markers.forEach(marker => bounds.extend(marker.getPosition()));
+                map.fitBounds(bounds);
+            }
         }
+
+        // Add window load event for ads to ensure they have proper size
+        window.addEventListener('load', function() {
+            // Give the ads containers time to be properly sized
+            setTimeout(function() {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                } catch (e) {
+                    console.warn("Ad loading error:", e);
+                }
+            }, 500);
+        });
     </script>
 
-    <!-- Google Maps Script -->
+    <!-- Google Maps Script with error handling -->
     <script>
         // Add error handling for Google Maps
         function gm_authFailure() {
