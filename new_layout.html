@@ -10,6 +10,14 @@
     <script src="js/rss-feed-config.js"></script>
     <script src="js/ticker.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Add favicon references -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/img/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="manifest" href="/img/site.webmanifest">
+    
     <style>
         /* Reset and base styles */
         * {
@@ -32,6 +40,7 @@
             width: 100%;
             top: 0;
             z-index: 50;
+            height: 96px; /* Explicitly define the header height */
         }
 
         .header-container {
@@ -262,16 +271,16 @@
 
         /* Main content spacing - Adjust for new header layout */
         .main-content {
-            margin-top: 144px; /* Reduced margin since nav moved to header */
+            margin-top: 176px; /* header (96px) + news ticker (40px) + trading view ticker (40px) */
             padding-top: 0;
         }
 
         @media (max-width: 768px) {
             .ticker-wrapper {
-                top: 80px;
+                top: 120px; /* mobile header (80px) + news ticker (40px) */
             }
             .main-content {
-                margin-top: 128px;
+                margin-top: 160px; /* mobile header (80px) + news ticker (40px) + trading view ticker (40px) */
             }
         }
 
@@ -332,7 +341,7 @@
         /* Ticker wrapper styles - Adjust based on new header */
         .ticker-wrapper {
             position: fixed;
-            top: 96px; /* Just below header since nav is now in header */
+            top: 136px; /* Exactly header (96px) + news ticker (40px) - no gap */
             left: 0;
             width: 100%;
             z-index: 46;
@@ -340,6 +349,9 @@
             height: 40px;
             overflow: hidden;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            border-top: none; /* Remove any border that might create visual gap */
+            margin: 0; /* Remove any margins */
+            padding: 0; /* Remove any padding */
         }
 
         .tradingview-widget-container,
@@ -357,7 +369,7 @@
         /* News Ticker Styles - Adjust based on new header */
         .news-ticker {
             position: fixed;
-            top: 136px; /* header (96px) + tradingview ticker (40px) */
+            top: 96px; /* Match exactly to header height */
             left: 0;
             width: 100%;
             height: 40px;
@@ -784,7 +796,7 @@
         /* Ticker wrapper styles */
         .ticker-wrapper {
             position: fixed;
-            top: 184px; /* header (96px) + nav (48px) + news ticker (40px) */
+            top: 136px; /* Exactly header (96px) + news ticker (40px) */
             left: 0;
             width: 100%;
             z-index: 46;
@@ -842,13 +854,13 @@
                 top: 80px;
             }
             .news-ticker {
-                top: 128px;
+                top: 80px; /* Match to mobile header height */
             }
             .ticker-wrapper {
-                top: 168px;
+                top: 120px; /* mobile header (80px) + news ticker (40px) */
             }
             .main-content {
-                margin-top: 208px;
+                margin-top: 160px; /* mobile header (80px) + news ticker (40px) + trading view ticker (40px) */
             }
         }
 
@@ -898,7 +910,7 @@
         /* News Ticker Styles */
         .news-ticker {
             position: fixed;
-            top: 144px; /* After header and nav */
+            top: 96px; /* Match exactly to header height */
             left: 0;
             width: 100%;
             height: 40px;
@@ -1023,6 +1035,9 @@
         <div class="ticker-tape">
             <div id="ticker-content" class="ticker-content">
                 <!-- News items will be dynamically inserted here -->
+                <span class="ticker-item">Welcome to Jerusalem Hills!</span>
+                <span class="ticker-item">Explore our marketplace for unique Jerusalem products.</span>
+                <span class="ticker-item">Join our forum discussions about Jerusalem culture.</span>
             </div>
         </div>
     </div>
@@ -1401,6 +1416,16 @@
                 hebrewDateElements.forEach(el => {
                     el.textContent = hebrewDate;
                 });
+
+                // Add Gregorian date
+                const now = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const gregDateStr = now.toLocaleDateString('en-US', options);
+                const gregDateElements = document.querySelectorAll('.gregorian-date');
+                
+                gregDateElements.forEach(el => {
+                    el.textContent = gregDateStr;
+                });
             } catch (e) {
                 console.warn("Error updating Hebrew date:", e);
             }
@@ -1420,9 +1445,18 @@
             });
         }
 
-        // Google Maps implementation
+        // Google Maps implementation with error handling for localhost
         function initMap() {
             try {
+                // Check if we're on localhost and show a placeholder map instead
+                const isLocalhost = window.location.hostname === "127.0.0.1" || 
+                                    window.location.hostname === "localhost";
+                                    
+                if (isLocalhost) {
+                    showPlaceholderMap();
+                    return;
+                }
+                
                 map = new google.maps.Map(document.getElementById("map"), {
                     center: jerusalemCenter,
                     zoom: 14,
@@ -1468,14 +1502,34 @@
                 });
             } catch (e) {
                 console.error("Error initializing map:", e);
-                const mapDiv = document.getElementById('map');
-                if (mapDiv) {
-                    mapDiv.innerHTML = '<div style="text-align: center; padding: 20px;"><p>Failed to load Google Maps. Please try again later.</p></div>';
-                }
+                showPlaceholderMap();
+            }
+        }
+
+        function showPlaceholderMap() {
+            const mapDiv = document.getElementById('map');
+            if (mapDiv) {
+                mapDiv.innerHTML = `
+                    <div style="text-align: center; padding: 20px; background-color: #f8f9fa; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <div style="margin-bottom: 10px;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        </div>
+                        <p style="font-weight: bold; margin-bottom: 5px;">Map Preview Unavailable</p>
+                        <p>Maps require proper domain authorization.</p>
+                        <p style="font-size: 0.8rem; color: #666;">When deployed to jerusalemhills.com, the map will display correctly.</p>
+                    </div>
+                `;
             }
         }
 
         function showLocations(category) {
+            // Only execute if map was initialized
+            if (!map) return;
+            
             // Clear existing markers
             markers.forEach(marker => marker.setMap(null));
             markers = [];
@@ -1527,33 +1581,18 @@
                 map.fitBounds(bounds);
             }
         }
-
-        // Add window load event for ads to ensure they have proper size
-        window.addEventListener('load', function() {
-            // Give the ads containers time to be properly sized
-            setTimeout(function() {
-                try {
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                } catch (e) {
-                    console.warn("Ad loading error:", e);
-                }
-            }, 500);
-        });
     </script>
 
-    <!-- Google Maps Script with error handling -->
+    <!-- Google Maps Script with improved error handling -->
     <script>
         // Add error handling for Google Maps
         function gm_authFailure() {
-            const mapDiv = document.getElementById('map');
-            if (mapDiv) {
-                mapDiv.innerHTML = '<div style="text-align: center; padding: 20px;"><p>Failed to load Google Maps. Please try again later.</p></div>';
-            }
+            showPlaceholderMap();
         }
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5_m5vWCLhVcPKlItsT62fMB_bk2YyHIs&callback=initMap&libraries=places"
-        onerror="gm_authFailure()">
+        onerror="showPlaceholderMap()">
     </script>
     <script src="js/youtube-playlist.js"></script>
 </body>
