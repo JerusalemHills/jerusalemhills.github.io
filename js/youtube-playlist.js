@@ -95,7 +95,7 @@ function createVideoSlides() {
             <iframe 
                 src="https://www.youtube.com/embed?listType=playlist&list=${PLAYLIST_ID}&index=${i + 1}&enablejsapi=1&origin=${window.location.origin}"
                 frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allow="fullscreen" 
                 allowfullscreen
             ></iframe>
         `;
