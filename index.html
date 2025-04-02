@@ -1526,7 +1526,7 @@
         <!-- TradingView Widget BEGIN -->
         <div class="tradingview-widget-container ticker-wrapper">
           <div class="tradingview-widget-container__widget"></div>
-          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async onerror="console.error('TradingView widget failed to load. Check your configuration.');">
           {
             "symbols": [
               {
@@ -1563,7 +1563,7 @@
         <main class="main-content">
             <!-- Homepage Banner Ad -->
             <section class="ad-banner">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1738161253720" crossorigin="anonymous"></script>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1738161253720" crossorigin="anonymous" onerror="console.error('AdSense script failed to load. Check your AdSense configuration.');"></script>
                 <!-- Homepage Banner -->
                 <ins class="adsbygoogle"
                      style="display:block;width:970px;height:250px;max-width:100%;margin:0 auto;"
@@ -1852,7 +1852,7 @@
 
             <!-- Sidebar Ad -->
             <aside class="sidebar-ad">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1738161253720" crossorigin="anonymous"></script>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1738161253720" crossorigin="anonymous" onerror="console.error('AdSense script failed to load. Check your AdSense configuration.');"></script>
                 <!-- Sidebar Vertical -->
                 <ins class="adsbygoogle"
                      style="display:block;width:300px;height:600px;margin:0 auto;"

@@ -1454,13 +1454,13 @@
                             <img src="img/1.svg" alt="Jerusalem Hills Logo" style="height: 90px; width: auto;">
                         </a>
                     </div>
-                    
+
                     <div class="middle-section">
                         <div class="search-container">
                             <input type="text" class="search-input" placeholder="Search everything...">
                             <i data-lucide="search" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgb(156, 163, 175);"></i>
                         </div>
-                        
+
                         <!-- Navigation moved to header -->
                         <nav class="header-nav">
                             <a href="#marketplace" class="header-nav-link">
@@ -1483,20 +1483,23 @@
                                 <i data-lucide="book-open"></i>
                                 <span>Siddur</span>
                             </a>
+                            <button class="icon-button" aria-label="Shopping Cart">
+                                <i data-lucide="shopping-cart"></i>
+                            </button>
+                            <button class="icon-button" aria-label="Notifications">
+                                <i data-lucide="bell"></i>
+                            </button>
+                            <button class="icon-button" aria-label="User menu" onclick="window.open('/user_info.html', '_blank')">
+                                <i data-lucide="user"></i>
+                            </button>
                         </nav>
                     </div>
+                </div>
 
-                    <div class="header-icons">
-                        <button class="icon-button" aria-label="Shopping Cart">
-                            <i data-lucide="shopping-cart"></i>
-                        </button>
-                        <button class="icon-button" aria-label="Notifications">
-                            <i data-lucide="bell"></i>
-                        </button>
-                        <button class="icon-button" aria-label="User menu" onclick="window.open('/user_info.html', '_blank')">
-                            <i data-lucide="user"></i>
-                        </button>
-                    </div>
+                <div class="financial-metrics">
+                    <div id="sp500-summary" class="metric">Loading S&P 500...</div>
+                    <div id="vix-summary" class="metric">Loading VIX...</div>
+                    <div id="treasury-summary" class="metric">Loading 10Y Treasury Yield...</div>
                 </div>
 
                 <div class="mobile-menu">
@@ -2077,5 +2080,99 @@
         onerror="showPlaceholderMap()">
     </script>
     <script src="js/youtube-playlist.js"></script>
+    <script>
+    function getScenarioSummary(sp500Change, vixChange, treasuryYieldChange) {
+        if (sp500Change > 0 && vixChange < 0 && treasuryYieldChange > 0) {
+            return "Market optimism with rising inflation expectations and lower uncertainty. Investors are bullish on equities, volatility is declining, and rising bond yields suggest expectations of future rate hikes or inflation. The market is in a risk-on mode, but higher yields could pose headwinds if they climb too quickly.";
+        } else if (sp500Change < 0 && vixChange > 0 && treasuryYieldChange < 0) {
+            return "Market pessimism and flight to safety. Investors are selling stocks, volatility is rising, and declining Treasury yields indicate a shift toward safer assets due to economic slowdown concerns. This suggests a risk-off environment, with fears of weaker growth or potential recession.";
+        } else if (sp500Change > 0 && vixChange > 0 && treasuryYieldChange < 0) {
+            return "Cautious optimism amid uncertainty. Stocks are rising, but increasing volatility suggests investors are nervous about potential risks. Falling bond yields indicate concerns about economic growth, possibly due to softening demand or expectations of central bank intervention.";
+        } else if (sp500Change < 0 && vixChange < 0 && treasuryYieldChange > 0) {
+            return "Market weakness despite stable volatility and inflation concerns. Stocks are declining, but the VIX remains low, suggesting a controlled pullback rather than panic. Rising bond yields indicate inflation fears or expectations of tighter monetary policy, which may be pressuring equities.";
+        } else if (sp500Change > 0 && vixChange < 0 && treasuryYieldChange < 0) {
+            return "Strong bullish sentiment with growth concerns. Stocks are rising with low volatility, suggesting confidence, but falling bond yields signal economic slowdown worries or expectations of central bank easing.";
+        } else if (sp500Change < 0 && vixChange > 0 && treasuryYieldChange > 0) {
+            return "Inflation-driven market stress. Stocks are declining while volatility rises, indicating fear, and higher yields suggest inflation concerns or tighter monetary policy, worsening risk sentiment.";
+        } else if (sp500Change > 0 && vixChange > 0 && treasuryYieldChange > 0) {
+            return "Unstable rally with inflation concerns. Stocks are rising, but volatility is also up, suggesting a nervous or speculative market. Rising yields indicate inflationary pressures or rate hike expectations, which could challenge the rally.";
+        } else if (sp500Change < 0 && vixChange < 0 && treasuryYieldChange < 0) {
+            return "A quiet decline with economic slowdown fears. Stocks are slipping, but low volatility suggests a controlled sell-off rather than panic. Falling yields point to concerns about slowing growth or expectations of monetary easing.";
+        } else {
+            return "No clear scenario matches the current market conditions.";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const sp500Change = parseFloat(document.getElementById("sp500-change").textContent);
+        const vixChange = parseFloat(document.getElementById("vix-change").textContent);
+        const treasuryYieldChange = parseFloat(document.getElementById("treasury-yield-change").textContent);
+
+        const sp500Summary = getScenarioSummary(sp500Change, vixChange, treasuryYieldChange);
+
+        document.getElementById("sp500-summary").setAttribute("title", sp500Summary);
+        document.getElementById("vix-summary").setAttribute("title", sp500Summary);
+        document.getElementById("treasury-summary").setAttribute("title", sp500Summary);
+    });
+</script>
+    <script>
+    async function fetchFinancialData() {
+        try {
+            const response = await fetch('https://api.example.com/financial-data'); // Replace with a real API endpoint
+            const data = await response.json();
+
+            // Update S&P 500
+            const sp500 = data.sp500;
+            document.getElementById('sp500-summary').innerHTML = `S&P 500: ${sp500.value} <span class="${sp500.change > 0 ? 'up' : 'down'}">${sp500.change > 0 ? '▲' : '▼'} ${sp500.change} (${sp500.changePercent}%)</span>`;
+
+            // Update VIX
+            const vix = data.vix;
+            document.getElementById('vix-summary').innerHTML = `VIX: ${vix.value} <span class="${vix.change > 0 ? 'up' : 'down'}">${vix.change > 0 ? '▲' : '▼'} ${vix.change} (${vix.changePercent}%)</span>`;
+
+            // Update 10Y Treasury Yield
+            const treasuryYield = data.treasuryYield;
+            document.getElementById('treasury-summary').innerHTML = `10Y Treasury Yield: ${treasuryYield.value}% <span class="${treasuryYield.change > 0 ? 'up' : 'down'}">${treasuryYield.change > 0 ? '▲' : '▼'} ${treasuryYield.change} (${treasuryYield.changePercent}%)</span>`;
+        } catch (error) {
+            console.error('Error fetching financial data:', error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchFinancialData);
+</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const sp500SummaryElement = document.getElementById("sp500-summary");
+            const vixSummaryElement = document.getElementById("vix-summary");
+            const treasurySummaryElement = document.getElementById("treasury-summary");
+
+            async function fetchFinancialData() {
+                try {
+                    const response = await fetch('https://api.example.com/financial-data'); // Replace with a real API endpoint
+                    const data = await response.json();
+
+                    // Update S&P 500
+                    const sp500 = data.sp500;
+                    sp500SummaryElement.innerHTML = `S&P 500: ${sp500.value} <span class="${sp500.change > 0 ? 'up' : 'down'}">${sp500.change > 0 ? '▲' : '▼'} ${sp500.change} (${sp500.changePercent}%)</span>`;
+
+                    // Update VIX
+                    const vix = data.vix;
+                    vixSummaryElement.innerHTML = `VIX: ${vix.value} <span class="${vix.change > 0 ? 'up' : 'down'}">${vix.change > 0 ? '▲' : '▼'} ${vix.change} (${vix.changePercent}%)</span>`;
+
+                    // Update 10Y Treasury Yield
+                    const treasuryYield = data.treasuryYield;
+                    treasurySummaryElement.innerHTML = `10Y Treasury Yield: ${treasuryYield.value}% <span class="${treasuryYield.change > 0 ? 'up' : 'down'}">${treasuryYield.change > 0 ? '▲' : '▼'} ${treasuryYield.change} (${treasuryYield.changePercent}%)</span>`;
+                } catch (error) {
+                    console.error('Error fetching financial data:', error);
+                    sp500SummaryElement.textContent = "Error loading S&P 500 data";
+                    vixSummaryElement.textContent = "Error loading VIX data";
+                    treasurySummaryElement.textContent = "Error loading Treasury Yield data";
+                }
+            }
+
+            // Fetch financial data on page load and every minute
+            fetchFinancialData();
+            setInterval(fetchFinancialData, 60000);
+        });
+    </script>
 </body>
 </html>
