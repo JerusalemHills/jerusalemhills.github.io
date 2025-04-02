@@ -17,6 +17,7 @@
         window.addEventListener("load", function () {
             if (typeof TradingView !== "undefined") {
                 new TradingView.widget({
+                    "container_id": "tradingview-widget",
                     "symbol": "FOREXCOM:GBPUSD", // Corrected symbol for British Pound to US Dollar
                     "interval": "15m",
                     "width": 425,
