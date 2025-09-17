@@ -1,21 +1,27 @@
 // Service Worker for caching essential files
-const CACHE_NAME = 'jerusalem-hills-v1';
+const CACHE_NAME = 'jerusalem-hills-v2';
 const urlsToCache = [
   '/',
   '/index.html',
+  '/offline.html',
   '/styles.css',
   '/img/1.svg',
+  '/img/logo.jpg',
   '/js/main.js',
   '/js/pwa.js',
   '/js/rss-feed-config.js',
+  '/js/cookie-consent.js',
+  '/js/adsense-config.js',
+  '/js/lazy-load.js',
+  '/js/search.js',
+  '/js/mobile-nav.js',
   '/favicon.ico',
   '/img/favicon-32x32.png',
   '/img/favicon-16x16.png',
   '/img/apple-touch-icon.png',
   '/img/android-chrome-192x192.png',
   '/img/android-chrome-512x512.png',
-  '/img/site.webmanifest',
-  '/market/manifest.json'
+  '/img/site.webmanifest'
 ];
 
 // Install event: cache all necessary resources
