@@ -1,0 +1,42 @@
+# Netlify Configuration
+# This file tells Netlify how to build and deploy your site
+
+[build]
+  # Directory with serverless functions
+  functions = "netlify/functions"
+
+  # Directory to publish (your site root)
+  publish = "."
+
+[functions]
+  # Use modern JavaScript runtime
+  node_bundler = "esbuild"
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Allow Stripe scripts
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; frame-src 'self' https://checkout.stripe.com https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.stripe.com"
+
+# Redirect rules
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Environment context settings
+[context.production]
+  # Production environment variables (set in Netlify dashboard)
+  # STRIPE_SECRET_KEY = set in dashboard
+  # STRIPE_WEBHOOK_SECRET = set in dashboard
+  # NODE_ENV = "production"
+
+[context.deploy-preview]
+  # Test environment for preview deploys
+  # Use test keys for Stripe

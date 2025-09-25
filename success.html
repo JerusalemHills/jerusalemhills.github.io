@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Successful - Jerusalem Hills</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .success-container {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .success-icon::after {
+            content: '✓';
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .success-message {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .order-details {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .order-details h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .order-details p {
+            margin: 0.5rem 0;
+            color: #666;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <div class="nav-container">
+                <a href="index.html" class="logo">Jerusalem Hills</a>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="success-container">
+        <div class="success-icon"></div>
+
+        <h1 class="success-title">Order Successful!</h1>
+
+        <p class="success-message">
+            Thank you for your purchase! Your order has been confirmed and you will receive
+            an email confirmation shortly with your order details and tracking information.
+        </p>
+
+        <div class="order-details" id="orderDetails">
+            <h3>Order Information</h3>
+            <p id="sessionInfo" class="loading">Loading order details...</p>
+        </div>
+
+        <div class="action-buttons">
+            <a href="marketplace.html" class="btn btn-primary">Continue Shopping</a>
+            <a href="index.html" class="btn btn-secondary">Return Home</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Jerusalem Hills. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Get session ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+
+        // Display session info
+        const sessionInfo = document.getElementById('sessionInfo');
+
+        if (sessionId) {
+            sessionInfo.innerHTML = `
+                <p><strong>Order ID:</strong> ${sessionId.substring(0, 20)}...</p>
+                <p><strong>Status:</strong> Payment successful</p>
+                <p><strong>Next Steps:</strong> We're preparing your order for shipment</p>
+                <p><strong>Estimated Delivery:</strong> 3-5 business days</p>
+            `;
+        } else {
+            sessionInfo.innerHTML = `
+                <p>Your order has been successfully placed.</p>
+                <p>Check your email for confirmation and tracking details.</p>
+            `;
+        }
+
+        // Optional: Retrieve full session details from Stripe (requires backend call)
+        // This would need another serverless function to fetch session details
+    </script>
+</body>
+</html>

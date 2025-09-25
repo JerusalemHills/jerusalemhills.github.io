@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Canceled - Jerusalem Hills</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cancel-container {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .cancel-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cancel-icon::after {
+            content: '←';
+            color: #666;
+            font-size: 2.5rem;
+        }
+
+        .cancel-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .cancel-message {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .info-box {
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .info-box ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            color: #666;
+        }
+
+        .info-box li {
+            margin: 0.5rem 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <div class="nav-container">
+                <a href="index.html" class="logo">Jerusalem Hills</a>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="cancel-container">
+        <div class="cancel-icon"></div>
+
+        <h1 class="cancel-title">Order Canceled</h1>
+
+        <p class="cancel-message">
+            Your order has been canceled and you have not been charged.
+            If you experienced any issues during checkout, please let us know
+            so we can help.
+        </p>
+
+        <div class="info-box">
+            <h3>Why was my order canceled?</h3>
+            <ul>
+                <li>You chose to cancel during the checkout process</li>
+                <li>Payment information was not completed</li>
+                <li>The checkout session expired</li>
+            </ul>
+
+            <h3 style="margin-top: 1.5rem;">Need Help?</h3>
+            <p>If you're having trouble completing your purchase, please <a href="contact.html">contact us</a>
+               and we'll be happy to assist you.</p>
+        </div>
+
+        <div class="action-buttons">
+            <a href="marketplace.html" class="btn btn-primary">Return to Marketplace</a>
+            <a href="index.html" class="btn btn-secondary">Go to Homepage</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Jerusalem Hills. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

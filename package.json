@@ -1,0 +1,19 @@
+{
+  "name": "jerusalemhills-marketplace",
+  "version": "1.0.0",
+  "description": "Jerusalem Hills Marketplace with Stripe Checkout",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "stripe": "^14.0.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JerusalemHills/jerusalemhills.github.io.git"
+  },
+  "author": "Jerusalem Hills",
+  "license": "MIT"
+}

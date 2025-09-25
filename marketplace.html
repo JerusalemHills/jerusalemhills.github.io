@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - Jerusalem Hills</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        .marketplace-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: #f5f5f5;
+        }
+
+        .product-details {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            color: #2c3e50;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0.5rem 0 1rem 0;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #27ae60;
+            margin: 1rem 0;
+        }
+
+        .buy-button {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .buy-button:hover {
+            opacity: 0.9;
+        }
+
+        .buy-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <div class="nav-container">
+                <a href="index.html" class="logo">Jerusalem Hills</a>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="marketplace.html" class="active">Marketplace</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="marketplace-container">
+        <h1>Jerusalem Hills Marketplace</h1>
+        <p>Discover unique products from local artisans and businesses</p>
+
+        <div id="message-container"></div>
+
+        <div id="products-container" class="products-grid">
+            <div class="loading">Loading products...</div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Jerusalem Hills. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Stripe (replace with your publishable key)
+        const stripe = Stripe('pk_test_51234567890'); // TODO: Replace with real key
+
+        // Sample products (replace with your actual products)
+        const products = [
+            {
+                id: 'prod_1',
+                name: 'Handmade Jerusalem Pottery',
+                description: 'Beautiful handcrafted pottery made by local Jerusalem artisans using traditional techniques.',
+                price: 4500, // in cents
+                currency: 'usd',
+                image: 'assets/images/pottery.jpg',
+                priceId: null // Will use dynamic pricing
+            },
+            {
+                id: 'prod_2',
+                name: 'Olive Wood Mezuzah',
+                description: 'Authentic olive wood mezuzah from the hills of Jerusalem, hand-carved with intricate details.',
+                price: 6500,
+                currency: 'usd',
+                image: 'assets/images/mezuzah.jpg',
+                priceId: null
+            },
+            {
+                id: 'prod_3',
+                name: 'Dead Sea Salt Collection',
+                description: 'Premium Dead Sea salt products including bath salts and therapeutic minerals.',
+                price: 3500,
+                currency: 'usd',
+                image: 'assets/images/deadsea.jpg',
+                priceId: null
+            },
+            {
+                id: 'prod_4',
+                name: 'Jerusalem Stone Coasters',
+                description: 'Set of 4 coasters made from authentic Jerusalem stone, perfect for any home.',
+                price: 2500,
+                currency: 'usd',
+                image: 'assets/images/coasters.jpg',
+                priceId: null
+            }
+        ];
+
+        // Display products
+        function displayProducts() {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.image || 'assets/images/placeholder.jpg'}"
+                         alt="${product.name}"
+                         class="product-image"
+                         onerror="this.src='assets/images/placeholder.jpg'">
+                    <div class="product-details">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-price">$${(product.price / 100).toFixed(2)}</div>
+                        <button class="buy-button"
+                                data-product-id="${product.id}"
+                                data-price-id="${product.priceId}"
+                                data-product-name="${product.name}"
+                                data-amount="${product.price}">
+                            Buy Now
+                        </button>
+                    </div>
+                `;
+                container.appendChild(productCard);
+            });
+
+            // Add click handlers to all buy buttons
+            document.querySelectorAll('.buy-button').forEach(button => {
+                button.addEventListener('click', handlePurchase);
+            });
+        }
+
+        // Handle purchase
+        async function handlePurchase(event) {
+            const button = event.target;
+            const priceId = button.dataset.priceId;
+            const productName = button.dataset.productName;
+            const amount = button.dataset.amount;
+
+            // Disable button and show loading
+            button.disabled = true;
+            button.textContent = 'Processing...';
+
+            try {
+                // Call your serverless function to create checkout session
+                const response = await fetch('/.netlify/functions/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        priceId: priceId,
+                        productName: productName,
+                        amount: parseInt(amount)
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to create checkout session');
+                }
+
+                // Redirect to Stripe Checkout
+                window.location.href = data.url;
+
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Error: ' + error.message, 'error');
+
+                // Re-enable button
+                button.disabled = false;
+                button.textContent = 'Buy Now';
+            }
+        }
+
+        // Show message to user
+        function showMessage(message, type = 'info') {
+            const container = document.getElementById('message-container');
+            container.innerHTML = `
+                <div class="${type === 'error' ? 'error-message' : 'success-message'}">
+                    ${message}
+                </div>
+            `;
+
+            // Clear message after 5 seconds
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        // Check if returning from checkout
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('success')) {
+            showMessage('Thank you for your purchase! You will receive a confirmation email shortly.', 'success');
+        } else if (urlParams.has('canceled')) {
+            showMessage('Purchase was canceled. Feel free to continue shopping.', 'info');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', displayProducts);
+    </script>
+</body>
+</html>
