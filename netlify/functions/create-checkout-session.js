@@ -4,6 +4,19 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 exports.handler = async (event, context) => {
+  // Handle CORS preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': 'https://jerusalemhills.com',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+      },
+      body: ''
+    };
+  }
+
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return {
@@ -67,7 +80,9 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*' // Configure for your domain in production
+        'Access-Control-Allow-Origin': 'https://jerusalemhills.com', // Allow your domain
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS'
       },
       body: JSON.stringify({
         url: session.url,
