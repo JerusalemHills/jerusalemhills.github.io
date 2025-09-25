@@ -37,6 +37,13 @@
   # STRIPE_WEBHOOK_SECRET = set in dashboard
   # NODE_ENV = "production"
 
+# TEMPORARY: Test keys only (replace with dashboard variables later)
+[build.environment]
+  NODE_ENV = "development"
+  # Add your test keys here:
+  # STRIPE_SECRET_KEY = "sk_test_..."
+  # STRIPE_PUBLISHABLE_KEY = "pk_test_..."
+
 [context.deploy-preview]
   # Test environment for preview deploys
   # Use test keys for Stripe
