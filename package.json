@@ -4,10 +4,17 @@
   "description": "Jerusalem Hills Marketplace with Stripe Checkout",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "minify": "npm run minify:js && npm run minify:css",
+    "minify:js": "terser js/analytics.js -o js/analytics.min.js --compress --mangle",
+    "minify:css": "echo 'CSS minification: Extract inline styles to external files first'"
   },
   "dependencies": {
     "stripe": "^18.5.0"
+  },
+  "devDependencies": {
+    "terser": "^5.31.0",
+    "clean-css-cli": "^5.6.3"
   },
   "repository": {
     "type": "git",
