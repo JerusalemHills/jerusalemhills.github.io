@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
+    <!-- Google Analytics 4 -->
+    <script src="/js/analytics.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jerusalem Hills - Explore Jerusalem's Heritage, Culture & Unique Marketplace</title>
@@ -1478,6 +1472,97 @@
                 display: block !important;
             }
         }
+
+        /* Enhanced Mobile Responsiveness Fixes */
+        @media (max-width: 768px) {
+            /* Fix header on mobile */
+            .header {
+                padding: 0.5rem 0;
+            }
+
+            .header-container {
+                padding: 0 0.75rem;
+            }
+
+            .logo img {
+                height: 60px !important;
+            }
+
+            /* Fix content sections */
+            .content-section {
+                padding: 1rem !important;
+                margin: 0.5rem !important;
+            }
+
+            .section-title {
+                font-size: 1.5rem !important;
+                margin-bottom: 1rem !important;
+            }
+
+            /* Fix cards and grids */
+            .product-card,
+            .discussion-item,
+            .featured-card {
+                width: 100% !important;
+                margin: 0.5rem 0 !important;
+                padding: 1rem !important;
+            }
+
+            /* Fix forms and inputs */
+            input, textarea, select, button {
+                font-size: 16px !important; /* Prevents zoom on iOS */
+            }
+
+            /* Fix overflow issues */
+            * {
+                max-width: 100vw !important;
+            }
+
+            /* Fix text readability */
+            p, li, td {
+                font-size: 14px !important;
+                line-height: 1.6 !important;
+            }
+
+            /* Ensure touch targets are large enough */
+            a, button {
+                min-height: 44px;
+                min-width: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Fix horizontal scrolling */
+            .main-wrapper,
+            #root-wrapper {
+                overflow-x: hidden !important;
+            }
+
+            /* Better spacing for mobile */
+            .container {
+                padding: 0 15px !important;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            .header-title {
+                font-size: 1.25rem !important;
+            }
+
+            .content-section {
+                padding: 0.75rem !important;
+                margin: 0.25rem !important;
+            }
+
+            /* Stack all grid items vertically */
+            .grid,
+            .product-grid,
+            .discussion-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1923,8 +2008,8 @@
         </footer>
     </div>
 
-    <!-- Cookie Consent and AdSense Management -->
-    <script src="/js/cookie-consent.js"></script>
+    <!-- AdSense Management -->
+    <!-- Cookie consent removed - not needed for basic analytics -->
     <script src="/js/adsense-config.js"></script>
     <script src="/js/lazy-load.js"></script>
     <script src="/js/search.js"></script>
