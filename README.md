@@ -181,5 +181,39 @@ This project is proprietary. All rights reserved.
 
 ---
 
+---
+
+## 🚧 Current Development (In Progress)
+
+### Jerusalem Theme Implementation
+- ✅ **Central Theme System** (`/css/theme.css`)
+  - Jerusalem color palette (Gold, Stone, Olive, Sky, Purple)
+  - Unified typography system
+  - Consistent spacing and components
+  - Micro-animations and transitions
+
+- 🔄 **Index Page Redesign** (`/css/index-redesign.css`)
+  - Card-based layout for better organization
+  - Categories: Marketplace, Community, Culture, Services
+  - Featured products carousel
+  - Community activity feed
+
+- ✅ **Jerusalem Time/Weather Widget** (`/js/jerusalem-widget.js`)
+  - Live Jerusalem time display
+  - Weather information (mock data for now)
+  - Fixed position widget
+
+- 🔄 **Backgammon Game** (`/games/backgammon/`)
+  - Local multiplayer implementation
+  - Jerusalem-themed design
+  - Drag-and-drop gameplay
+  - Score tracking
+
+### Next Steps
+- Complete backgammon game logic
+- Implement P2P connectivity with PeerJS
+- Add GunDB for decentralized data
+- Complete index.html migration to new design
+
 **Last Updated**: September 2025
-**Version**: 2.0.0
+**Version**: 2.1.0

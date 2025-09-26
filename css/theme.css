@@ -1,0 +1,319 @@
+/*
+ * Jerusalem Hills - Central Theme CSS
+ * ====================================
+ * Unified design system for consistent branding across all pages
+ *
+ * Color Palette inspired by Jerusalem:
+ * - Gold: The golden Jerusalem stone and holy light
+ * - Stone White: Jerusalem limestone
+ * - Olive Green: Ancient olive trees
+ * - Sky Blue: Mediterranean sky
+ * - Deep Purple: Royalty and spirituality
+ */
+
+:root {
+    /* Primary Jerusalem Colors */
+    --jerusalem-gold: #D4A574;
+    --jerusalem-gold-light: #E5C5A0;
+    --jerusalem-gold-dark: #B8925C;
+
+    --jerusalem-stone: #F5E6D3;
+    --jerusalem-stone-light: #FBF7F3;
+    --jerusalem-stone-dark: #E8D4BC;
+
+    --jerusalem-olive: #6B7E54;
+    --jerusalem-olive-light: #8B9D73;
+    --jerusalem-olive-dark: #4B5A3B;
+
+    --jerusalem-sky: #5B9BD5;
+    --jerusalem-sky-light: #87BEED;
+    --jerusalem-sky-dark: #4178AB;
+
+    --jerusalem-purple: #6B5B95;
+    --jerusalem-purple-light: #8B7BAB;
+    --jerusalem-purple-dark: #4B3B75;
+
+    /* Functional Colors */
+    --color-primary: var(--jerusalem-gold);
+    --color-secondary: var(--jerusalem-olive);
+    --color-accent: var(--jerusalem-purple);
+    --color-background: var(--jerusalem-stone-light);
+    --color-surface: #FFFFFF;
+    --color-text-primary: #2C2416;
+    --color-text-secondary: #5C5446;
+    --color-text-light: #8C8476;
+
+    /* Status Colors */
+    --color-success: #52C41A;
+    --color-warning: var(--jerusalem-gold);
+    --color-error: #CF4436;
+    --color-info: var(--jerusalem-sky);
+
+    /* Typography - Mixing modern and traditional */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-secondary: 'Playfair Display', 'Georgia', serif;
+    --font-hebrew: 'Frank Ruhl Libre', 'David Libre', serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+    /* Font Sizes - Responsive scale */
+    --text-xs: clamp(0.75rem, 1.5vw, 0.875rem);
+    --text-sm: clamp(0.875rem, 2vw, 1rem);
+    --text-base: clamp(1rem, 2.5vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 3vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 3.5vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 4vw, 2rem);
+    --text-3xl: clamp(2rem, 5vw, 3rem);
+    --text-4xl: clamp(2.5rem, 6vw, 4rem);
+
+    /* Spacing System */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-full: 9999px;
+
+    /* Shadows - Subtle depth */
+    --shadow-xs: 0 1px 2px rgba(44, 36, 22, 0.05);
+    --shadow-sm: 0 2px 4px rgba(44, 36, 22, 0.1);
+    --shadow-md: 0 4px 8px rgba(44, 36, 22, 0.15);
+    --shadow-lg: 0 8px 16px rgba(44, 36, 22, 0.2);
+    --shadow-xl: 0 16px 32px rgba(44, 36, 22, 0.25);
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-slow: 350ms ease;
+
+    /* Z-index layers */
+    --z-base: 0;
+    --z-dropdown: 1000;
+    --z-sticky: 1100;
+    --z-overlay: 1200;
+    --z-modal: 1300;
+    --z-popover: 1400;
+    --z-tooltip: 1500;
+
+    /* Container widths */
+    --container-xs: 480px;
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1280px;
+    --container-2xl: 1536px;
+}
+
+/* Dark mode variables */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-background: #1A1612;
+        --color-surface: #2C2416;
+        --color-text-primary: #F5E6D3;
+        --color-text-secondary: #D4C4B0;
+        --color-text-light: #A49484;
+    }
+}
+
+/* Base Typography Classes */
+.font-primary { font-family: var(--font-primary); }
+.font-secondary { font-family: var(--font-secondary); }
+.font-hebrew { font-family: var(--font-hebrew); }
+.font-mono { font-family: var(--font-mono); }
+
+/* Utility Classes */
+.text-jerusalem-gold { color: var(--jerusalem-gold); }
+.text-jerusalem-olive { color: var(--jerusalem-olive); }
+.text-jerusalem-sky { color: var(--jerusalem-sky); }
+.text-jerusalem-purple { color: var(--jerusalem-purple); }
+
+.bg-jerusalem-gold { background-color: var(--jerusalem-gold); }
+.bg-jerusalem-stone { background-color: var(--jerusalem-stone); }
+.bg-jerusalem-olive { background-color: var(--jerusalem-olive); }
+.bg-jerusalem-sky { background-color: var(--jerusalem-sky); }
+.bg-jerusalem-purple { background-color: var(--jerusalem-purple); }
+
+/* Card Component */
+.jerusalem-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    border: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+.jerusalem-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--jerusalem-gold);
+}
+
+/* Button Styles */
+.btn-jerusalem {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    border: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.btn-jerusalem-primary {
+    background: linear-gradient(135deg, var(--jerusalem-gold), var(--jerusalem-gold-dark));
+    color: white;
+    border-color: var(--jerusalem-gold-dark);
+}
+
+.btn-jerusalem-primary:hover {
+    background: linear-gradient(135deg, var(--jerusalem-gold-light), var(--jerusalem-gold));
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-jerusalem-secondary {
+    background: var(--jerusalem-olive);
+    color: white;
+}
+
+.btn-jerusalem-secondary:hover {
+    background: var(--jerusalem-olive-light);
+}
+
+.btn-jerusalem-outline {
+    background: transparent;
+    color: var(--jerusalem-gold);
+    border-color: var(--jerusalem-gold);
+}
+
+.btn-jerusalem-outline:hover {
+    background: var(--jerusalem-gold);
+    color: white;
+}
+
+/* Micro-animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+.animate-fadeIn { animation: fadeIn var(--transition-slow) ease forwards; }
+.animate-slideInLeft { animation: slideInLeft var(--transition-slow) ease forwards; }
+.animate-slideInRight { animation: slideInRight var(--transition-slow) ease forwards; }
+.animate-pulse { animation: pulse 2s ease infinite; }
+
+/* Loading shimmer effect */
+.shimmer {
+    background: linear-gradient(
+        90deg,
+        var(--jerusalem-stone) 0%,
+        var(--jerusalem-stone-light) 50%,
+        var(--jerusalem-stone) 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* Hebrew Text Support */
+.hebrew-text {
+    font-family: var(--font-hebrew);
+    direction: rtl;
+    text-align: right;
+    line-height: 1.8;
+}
+
+/* Responsive Grid System */
+.jerusalem-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+@media (min-width: 768px) {
+    .jerusalem-grid-md-2 { grid-template-columns: repeat(2, 1fr); }
+    .jerusalem-grid-md-3 { grid-template-columns: repeat(3, 1fr); }
+    .jerusalem-grid-md-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .jerusalem-grid-lg-2 { grid-template-columns: repeat(2, 1fr); }
+    .jerusalem-grid-lg-3 { grid-template-columns: repeat(3, 1fr); }
+    .jerusalem-grid-lg-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Section Styling */
+.jerusalem-section {
+    padding: var(--space-3xl) var(--space-lg);
+    position: relative;
+}
+
+.jerusalem-section-title {
+    font-family: var(--font-secondary);
+    font-size: var(--text-3xl);
+    color: var(--jerusalem-gold-dark);
+    margin-bottom: var(--space-xl);
+    text-align: center;
+    position: relative;
+}
+
+.jerusalem-section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--jerusalem-gold), var(--jerusalem-olive));
+    margin: var(--space-md) auto 0;
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus Styles for Accessibility */
+*:focus-visible {
+    outline: 2px solid var(--jerusalem-gold);
+    outline-offset: 2px;
+}
+
+/* Selection Colors */
+::selection {
+    background-color: var(--jerusalem-gold);
+    color: white;
+}
+
+::-moz-selection {
+    background-color: var(--jerusalem-gold);
+    color: white;
+}
