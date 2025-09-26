@@ -5,237 +5,282 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Play live backgammon on Jerusalem Hills">
     <title>Live Backgammon | Jerusalem Hills</title>
-    <link rel="stylesheet" href="css/backgammon.css">
-    <script src="js/backgammon.js" defer></script>
-    <!-- 
+    <link rel="stylesheet" href="backgammon.css">
+    <link rel="stylesheet" href="/css/theme.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        header, footer {
-            background-color: #2c3e50;
-            color: white;
+        /* Jerusalem Theme Integration */
+        .game-header {
+            background: linear-gradient(135deg, #8B7355 0%, #D4A574 100%);
+            padding: 1rem;
             text-align: center;
-            padding: 15px 0;
-        }
-
-        header nav ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        header nav ul li {
-            margin: 0 15px;
-        }
-
-        header nav ul li a {
-            text-decoration: none;
             color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        #board {
-            display: grid;
-            grid-template-columns: repeat(14, 50px);
-            grid-template-rows: repeat(14, 50px);
-            width: 700px;
-            height: 700px;
-            background-color: #f0d9b5;
-            margin: 20px auto;
-            border: 2px solid black;
+        .game-header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .game-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .game-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: #D4A574;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #8B7355;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .dice-display {
+            font-size: 24px;
+            margin: 0 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .turn-indicator {
+            padding: 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        #backgammon-board {
+            background: #8B5A2B;
+            border: 10px solid #4B2F1A;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .board-half {
+            flex: 1;
+            display: flex;
+            gap: 5px;
         }
 
         .point {
             width: 50px;
-            height: 50px;
+            height: 300px;
+            position: relative;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .point.top {
+            flex-direction: column-reverse;
+        }
+
+        .point.dark {
+            background: linear-gradient(to bottom, #654321 0%, #8B5A2B 100%);
+        }
+
+        .point.light {
+            background: linear-gradient(to bottom, #DEB887 0%, #F5DEB3 100%);
+        }
+
+        .bar {
+            width: 60px;
+            background: #4B2F1A;
+            border-left: 2px solid #2F1F0F;
+            border-right: 2px solid #2F1F0F;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .checker {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            position: absolute;
+            transition: all 0.3s ease;
+            cursor: grab;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .checker.white {
+            background: radial-gradient(circle at 30% 30%, #FFFFFF, #E0E0E0);
+            border: 2px solid #CCCCCC;
+        }
+
+        .checker.black {
+            background: radial-gradient(circle at 30% 30%, #444444, #000000);
+            border: 2px solid #222222;
+        }
+
+        .checker.selected {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        .point.valid-move {
+            background: rgba(0, 255, 0, 0.3) !important;
+        }
+
+        .home-area {
+            width: 80px;
+            background: linear-gradient(135deg, #8B7355 0%, #D4A574 100%);
+            border: 2px solid #4B2F1A;
+            border-radius: 5px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
-        .piece {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #333;
-            cursor: grab;
-        }
-
-        #controls {
-            text-align: center;
-            margin: 20px;
-        }
-
-        footer ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 10px 0 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        footer ul li {
-            margin: 0 10px;
-        }
-
-        footer ul li a {
-            text-decoration: none;
+        .home-area h3 {
             color: white;
+            margin: 0 0 10px 0;
+            font-size: 14px;
         }
 
-        .logo {
-            max-width: 200px;
-            margin-bottom: 10px;
-        }
-
-        .search-bar {
-            width: 80%;
-            max-width: 400px;
-            padding: 10px;
-            margin: 20px auto;
-            display: block;
-            border: 1px solid #ddd;
+        .nav-back {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px 20px;
+            background: #D4A574;
+            color: white;
+            text-decoration: none;
             border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav-back:hover {
+            background: #8B7355;
+        }
+
+        @media (max-width: 768px) {
+            #backgammon-board {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .point {
+                width: 40px;
+                height: 200px;
+            }
+
+            .checker {
+                width: 30px;
+                height: 30px;
+            }
         }
     </style>
-    -->
-    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.4.7/dist/peer.min.js"></script>
-    
 </head>
 <body>
-    <header>
-        <img src="./img/1.svg" alt="Jerusalem Hills Logo" class="logo">
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about.html">About</a></li>
-                <li><a href="/forum">Forum</a></li>
-                <li><a href="/market/index.html">Marketplace</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <input type="text" class="search-bar" placeholder="Search for Jerusalem gifts, tours, and more...">
-
-    <div id="board"></div>
-
-    <div id="controls">
-        <button id="connectBtn">Connect</button>
-        <input type="text" id="peerIdInput" placeholder="Enter opponent ID">
+    <div class="game-header">
+        <a href="/" style="position: absolute; left: 20px; top: 20px;">
+            <img src="/img/1.svg" alt="Jerusalem Hills Logo" style="height: 40px;">
+        </a>
+        <h1>Jerusalem Hills Backgammon</h1>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Jerusalem Hills. All rights reserved.</p>
-        <ul>
-            <li><a href="/privacy-policy">Privacy Policy</a></li>
-            <li><a href="/terms-of-service">Terms of Service</a></li>
-        </ul>
-    </footer>
+    <div class="game-container">
+        <a href="/games/" class="nav-back">← Back to Games</a>
 
+        <div class="game-info">
+            <div class="turn-indicator" id="turn-indicator">
+                White's Turn
+            </div>
+
+            <div class="controls">
+                <button id="new-game-btn" class="btn">New Game</button>
+                <button id="roll-dice-btn" class="btn">Roll Dice</button>
+                <div class="dice-display" id="dice-display">🎲 🎲</div>
+                <button id="end-turn-btn" class="btn" disabled>End Turn</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 10px;">
+                <small>Click a checker to select it, then click a valid point to move</small>
+            </div>
+        </div>
+
+        <div id="backgammon-board">
+            <!-- Board will be generated by JavaScript -->
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <p><strong>Game Status:</strong> <span id="game-status">Ready to start</span></p>
+            <p><strong>White Home:</strong> <span id="white-home-count">0</span> | <strong>Black Home:</strong> <span id="black-home-count">0</span></p>
+        </div>
+    </div>
+
+    <script src="js/backgammon.js"></script>
     <script>
-        const board = document.getElementById("board");
-        const connectBtn = document.getElementById("connectBtn");
-        const peerIdInput = document.getElementById("peerIdInput");
+        // Initialize the game when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const game = new BackgammonGame();
 
-        const peer = new Peer();
-        let connection;
-
-        peer.on("open", (id) => {
-            alert(`Your Peer ID: ${id}. Share this with your opponent.`);
-        });
-
-        peer.on("connection", (conn) => {
-            connection = conn;
-            setupConnectionHandlers();
-        });
-
-        connectBtn.addEventListener("click", () => {
-            const peerId = peerIdInput.value;
-            if (peerId) {
-                connection = peer.connect(peerId);
-                setupConnectionHandlers();
-            }
-        });
-
-        function setupConnectionHandlers() {
-            connection.on("data", (data) => {
-                const { type, payload } = JSON.parse(data);
-                if (type === "move") {
-                    updateBoard(payload);
+            // Bind UI buttons
+            document.getElementById('new-game-btn').addEventListener('click', () => {
+                if (confirm('Start a new game?')) {
+                    game.resetGame();
                 }
             });
-        }
 
-        function sendMove(move) {
-            if (connection && connection.open) {
-                connection.send(JSON.stringify({ type: "move", payload: move }));
-            }
-        }
+            document.getElementById('roll-dice-btn').addEventListener('click', () => {
+                game.rollDice();
+            });
 
-        function generateBoard() {
-            for (let i = 0; i < 24; i++) {
-                const point = document.createElement("div");
-                point.classList.add("point");
-                point.dataset.index = i;
-                board.appendChild(point);
-
-                if (i === 0 || i === 23) {
-                    for (let j = 0; j < 5; j++) {
-                        const piece = document.createElement("div");
-                        piece.classList.add("piece");
-                        piece.draggable = true;
-
-                        piece.addEventListener("dragstart", (e) => {
-                            e.dataTransfer.setData("pieceIndex", i);
-                        });
-
-                        point.appendChild(piece);
-                    }
-                }
-            }
-        }
-
-        board.addEventListener("dragover", (e) => e.preventDefault());
-
-        board.addEventListener("drop", (e) => {
-            const targetPoint = e.target.closest(".point");
-            if (targetPoint) {
-                const fromIndex = parseInt(e.dataTransfer.getData("pieceIndex"), 10);
-                const toIndex = parseInt(targetPoint.dataset.index, 10);
-
-                if (isValidMove(fromIndex, toIndex)) {
-                    const piece = document.querySelector(
-                        `.point[data-index="${fromIndex}"] .piece:last-child`
-                    );
-                    if (piece) {
-                        targetPoint.appendChild(piece);
-                        sendMove({ from: fromIndex, to: toIndex });
-                    }
-                }
-            }
+            document.getElementById('end-turn-btn').addEventListener('click', () => {
+                game.endTurn();
+            });
         });
-
-        function isValidMove(from, to) {
-            return true; // Simplified for this example.
-        }
-
-        function updateBoard(move) {
-            const fromPoint = document.querySelector(`.point[data-index="${move.from}"]`);
-            const toPoint = document.querySelector(`.point[data-index="${move.to}"]`);
-            const piece = fromPoint.querySelector(".piece:last-child");
-
-            if (piece) {
-                toPoint.appendChild(piece);
-            }
-        }
-
-        generateBoard();
     </script>
 </body>
 </html>
