@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics 4 -->
+    <script src="/js/analytics.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jerusalem Hills - Explore Jerusalem's Heritage, Culture & Unique Marketplace</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover Jerusalem Hills - your gateway to Jerusalem's rich heritage, culture, and history. Explore our unique marketplace featuring authentic Jerusalem products, join community discussions, and access essential local services.">
+    <meta name="keywords" content="Jerusalem Hills, Jerusalem heritage, Jerusalem marketplace, Jerusalem culture, Jerusalem history, Dead Sea products, Jerusalem crafts, Jerusalem community, Israeli products, Jerusalem tourism, authentic gifts, local services">
+    <meta name="author" content="Jerusalem Hills">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Jerusalem Hills - Explore Jerusalem's Heritage, Culture & Unique Marketplace">
+    <meta property="og:description" content="Discover Jerusalem Hills - your gateway to Jerusalem's rich heritage, culture, and history. Explore our unique marketplace featuring authentic Jerusalem products, join community discussions, and access essential local services.">
+    <meta property="og:image" content="https://jerusalemhills.com/img/header-bg-city-wall.jpg">
+    <meta property="og:image:alt" content="Jerusalem's ancient city wall showcasing the historic beauty of Jerusalem Hills">
+    <meta property="og:url" content="https://jerusalemhills.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Jerusalem Hills">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jerusalem Hills - Explore Jerusalem's Heritage, Culture & Unique Marketplace">
+    <meta name="twitter:description" content="Discover Jerusalem Hills - your gateway to Jerusalem's rich heritage, culture, and history. Explore our unique marketplace featuring authentic Jerusalem products.">
+    <meta name="twitter:image" content="https://jerusalemhills.com/img/header-bg-city-wall.jpg">
+    <meta name="twitter:image:alt" content="Jerusalem's ancient city wall showcasing the historic beauty of Jerusalem Hills">
+    <meta name="twitter:site" content="@JerusalemHills">
+    <meta name="twitter:creator" content="@JerusalemHills">
+
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="apple-mobile-web-app-title" content="Jerusalem Hills">
+    <meta name="application-name" content="Jerusalem Hills">
+    <meta name="msapplication-TileColor" content="#4F46E5">
+    <meta name="google-site-verification" content="ZSCfkxbfCgbfz-qO3-L3cVpifny1S6dygLdSklzsgCU" />
+    <meta name="google-adsense-account" content="ca-pub-1738161253720" />
+    
+    <!-- Load local scripts instead of CDNs to avoid MIME type issues -->
+    <script src="js/hebcal.js"></script>
+    <script src="js/rss-feed-config.js"></script>
+    <script src="js/rain.js"></script>
+    <script src="js/ticker.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Add favicon references -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/img/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="manifest" href="/img/site.webmanifest">
+    
+    <style>
+        /* Root level constraints */
+        html, body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        #root-wrapper {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: rgb(249, 250, 251);
+            min-height: 100vh;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Header styles with width constraint */
+        .header {
+            background: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            position: fixed;
+            width: 100%;
+            max-width: 100vw;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            height: 96px;
+            overflow-x: hidden;
+        }
+
+        .header-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 0.5rem;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 6rem;
+            padding: 0.5rem 0;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 0.5rem;
+        }
+
+        .logo img {
+            height: 90px;
+            width: auto;
+            transition: transform 0.2s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .logo img {
+                height: 72px;
+            }
+        }
+
+        /* Updated header layout with nav buttons */
+        .middle-section {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            margin: 0 1rem;
+        }
+
+        .search-container {
+            flex: 0.6;
+            max-width: 32rem;
+            position: relative;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+            margin-left: 1rem;
+            flex: 1;
+        }
+
+        .header-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: rgb(75, 85, 99);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+
+        .header-nav-link:hover {
+            color: rgb(17, 24, 39);
+            background-color: rgb(243, 244, 246);
+        }
+
+        .header-nav-link i {
+            width: 18px;
+            height: 18px;
+        }
+
+        @media (min-width: 768px) {
+            .search-container {
+                display: block;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .header-nav-link span {
+                display: none;
+            }
+            
+            .header-nav {
+                gap: 0.5rem;
+            }
+            
+            .header-nav-link {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-nav {
+                display: none;
+            }
+            
+            .middle-section {
+                margin: 0;
+            }
+            
+            .search-container {
+                max-width: none;
+                width: 100%;
+            }
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border-radius: 9999px;
+            border: 1px solid rgb(229, 231, 235);
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: rgb(79, 70, 229);
+            box-shadow: 0 0 0 1px rgb(79, 70, 229);
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icon-button {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: rgb(75, 85, 99);
+        }
+
+        .icon-button:hover {
+            background-color: rgb(243, 244, 246);
+            color: rgb(17, 24, 39);
+        }
+
+        /* Navigation styles - Modified for main-nav */
+        .main-nav {
+            display: block;
+            background: white;
+            border-bottom: 1px solid rgb(229, 231, 235);
+            position: fixed;
+            width: 100%;
+            top: 96px;
+            height: 48px;
+            z-index: 46;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 1rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            height: 100%;
+            align-items: center;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgb(75, 85, 99);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            height: 100%;
+            padding: 0 0.5rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: rgb(17, 24, 39);
+            border-bottom-color: rgb(79, 70, 229);
+        }
+
+        .nav-link i {
+            width: 18px;
+            height: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+            .mobile-menu.open {
+                display: block;
+                background: white;
+                border-bottom: 1px solid rgb(229, 231, 235);
+                position: absolute;
+                width: 100%;
+                top: 100%;
+                left: 0;
+                padding: 0.5rem 0;
+                z-index: 49;
+            }
+        }
+
+        /* Main content spacing - Adjust for new header layout */
+        .main-content {
+            width: 100%;
+            max-width: 80rem;
+            margin: 0 auto;
+            margin-top: 176px; /* header (96px) + news ticker (40px) + trading view ticker (40px) */
+            padding-top: 0;
+            overflow-x: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .ticker-wrapper {
+                top: 120px; /* mobile header (80px) + news ticker (40px) */
+            }
+            .main-content {
+                margin-top: 160px; /* mobile header (80px) + news ticker (40px) + trading view ticker (40px) */
+            }
+        }
+
+        /* Date display styles */
+        .top-date-display {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            text-align: right;
+            font-size: 0.875rem;
+            color: rgb(75, 85, 99);
+            line-height: 1.4;
+            z-index: 51;
+        }
+
+        .hebrew-date {
+            font-weight: 600;
+            color: rgb(79, 70, 229);
+        }
+
+        .gregorian-date {
+            font-size: 0.75rem;
+            color: rgb(107, 114, 128);
+        }
+
+        @media (max-width: 768px) {
+            .top-date-display {
+                position: static;
+                text-align: center;
+                padding: 0.5rem;
+                background: white;
+                border-bottom: 1px solid rgb(229, 231, 235);
+            }
+        }
+
+        /* Main content styles - consolidated */
+        .main-content {
+            max-width: 80rem;
+            margin: 0 auto;
+            margin-top: 130px; /* Adjusted for the new header layout */
+            padding: 1rem;
+        }
+
+        .ad-banner {
+            margin: 0.5rem auto; /* Reduced margin */
+        }
+
+        .ad-banner ins.adsbygoogle {
+            width: 100% !important;
+            max-width: 970px !important;
+            height: auto !important;
+            min-height: 250px;
+        }
+
+        .trending-section {
+            margin-top: 0.5rem; /* Reduced margin */
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                margin-top: 110px; /* Reduced for mobile */
+            }
+        }
+
+        /* Ticker wrapper styles - Adjust based on new header */
+        .ticker-wrapper {
+            position: fixed;
+            top: 136px; /* Exactly header (96px) + news ticker (40px) - no gap */
+            left: 0;
+            width: 100%;
+            z-index: 46;
+            background: white;
+            height: 40px;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            border-top: none; /* Remove any border that might create visual gap */
+            margin: 0; /* Remove any margins */
+            padding: 0; /* Remove any padding */
+        }
+
+        .tradingview-widget-container,
+        .tradingview-widget-container__widget {
+            width: 100% !important;
+            height: 40px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .tradingview-widget-copyright {
+            display: none !important;
+        }
+
+        /* News Ticker Styles - Adjust based on new header */
+        .news-ticker {
+            position: fixed;
+            top: 96px; /* Match exactly to header height */
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: white;
+            border-bottom: 1px solid rgb(229, 231, 235);
+            z-index: 47; /* Higher than TradingView widget */
+            overflow: hidden;
+            box-shadow: none; /* Remove shadow to prevent gap appearance */
+        }
+
+        /* Rest of the styles remain unchanged */
+        /* Featured section styles */
+        .featured-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgb(17, 24, 39);
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .featured-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .featured-card {
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .featured-card:hover {
+            transform: scale(1.02);
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            padding: 1rem;
+        }
+
+        .featured-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: rgb(17, 24, 39);
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-description {
+            color: rgb(75, 85, 99);
+        }
+
+        /* Products and Videos section styles */
+        .products-grid, .videos-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            padding: 0.5rem;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .products-grid, .videos-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 640px) {
+            .products-grid, .videos-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .products-grid, .videos-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .header-container {
+                padding: 0 1rem;
+            }
+            .main-content {
+                padding: 1rem;
+            }
+        }
+
+        .product-card, .video-card {
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .video-card:hover {
+            transform: scale(1.02);
+        }
+
+        .product-image, .video-thumbnail {
+            width: 100%;
+            height: 10rem;
+            object-fit: cover;
+        }
+
+        .product-content, .video-content {
+            padding: 1rem;
+        }
+
+        .product-title, .video-title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: rgb(17, 24, 39);
+        }
+
+        .video-duration {
+            font-size: 0.75rem;
+            color: rgb(107, 114, 128);
+            margin-top: 0.25rem;
+        }
+
+        /* Discussion section styles */
+        .discussion-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .discussion-card:hover {
+            background-color: rgb(249, 250, 251);
+        }
+
+        .discussion-header {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+        }
+
+        .discussion-content {
+            flex: 1;
+        }
+
+        .discussion-title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: rgb(17, 24, 39);
+            margin-bottom: 0.25rem;
+        }
+
+        .discussion-preview {
+            font-size: 0.875rem;
+            color: rgb(75, 85, 99);
+            margin-bottom: 0.5rem;
+        }
+
+        .discussion-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: rgb(107, 114, 128);
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+            padding: 0.75rem 0;
+        }
+
+        .mobile-menu.open {
+            display: block;
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .mobile-link {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: rgb(55, 65, 81);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 0.375rem;
+        }
+
+        .mobile-link:hover {
+            background-color: rgb(243, 244, 246);
+            color: rgb(17, 24, 39);
+        }
+
+        @media (min-width: 768px) {
+            .menu-button {
+                display: none;
+            }
+        }
+
+        /* Map section styles */
+        .map-section {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .map-section-container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0 0.5rem;
+            display: flex;
+            gap: 2rem;
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .map-wrapper {
+            flex: 3;
+        }
+
+        .services-links {
+            flex: 1;
+            min-width: 250px;
+            border-left: 1px solid rgb(229, 231, 235);
+            padding-left: 2rem;
+        }
+
+        .services-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .services-category h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: rgb(17, 24, 39);
+            margin-bottom: 0.75rem;
+        }
+
+        .services-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .services-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .services-list a {
+            color: rgb(79, 70, 229);
+            text-decoration: none;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .services-list a:hover {
+            color: rgb(67, 56, 202);
+            text-decoration: underline;
+        }
+
+        .services-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .map-section-container {
+                flex-direction: column;
+            }
+
+            .services-links {
+                border-left: none;
+                border-top: 1px solid rgb(229, 231, 235);
+                padding-left: 0;
+                padding-top: 2rem;
+            }
+        }
+
+        /* Footer styles */
+        .footer {
+            background: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid rgb(229, 231, 235);
+        }
+
+        .footer-container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            color: rgb(107, 114, 128);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-link {
+            color: rgb(79, 70, 229);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Video Slider styles */
+        .video-slider-section {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .slider-wrapper {
+            width: 100%;
+            max-width: 100%;
+            position: relative;
+            padding: 0;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .slider-container {
+            width: 100%;
+            max-width: 100%;
+            position: relative;
+            margin: 0 auto;
+            padding: 0 30px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.5s ease;
+            width: max-content;
+            max-width: calc(100vw - 60px);
+            margin: 0 auto;
+        }
+
+        .slider-item {
+            position: relative;
+            width: 100%;
+            min-width: 260px;
+            max-width: calc(100vw - 80px);
+            flex: 0 0 auto;
+            aspect-ratio: 16/9;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                height: 80px;
+                width: 100vw;
+                left: 0;
+                right: 0;
+            }
+            
+            .header-content {
+                padding: 0.25rem;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            .slider-item {
+                width: calc(100vw - 60px);
+                min-width: unset;
+            }
+
+            .slider-container {
+                padding: 0 15px;
+            }
+
+            .slider {
+                max-width: calc(100vw - 30px);
+            }
+
+            .middle-section {
+                max-width: calc(100vw - 120px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                height: 50px;
+            }
+
+            .header-content {
+                height: 50px;
+                padding: 0.25rem;
+            }
+
+            .slider-container {
+                padding: 0 10px;
+            }
+
+            .slider {
+                max-width: calc(100vw - 20px);
+            }
+
+            .slider-item {
+                width: calc(100vw - 40px);
+            }
+        }
+
+        /* Ticker wrapper styles */
+        .ticker-wrapper {
+            position: fixed;
+            top: 136px; /* Exactly header (96px) + news ticker (40px) */
+            left: 0;
+            width: 100%;
+            z-index: 46;
+            background: white;
+            height: 40px;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .tradingview-widget-container,
+        .tradingview-widget-container__widget {
+            width: 100% !important;
+            height: 40px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .tradingview-widget-copyright {
+            display: none !important;
+        }
+
+        /* Navigation and content layout */
+        .header {
+            height: 96px;
+        }
+
+        .main-nav {
+            top: 96px;
+            height: 48px;
+        }
+
+        .ticker-wrapper {
+            top: 184px; /* header (96px) + nav (48px) + news ticker (40px) */
+            height: 40px;
+        }
+
+        .main-content {
+            margin-top: 224px; /* header (96px) + nav (48px) + news ticker (40px) + trading view (40px) */
+            padding: 1rem;
+        }
+
+        .ad-banner {
+            margin: 0 auto 1rem;
+        }
+
+        .trending-section {
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                height: 80px;
+            }
+            .main-nav {
+                top: 80px;
+            }
+            .news-ticker {
+                top: 80px; /* Match to mobile header height */
+            }
+            .ticker-wrapper {
+                top: 120px; /* mobile header (80px) + news ticker (40px) */
+            }
+            .main-content {
+                margin-top: 160px; /* mobile header (80px) + news ticker (40px) + trading view ticker (40px) */
+            }
+        }
+
+        /* Map Controls */
+        .map-controls {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .map-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgb(229, 231, 235);
+            background: white;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            color: rgb(75, 85, 99);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .map-button:hover {
+            background: rgb(243, 244, 246);
+            color: rgb(17, 24, 39);
+        }
+
+        .map-button.active {
+            background: rgb(79, 70, 229);
+            color: white;
+            border-color: rgb(67, 56, 202);
+        }
+
+        .map-container {
+            width: 100%;
+            height: 400px;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid rgb(229, 231, 235);
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* News Ticker Styles */
+        .news-ticker {
+            position: fixed;
+            top: 96px; /* Match exactly to header height */
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: white;
+            border-bottom: none; /* Remove border to prevent gap */
+            z-index: 47;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Trading View Ticker Styles */
+        .ticker-wrapper {
+            position: fixed;
+            top: 136px; /* Exactly header + news ticker height */
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: white;
+            z-index: 46;
+            overflow: hidden;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Remove any margins and padding from widget containers */
+        .tradingview-widget-container,
+        .tradingview-widget-container__widget {
+            width: 100% !important;
+            height: 40px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            display: block !important;
+        }
+
+        /* Main content spacing adjustment */
+        .main-content {
+            margin-top: 176px; /* header (96px) + news ticker (40px) + trading view ticker (40px) */
+            padding-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                height: 80px;
+            }
+            .news-ticker {
+                top: 80px;
+            }
+            .ticker-wrapper {
+                top: 120px; /* mobile header (80px) + news ticker (40px) */
+            }
+            .main-content {
+                margin-top: 160px; /* mobile header (80px) + news ticker (40px) + trading view ticker (40px) */
+            }
+        }
+
+        .ticker-tape {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 0 20px;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            padding-right: 100%;
+            animation: none;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .ticker-item {
+            display: inline-block;
+            margin-right: 20px;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-right: 1px solid #eee;
+        }
+
+        .ticker-item a {
+            color: rgb(75, 85, 99);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .ticker-item a:hover {
+            color: rgb(17, 24, 39);
+            text-decoration: underline;
+        }
+
+        /* Base header heights */
+        .header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 50;
+            height: 96px;
+            background: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* News Ticker Styles */
+        .news-ticker {
+            position: fixed;
+            top: 96px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: white;
+            z-index: 47;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+
+        /* Trading View Ticker Styles */
+        .ticker-wrapper {
+            position: fixed;
+            top: 136px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: white;
+            z-index: 46;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+
+        /* Widget container styles */
+        .tradingview-widget-container,
+        .tradingview-widget-container__widget {
+            width: 100% !important;
+            height: 40px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            display: block !important;
+        }
+
+        /* Main content spacing */
+        .main-content {
+            margin-top: 176px;
+            padding-top: 1rem;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            /* Adjust header for mobile */
+            .header {
+                height: 80px;
+            }
+            
+            .header-content {
+                height: 80px;
+                padding: 0.25rem 0;
+            }
+
+            /* Logo adjustments */
+            .logo img {
+                height: 60px;
+            }
+
+            /* Update ticker positions for mobile */
+            .news-ticker {
+                top: 80px; /* Align with reduced header height */
+            }
+
+            .ticker-wrapper {
+                top: 120px; /* header (80px) + news ticker (40px) */
+            }
+
+            /* Update main content margin */
+            .main-content {
+                margin-top: 160px; /* header (80px) + news ticker (40px) + trading ticker (40px) */
+                padding-top: 0.5rem;
+            }
+
+            /* Adjust search and navigation for mobile */
+            .middle-section {
+                margin: 0 0.5rem;
+            }
+
+            .search-container {
+                max-width: none;
+            }
+
+            /* Ensure mobile menu doesn't overlap */
+            .mobile-menu.open {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: white;
+                z-index: 49;
+                border-bottom: 1px solid rgb(229, 231, 235);
+            }
+
+            /* Hide desktop nav items */
+            .header-nav {
+                display: none;
+            }
+            
+            /* Adjust date display for mobile */
+            .top-date-display {
+                display: none; /* Hide on mobile to save space */
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            .header {
+                height: 50px;
+            }
+
+            .header-content {
+                height: 50px;
+                padding: 0.25rem;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .news-ticker {
+                top: 50px;
+                height: 25px;
+                font-size: 12px;
+                padding: 0 0.5rem;
+            }
+
+            .ticker-wrapper {
+                top: 75px; /* header (50px) + news ticker (25px) */
+                height: 25px;
+            }
+
+            .main-content {
+                margin-top: 100px; /* header (50px) + news ticker (25px) + trading ticker (25px) */
+                padding: 0.5rem;
+            }
+
+            .mobile-menu.open {
+                top: 50px;
+            }
+
+            .search-container {
+                max-width: calc(100vw - 120px);
+            }
+
+            .header-icons {
+                gap: 0.5rem;
+            }
+
+            .icon-button {
+                padding: 0.25rem;
+            }
+        }
+
+        /* Base header styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Mobile-first approach */
+        @media (max-width: 768px) {
+            /* Header adjustments */
+            .header {
+                height: 60px; /* Reduced height for mobile */
+            }
+            
+            .header-content {
+                height: 60px;
+                padding: 0.5rem;
+            }
+
+            .logo img {
+                height: 45px; /* Smaller logo for mobile */
+            }
+
+            /* News ticker positioning */
+            .news-ticker {
+                top: 60px;
+                height: 30px; /* Smaller height for mobile */
+            }
+
+            /* Trading view ticker adjustments */
+            .ticker-wrapper {
+                top: 90px; /* header (60px) + news ticker (30px) */
+                height: 30px; /* Smaller height for mobile */
+            }
+
+            /* Widget container adjustments */
+            .tradingview-widget-container,
+            .tradingview-widget-container__widget {
+                height: 30px !important;
+            }
+
+            /* Main content spacing */
+            .main-content {
+                margin-top: 120px; /* header (60px) + news ticker (30px) + trading ticker (30px) */
+            }
+
+            /* Mobile menu adjustments */
+            .mobile-menu.open {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: white;
+                z-index: 49;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            .header {
+                height: 50px;
+            }
+
+            .header-content {
+                height: 50px;
+                padding: 0.25rem;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .news-ticker {
+                top: 50px;
+                height: 25px;
+            }
+
+            .ticker-wrapper {
+                top: 75px; /* header (50px) + news ticker (25px) */
+                height: 25px;
+            }
+
+            .tradingview-widget-container,
+            .tradingview-widget-container__widget {
+                height: 25px !important;
+            }
+
+            .main-content {
+                margin-top: 100px; /* header (50px) + news ticker (25px) + trading ticker (25px) */
+            }
+
+            .mobile-menu.open {
+                top: 50px;
+            }
+        }
+
+        /* Tablet and desktop styles */
+        @media (min-width: 769px) {
+            .header {
+                height: 96px;
+            }
+
+            .news-ticker {
+                top: 96px;
+                height: 40px;
+            }
+
+            .ticker-wrapper {
+                top: 136px;
+                height: 40px;
+            }
+
+            .main-content {
+                margin-top: 176px;
+            }
+        }
+
+        /* Container constraints for mobile */
+        .header-container, 
+        .news-ticker,
+        .ticker-wrapper,
+        .main-content,
+        .featured-section,
+        .videos-section,
+        .discussions-section,
+        .map-section,
+        .footer {
+            width: 100vw;
+            max-width: 100vw;
+            overflow-x: hidden;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+            box-sizing: border-box;
+            left: 0;
+            right: 0;
+        }
+
+        /* Ensure all grid containers are contained */
+        .products-grid,
+        .videos-grid,
+        .featured-grid {
+            width: 100%;
+            max-width: 100vw;
+            margin: 0;
+            padding: 0.5rem;
+            box-sizing: border-box;
+            display: grid;
+            gap: 1rem;
+        }
+
+        /* Additional mobile constraints */
+        @media (max-width: 768px) {
+            body {
+                min-width: 320px;
+            }
+
+            .header-content {
+                width: 100%;
+                max-width: 100vw;
+                padding: 0 0.5rem;
+            }
+
+            .middle-section {
+                width: auto;
+                flex: 1;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: calc(100vw - 140px);
+            }
+
+            .header-icons {
+                min-width: fit-content;
+            }
+
+            /* Ensure ads don't cause overflow */
+            .ad-banner ins.adsbygoogle,
+            .sidebar-ad ins.adsbygoogle {
+                max-width: calc(100vw - 20px) !important;
+                width: 100% !important;
+                margin: 0 auto !important;
+                display: block !important;
+            }
+        }
+
+        /* Enhanced Mobile Responsiveness Fixes */
+        @media (max-width: 768px) {
+            /* Fix header on mobile */
+            .header {
+                padding: 0.5rem 0;
+            }
+
+            .header-container {
+                padding: 0 0.75rem;
+            }
+
+            .logo img {
+                height: 60px !important;
+            }
+
+            /* Fix content sections */
+            .content-section {
+                padding: 1rem !important;
+                margin: 0.5rem !important;
+            }
+
+            .section-title {
+                font-size: 1.5rem !important;
+                margin-bottom: 1rem !important;
+            }
+
+            /* Fix cards and grids */
+            .product-card,
+            .discussion-item,
+            .featured-card {
+                width: 100% !important;
+                margin: 0.5rem 0 !important;
+                padding: 1rem !important;
+            }
+
+            /* Fix forms and inputs */
+            input, textarea, select, button {
+                font-size: 16px !important; /* Prevents zoom on iOS */
+            }
+
+            /* Fix overflow issues */
+            * {
+                max-width: 100vw !important;
+            }
+
+            /* Fix text readability */
+            p, li, td {
+                font-size: 14px !important;
+                line-height: 1.6 !important;
+            }
+
+            /* Ensure touch targets are large enough */
+            a, button {
+                min-height: 44px;
+                min-width: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Fix horizontal scrolling */
+            .main-wrapper,
+            #root-wrapper {
+                overflow-x: hidden !important;
+            }
+
+            /* Better spacing for mobile */
+            .container {
+                padding: 0 15px !important;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            .header-title {
+                font-size: 1.25rem !important;
+            }
+
+            .content-section {
+                padding: 0.75rem !important;
+                margin: 0.25rem !important;
+            }
+
+            /* Stack all grid items vertically */
+            .grid,
+            .product-grid,
+            .discussion-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root-wrapper">
+        <header class="header">
+            <div class="top-date-display">
+                <div class="hebrew-date"></div>
+                <div class="gregorian-date"></div>
+            </div>
+            <div class="header-container">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <button class="icon-button menu-button" aria-label="Menu">
+                            <i data-lucide="menu"></i>
+                        </button>
+                        <a href="/" class="logo">
+                            <img src="img/1.svg" alt="Jerusalem Hills Logo" style="height: 90px; width: auto;">
+                        </a>
+                    </div>
+                    
+                    <div class="middle-section">
+                        <div class="search-container">
+                            <input type="text" class="search-input" placeholder="Search everything...">
+                            <i data-lucide="search" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgb(156, 163, 175);"></i>
+                        </div>
+                        
+                        <!-- Navigation moved to header -->
+                        <nav class="header-nav">
+                            <a href="/marketplace.html" class="header-nav-link">
+                                <i data-lucide="shopping-bag"></i>
+                                <span>Marketplace</span>
+                            </a>
+                            <!-- <a href="#forum" class="header-nav-link">
+                                <i data-lucide="message-square"></i>
+                                <span>Forum</span>
+                            </a> -->
+                            <a href="/games/" class="header-nav-link">
+                                <i data-lucide="gamepad-2"></i>
+                                <span>Games</span>
+                            </a>
+                            <!-- <a href="#news" class="header-nav-link">
+                                <i data-lucide="newspaper"></i>
+                                <span>News</span>
+                            </a> -->
+                            <a href="/sidur.html" class="header-nav-link">
+                                <i data-lucide="book-open"></i>
+                                <span>Siddur</span>
+                            </a>
+                        </nav>
+                    </div>
+
+                    <div class="header-icons">
+                        <button class="icon-button" aria-label="Shopping Cart">
+                            <i data-lucide="shopping-cart"></i>
+                        </button>
+                        <button class="icon-button" aria-label="Notifications">
+                            <i data-lucide="bell"></i>
+                        </button>
+                        <button class="icon-button" aria-label="User menu" onclick="window.open('/user_info.html', '_blank')">
+                            <i data-lucide="user"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mobile-menu">
+                    <a href="/marketplace.html" class="mobile-link">Marketplace</a>
+                    <!-- <a href="#forum" class="mobile-link">Forum</a> -->
+                    <a href="/games/" class="mobile-link">Games</a>
+                    <!-- <a href="#news" class="mobile-link">News</a> -->
+                    <a href="/sidur.html" class="mobile-link">Siddur</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Removed main-nav section since navigation is now in header -->
+
+        <!-- News Ticker -->
+        <div class="news-ticker">
+            <div class="ticker-tape">
+                <div id="ticker-content" class="ticker-content">
+                    <!-- News items will be dynamically inserted here -->
+                    <span class="ticker-item">Welcome to Jerusalem Hills!</span>
+                    <span class="ticker-item">Explore our marketplace for unique Jerusalem products.</span>
+                    <span class="ticker-item">Join our forum discussions about Jerusalem culture.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TradingView Widget BEGIN -->
+        <div class="tradingview-widget-container ticker-wrapper">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async onerror="console.error('TradingView widget failed to load. Check your configuration.');">
+          {
+            "symbols": [
+              {
+                "proName": "FOREXCOM:SPXUSD",
+                "title": "S&P 500"
+              },
+              {
+                "proName": "FOREXCOM:NSXUSD",
+                "title": "Nasdaq"
+              },
+              {
+                "proName": "FX_IDC:EURUSD",
+                "title": "EUR/USD"
+              },
+              {
+                "proName": "BITSTAMP:BTCUSD",
+                "title": "BTC"
+              },
+              {
+                "proName": "BITSTAMP:ETHUSD",
+                "title": "ETH"
+              }
+            ],
+            "showSymbolLogo": false,
+            "colorTheme": "light",
+            "isTransparent": true,
+            "displayMode": "regular",
+            "locale": "en"
+          }
+          </script>
+        </div>
+        <!-- TradingView Widget END -->
+
+        <main class="main-content">
+            <!-- Homepage Banner Ad -->
+            <section class="ad-banner">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1738161253720" crossorigin="anonymous" onerror="console.error('AdSense script failed to load. Check your AdSense configuration.');"></script>
+                <!-- Homepage Banner -->
+                <ins class="adsbygoogle"
+                     style="display:block;width:970px;height:250px;max-width:100%;margin:0 auto;"
+                     data-ad-client="ca-pub-1738161253720"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </section>
+
+            <section class="trending-section">
+                <h2 class="section-title">Trending in Marketplace</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <img src="img/pic01.jpg" alt="Product" class="product-image" loading="lazy">
+                        <div class="product-content">
+                            <h3 class="product-title">Jerusalem Crafts</h3>
+                            <p class="product-price">₪299</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="img/pic02.jpg" alt="Product" class="product-image" loading="lazy">
+                        <div class="product-content">
+                            <h3 class="product-title">Dead Sea Products</h3>
+                            <p class="product-price">₪199</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="img/pic01.jpg" alt="Product" class="product-image" loading="lazy">
+                        <div class="product-content">
+                            <h3 class="product-title">Judaica Art</h3>
+                            <p class="product-price">₪399</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="img/pic02.jpg" alt="Product" class="product-image" loading="lazy">
+                        <div class="product-content">
+                            <h3 class="product-title">Local Spices</h3>
+                            <p class="product-price">₪99</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="discussions-section">
+                <h2 class="section-title">Active Discussions</h2>
+                <div class="discussions-list">
+                    <div class="discussion-card">
+                        <div class="discussion-header">
+                            <img src="img/logo.jpg" alt="Avatar" class="avatar" loading="lazy">
+                            <div class="discussion-content">
+                                <h3 class="discussion-title">Jerusalem Culture and Heritage</h3>
+                                <p class="discussion-preview">Join our discussion about preserving and celebrating Jerusalem's rich cultural heritage...</p>
+                                <div class="discussion-meta">
+                                    <span>24 replies</span>
+                                    <span>•</span>
+                                    <span>3 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="discussion-card">
+                        <div class="discussion-header">
+                            <img src="img/logo.jpg" alt="Avatar" class="avatar" loading="lazy">
+                            <div class="discussion-content">
+                                <h3 class="discussion-title">Local Events This Week</h3>
+                                <p class="discussion-preview">Check out the upcoming events in Jerusalem this week...</p>
+                                <div class="discussion-meta">
+                                    <span>15 replies</span>
+                                    <span>•</span>
+                                    <span>5 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="discussion-card">
+                        <div class="discussion-header">
+                            <img src="img/logo.jpg" alt="Avatar" class="avatar" loading="lazy">
+                            <div class="discussion-content">
+                                <h3 class="discussion-title">Community Marketplace Tips</h3>
+                                <p class="discussion-preview">Share your experiences and tips for buying and selling in our marketplace...</p>
+                                <div class="discussion-meta">
+                                    <span>32 replies</span>
+                                    <span>•</span>
+                                    <span>1 day ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="featured-section">
+                <h2 class="section-title">Featured Articles</h2>
+                <div class="featured-grid">
+                    <div class="featured-card">
+                        <img src="img/Jerusalem_Old_City_market.jpg" alt="Marketplace" class="featured-image" loading="lazy">
+                        <div class="featured-content">
+                            <h3 class="featured-title">New Marketplace Features</h3>
+                            <p class="featured-description">Discover our latest AI-powered recommendations and seamless shopping experience.</p>
+                        </div>
+                    </div>
+                    <div class="featured-card">
+                        <img src="img/David's_Tower_11.jpg" alt="Gaming" class="featured-image" loading="lazy">
+                        <div class="featured-content">
+                            <h3 class="featured-title">Gaming Tournament</h3>
+                            <p class="featured-description">Join our weekly gaming tournaments and compete for amazing prizes!</p>
+                        </div>
+                    </div>
+                    <div class="featured-card">
+                        <img src="img/header-bg-city-wall.jpg" alt="News" class="featured-image" loading="lazy">
+                        <div class="featured-content">
+                            <h3 class="featured-title">Latest Updates</h3>
+                            <p class="featured-description">Stay updated with the latest Jerusalem news and community insights.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="videos-section">
+                <h2 class="section-title">Latest Videos</h2>
+                <div class="videos-grid">
+                    <div class="video-card">
+                        <img src="img/header-bg-city-wall.jpg" alt="Jerusalem City Tour" class="video-thumbnail" loading="lazy">
+                        <div class="video-content">
+                            <h3 class="video-title">Jerusalem Old City Tour</h3>
+                            <p class="video-duration">12:45</p>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <img src="img/Jerusalem_Old_City_market.jpg" alt="Market Tour" class="video-thumbnail" loading="lazy">
+                        <div class="video-content">
+                            <h3 class="video-title">Market Shopping Guide</h3>
+                            <p class="video-duration">8:30</p>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <img src="img/David's_Tower_11.jpg" alt="Historical Sites" class="video-thumbnail" loading="lazy">
+                        <div class="video-content">
+                            <h3 class="video-title">David's Tower History</h3>
+                            <p class="video-duration">15:20</p>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <img src="img/pic01.jpg" alt="Local Crafts" class="video-thumbnail" loading="lazy">
+                        <div class="video-content">
+                            <h3 class="video-title">Artisan Workshop</h3>
+                            <p class="video-duration">10:15</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="video-slider-section">
+                <h2>Latest Videos from Jerusalem Hills</h2>
+                <div class="slider-wrapper">
+                    <div class="slider-container">
+                        <div class="slider" id="video-slider">
+                            <!-- Videos will be dynamically loaded here -->
+                        </div>
+                        <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&lt;</button>
+                        <button class="slider-btn next-btn" onclick="moveSlide(1)">&gt;</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Map Section -->
+            <section class="map-section">
+                <div class="map-section-container">
+                    <div class="map-wrapper">
+                        <h2 class="section-title">Explore Jerusalem</h2>
+                        <div class="map-controls">
+                            <button class="map-button active" data-category="attractions">Tourist Attractions</button>
+                            <button class="map-button" data-category="religious">Religious Sites</button>
+                            <button class="map-button" data-category="markets">Markets & Shopping</button>
+                            <button class="map-button" data-category="restaurants">Restaurants</button>
+                        </div>
+                        <div class="map-container">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+
+                    <div class="services-links">
+                        <h2 class="section-title">Services</h2>
+                        
+                        <div class="services-category">
+                            <h3>Government Offices</h3>
+                            <ul class="services-list">
+                                <li>
+                                    <a href="https://www.jerusalem.muni.il/" target="_blank">
+                                        <i data-lucide="building"></i>
+                                        Jerusalem Municipality
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.gov.il/en/service/request_residency_status_in_israel" target="_blank">
+                                        <i data-lucide="id-card"></i>
+                                        Interior Ministry
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.tourist-israel.com/jerusalem-tourist-information/" target="_blank">
+                                        <i data-lucide="info"></i>
+                                        Tourist Information
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="services-category">
+                            <h3>Transportation</h3>
+                            <ul class="services-list">
+                                <li>
+                                    <a href="https://www.rail.co.il/en" target="_blank">
+                                        <i data-lucide="train"></i>
+                                        Israel Railways
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.egged.co.il/en" target="_blank">
+                                        <i data-lucide="bus"></i>
+                                        Egged Bus Service
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.citypass.co.il/en/" target="_blank">
+                                        <i data-lucide="train-front"></i>
+                                        Light Rail
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="services-category">
+                            <h3>Utilities</h3>
+                            <ul class="services-list">
+                                <li>
+                                    <a href="https://www.hagihon.co.il/english/" target="_blank">
+                                        <i data-lucide="droplets"></i>
+                                        Hagihon Water Company
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.iec.co.il/en/home" target="_blank">
+                                        <i data-lucide="zap"></i>
+                                        Electric Corporation
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.bezeq.co.il/en/" target="_blank">
+                                        <i data-lucide="wifi"></i>
+                                        Bezeq Telecom
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="services-category">
+                            <h3>Emergency</h3>
+                            <ul class="services-list">
+                                <li>
+                                    <a href="tel:100">
+                                        <i data-lucide="siren"></i>
+                                        Police - 100
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="tel:101">
+                                        <i data-lucide="heart-pulse"></i>
+                                        Ambulance - 101
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="tel:102">
+                                        <i data-lucide="flame"></i>
+                                        Fire Department - 102
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sidebar Ad -->
+            <aside class="sidebar-ad">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1738161253720" crossorigin="anonymous" onerror="console.error('AdSense script failed to load. Check your AdSense configuration.');"></script>
+                <!-- Sidebar Vertical -->
+                <ins class="adsbygoogle"
+                     style="display:block;width:300px;height:600px;margin:0 auto;"
+                     data-ad-client="ca-pub-1738161253720"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="vertical"
+                     data-full-width-responsive="false"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </aside>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-copyright">
+                    © 2024 JerusalemHills.com. All rights reserved.
+                </div>
+                <div class="footer-links">
+                    <a href="/privacy-policy.html" class="footer-link">Privacy Policy</a>
+                    <a href="/terms-of-service.html" class="footer-link">Terms of Service</a>
+                    <a href="/contact.html" class="footer-link">Contact Us</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- AdSense Management -->
+    <!-- Cookie consent removed - not needed for basic analytics -->
+    <script src="/js/adsense-config.js"></script>
+    <script src="/js/lazy-load.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/mobile-nav.js"></script>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Define jerusalemCenter at the global scope for the map
+        const jerusalemCenter = { lat: 31.7683, lng: 35.2137 };
+        let map;
+        let markers = [];
+
+        // Hebrew Date Update Function
+        function updateHebrewDate() {
+            try {
+                const hebrewDate = HebrewCalendar.getHebrewDate();
+                const hebrewDateElements = document.querySelectorAll('.hebrew-date');
+                
+                hebrewDateElements.forEach(el => {
+                    el.textContent = hebrewDate;
+                });
+
+                // Add Gregorian date
+                const now = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const gregDateStr = now.toLocaleDateString('en-US', options);
+                const gregDateElements = document.querySelectorAll('.gregorian-date');
+                
+                gregDateElements.forEach(el => {
+                    el.textContent = gregDateStr;
+                });
+            } catch (e) {
+                console.warn("Error updating Hebrew date:", e);
+            }
+        }
+
+        // Update Hebrew Date on page load and every minute
+        updateHebrewDate();
+        setInterval(updateHebrewDate, 60000);
+
+        // Mobile menu toggle
+        const menuButton = document.querySelector('.menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+            });
+        }
+
+        // Google Maps implementation with error handling for localhost
+        function initMap() {
+            try {
+                const map = new google.maps.Map(document.getElementById("map"), {
