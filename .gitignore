@@ -3,3 +3,7 @@
 .netlify
 # Node modules
 node_modules/
+# Private/sensitive data
+dl/
+*.private
+*-private.*
