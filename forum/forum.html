@@ -1,13 +1,82 @@
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VE3Z9354M2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VE3Z9354M2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VE3Z9354M2');
+    </script>
 
-  gtag('config', 'G-VE3Z9354M2');
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; url=/forum/">
+    <title>Redirecting to Forum - Jerusalem Hills</title>
 
-<img src="img/1.svg" alt="Jerusalem Hills Logo" class="logo">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #87CEEB, #F0E68C);
+            color: #2C3E50;
+        }
 
-under construction
+        .redirect-container {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        a {
+            color: #2C3E50;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            background: #87CEEB;
+            border-radius: 8px;
+            border: 2px solid #2C3E50;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        a:hover {
+            background: #6BB6D6;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="redirect-container">
+        <img src="/img/logo.jpg" alt="Jerusalem Hills Logo" class="logo">
+        <h1>Redirecting to Forum...</h1>
+        <p>You will be automatically redirected to the community forum.</p>
+        <a href="/forum/">Click here if not redirected</a>
+    </div>
+</body>
+</html>

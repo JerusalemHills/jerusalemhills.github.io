@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics 4 -->
+    <script src="/js/analytics.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Forum - Jerusalem Hills</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Join the Jerusalem Hills community forum. Discuss culture, heritage, marketplace tips, local events, and connect with fellow community members.">
+    <meta name="keywords" content="Jerusalem Hills forum, community discussion, Jerusalem community, marketplace forum, local events">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/logo.jpg" type="image/jpeg">
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#87CEEB">
+
+    <!-- GunDB for real-time forum -->
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/sea.js"></script>
+
+    <style>
+        /* Jerusalem Hills Color Theme */
+        :root {
+            --primary-color: #87CEEB;
+            --primary-hover: #6BB6D6;
+            --secondary-color: #F0E68C;
+            --accent-color: #E6D76E;
+            --text-accent: #2C3E50;
+            --text-dark: rgb(17, 24, 39);
+            --text-medium: rgb(75, 85, 99);
+            --text-light: rgb(156, 163, 175);
+            --bg-white: white;
+            --bg-gray: rgb(243, 244, 246);
+            --border-color: rgb(229, 231, 235);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: white;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--text-accent);
+        }
+
+        .header h1 {
+            color: var(--text-accent);
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+
+        .header p {
+            color: var(--text-accent);
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .logo-link {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            height: 80px;
+            width: auto;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Forum Categories */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .category {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 24px;
+            border-radius: 12px;
+            border: 2px solid var(--text-accent);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .category:hover {
+            transform: translateY(-2px);
+        }
+
+        .category h3 {
+            color: var(--text-accent);
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .category p {
+            color: var(--text-accent);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .category-stats {
+            color: var(--text-accent);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Post Form */
+        .post-form {
+            background: var(--bg-gray);
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .post-form h3 {
+            color: var(--text-accent);
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: var(--text-accent);
+            padding: 12px 24px;
+            border: 2px solid var(--text-accent);
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Posts */
+        .posts {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .post {
+            background: white;
+            padding: 20px;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .post-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-accent);
+            font-size: 18px;
+        }
+
+        .post-meta {
+            flex: 1;
+        }
+
+        .post-author {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .post-time {
+            font-size: 13px;
+            color: var(--text-medium);
+        }
+
+        .post-category {
+            background: var(--secondary-color);
+            color: var(--text-accent);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .post-content {
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+        }
+
+        .post-action {
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .post-action:hover {
+            color: var(--primary-color);
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text-accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-medium);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .categories {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <a href="/" class="logo-link">
+            <img src="/img/logo.jpg" alt="Jerusalem Hills Logo" class="logo">
+        </a>
+        <h1>Community Forum</h1>
+        <p>Connect, discuss, and share with the Jerusalem Hills community</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <a href="/" class="back-link">← Back to Home</a>
+
+        <!-- Forum Categories -->
+        <div class="categories">
+            <div class="category" onclick="filterCategory('culture')">
+                <h3>🏛️ Culture & Heritage</h3>
+                <p>Discuss Jerusalem's rich cultural heritage and traditions</p>
+                <div class="category-stats">24 discussions • 156 messages</div>
+            </div>
+
+            <div class="category" onclick="filterCategory('marketplace')">
+                <h3>🛍️ Marketplace</h3>
+                <p>Tips, reviews, and discussions about marketplace products</p>
+                <div class="category-stats">18 discussions • 92 messages</div>
+            </div>
+
+            <div class="category" onclick="filterCategory('events')">
+                <h3>📅 Local Events</h3>
+                <p>Share and discover local events and gatherings</p>
+                <div class="category-stats">12 discussions • 78 messages</div>
+            </div>
+
+            <div class="category" onclick="filterCategory('general')">
+                <h3>💬 General Discussion</h3>
+                <p>Off-topic conversations and community chat</p>
+                <div class="category-stats">45 discussions • 234 messages</div>
+            </div>
+        </div>
+
+        <!-- Post Form -->
+        <div class="post-form">
+            <h3>Start a New Discussion</h3>
+            <form id="postForm">
+                <div class="form-group">
+                    <label for="username">Your Name</label>
+                    <input type="text" id="username" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" required>
+                        <option value="">Select a category</option>
+                        <option value="culture">Culture & Heritage</option>
+                        <option value="marketplace">Marketplace</option>
+                        <option value="events">Local Events</option>
+                        <option value="general">General Discussion</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" placeholder="What's your discussion about?" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Share your thoughts..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn">Post Discussion</button>
+            </form>
+        </div>
+
+        <!-- Posts Section -->
+        <h2 style="margin-bottom: 20px; color: var(--text-accent);">Recent Discussions</h2>
+        <div id="posts" class="posts">
+            <div class="loading">Loading discussions...</div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize GunDB
+        const gun = Gun(['https://gun-manhattan.herokuapp.com/gun']);
+        const forum = gun.get('jerusalemhills-forum');
+
+        let currentFilter = 'all';
+        let allPosts = [];
+
+        // Store username in localStorage
+        const savedUsername = localStorage.getItem('jh-forum-username');
+        if (savedUsername) {
+            document.getElementById('username').value = savedUsername;
+        }
+
+        // Post Form Handler
+        document.getElementById('postForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const category = document.getElementById('category').value;
+            const title = document.getElementById('title').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!username || !category || !title || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // Save username
+            localStorage.setItem('jh-forum-username', username);
+
+            // Create post object
+            const post = {
+                username: username,
+                category: category,
+                title: title,
+                message: message,
+                timestamp: Date.now(),
+                id: 'post-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9)
+            };
+
+            // Save to GunDB
+            forum.get('posts').get(post.id).put(post);
+
+            // Clear form
+            document.getElementById('title').value = '';
+            document.getElementById('message').value = '';
+            document.getElementById('category').value = '';
+
+            alert('Discussion posted successfully!');
+        });
+
+        // Load posts from GunDB
+        function loadPosts() {
+            const postsContainer = document.getElementById('posts');
+            allPosts = [];
+
+            forum.get('posts').map().on(function(post, id) {
+                if (post && post.username) {
+                    // Check if post already exists in array
+                    const existingIndex = allPosts.findIndex(p => p.id === post.id);
+
+                    if (existingIndex >= 0) {
+                        allPosts[existingIndex] = post;
+                    } else {
+                        allPosts.push(post);
+                    }
+
+                    renderPosts();
+                }
+            });
+        }
+
+        // Render posts
+        function renderPosts() {
+            const postsContainer = document.getElementById('posts');
+
+            // Filter posts
+            let filteredPosts = currentFilter === 'all'
+                ? allPosts
+                : allPosts.filter(p => p.category === currentFilter);
+
+            // Sort by timestamp (newest first)
+            filteredPosts.sort((a, b) => b.timestamp - a.timestamp);
+
+            if (filteredPosts.length === 0) {
+                postsContainer.innerHTML = '<div class="loading">No discussions yet. Be the first to post!</div>';
+                return;
+            }
+
+            postsContainer.innerHTML = filteredPosts.map(post => {
+                const timeAgo = getTimeAgo(post.timestamp);
+                const initial = post.username.charAt(0).toUpperCase();
+                const categoryName = getCategoryName(post.category);
+
+                return `
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="post-avatar">${initial}</div>
+                            <div class="post-meta">
+                                <div class="post-author">${escapeHtml(post.username)}</div>
+                                <div class="post-time">${timeAgo}</div>
+                            </div>
+                            <div class="post-category">${categoryName}</div>
+                        </div>
+                        <h3 style="color: var(--text-accent); margin-bottom: 8px; font-size: 18px;">${escapeHtml(post.title)}</h3>
+                        <div class="post-content">${escapeHtml(post.message)}</div>
+                        <div class="post-actions">
+                            <span class="post-action">👍 Like</span>
+                            <span class="post-action">💬 Reply</span>
+                            <span class="post-action">🔗 Share</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter by category
+        function filterCategory(category) {
+            currentFilter = category;
+            renderPosts();
+            window.scrollTo({ top: document.querySelector('.post-form').offsetTop - 20, behavior: 'smooth' });
+        }
+
+        // Helper: Get time ago
+        function getTimeAgo(timestamp) {
+            const seconds = Math.floor((Date.now() - timestamp) / 1000);
+
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return Math.floor(seconds / 60) + ' minutes ago';
+            if (seconds < 86400) return Math.floor(seconds / 3600) + ' hours ago';
+            if (seconds < 604800) return Math.floor(seconds / 86400) + ' days ago';
+
+            return new Date(timestamp).toLocaleDateString();
+        }
+
+        // Helper: Get category name
+        function getCategoryName(category) {
+            const names = {
+                'culture': '🏛️ Culture & Heritage',
+                'marketplace': '🛍️ Marketplace',
+                'events': '📅 Local Events',
+                'general': '💬 General'
+            };
+            return names[category] || category;
+        }
+
+        // Helper: Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Initialize
+        loadPosts();
+
+        // Add some sample posts if none exist (for demo)
+        setTimeout(() => {
+            if (allPosts.length === 0) {
+                const samplePosts = [
+                    {
+                        id: 'sample-1',
+                        username: 'Sarah Cohen',
+                        category: 'culture',
+                        title: 'Jerusalem Culture & Heritage Discussion',
+                        message: 'What are your favorite cultural sites in Jerusalem? I recently visited the Old City and was amazed by the history.',
+                        timestamp: Date.now() - 3600000
+                    },
+                    {
+                        id: 'sample-2',
+                        username: 'David Levi',
+                        category: 'marketplace',
+                        title: 'Best Olive Oil Products',
+                        message: 'Just received my olive oil from the marketplace. The quality is outstanding! Highly recommend.',
+                        timestamp: Date.now() - 7200000
+                    },
+                    {
+                        id: 'sample-3',
+                        username: 'Rachel Stone',
+                        category: 'events',
+                        title: 'Local Events This Weekend',
+                        message: 'Anyone know of any interesting events happening this weekend in Jerusalem?',
+                        timestamp: Date.now() - 10800000
+                    }
+                ];
+
+                samplePosts.forEach(post => {
+                    forum.get('posts').get(post.id).put(post);
+                });
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
