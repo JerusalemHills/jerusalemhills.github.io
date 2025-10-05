@@ -10,11 +10,11 @@
     "minify:css": "echo 'CSS minification: Extract inline styles to external files first'"
   },
   "dependencies": {
-    "stripe": "^18.5.0"
+    "stripe": "^19.1.0"
   },
   "devDependencies": {
-    "terser": "^5.31.0",
-    "clean-css-cli": "^5.6.3"
+    "clean-css-cli": "^5.6.3",
+    "terser": "^5.31.0"
   },
   "repository": {
     "type": "git",
