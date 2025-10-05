@@ -391,9 +391,13 @@
     </div>
 
     <script>
-        // Initialize GunDB
-        const gun = Gun(['https://gun-manhattan.herokuapp.com/gun']);
-        const forum = gun.get('jerusalemhills-forum');
+        // Initialize GunDB with multiple relay servers for better sync
+        const gun = Gun([
+            'https://gun-manhattan.herokuapp.com/gun',
+            'https://gunjs.herokuapp.com/gun',
+            'https://e2eec.herokuapp.com/gun'
+        ]);
+        const forum = gun.get('jerusalemhills-forum-v2');
 
         let currentFilter = 'all';
         let allPosts = [];
@@ -431,15 +435,22 @@
                 id: 'post-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9)
             };
 
-            // Save to GunDB
-            forum.get('posts').get(post.id).put(post);
+            // Save to GunDB with confirmation
+            forum.get('posts').get(post.id).put(post, function(ack) {
+                if (ack.err) {
+                    console.error('Error posting:', ack.err);
+                    alert('Error posting discussion. Please try again.');
+                } else {
+                    console.log('Post saved successfully:', post.id);
 
-            // Clear form
-            document.getElementById('title').value = '';
-            document.getElementById('message').value = '';
-            document.getElementById('category').value = '';
+                    // Clear form
+                    document.getElementById('title').value = '';
+                    document.getElementById('message').value = '';
+                    document.getElementById('category').value = '';
 
-            alert('Discussion posted successfully!');
+                    alert('Discussion posted successfully! It will sync to other devices.');
+                }
+            });
         });
 
         // Load posts from GunDB
@@ -448,18 +459,27 @@
             allPosts = [];
 
             forum.get('posts').map().on(function(post, id) {
-                if (post && post.username) {
+                if (post && post.username && post.id) {
                     // Check if post already exists in array
                     const existingIndex = allPosts.findIndex(p => p.id === post.id);
 
                     if (existingIndex >= 0) {
+                        // Update existing post
                         allPosts[existingIndex] = post;
                     } else {
+                        // Add new post
                         allPosts.push(post);
+                        console.log('New post received:', post.title);
                     }
 
+                    // Re-render when data changes
                     renderPosts();
                 }
+            });
+
+            // Also listen for new posts explicitly
+            forum.get('posts').on(function(data, key) {
+                console.log('Forum data updated:', key);
             });
         }
 
@@ -545,11 +565,20 @@
         }
 
         // Initialize
+        console.log('Initializing forum...');
         loadPosts();
+
+        // Connection status monitoring
+        let syncCheckInterval = setInterval(() => {
+            const peers = gun._.opt.peers;
+            const connectedPeers = Object.keys(peers).filter(url => peers[url].wire).length;
+            console.log('Connected to', connectedPeers, 'GunDB peers');
+        }, 10000);
 
         // Add some sample posts if none exist (for demo)
         setTimeout(() => {
             if (allPosts.length === 0) {
+                console.log('No posts found, adding sample data...');
                 const samplePosts = [
                     {
                         id: 'sample-1',
@@ -578,10 +607,12 @@
                 ];
 
                 samplePosts.forEach(post => {
-                    forum.get('posts').get(post.id).put(post);
+                    forum.get('posts').get(post.id).put(post, function(ack) {
+                        console.log('Sample post added:', post.id, ack.err ? 'ERROR' : 'OK');
+                    });
                 });
             }
-        }, 2000);
+        }, 3000);
     </script>
 </body>
 </html>
