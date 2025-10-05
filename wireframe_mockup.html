@@ -1,0 +1,417 @@
+<!doctype html>
+<!--
+Jerusalem Hills — single-file wireframe mockup
+Uses logo/favicons assumed at: https://jerusalemhills.com/img/logo.png and /favicon.ico
+Drop into a browser to preview. Replace asset URLs if needed.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jerusalem Hills — Marketplace & Community (Wireframe)</title>
+
+  <!-- favicons (keeps originals from site) -->
+  <link rel="icon" href="https://jerusalemhills.com/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://jerusalemhills.com/apple-touch-icon.png" />
+
+  <style>
+    /* ---- Reset & base ---- */
+    :root{
+      --bg:#f6f5f3;
+      --card:#ffffff;
+      --muted:#7b7b7b;
+      --accent:#1f5f6b; /* tweak to brand */
+      --accent-2:#b6862b;
+      --radius:12px;
+      --gap:20px;
+      --maxw:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:linear-gradient(180deg, var(--bg), #efeeec);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.35;
+      padding:24px 12px;
+      display:flex;
+      justify-content:center;
+    }
+    .wrap{width:100%;max-width:var(--maxw);}
+
+    /* ---- Header ---- */
+    header{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      justify-content:space-between;
+      margin-bottom:28px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      text-decoration:none;
+      color:inherit;
+    }
+    .brand img{height:48px; width:auto; border-radius:8px; background:transparent}
+    .brand h1{font-size:18px; margin:0; letter-spacing:0.2px}
+    nav{display:flex; gap:14px; align-items:center; flex:1; justify-content:center}
+    nav a{
+      text-decoration:none;
+      color:var(--muted);
+      padding:8px 12px;
+      border-radius:8px;
+      font-weight:600;
+      font-size:14px;
+    }
+    nav a.active{color:var(--accent); background:rgba(31,95,107,0.06)}
+    .header-actions{display:flex; gap:8px; align-items:center}
+    .search{
+      display:flex;
+      align-items:center;
+      background:#fff;
+      border-radius:999px;
+      padding:6px 10px;
+      box-shadow:0 1px 0 rgba(0,0,0,0.03);
+      min-width:220px;
+    }
+    .search input{
+      border:0; outline:0; font-size:14px; background:transparent; width:100%;
+    }
+    .cta{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:white;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:700;
+      text-decoration:none;
+      box-shadow:0 6px 18px rgba(31,95,107,0.12);
+      display:inline-block;
+    }
+
+    /* ---- Hero ---- */
+    .hero{
+      background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+      border-radius:18px;
+      padding:30px;
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:26px;
+      align-items:center;
+      margin-bottom:var(--gap);
+      box-shadow:0 6px 18px rgba(20,20,20,0.04);
+    }
+    .hero-left h2{font-size:28px; margin:0 0 8px}
+    .hero-left p{margin:0 0 18px; color:var(--muted)}
+    .hero-cta{display:flex; gap:12px}
+    .ghost{background:transparent; border:1px solid rgba(0,0,0,0.06); padding:9px 12px; border-radius:10px; color:var(--muted); text-decoration:none}
+    .hero-right{display:flex; flex-direction:column; gap:8px}
+    .stats{display:flex; gap:10px; align-items:center; justify-content:space-between}
+    .stat{background:var(--card); padding:12px; border-radius:10px; text-align:center; min-width:100px; box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+    .stat b{display:block; font-size:18px; color:var(--accent)}
+
+    /* ---- Sections ---- */
+    section{margin-bottom:24px}
+    .section-title{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px}
+    .section-title h3{margin:0}
+    .section-title a{color:var(--muted); text-decoration:none; font-size:14px}
+
+    /* marketplace grid */
+    .market-grid{
+      display:grid;
+      grid-template-columns: 260px 1fr 1fr;
+      gap:18px;
+      align-items:start;
+    }
+    .featured{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:14px;
+      min-height:300px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.03);
+    }
+    .featured .img{background:#eee; border-radius:8px; height:200px; display:flex; align-items:center; justify-content:center; color:#bbb}
+    .card-grid{display:grid; grid-template-columns: repeat(3,1fr); gap:12px}
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      padding:10px;
+      box-shadow:0 6px 14px rgba(0,0,0,0.03);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .thumb{height:120px; background:#f2f2f2; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#bbb}
+    .price{font-weight:700; color:var(--accent)}
+    .buy{margin-top:auto; text-decoration:none; padding:8px 10px; border-radius:8px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; display:inline-block; font-weight:700; text-align:center}
+
+    /* secondary columns */
+    .two-cols{display:grid; grid-template-columns: 1fr 360px; gap:18px; align-items:start}
+    .news-card, .video-card, .forum-card{background:var(--card); padding:12px; border-radius:12px; box-shadow:0 6px 12px rgba(0,0,0,0.03)}
+
+    .videos{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+    .video-thumb{height:120px; background:#ddd; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#aaa; font-weight:700}
+
+    /* forum list */
+    .forum-list{display:flex; flex-direction:column; gap:10px}
+    .forum-item{display:flex; gap:12px; align-items:center}
+    .avatar{width:44px;height:44px;background:#eee;border-radius:8px;display:inline-block}
+
+    /* footer */
+    footer{margin-top:24px;text-align:center;color:var(--muted);font-size:13px;padding:18px 6px}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr; padding:18px}
+      .market-grid{grid-template-columns:1fr; gap:12px}
+      .card-grid{grid-template-columns:repeat(2,1fr)}
+      .two-cols{grid-template-columns:1fr}
+    }
+    @media (max-width:520px){
+      .card-grid{grid-template-columns:1fr}
+      nav{display:none}
+      .search{min-width:120px}
+      header{gap:8px}
+      .brand h1{font-size:15px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <header>
+      <a class="brand" href="/">
+        <img src="https://jerusalemhills.com/img/logo.png" alt="Jerusalem Hills logo" onerror="this.style.display='none'"/>
+        <h1>Jerusalem Hills</h1>
+      </a>
+
+      <nav aria-label="Primary navigation">
+        <a href="/marketplace.html" class="active">Marketplace</a>
+        <a href="/games/">Games</a>
+        <a href="/news/">News</a>
+        <a href="/forum/">Forum</a>
+        <a href="/articles/">Articles</a>
+        <a href="/videos/">Videos</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="search" role="search" aria-label="site search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.6"><path d="M21 21l-4.35-4.35" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="#000" stroke-width="1.5"/></svg>
+          <input placeholder="Search marketplace, articles..." aria-label="Search input"/>
+        </div>
+        <a class="cta" href="/marketplace.html">Shop</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero" aria-label="Intro">
+        <div class="hero-left">
+          <h2>Marketplace & Community from Jerusalem Hills</h2>
+          <p>Curated products, cultural articles, community forums, and casual games — fast and privacy-friendly.</p>
+          <div class="hero-cta">
+            <a class="cta" href="/marketplace.html">Explore Marketplace</a>
+            <a class="ghost" href="/forum/">Join Community</a>
+          </div>
+          <div style="height:12px"></div>
+          <div class="stats" aria-hidden>
+            <div class="stat"><span style="font-size:12px;color:var(--muted)">Sellers</span><b>24</b></div>
+            <div class="stat"><span style="font-size:12px;color:var(--muted)">Items</span><b>142</b></div>
+            <div class="stat"><span style="font-size:12px;color:var(--muted)">Active</span><b>320</b></div>
+          </div>
+        </div>
+
+        <aside class="hero-right" aria-hidden>
+          <div style="background:linear-gradient(180deg,#fff,#f7f7f7); padding:12px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.03)">
+            <div style="display:flex; align-items:center; gap:12px">
+              <div style="width:64px;height:64px;background:#eee;border-radius:8px"></div>
+              <div>
+                <div style="font-weight:700">Featured Seller</div>
+                <div style="color:var(--muted);font-size:13px">Jerusalem Crafts</div>
+              </div>
+            </div>
+            <div style="margin-top:10px; font-size:13px; color:var(--muted)">Free shipping via Amazon MCF. Secure payments via Stripe Checkout.</div>
+          </div>
+          <div style="height:8px"></div>
+          <div style="display:flex; gap:8px">
+            <div style="flex:1; background:#fff; padding:10px; border-radius:12px; text-align:center; box-shadow:0 6px 16px rgba(0,0,0,0.03)">
+              <div style="font-size:12px;color:var(--muted)">Support</div>
+              <div style="font-weight:700">Fulfilled by Amazon</div>
+            </div>
+            <div style="flex:1; background:#fff; padding:10px; border-radius:12px; text-align:center; box-shadow:0 6px 16px rgba(0,0,0,0.03)">
+              <div style="font-size:12px;color:var(--muted)">Privacy</div>
+              <div style="font-weight:700">No payment data stored</div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Marketplace -->
+      <section aria-labelledby="marketplace-title">
+        <div class="section-title">
+          <h3 id="marketplace-title">Marketplace</h3>
+          <a href="/marketplace.html">View All Products →</a>
+        </div>
+
+        <div class="market-grid">
+          <div class="featured" aria-hidden>
+            <div class="img">Large featured product image</div>
+            <div style="font-weight:700">Handmade Olivewood Menorah</div>
+            <div style="color:var(--muted); font-size:14px">Hand-carved in the Jerusalem Hills — limited run.</div>
+            <div style="display:flex; gap:8px; margin-top:auto; align-items:center">
+              <div style="font-size:18px; font-weight:800; color:var(--accent)">₪299</div>
+              <a class="buy" href="#">Buy Now</a>
+            </div>
+          </div>
+
+          <div>
+            <div class="card-grid" role="list">
+              <!-- product card -->
+              <article class="card" role="listitem">
+                <div class="thumb">img</div>
+                <div style="font-weight:700">Dead Sea Soap</div>
+                <div style="color:var(--muted);font-size:13px">Natural minerals</div>
+                <div class="price">₪99</div>
+                <a class="buy" href="#">Buy</a>
+              </article>
+
+              <article class="card">
+                <div class="thumb">img</div>
+                <div style="font-weight:700">Jerusalem Print</div>
+                <div style="color:var(--muted);font-size:13px">Giclée print on archival paper</div>
+                <div class="price">₪399</div>
+                <a class="buy" href="#">Buy</a>
+              </article>
+
+              <article class="card">
+                <div class="thumb">img</div>
+                <div style="font-weight:700">Spice Collection</div>
+                <div style="color:var(--muted);font-size:13px">Local market blends</div>
+                <div class="price">₪59</div>
+                <a class="buy" href="#">Buy</a>
+              </article>
+
+              <article class="card">
+                <div class="thumb">img</div>
+                <div style="font-weight:700">Kiddush Cup</div>
+                <div style="color:var(--muted);font-size:13px">Polished brass</div>
+                <div class="price">₪149</div>
+                <a class="buy" href="#">Buy</a>
+              </article>
+
+              <article class="card">
+                <div class="thumb">img</div>
+                <div style="font-weight:700">Handwoven Tallit</div>
+                <div style="color:var(--muted);font-size:13px">Small-batch, soft cotton</div>
+                <div class="price">₪499</div>
+                <a class="buy" href="#">Buy</a>
+              </article>
+
+              <article class="card">
+                <div class="thumb">img</div>
+                <div style="font-weight:700">Artisan Honey</div>
+                <div style="color:var(--muted);font-size:13px">From Judean hills</div>
+                <div class="price">₪89</div>
+                <a class="buy" href="#">Buy</a>
+              </article>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div class="news-card">
+                <div style="font-weight:700">Latest Articles</div>
+                <div style="color:var(--muted); font-size:13px; margin-top:8px">New marketplace features, stories from local artisans, and curated travel pieces.</div>
+                <div style="margin-top:10px; display:flex; gap:8px;">
+                  <div style="flex:1; background:#fafafa; padding:8px; border-radius:8px">Article thumbnail</div>
+                  <div style="flex:1; background:#fafafa; padding:8px; border-radius:8px">Article thumbnail</div>
+                </div>
+                <div style="text-align:right; margin-top:10px"><a href="/articles/">Read more →</a></div>
+              </div>
+
+              <div class="video-card">
+                <div style="font-weight:700">Videos</div>
+                <div class="videos" style="margin-top:8px">
+                  <div class="video-thumb">Tour</div>
+                  <div class="video-thumb">Market</div>
+                </div>
+                <div style="text-align:right; margin-top:10px"><a href="/videos/">More videos →</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Games & Forum -->
+      <section class="two-cols" aria-labelledby="games-title">
+        <div>
+          <div class="section-title">
+            <h3 id="games-title">Games</h3>
+            <a href="/games/">Play All</a>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px">
+            <div class="card"><div class="thumb">Tetris</div><div style="font-weight:700">Classic Tetris</div><div style="color:var(--muted); font-size:13px">Casual</div></div>
+            <div class="card"><div class="thumb">Backgammon</div><div style="font-weight:700">Backgammon</div><div style="color:var(--muted); font-size:13px">Multiplayer</div></div>
+            <div class="card"><div class="thumb">Chess</div><div style="font-weight:700">Chess</div><div style="color:var(--muted); font-size:13px">Coming soon</div></div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="section-title">
+            <h3>Forum Highlights</h3>
+            <a href="/forum/">See all</a>
+          </div>
+          <div class="forum-card">
+            <div class="forum-list">
+              <div class="forum-item"><span class="avatar"></span><div><div style="font-weight:700">Jerusalem Culture and Heritage</div><div style="color:var(--muted); font-size:13px">24 replies • 3 hours ago</div></div></div>
+              <div class="forum-item"><span class="avatar"></span><div><div style="font-weight:700">Local Events This Week</div><div style="color:var(--muted); font-size:13px">15 replies • 5 hours ago</div></div></div>
+              <div class="forum-item"><span class="avatar"></span><div><div style="font-weight:700">Marketplace Tips</div><div style="color:var(--muted); font-size:13px">32 replies • 1 day ago</div></div></div>
+            </div>
+            <div style="text-align:right; margin-top:10px"><a href="/forum/">Join the conversation →</a></div>
+          </div>
+        </aside>
+      </section>
+
+    </main>
+
+    <footer>
+      <div style="margin-bottom:8px">© <span id="year"></span> Jerusalem Hills — curated goods & community</div>
+      <div style="color:var(--muted)"><a href="/privacy-policy.html">Privacy</a> · <a href="/terms-of-service.html">Terms</a> · <a href="/contact.html">Contact</a></div>
+    </footer>
+  </div>
+
+  <script>
+    // small client script to add minor interactions (kept minimal)
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Progressive enhancement: replace static "Buy" clicks to show a quick preview modal
+    document.querySelectorAll('.buy').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const title = btn.closest('.card')?.querySelector('div[style*="font-weight:700"]')?.textContent || 'Product';
+        const price = btn.closest('.card')?.querySelector('.price')?.textContent || '—';
+        // simple preview
+        const overlay = document.createElement('div');
+        overlay.style.position='fixed'; overlay.style.inset=0; overlay.style.background='rgba(0,0,0,0.45)'; overlay.style.display='flex'; overlay.style.alignItems='center'; overlay.style.justifyContent='center'; overlay.style.zIndex=9999;
+        overlay.innerHTML = `<div style="background:white;padding:20px;border-radius:12px;max-width:420px;width:92%;text-align:center;font-family:inherit">
+          <h3 style="margin:0 0 8px">${title}</h3>
+          <div style="color:var(--muted);margin-bottom:12px">${price}</div>
+          <div style="display:flex;gap:8px;justify-content:center">
+            <button id="go-checkout" style="background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;padding:10px 14px;border-radius:8px;font-weight:700">Checkout</button>
+            <button id="close-modal" style="background:#f0f0f0;border:0;padding:10px 14px;border-radius:8px">Close</button>
+          </div>
+        </div>`;
+        document.body.appendChild(overlay);
+        overlay.querySelector('#close-modal').onclick = ()=>overlay.remove();
+        overlay.querySelector('#go-checkout').onclick = ()=>{ alert('Demo: Replace with Stripe Checkout call'); overlay.remove(); };
+      });
+    });
+  </script>
+</body>
+</html>
