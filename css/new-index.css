@@ -3,12 +3,13 @@
 
 /* ---- CSS Variables ---- */
 :root {
-    /* Primary Colors - matching site theme */
-    --primary-color: #4F46E5;
-    --primary-hover: #4338CA;
-    --secondary-color: #6366F1;
-    --accent-color: #8B5CF6;
-    --accent-gold: #D4A574;
+    /* Primary Colors - matching Jerusalem Hills logo */
+    --primary-color: #87CEEB;        /* Sky blue from logo */
+    --primary-hover: #6BB6D6;        /* Darker sky blue */
+    --secondary-color: #F0E68C;      /* Jerusalem stone yellow from logo */
+    --accent-color: #E6D76E;         /* Darker stone yellow */
+    --accent-gold: #D4A574;          /* Gold accent */
+    --text-accent: #2C3E50;          /* Dark text like logo */
 
     /* Text Colors */
     --text-dark: rgb(17, 24, 39);
@@ -49,7 +50,7 @@ html, body {
 
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: var(--bg-gradient);
+    background: linear-gradient(180deg, #f5f9fc, #e8f4f8);
     color: var(--text-dark);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -108,9 +109,10 @@ header {
 }
 
 .brand img {
-    height: 48px;
+    height: 72px;
     width: auto;
-    border-radius: 8px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .brand h1 {
@@ -142,8 +144,9 @@ nav a:hover {
 }
 
 nav a.active {
-    color: var(--primary-color);
-    background: rgba(79, 70, 229, 0.06);
+    color: var(--text-accent);
+    background: var(--secondary-color);
+    font-weight: 700;
 }
 
 /* Header Actions */
@@ -183,26 +186,28 @@ nav a.active {
 }
 
 .cta {
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    color: white;
+    background: var(--primary-color);
+    color: var(--text-accent);
     padding: 10px 16px;
     border-radius: 10px;
     font-weight: 700;
     font-size: 14px;
     text-decoration: none;
-    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.25);
+    box-shadow: 0 4px 12px rgba(135, 206, 235, 0.4);
     display: inline-block;
     transition: all 0.2s ease;
+    border: 2px solid var(--text-accent);
 }
 
 .cta:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 6px 16px rgba(135, 206, 235, 0.5);
+    background: var(--primary-hover);
 }
 
 /* ---- Hero Section ---- */
 .hero {
-    background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5));
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     border-radius: 18px;
     padding: 40px;
     display: grid;
@@ -210,18 +215,21 @@ nav a.active {
     gap: 32px;
     align-items: center;
     margin-bottom: var(--gap);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 8px 24px rgba(135, 206, 235, 0.3);
+    border: 3px solid var(--text-accent);
 }
 
 .hero-left h2 {
     margin: 0 0 12px;
-    color: var(--text-dark);
+    color: var(--text-accent);
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
 }
 
 .hero-left p {
     margin: 0 0 24px;
-    color: var(--text-medium);
+    color: var(--text-accent);
     font-size: 16px;
+    font-weight: 500;
 }
 
 .hero-cta {
@@ -231,11 +239,11 @@ nav a.active {
 }
 
 .ghost {
-    background: transparent;
-    border: 2px solid var(--border-color);
+    background: white;
+    border: 2px solid var(--text-accent);
     padding: 9px 14px;
     border-radius: 10px;
-    color: var(--text-medium);
+    color: var(--text-accent);
     text-decoration: none;
     font-weight: 600;
     font-size: 14px;
@@ -243,9 +251,9 @@ nav a.active {
 }
 
 .ghost:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-    background: rgba(79, 70, 229, 0.03);
+    border-color: var(--text-accent);
+    color: white;
+    background: var(--text-accent);
 }
 
 /* Stats */
@@ -275,7 +283,7 @@ nav a.active {
 .stat b {
     display: block;
     font-size: 20px;
-    color: var(--primary-color);
+    color: var(--text-accent);
     font-weight: 700;
 }
 
@@ -440,7 +448,7 @@ section {
 .featured-price {
     font-size: 20px;
     font-weight: 800;
-    color: var(--primary-color);
+    color: var(--text-accent);
 }
 
 /* Product Cards Grid */
@@ -492,7 +500,7 @@ section {
 .price {
     font-weight: 700;
     font-size: 16px;
-    color: var(--primary-color);
+    color: var(--text-accent);
 }
 
 .buy {
@@ -500,20 +508,21 @@ section {
     text-decoration: none;
     padding: 10px 12px;
     border-radius: 8px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--text-accent);
     display: inline-block;
     font-weight: 700;
     font-size: 13px;
     text-align: center;
     transition: all 0.2s ease;
-    border: none;
+    border: 2px solid var(--text-accent);
     cursor: pointer;
 }
 
 .buy:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 4px 12px rgba(135, 206, 235, 0.4);
+    background: var(--primary-hover);
 }
 
 /* Secondary Content Cards */
@@ -559,7 +568,7 @@ section {
 }
 
 .card-footer a {
-    color: var(--primary-color);
+    color: var(--text-accent);
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
@@ -567,7 +576,7 @@ section {
 }
 
 .card-footer a:hover {
-    color: var(--primary-hover);
+    color: var(--primary-color);
 }
 
 /* Videos */
@@ -660,7 +669,8 @@ footer a {
 }
 
 footer a:hover {
-    color: var(--primary-color);
+    color: var(--text-accent);
+    text-decoration: underline;
 }
 
 .footer-links {
