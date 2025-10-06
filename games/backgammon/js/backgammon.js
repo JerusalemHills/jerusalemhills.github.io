@@ -36,21 +36,23 @@ class BackgammonGame {
     }
 
     initializeBoard() {
-        // Backgammon starting position
+        // Standard backgammon starting position
         // Points numbered 1-24, with bar at position 0 and home at position 25
+        // White moves from 1→24 (counterclockwise)
+        // Black moves from 24→1 (clockwise)
         const board = Array(26).fill(null).map(() => []);
 
-        // White pieces starting position
-        board[1] = ['white', 'white'];
-        board[12] = ['white', 'white', 'white', 'white', 'white'];
-        board[17] = ['white', 'white', 'white'];
-        board[19] = ['white', 'white', 'white', 'white', 'white'];
+        // White pieces starting position (15 total)
+        board[1] = Array(2).fill('white');   // 2 on point 1
+        board[12] = Array(5).fill('white');  // 5 on point 12
+        board[17] = Array(3).fill('white');  // 3 on point 17
+        board[19] = Array(5).fill('white');  // 5 on point 19
 
-        // Black pieces starting position
-        board[24] = ['black', 'black'];
-        board[13] = ['black', 'black', 'black', 'black', 'black'];
-        board[8] = ['black', 'black', 'black'];
-        board[6] = ['black', 'black', 'black', 'black', 'black'];
+        // Black pieces starting position (15 total)
+        board[24] = Array(2).fill('black');  // 2 on point 24
+        board[13] = Array(5).fill('black');  // 5 on point 13
+        board[8] = Array(3).fill('black');   // 3 on point 8
+        board[6] = Array(5).fill('black');   // 5 on point 6
 
         return board;
     }
@@ -543,6 +545,10 @@ class BackgammonGame {
     }
 
     resetGame() {
+        // Clear any existing game messages
+        const existingMessages = document.querySelectorAll('.game-message');
+        existingMessages.forEach(msg => msg.remove());
+
         // Reset game state
         this.board = this.initializeBoard();
         this.currentPlayer = 'white';
@@ -563,7 +569,10 @@ class BackgammonGame {
         this.moveHistory = [];
         this.moveNumber = 1;
 
-        // Reset UI
+        // Deselect any selected checkers
+        this.deselectChecker();
+
+        // Reset UI elements
         const die1 = document.getElementById('die1');
         const die2 = document.getElementById('die2');
         if (die1) die1.textContent = '?';
@@ -583,9 +592,18 @@ class BackgammonGame {
         // Update move history display
         this.updateMoveHistory();
 
-        // Re-render board
+        // Clear and re-render board completely
+        const container = document.getElementById('backgammon-board');
+        if (container) {
+            // Clear all existing checkers
+            document.querySelectorAll('.checker').forEach(c => c.remove());
+        }
+
+        // Re-render board with new pieces
         this.render();
         this.playSound('click');
+
+        console.log('Game reset - Board state:', this.board);
     }
 
     undoLastMove() {
