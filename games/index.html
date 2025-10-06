@@ -71,10 +71,13 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            cursor: pointer;
+            position: relative;
         }
 
         .game-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
         .game-card img {
@@ -247,5 +250,26 @@
     <script src="/js/lazy-load.js"></script>
     <script src="/js/search.js"></script>
     <script src="/js/mobile-nav.js"></script>
+
+    <script>
+        // Make entire game card clickable
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Don't trigger if clicking the button directly
+                if (e.target.classList.contains('play-button')) return;
+
+                const link = this.querySelector('.play-button');
+                if (link) {
+                    // If it's a javascript:void(0) link, trigger the onclick
+                    if (link.href.includes('javascript:void(0)')) {
+                        link.click();
+                    } else {
+                        // Otherwise navigate to the href
+                        window.location.href = link.href;
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
