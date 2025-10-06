@@ -67,33 +67,50 @@ class BackgammonGame {
 
         container.innerHTML = '';
 
-        // Create top row (points 13-24)
-        for (let i = 13; i <= 24; i++) {
-            if (i === 19) {
-                // Add bar in the middle
-                const bar = document.createElement('div');
-                bar.className = 'bar';
-                bar.id = 'bar';
-                bar.dataset.position = '0';
-                container.appendChild(bar);
-            }
+        // Standard backgammon layout:
+        // Top row (left to right): 13, 14, 15, 16, 17, 18 | BAR | 19, 20, 21, 22, 23, 24
+        // Bottom row (left to right): 12, 11, 10, 9, 8, 7 | BAR | 6, 5, 4, 3, 2, 1
 
+        // Create top row - points 13 to 18
+        for (let i = 13; i <= 18; i++) {
             const point = document.createElement('div');
-            point.className = `point top ${i % 2 === 0 ? 'dark' : 'light'}`;
+            point.className = `point top ${i % 2 === 0 ? 'light' : 'dark'}`;
             point.dataset.position = i;
             point.id = `point-${i}`;
             container.appendChild(point);
         }
 
-        // Create bottom row (points 12-1)
-        for (let i = 12; i >= 1; i--) {
-            if (i === 6) {
-                // Bar already added, skip
-                continue;
-            }
+        // Add bar in the middle
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.id = 'bar';
+        bar.dataset.position = '0';
+        container.appendChild(bar);
 
+        // Create top row - points 19 to 24
+        for (let i = 19; i <= 24; i++) {
             const point = document.createElement('div');
-            point.className = `point bottom ${i % 2 === 0 ? 'dark' : 'light'}`;
+            point.className = `point top ${i % 2 === 0 ? 'light' : 'dark'}`;
+            point.dataset.position = i;
+            point.id = `point-${i}`;
+            container.appendChild(point);
+        }
+
+        // Create bottom row - points 12 down to 7
+        for (let i = 12; i >= 7; i--) {
+            const point = document.createElement('div');
+            point.className = `point bottom ${i % 2 === 0 ? 'light' : 'dark'}`;
+            point.dataset.position = i;
+            point.id = `point-${i}`;
+            container.appendChild(point);
+        }
+
+        // Bar is already added above (shared between top and bottom)
+
+        // Create bottom row - points 6 down to 1
+        for (let i = 6; i >= 1; i--) {
+            const point = document.createElement('div');
+            point.className = `point bottom ${i % 2 === 0 ? 'light' : 'dark'}`;
             point.dataset.position = i;
             point.id = `point-${i}`;
             container.appendChild(point);
@@ -545,9 +562,14 @@ class BackgammonGame {
     }
 
     resetGame() {
+        console.log('Resetting game...');
+
         // Clear any existing game messages
         const existingMessages = document.querySelectorAll('.game-message');
         existingMessages.forEach(msg => msg.remove());
+
+        // Deselect any selected checkers first
+        this.deselectChecker();
 
         // Reset game state
         this.board = this.initializeBoard();
@@ -569,21 +591,20 @@ class BackgammonGame {
         this.moveHistory = [];
         this.moveNumber = 1;
 
-        // Deselect any selected checkers
-        this.deselectChecker();
-
-        // Reset UI elements
+        // Reset UI elements - dice
         const die1 = document.getElementById('die1');
         const die2 = document.getElementById('die2');
         if (die1) die1.textContent = '?';
         if (die2) die2.textContent = '?';
 
+        // Reset buttons
         const rollBtn = document.getElementById('roll-dice');
         if (rollBtn) rollBtn.disabled = false;
 
         const undoBtn = document.getElementById('undo-move');
         if (undoBtn) undoBtn.disabled = true;
 
+        // Reset player indicators
         const whitePlayer = document.getElementById('white-player');
         const blackPlayer = document.getElementById('black-player');
         if (whitePlayer) whitePlayer.classList.add('active');
@@ -592,18 +613,22 @@ class BackgammonGame {
         // Update move history display
         this.updateMoveHistory();
 
-        // Clear and re-render board completely
-        const container = document.getElementById('backgammon-board');
-        if (container) {
-            // Clear all existing checkers
-            document.querySelectorAll('.checker').forEach(c => c.remove());
-        }
+        // Clear ALL existing checkers from the DOM
+        document.querySelectorAll('.checker').forEach(c => {
+            c.remove();
+        });
 
-        // Re-render board with new pieces
+        // Force re-render with fresh board state
         this.render();
         this.playSound('click');
 
-        console.log('Game reset - Board state:', this.board);
+        console.log('Game reset complete. Board state:', this.board);
+        console.log('Points with pieces:');
+        this.board.forEach((point, idx) => {
+            if (point.length > 0) {
+                console.log(`  Point ${idx}: ${point.length} ${point[0]} pieces`);
+            }
+        });
     }
 
     undoLastMove() {
