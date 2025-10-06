@@ -21,6 +21,7 @@
     // AdSense Manager
     const AdSenseManager = {
         initialized: false,
+        autoAdsEnabled: false,
 
         // Initialize AdSense when consent is given
         init: function() {
@@ -40,9 +41,10 @@
             // Initialize existing ad units
             this.initializeAdUnits();
 
-            // Set up auto ads if enabled
-            if (ADSENSE_CONFIG.autoAds) {
+            // Set up auto ads if enabled (only once)
+            if (ADSENSE_CONFIG.autoAds && !this.autoAdsEnabled) {
                 this.enableAutoAds();
+                this.autoAdsEnabled = true;
             }
 
             this.initialized = true;
