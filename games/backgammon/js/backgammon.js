@@ -22,6 +22,13 @@ class BackgammonGame {
             black: { piecesHome: 0, piecesOff: 0, doubletsRolled: 0 }
         };
 
+        // Move history
+        this.moveHistory = [];
+        this.moveNumber = 1;
+
+        // Sound enabled
+        this.soundEnabled = localStorage.getItem('bg-sound') !== 'false';
+
         // Initialize UI
         this.initializeUI();
         this.bindEvents();
@@ -156,10 +163,28 @@ class BackgammonGame {
         controls.className = 'game-controls';
         controls.innerHTML = `
             <button class="btn-game btn-roll" id="roll-dice">Roll Dice</button>
-            <button class="btn-game btn-undo" id="undo-move">Undo Move</button>
+            <button class="btn-game btn-undo" id="undo-move" disabled>Undo Move</button>
             <button class="btn-game btn-new-game" id="new-game">New Game</button>
+            <button class="btn-game btn-help" id="help-btn" style="background: var(--jerusalem-olive);">❓ Help</button>
         `;
         document.querySelector('.game-board-wrapper').appendChild(controls);
+
+        // Create move history
+        const historyEl = document.createElement('div');
+        historyEl.className = 'move-history';
+        historyEl.innerHTML = `
+            <h3>Move History</h3>
+            <div id="move-list"></div>
+        `;
+        document.querySelector('.game-board-wrapper').appendChild(historyEl);
+
+        // Create sound toggle
+        const soundToggle = document.createElement('button');
+        soundToggle.className = 'sound-toggle';
+        soundToggle.innerHTML = this.soundEnabled ? '🔊' : '🔇';
+        soundToggle.id = 'sound-toggle';
+        soundToggle.title = 'Toggle sound effects';
+        document.querySelector('.game-header').appendChild(soundToggle);
     }
 
     bindEvents() {
@@ -172,13 +197,29 @@ class BackgammonGame {
         // New game button
         const newGameBtn = document.getElementById('new-game');
         if (newGameBtn) {
-            newGameBtn.addEventListener('click', () => this.resetGame());
+            newGameBtn.addEventListener('click', () => {
+                if (confirm('Start a new game? Current game will be lost.')) {
+                    this.resetGame();
+                }
+            });
         }
 
         // Undo button
         const undoBtn = document.getElementById('undo-move');
         if (undoBtn) {
             undoBtn.addEventListener('click', () => this.undoLastMove());
+        }
+
+        // Help button
+        const helpBtn = document.getElementById('help-btn');
+        if (helpBtn) {
+            helpBtn.addEventListener('click', () => this.showHelp());
+        }
+
+        // Sound toggle
+        const soundToggle = document.getElementById('sound-toggle');
+        if (soundToggle) {
+            soundToggle.addEventListener('click', () => this.toggleSound());
         }
 
         // Point click events
@@ -188,6 +229,17 @@ class BackgammonGame {
 
         // Checker drag events
         this.enableCheckerDrag();
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'r' && !this.gameStarted) this.rollDice();
+            if (e.key === 'u' && e.ctrlKey) {
+                e.preventDefault();
+                this.undoLastMove();
+            }
+            if (e.key === 'h' || e.key === '?') this.showHelp();
+            if (e.key === 'Escape') this.deselectChecker();
+        });
     }
 
     enableCheckerDrag() {
@@ -203,8 +255,11 @@ class BackgammonGame {
         const die1 = document.getElementById('die1');
         const die2 = document.getElementById('die2');
 
+        if (!die1 || !die2) return;
+
         die1.classList.add('rolling');
         die2.classList.add('rolling');
+        this.playSound('dice');
 
         setTimeout(() => {
             // Generate random dice values
@@ -223,6 +278,7 @@ class BackgammonGame {
                 // Doubles - player can move 4 times
                 this.movesRemaining = [this.dice[0], this.dice[0], this.dice[0], this.dice[0]];
                 this.stats[this.currentPlayer].doubletsRolled++;
+                this.showMessage('Doubles!', `${this.currentPlayer} rolled ${this.dice[0]}-${this.dice[1]}! Move 4 times!`, 1500);
             } else {
                 this.movesRemaining = [...this.dice];
             }
@@ -371,6 +427,7 @@ class BackgammonGame {
     makeMove(move) {
         const { from, to, die } = move;
         const player = this.currentPlayer;
+        let hitOpponent = null;
 
         // Remove checker from source
         const sourceIndex = this.board[from].indexOf(player);
@@ -380,18 +437,31 @@ class BackgammonGame {
         if (to === 25) {
             // Bear off
             this.stats[player].piecesOff++;
+            this.playSound('move');
         } else {
             // Check for hit
             if (this.board[to].length === 1 && this.board[to][0] !== player) {
                 // Hit opponent's blot
-                const opponent = this.board[to][0];
+                hitOpponent = this.board[to][0];
                 this.board[to] = [];
-                this.board[0].push(opponent); // Send to bar
+                this.board[0].push(hitOpponent); // Send to bar
+                this.playSound('hit');
+            } else {
+                this.playSound('move');
             }
 
             // Add checker to destination
             this.board[to].push(player);
         }
+
+        // Record move in history
+        this.moveHistory.push({
+            from,
+            to,
+            die,
+            player,
+            hit: hitOpponent
+        });
 
         // Remove used die from moves
         const dieIndex = this.movesRemaining.indexOf(die);
@@ -400,6 +470,11 @@ class BackgammonGame {
         // Update UI
         this.deselectChecker();
         this.render();
+        this.updateMoveHistory();
+
+        // Enable undo button
+        const undoBtn = document.getElementById('undo-move');
+        if (undoBtn) undoBtn.disabled = false;
 
         // Check for win
         if (this.checkWin(player)) {
@@ -445,20 +520,26 @@ class BackgammonGame {
     endGame(winner) {
         this.winner = winner;
         this.gameStarted = false;
+        this.playSound('win');
 
         // Show victory message
         const message = document.createElement('div');
         message.className = 'game-message';
         message.innerHTML = `
             <h2>🏆 ${winner.toUpperCase()} WINS! 🏆</h2>
-            <p>Congratulations!</p>
-            <button class="btn-jerusalem-primary" onclick="backgammonGame.resetGame()">Play Again</button>
+            <p>Congratulations! All pieces borne off successfully!</p>
+            <p style="font-size: 0.9em; color: #666;">
+                Moves: ${this.moveHistory.length} |
+                Doubles: ${this.stats[winner].doubletsRolled}
+            </p>
+            <button class="btn-close-help" onclick="window.backgammonGame.resetGame()">Play Again</button>
         `;
         document.body.appendChild(message);
 
+        // Auto-close after 10 seconds
         setTimeout(() => {
-            message.remove();
-        }, 5000);
+            if (message.parentElement) message.remove();
+        }, 10000);
     }
 
     resetGame() {
@@ -478,20 +559,171 @@ class BackgammonGame {
             black: { piecesHome: 0, piecesOff: 0, doubletsRolled: 0 }
         };
 
+        // Reset move history
+        this.moveHistory = [];
+        this.moveNumber = 1;
+
         // Reset UI
-        document.getElementById('die1').textContent = '?';
-        document.getElementById('die2').textContent = '?';
-        document.getElementById('roll-dice').disabled = false;
-        document.getElementById('white-player').classList.add('active');
-        document.getElementById('black-player').classList.remove('active');
+        const die1 = document.getElementById('die1');
+        const die2 = document.getElementById('die2');
+        if (die1) die1.textContent = '?';
+        if (die2) die2.textContent = '?';
+
+        const rollBtn = document.getElementById('roll-dice');
+        if (rollBtn) rollBtn.disabled = false;
+
+        const undoBtn = document.getElementById('undo-move');
+        if (undoBtn) undoBtn.disabled = true;
+
+        const whitePlayer = document.getElementById('white-player');
+        const blackPlayer = document.getElementById('black-player');
+        if (whitePlayer) whitePlayer.classList.add('active');
+        if (blackPlayer) blackPlayer.classList.remove('active');
+
+        // Update move history display
+        this.updateMoveHistory();
 
         // Re-render board
         this.render();
+        this.playSound('click');
     }
 
     undoLastMove() {
-        // TODO: Implement move history and undo functionality
-        this.showMessage('Undo', 'This feature is coming soon!');
+        if (this.moveHistory.length === 0) {
+            this.showMessage('Cannot Undo', 'No moves to undo');
+            return;
+        }
+
+        const lastMove = this.moveHistory.pop();
+
+        // Restore board state
+        if (lastMove.to === 25) {
+            // Was a bear off - add piece back
+            this.board[lastMove.from].push(lastMove.player);
+            this.stats[lastMove.player].piecesOff--;
+        } else {
+            // Move piece back
+            const pieceIndex = this.board[lastMove.to].indexOf(lastMove.player);
+            this.board[lastMove.to].splice(pieceIndex, 1);
+            this.board[lastMove.from].push(lastMove.player);
+
+            // If there was a hit, restore opponent piece
+            if (lastMove.hit) {
+                const barIndex = this.board[0].indexOf(lastMove.hit);
+                this.board[0].splice(barIndex, 1);
+                this.board[lastMove.to].push(lastMove.hit);
+            }
+        }
+
+        // Restore dice
+        this.movesRemaining.push(lastMove.die);
+        this.movesRemaining.sort((a, b) => b - a);
+
+        // Update UI
+        this.render();
+        this.updateMoveHistory();
+        this.playSound('undo');
+
+        // Update undo button state
+        document.getElementById('undo-move').disabled = this.moveHistory.length === 0;
+    }
+
+    toggleSound() {
+        this.soundEnabled = !this.soundEnabled;
+        localStorage.setItem('bg-sound', this.soundEnabled);
+        const toggle = document.getElementById('sound-toggle');
+        if (toggle) {
+            toggle.innerHTML = this.soundEnabled ? '🔊' : '🔇';
+        }
+        this.playSound('click');
+    }
+
+    playSound(type) {
+        if (!this.soundEnabled) return;
+
+        // Using Web Audio API for simple sound effects
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        const sounds = {
+            click: { freq: 300, duration: 0.05 },
+            dice: { freq: 400, duration: 0.1 },
+            move: { freq: 500, duration: 0.08 },
+            hit: { freq: 200, duration: 0.15 },
+            win: { freq: 600, duration: 0.3 },
+            undo: { freq: 350, duration: 0.1 }
+        };
+
+        const sound = sounds[type] || sounds.click;
+        oscillator.frequency.value = sound.freq;
+        gainNode.gain.value = 0.1;
+
+        oscillator.start();
+        setTimeout(() => oscillator.stop(), sound.duration * 1000);
+    }
+
+    showHelp() {
+        const helpOverlay = document.createElement('div');
+        helpOverlay.className = 'help-overlay';
+        helpOverlay.innerHTML = `
+            <div class="help-content">
+                <h2>🎲 How to Play Backgammon</h2>
+                <ul>
+                    <li><strong>Objective:</strong> Move all 15 checkers to your home board and bear them off before your opponent</li>
+                    <li><strong>Rolling Dice:</strong> Click "Roll Dice" to start your turn</li>
+                    <li><strong>Moving:</strong> Click a checker, then click a highlighted valid destination</li>
+                    <li><strong>Hitting:</strong> Land on a single opponent checker to send it to the bar</li>
+                    <li><strong>Bearing Off:</strong> Remove checkers once all are in your home board (points 1-6 for white, 19-24 for black)</li>
+                    <li><strong>Doubles:</strong> Rolling the same number gives you 4 moves instead of 2</li>
+                    <li><strong>Keyboard Shortcuts:</strong>
+                        <ul>
+                            <li><strong>R</strong> - Roll dice</li>
+                            <li><strong>Ctrl+U</strong> - Undo last move</li>
+                            <li><strong>H or ?</strong> - Show this help</li>
+                            <li><strong>Esc</strong> - Deselect checker</li>
+                        </ul>
+                    </li>
+                </ul>
+                <button class="btn-close-help">Close</button>
+            </div>
+        `;
+        document.body.appendChild(helpOverlay);
+
+        // Close help on button click or overlay click
+        helpOverlay.querySelector('.btn-close-help').addEventListener('click', () => {
+            helpOverlay.remove();
+        });
+        helpOverlay.addEventListener('click', (e) => {
+            if (e.target === helpOverlay) helpOverlay.remove();
+        });
+    }
+
+    updateMoveHistory() {
+        const moveList = document.getElementById('move-list');
+        if (!moveList) return;
+
+        if (this.moveHistory.length === 0) {
+            moveList.innerHTML = '<p style="color: #999; text-align: center;">No moves yet</p>';
+            return;
+        }
+
+        const lastMoves = this.moveHistory.slice(-10); // Show last 10 moves
+        moveList.innerHTML = lastMoves.map((move, idx) => {
+            const moveNum = this.moveHistory.length - lastMoves.length + idx + 1;
+            const fromStr = move.from === 0 ? 'bar' : `point ${move.from}`;
+            const toStr = move.to === 25 ? 'off' : `point ${move.to}`;
+            const hitStr = move.hit ? ' (hit!)' : '';
+            return `<div class="move-item ${move.player}">
+                ${moveNum}. ${move.player}: ${fromStr} → ${toStr}${hitStr}
+            </div>`;
+        }).join('');
+
+        // Auto-scroll to bottom
+        moveList.scrollTop = moveList.scrollHeight;
     }
 
     showMessage(title, text, duration = 2000) {
