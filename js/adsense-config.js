@@ -74,7 +74,8 @@
             adUnits.forEach(function(adUnit) {
                 try {
                     // Push to adsbygoogle array
-                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    window.adsbygoogle = window.adsbygoogle || [];
+                    window.adsbygoogle.push({});
                     adUnit.setAttribute('data-ad-status', 'initialized');
                 } catch (e) {
                     console.error('Error initializing ad unit:', e);
@@ -84,10 +85,15 @@
 
         // Enable auto ads
         enableAutoAds: function() {
-            (adsbygoogle = window.adsbygoogle || []).push({
-                google_ad_client: ADSENSE_CONFIG.client,
-                enable_page_level_ads: true
-            });
+            try {
+                window.adsbygoogle = window.adsbygoogle || [];
+                window.adsbygoogle.push({
+                    google_ad_client: ADSENSE_CONFIG.client,
+                    enable_page_level_ads: true
+                });
+            } catch (e) {
+                console.error('Error enabling auto ads:', e);
+            }
         },
 
         // Create an ad unit dynamically
