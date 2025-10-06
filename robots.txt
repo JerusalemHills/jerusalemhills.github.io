@@ -1,4 +1,19 @@
 User-agent: *
 Disallow: /private/
+Disallow: /example_layout/
+Disallow: *.md
+Disallow: *-old.html
+Disallow: *-new.html
+Disallow: *backup*.html
+Disallow: *test*.html
+Disallow: *wireframe*.html
 
-Sitemap: https://www.jerusalemhills.com/sitemap.xml
+# Allow important directories
+Allow: /games/
+Allow: /market/
+Allow: /forum/
+Allow: /css/
+Allow: /js/
+Allow: /img/
+
+Sitemap: https://jerusalemhills.com/sitemap.xml
