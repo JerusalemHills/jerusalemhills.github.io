@@ -1563,6 +1563,127 @@
                 grid-template-columns: 1fr !important;
             }
         }
+
+        /* Hebrew Virtual Keyboard Styles */
+        #hebrew-keyboard-container {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 90vw;
+            width: 700px;
+            z-index: 9999;
+        }
+
+        #hebrew-keyboard-container.active {
+            display: block;
+        }
+
+        .keyboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .keyboard-header span {
+            color: rgb(79, 70, 229);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .keyboard-close {
+            background: rgb(239, 68, 68);
+            color: white;
+            border: none;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .keyboard-close:hover {
+            background: rgb(220, 38, 38);
+        }
+
+        .keyboard-keys {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .keyboard-row {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .key {
+            background: white;
+            border: 2px solid rgb(229, 231, 235);
+            border-radius: 0.375rem;
+            padding: 0.75rem;
+            min-width: 50px;
+            font-size: 1.25rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            user-select: none;
+        }
+
+        .key:hover {
+            background: rgb(243, 244, 246);
+            border-color: rgb(79, 70, 229);
+            transform: translateY(-2px);
+        }
+
+        .key:active {
+            transform: translateY(0);
+            background: rgb(79, 70, 229);
+            color: white;
+        }
+
+        .key.space {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .key.special {
+            background: rgb(243, 244, 246);
+            font-size: 0.875rem;
+            color: rgb(75, 85, 99);
+        }
+
+        .key.special:hover {
+            background: rgb(229, 231, 235);
+        }
+
+        @media (max-width: 768px) {
+            #hebrew-keyboard-container {
+                width: 95vw;
+                padding: 0.75rem;
+                bottom: 10px;
+            }
+
+            .key {
+                min-width: 35px;
+                padding: 0.5rem;
+                font-size: 1rem;
+            }
+
+            .keyboard-output {
+                font-size: 1rem;
+                min-height: 50px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1611,6 +1732,10 @@
                                 <i data-lucide="book-open"></i>
                                 <span>Siddur</span>
                             </a>
+                            <a href="#" class="header-nav-link" id="keyboard-toggle">
+                                <i data-lucide="keyboard"></i>
+                                <span>Hebrew KB</span>
+                            </a>
                         </nav>
                     </div>
 
@@ -1633,6 +1758,7 @@
                     <a href="/games/" class="mobile-link">Games</a>
                     <!-- <a href="#news" class="mobile-link">News</a> -->
                     <a href="/sidur.html" class="mobile-link">Siddur</a>
+                    <a href="#" class="mobile-link" id="keyboard-toggle-mobile">Hebrew Keyboard</a>
                 </div>
             </div>
         </header>
@@ -2015,7 +2141,190 @@
     <script src="/js/search.js"></script>
     <script src="/js/mobile-nav.js"></script>
 
+    <!-- Hebrew Virtual Keyboard -->
+    <div id="hebrew-keyboard-container">
+        <div class="keyboard-header">
+            <span>🔴 מקלדת עברית פעילה - Hebrew Keyboard Active</span>
+            <button class="keyboard-close" id="keyboard-close">Close</button>
+        </div>
+
+        <div class="keyboard-keys">
+                <!-- Row 1 -->
+                <div class="keyboard-row">
+                    <button class="key" data-char=";">;</button>
+                    <button class="key" data-char="1">1</button>
+                    <button class="key" data-char="2">2</button>
+                    <button class="key" data-char="3">3</button>
+                    <button class="key" data-char="4">4</button>
+                    <button class="key" data-char="5">5</button>
+                    <button class="key" data-char="6">6</button>
+                    <button class="key" data-char="7">7</button>
+                    <button class="key" data-char="8">8</button>
+                    <button class="key" data-char="9">9</button>
+                    <button class="key" data-char="0">0</button>
+                    <button class="key" data-char="-">-</button>
+                    <button class="key" data-char="=">=</button>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="keyboard-row">
+                    <button class="key" data-char="/">/ ק</button>
+                    <button class="key" data-char="'">׳ ר</button>
+                    <button class="key" data-char="ק">ק א</button>
+                    <button class="key" data-char="ר">ר ט</button>
+                    <button class="key" data-char="א">א ו</button>
+                    <button class="key" data-char="ט">ט ן</button>
+                    <button class="key" data-char="ו">ו ם</button>
+                    <button class="key" data-char="ן">ן פ</button>
+                    <button class="key" data-char="ם">ם</button>
+                    <button class="key" data-char="פ">פ</button>
+                    <button class="key" data-char="[">[</button>
+                    <button class="key" data-char="]">]</button>
+                    <button class="key special" data-action="backspace">⌫ Back</button>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="keyboard-row">
+                    <button class="key" data-char="ש">ש</button>
+                    <button class="key" data-char="ד">ד</button>
+                    <button class="key" data-char="ג">ג</button>
+                    <button class="key" data-char="כ">כ</button>
+                    <button class="key" data-char="ע">ע</button>
+                    <button class="key" data-char="י">י</button>
+                    <button class="key" data-char="ח">ח</button>
+                    <button class="key" data-char="ל">ל</button>
+                    <button class="key" data-char="ך">ך</button>
+                    <button class="key" data-char="ף">ף</button>
+                    <button class="key" data-char=",">,</button>
+                    <button class="key special" data-action="enter">↵ Enter</button>
+                </div>
+
+                <!-- Row 4 -->
+                <div class="keyboard-row">
+                    <button class="key" data-char="ז">ז</button>
+                    <button class="key" data-char="ס">ס</button>
+                    <button class="key" data-char="ב">ב</button>
+                    <button class="key" data-char="ה">ה</button>
+                    <button class="key" data-char="נ">נ</button>
+                    <button class="key" data-char="מ">מ</button>
+                    <button class="key" data-char="צ">צ</button>
+                    <button class="key" data-char="ת">ת</button>
+                    <button class="key" data-char="ץ">ץ</button>
+                    <button class="key" data-char=".">.</button>
+                    <button class="key" data-char="/">/</button>
+                </div>
+
+                <!-- Row 5 - Space bar -->
+                <div class="keyboard-row">
+                    <button class="key space" data-char=" ">רווח - Space</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Hebrew Virtual Keyboard Functionality
+        (function() {
+            const container = document.getElementById('hebrew-keyboard-container');
+            const toggleBtn = document.getElementById('keyboard-toggle');
+            const toggleBtnMobile = document.getElementById('keyboard-toggle-mobile');
+            const closeBtn = document.getElementById('keyboard-close');
+            const keys = document.querySelectorAll('.key');
+            const searchInput = document.querySelector('.search-input');
+            let isKeyboardActive = false;
+            let currentInput = null;
+
+            // Toggle keyboard visibility
+            function toggleKeyboard(e) {
+                e.preventDefault();
+                isKeyboardActive = !isKeyboardActive;
+                container.classList.toggle('active');
+
+                if (isKeyboardActive) {
+                    // Focus on search bar by default
+                    if (searchInput) {
+                        searchInput.focus();
+                        currentInput = searchInput;
+                    }
+                } else {
+                    currentInput = null;
+                }
+            }
+
+            // Close keyboard
+            function closeKeyboard() {
+                isKeyboardActive = false;
+                container.classList.remove('active');
+                currentInput = null;
+            }
+
+            // Track focused input fields
+            document.addEventListener('focusin', function(e) {
+                if (isKeyboardActive && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+                    currentInput = e.target;
+                }
+            });
+
+            // Event listeners for toggle buttons
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', toggleKeyboard);
+            }
+            if (toggleBtnMobile) {
+                toggleBtnMobile.addEventListener('click', toggleKeyboard);
+            }
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeKeyboard);
+            }
+
+            // Handle key clicks
+            keys.forEach(key => {
+                key.addEventListener('click', function() {
+                    if (!currentInput) {
+                        // If no input is focused, focus on search bar
+                        if (searchInput) {
+                            searchInput.focus();
+                            currentInput = searchInput;
+                        } else {
+                            return;
+                        }
+                    }
+
+                    const char = this.getAttribute('data-char');
+                    const action = this.getAttribute('data-action');
+
+                    if (action === 'backspace') {
+                        const cursorPos = currentInput.selectionStart;
+                        if (cursorPos > 0) {
+                            currentInput.value = currentInput.value.substring(0, cursorPos - 1) +
+                                               currentInput.value.substring(cursorPos);
+                            currentInput.selectionStart = currentInput.selectionEnd = cursorPos - 1;
+                        }
+                    } else if (action === 'enter') {
+                        if (currentInput.tagName === 'TEXTAREA') {
+                            const cursorPos = currentInput.selectionStart;
+                            currentInput.value = currentInput.value.substring(0, cursorPos) + '\n' +
+                                               currentInput.value.substring(cursorPos);
+                            currentInput.selectionStart = currentInput.selectionEnd = cursorPos + 1;
+                        }
+                    } else if (char) {
+                        const cursorPos = currentInput.selectionStart;
+                        currentInput.value = currentInput.value.substring(0, cursorPos) + char +
+                                           currentInput.value.substring(cursorPos);
+                        currentInput.selectionStart = currentInput.selectionEnd = cursorPos + 1;
+                    }
+
+                    currentInput.focus();
+                });
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isKeyboardActive) {
+                    closeKeyboard();
+                }
+            });
+        })();
+
         // Initialize Lucide icons
         lucide.createIcons();
 
