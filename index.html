@@ -300,30 +300,23 @@
       </div>
     </section>
 
-    <!-- Latest Videos Section -->
-    <section class="grid-section">
-      <h2 class="section-title">Latest Videos</h2>
-      <div class="grid">
-        <div class="card">
-          <img src="img/header-bg-city-wall.jpg" alt="Jerusalem City Tour">
-          <h4>Jerusalem Old City Tour</h4>
-          <p>12:45</p>
+    <!-- Latest Videos Section - YouTube Carousel -->
+    <section class="grid-section video-slider-section">
+      <h2 class="section-title">Latest Videos from Jerusalem Hills</h2>
+      <div class="slider-container">
+        <button class="slider-btn prev" onclick="slideVideos('prev')" aria-label="Previous videos">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div class="slider" id="video-slider">
+          <!-- JavaScript will dynamically add YouTube iframes here -->
         </div>
-        <div class="card">
-          <img src="img/Jerusalem_Old_City_market.jpg" alt="Market Tour">
-          <h4>Market Shopping Guide</h4>
-          <p>8:30</p>
-        </div>
-        <div class="card">
-          <img src="img/David's_Tower_11.jpg" alt="Historical Sites">
-          <h4>David's Tower History</h4>
-          <p>15:20</p>
-        </div>
-        <div class="card">
-          <img src="img/pic01.jpg" alt="Local Crafts">
-          <h4>Artisan Workshop</h4>
-          <p>10:15</p>
-        </div>
+        <button class="slider-btn next" onclick="slideVideos('next')" aria-label="Next videos">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
       </div>
     </section>
   </main>
@@ -497,6 +490,133 @@
         }
       });
     })();
+  </script>
+
+  <!-- YouTube Video Carousel Script -->
+  <script>
+    // YouTube API Configuration
+    const YOUTUBE_API_KEY = 'AIzaSyB5_m5vWCLhVcPKlItsT62fMB_bk2YyHIs'; // Your existing Google API key
+    const PLAYLIST_ID = 'PLZkWvmItga8Uke86j0__CT5IxPACfvCFy'; // Jerusalem Hills YouTube Playlist
+    const NUM_VIDEOS = 10; // Number of videos to display
+
+    let currentSlideIndex = 0;
+
+    // Fetch YouTube playlist videos
+    async function fetchPlaylistVideos() {
+      const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${NUM_VIDEOS}&key=${YOUTUBE_API_KEY}&cache_bust=${Date.now()}`;
+
+      try {
+        const response = await fetch(url, { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        if (data.items && data.items.length > 0) {
+          populateVideoSlider(data.items);
+        } else {
+          console.warn('No videos found in playlist');
+          showFallbackVideos();
+        }
+      } catch (error) {
+        console.error('Error fetching YouTube playlist:', error);
+        showFallbackVideos();
+      }
+    }
+
+    // Populate slider with video iframes
+    function populateVideoSlider(videos) {
+      const slider = document.getElementById('video-slider');
+      slider.innerHTML = ''; // Clear loading message
+
+      videos.forEach(video => {
+        const videoId = video.snippet.resourceId.videoId;
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('loading', 'lazy');
+        slider.appendChild(iframe);
+      });
+    }
+
+    // Show fallback static videos if API fails
+    function showFallbackVideos() {
+      const slider = document.getElementById('video-slider');
+      const fallbackVideoIds = ['dQw4w9WgXcQ', 'jNQXAC9IVRw', 'y6Sxv-sUYtM']; // Example video IDs
+
+      slider.innerHTML = '';
+      fallbackVideoIds.forEach(videoId => {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+        slider.appendChild(iframe);
+      });
+    }
+
+    // Slide video carousel
+    function slideVideos(direction) {
+      const slider = document.getElementById('video-slider');
+      const videos = slider.querySelectorAll('iframe');
+      const videoWidth = 400 + 24; // iframe width + gap
+      const visibleVideos = window.innerWidth <= 768 ? 1 : 3;
+      const maxIndex = Math.max(0, videos.length - visibleVideos);
+
+      if (direction === 'next') {
+        currentSlideIndex = Math.min(currentSlideIndex + 1, maxIndex);
+      } else {
+        currentSlideIndex = Math.max(currentSlideIndex - 1, 0);
+      }
+
+      const translateX = -(currentSlideIndex * videoWidth);
+      slider.style.transform = `translateX(${translateX}px)`;
+    }
+
+    // Auto-slide every 5 seconds
+    let autoSlideInterval;
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(() => {
+        const slider = document.getElementById('video-slider');
+        const videos = slider.querySelectorAll('iframe');
+        const visibleVideos = window.innerWidth <= 768 ? 1 : 3;
+        const maxIndex = Math.max(0, videos.length - visibleVideos);
+
+        if (currentSlideIndex >= maxIndex) {
+          currentSlideIndex = 0;
+        } else {
+          currentSlideIndex++;
+        }
+
+        const videoWidth = 400 + 24;
+        const translateX = -(currentSlideIndex * videoWidth);
+        slider.style.transform = `translateX(${translateX}px)`;
+      }, 5000);
+    }
+
+    function stopAutoSlide() {
+      if (autoSlideInterval) {
+        clearInterval(autoSlideInterval);
+      }
+    }
+
+    // Pause auto-slide on hover
+    document.addEventListener('DOMContentLoaded', () => {
+      const sliderContainer = document.querySelector('.slider-container');
+      if (sliderContainer) {
+        sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+        sliderContainer.addEventListener('mouseleave', startAutoSlide);
+      }
+    });
+
+    // Initialize YouTube carousel
+    if (document.getElementById('video-slider')) {
+      fetchPlaylistVideos();
+      // Start auto-slide after videos load
+      setTimeout(startAutoSlide, 2000);
+    }
   </script>
 </body>
 </html>
