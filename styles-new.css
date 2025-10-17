@@ -509,94 +509,80 @@ main {
   flex: 1;
 }
 
-/* Headlines Ticker - No Card Wrapper */
-.headlines-ticker {
-  overflow: hidden;
+/* Markets Card with TradingView Widgets */
+.markets-widgets {
   position: relative;
-  padding: 0.75rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  padding: 0.75rem !important;
+  padding-top: 3rem !important; /* Space for ticker overlay */
   background: rgba(255, 255, 255, 0.7);
   border-radius: 8px;
-  margin-bottom: 1rem;
 }
 
-/* Headlines Card - Horizontal Carousel (Legacy) */
-.headlines-card .card-content {
+/* Headlines Ticker Overlay - Single Scrolling Line Above Widgets */
+.headlines-ticker-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.5rem;
+  background: rgba(145, 217, 248, 0.15); /* Light blue from brand */
+  border-bottom: 1px solid rgba(145, 217, 248, 0.3);
   overflow: hidden;
-  position: relative;
-  padding: 1.25rem 1.5rem;
+  z-index: 10;
+  border-radius: 8px 8px 0 0;
 }
 
-.headlines-carousel {
-  position: relative;
-  overflow: hidden;
-  min-height: 80px;
-}
-
-.headlines-track {
+.ticker-track {
   display: flex;
-  transition: transform 0.8s ease-in-out;
   gap: 3rem;
+  white-space: nowrap;
+  animation: scroll-ticker 60s linear infinite;
+  will-change: transform;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .headline-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 0;
+  gap: 0.75rem;
+  padding: 0 1.5rem;
+  height: 2.5rem;
   flex-shrink: 0;
-  min-width: 500px;
-}
-
-.headline-badge {
-  display: inline-block;
-  padding: 0.25rem 0.625rem;
-  background: var(--accent);
-  color: white;
-  font-size: 0.7rem;
-  font-weight: 600;
-  border-radius: 4px;
-  text-transform: uppercase;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .headline-link {
   color: var(--text);
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  line-height: 1.4;
   transition: color 0.2s;
-  flex: 1;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .headline-link:hover {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 .headline-time {
   font-size: 0.75rem;
   color: #9ca3af;
   white-space: nowrap;
-  flex-shrink: 0;
-}
-
-/* Carousel Controls - Hidden */
-.carousel-controls {
-  display: none;
-}
-
-/* Markets Card with TradingView Widgets */
-.markets-widgets {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
-  padding: 0.75rem !important;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 8px;
 }
 
 .tradingview-widget-container {
