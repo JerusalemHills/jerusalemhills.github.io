@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto-scroll horizontally - smooth continuous movement
     carouselInterval = setInterval(() => {
       if (!carouselPaused) {
-        carouselPosition -= 1; // Move 1px left every interval
+        carouselPosition -= 2; // Move 2px left every interval (faster)
 
         // Reset position for seamless loop (when first set of items is fully scrolled)
         const firstItem = track.querySelector('.headline-item');
@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         track.style.transform = `translateX(${carouselPosition}px)`;
       }
-    }, 30); // Run every 30ms for smooth animation
+    }, 20); // Run every 20ms for faster, smoother animation
   }
 
   // Fetch headlines on load

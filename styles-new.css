@@ -509,7 +509,17 @@ main {
   flex: 1;
 }
 
-/* Headlines Card - Horizontal Carousel */
+/* Headlines Ticker - No Card Wrapper */
+.headlines-ticker {
+  overflow: hidden;
+  position: relative;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* Headlines Card - Horizontal Carousel (Legacy) */
 .headlines-card .card-content {
   overflow: hidden;
   position: relative;
@@ -584,7 +594,9 @@ main {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.75rem;
-  padding: 1.25rem 1.5rem !important;
+  padding: 0.75rem !important;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
 }
 
 .tradingview-widget-container {

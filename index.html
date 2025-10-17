@@ -67,35 +67,28 @@
 
   <main>
     <section class="dashboard-hero">
-      <!-- Headlines Card - Full Width -->
-      <div class="dashboard-card headlines-card">
-        <div class="card-content">
-          <div class="headline-item">
-            <span class="headline-badge">Breaking</span>
-            <a href="#" class="headline-link">Jerusalem hosts annual cultural heritage festival</a>
-            <span class="headline-time">2h ago</span>
-          </div>
-          <div class="headline-item">
-            <span class="headline-badge">Local</span>
-            <a href="#" class="headline-link">New archaeological discovery in Old City</a>
-            <span class="headline-time">5h ago</span>
-          </div>
-          <div class="headline-item">
-            <span class="headline-badge">Community</span>
-            <a href="#" class="headline-link">Marketplace expands with 50+ new artisan vendors</a>
-            <span class="headline-time">1d ago</span>
-          </div>
-          <div class="headline-item">
-            <span class="headline-badge">Event</span>
-            <a href="#" class="headline-link">Weekly Torah study group welcomes new members</a>
-            <span class="headline-time">2d ago</span>
-          </div>
+      <!-- Headlines Ticker - No Card Wrapper -->
+      <div class="headlines-ticker">
+        <div class="headline-item">
+          <a href="#" class="headline-link">Jerusalem hosts annual cultural heritage festival</a>
+          <span class="headline-time">2h ago</span>
+        </div>
+        <div class="headline-item">
+          <a href="#" class="headline-link">New archaeological discovery in Old City</a>
+          <span class="headline-time">5h ago</span>
+        </div>
+        <div class="headline-item">
+          <a href="#" class="headline-link">Marketplace expands with 50+ new artisan vendors</a>
+          <span class="headline-time">1d ago</span>
+        </div>
+        <div class="headline-item">
+          <a href="#" class="headline-link">Weekly Torah study group welcomes new members</a>
+          <span class="headline-time">2d ago</span>
         </div>
       </div>
 
-      <!-- Markets Card - Full Width -->
-      <div class="dashboard-card markets-tradingview-card">
-        <div class="card-content markets-widgets">
+      <!-- Markets Widgets - No Card Wrapper -->
+      <div class="markets-widgets">
           <!-- TradingView Widget: S&P 500 -->
           <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
@@ -171,12 +164,11 @@
             }
             </script>
           </div>
-        </div>
       </div>
     </section>
 
     <section id="games" class="grid-section">
-      <h3>Games</h3>
+      <h3><a href="/games/" style="text-decoration: none; color: inherit; cursor: pointer;">Games</a></h3>
       <div class="grid">
         <div class="card">
           <a href="/games/backgammon/backgammon.html" style="text-decoration: none; color: inherit;">
@@ -184,16 +176,6 @@
             <h4>Backgammon</h4>
             <p>Play classic backgammon online</p>
           </a>
-        </div>
-        <div class="card">
-          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23f3f4f6' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%239ca3af'%3EComing Soon...%3C/text%3E%3C/svg%3E" alt="Tetris">
-          <h4>Tetris</h4>
-          <p>Classic block puzzle game</p>
-        </div>
-        <div class="card">
-          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23f3f4f6' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%239ca3af'%3EComing Soon...%3C/text%3E%3C/svg%3E" alt="Snake">
-          <h4>Snake</h4>
-          <p>Retro snake arcade game</p>
         </div>
       </div>
     </section>
@@ -225,7 +207,7 @@
 
     <!-- Trending Products Section -->
     <section id="marketplace" class="grid-section">
-      <h2 class="section-title">Trending in Marketplace</h2>
+      <h2 class="section-title"><a href="/marketplace.html" style="text-decoration: none; color: inherit; cursor: pointer;">Trending in Marketplace</a></h2>
       <div class="grid">
         <div class="card">
           <img src="img/pic01.jpg" alt="Jerusalem Crafts">
