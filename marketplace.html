@@ -266,7 +266,8 @@
         }
 
         .hero {
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            background: linear-gradient(rgba(79, 70, 229, 0.85), rgba(67, 56, 202, 0.85)),
+                        url('/img/Jerusalem_Old_City_market.jpg') center/cover;
             padding: 4rem 2rem;
             text-align: center;
             position: relative;
@@ -628,66 +629,9 @@
 <body>
     <!-- Shared Header Component -->
     <div id="header-placeholder"></div>
+
+    <!-- Load Header Component (must be after placeholder) -->
     <script src="/js/load-header.js"></script>
-
-    <!-- Header from index.html -->
-    <header class="header">
-        <div class="header-container">
-            <div class="header-content">
-                <div class="logo-section">
-                    <button class="icon-button menu-button" aria-label="Menu">
-                        <i data-lucide="menu"></i>
-                    </button>
-                    <a href="/" class="logo">
-                        <img src="img/1.svg" alt="Jerusalem Hills Logo" style="height: 90px; width: auto;">
-                    </a>
-                </div>
-
-                <div class="middle-section">
-                    <div class="search-container">
-                        <input type="text" class="search-input" placeholder="Search products...">
-                        <i data-lucide="search" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-light);"></i>
-                    </div>
-
-                    <!-- Navigation moved to header -->
-                    <nav class="header-nav">
-                        <a href="/" class="header-nav-link">
-                            <i data-lucide="home"></i>
-                            <span>Home</span>
-                        </a>
-                        <a href="marketplace.html" class="header-nav-link active">
-                            <i data-lucide="shopping-bag"></i>
-                            <span>Marketplace</span>
-                        </a>
-                        <a href="#forum" class="header-nav-link">
-                            <i data-lucide="message-square"></i>
-                            <span>Forum</span>
-                        </a>
-                        <a href="#services" class="header-nav-link">
-                            <i data-lucide="grid"></i>
-                            <span>Services</span>
-                        </a>
-                        <a href="/sidur.html" class="header-nav-link">
-                            <i data-lucide="book-open"></i>
-                            <span>Siddur</span>
-                        </a>
-                    </nav>
-                </div>
-
-                <div class="header-icons">
-                    <button class="icon-button" aria-label="Shopping Cart">
-                        <i data-lucide="shopping-cart"></i>
-                    </button>
-                    <button class="icon-button" aria-label="Notifications">
-                        <i data-lucide="bell"></i>
-                    </button>
-                    <button class="icon-button" aria-label="User menu">
-                        <i data-lucide="user"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
 
     <!-- Main Content - below fixed header -->
     <div class="main-content">
@@ -797,6 +741,18 @@
         // Enhanced product catalog with categories and better descriptions
         const products = [
             {
+                id: 'prod_mezuzah_glass_001',
+                name: 'Glass and Copper Mezuzah',
+                category: 'judaica',
+                categoryName: 'Judaica',
+                description: 'Handcrafted artisan mezuzah featuring delicate glass vial with copper accents and natural cork stopper, a unique blend of traditional and contemporary design',
+                price: 12500,
+                currency: 'usd',
+                image: 'https://jerusalemhills.com/img/glass-copper-mezuzah.jpg',
+                badge: 'New Arrival',
+                inStock: true
+            },
+            {
                 id: 'prod_pottery_001',
                 name: 'Jerusalem Stone Serving Platter',
                 category: 'pottery',
@@ -809,12 +765,12 @@
                 inStock: true
             },
             {
-                id: 'prod_mezuzah_001',
+                id: 'prod_mezuzah_002',
                 name: 'Olive Wood Mezuzah',
                 category: 'judaica',
                 categoryName: 'Judaica',
                 description: 'Hand-carved from ancient Jerusalem olive trees, includes kosher parchment scroll',
-                price: 12500,
+                price: 9900,
                 currency: 'usd',
                 image: 'https://images.unsplash.com/photo-1600298881974-6be191ceeda1?w=400',
                 badge: 'Artisan Made',

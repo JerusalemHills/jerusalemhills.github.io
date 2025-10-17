@@ -35,6 +35,7 @@
       console.error('Error loading header:', error);
       headerPlaceholder.innerHTML = '<p style="color: red;">Failed to load header</p>';
     });
+  }
 
   // Mobile menu toggle functionality
   function initializeMobileMenu() {
