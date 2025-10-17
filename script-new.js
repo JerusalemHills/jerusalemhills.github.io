@@ -328,10 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return 'News';
   }
 
-  // Carousel state
+  // Carousel state - Simplified horizontal scroll
+  let carouselPosition = 0;
   let carouselInterval;
-  let currentSlide = 0;
-  let totalSlides = 0;
   let carouselPaused = false;
 
   async function fetchHeadlines() {
@@ -369,34 +368,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Take top 12 items for carousel
       const topItems = allItems.slice(0, 12);
-      totalSlides = topItems.length;
 
       if (topItems.length === 0) {
         headlinesCard.innerHTML = '<div style="text-align: center; padding: 2rem; color: #9ca3af;">No headlines available</div>';
         return;
       }
 
-      // Create carousel structure
+      // Create simplified carousel structure
       headlinesCard.innerHTML = `
         <div class="headlines-carousel">
           <div class="headlines-track"></div>
         </div>
-        <div class="carousel-controls">
-          <button class="carousel-arrow" id="carousel-prev">
-            <i data-lucide="chevron-left"></i>
-          </button>
-          <div class="carousel-dots"></div>
-          <button class="carousel-arrow" id="carousel-next">
-            <i data-lucide="chevron-right"></i>
-          </button>
-        </div>
       `;
 
       const track = headlinesCard.querySelector('.headlines-track');
-      const dotsContainer = headlinesCard.querySelector('.carousel-dots');
+
+      // Duplicate items for seamless loop
+      const duplicatedItems = [...topItems, ...topItems];
 
       // Populate carousel items
-      topItems.forEach((item, index) => {
+      duplicatedItems.forEach((item) => {
         const headlineDiv = document.createElement('div');
         headlineDiv.className = 'headline-item';
 
@@ -419,30 +410,6 @@ document.addEventListener('DOMContentLoaded', () => {
         headlineDiv.appendChild(link);
         headlineDiv.appendChild(time);
         track.appendChild(headlineDiv);
-
-        // Create dot
-        const dot = document.createElement('div');
-        dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
-        dot.addEventListener('click', () => goToSlide(index));
-        dotsContainer.appendChild(dot);
-      });
-
-      // Reinitialize Lucide icons for arrows
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-      }
-
-      // Setup controls
-      document.getElementById('carousel-prev')?.addEventListener('click', () => {
-        carouselPaused = true;
-        previousSlide();
-        setTimeout(() => carouselPaused = false, 5000);
-      });
-
-      document.getElementById('carousel-next')?.addEventListener('click', () => {
-        carouselPaused = true;
-        nextSlide();
-        setTimeout(() => carouselPaused = false, 5000);
       });
 
       // Pause on hover
@@ -459,46 +426,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function goToSlide(index) {
-    currentSlide = index;
-    updateCarousel();
-  }
-
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    updateCarousel();
-  }
-
-  function previousSlide() {
-    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-    updateCarousel();
-  }
-
-  function updateCarousel() {
-    const track = document.querySelector('.headlines-track');
-    const dots = document.querySelectorAll('.carousel-dot');
-
-    if (track) {
-      track.style.transform = `translateX(-${currentSlide * 100}%)`;
-    }
-
-    dots.forEach((dot, index) => {
-      dot.classList.toggle('active', index === currentSlide);
-    });
-  }
-
   function startCarousel() {
     // Clear any existing interval
     if (carouselInterval) {
       clearInterval(carouselInterval);
     }
 
-    // Auto-advance every 5 seconds
+    const track = document.querySelector('.headlines-track');
+    if (!track) return;
+
+    // Auto-scroll horizontally - smooth continuous movement
     carouselInterval = setInterval(() => {
       if (!carouselPaused) {
-        nextSlide();
+        carouselPosition -= 1; // Move 1px left every interval
+
+        // Reset position for seamless loop (when first set of items is fully scrolled)
+        const firstItem = track.querySelector('.headline-item');
+        if (firstItem) {
+          const itemWidth = firstItem.offsetWidth + 48; // item width + gap
+          const totalWidth = itemWidth * (track.children.length / 2);
+
+          if (Math.abs(carouselPosition) >= totalWidth) {
+            carouselPosition = 0;
+          }
+        }
+
+        track.style.transform = `translateX(${carouselPosition}px)`;
       }
-    }, 5000);
+    }, 30); // Run every 30ms for smooth animation
   }
 
   // Fetch headlines on load

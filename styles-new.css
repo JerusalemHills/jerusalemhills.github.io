@@ -460,8 +460,8 @@ main {
 
 /* Dashboard Hero Section */
 .dashboard-hero {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
   padding: 2rem 1.5rem;
   max-width: 1400px;
@@ -485,71 +485,63 @@ main {
   transform: translateY(-2px);
 }
 
-.card-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1.5rem 1.5rem 1rem;
-  border-bottom: 2px solid rgb(243, 244, 246);
-}
-
-.card-header i {
-  width: 24px;
-  height: 24px;
-  color: var(--accent);
-}
-
-.card-header h3 {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--primary);
-  margin: 0;
-}
-
 .card-content {
   padding: 1.5rem;
   flex: 1;
 }
 
-/* Headlines Card - Carousel */
+/* Headlines Card - Horizontal Carousel */
+.headlines-card .card-content {
+  overflow: hidden;
+  position: relative;
+  padding: 1.25rem 1.5rem;
+}
+
 .headlines-carousel {
   position: relative;
   overflow: hidden;
-  min-height: 200px;
+  min-height: 80px;
 }
 
 .headlines-track {
   display: flex;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.8s ease-in-out;
+  gap: 3rem;
 }
 
 .headline-item {
-  min-width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem 0;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  flex-shrink: 0;
+  min-width: 500px;
 }
 
 .headline-badge {
   display: inline-block;
-  padding: 0.125rem 0.5rem;
+  padding: 0.25rem 0.625rem;
   background: var(--accent);
   color: white;
   font-size: 0.7rem;
   font-weight: 600;
   border-radius: 4px;
   text-transform: uppercase;
-  width: fit-content;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .headline-link {
   color: var(--text);
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.5;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
   transition: color 0.2s;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .headline-link:hover {
@@ -559,62 +551,21 @@ main {
 .headline-time {
   font-size: 0.75rem;
   color: #9ca3af;
-  margin-top: 0.25rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-/* Carousel Controls */
+/* Carousel Controls - Hidden */
 .carousel-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.carousel-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgb(209, 213, 219);
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.carousel-dot.active {
-  background: var(--accent);
-  width: 24px;
-  border-radius: 4px;
-}
-
-.carousel-arrow {
-  background: none;
-  border: none;
-  color: rgb(107, 114, 128);
-  cursor: pointer;
-  padding: 0.25rem;
-  border-radius: 50%;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.carousel-arrow:hover {
-  background: rgb(243, 244, 246);
-  color: var(--accent);
-}
-
-.carousel-arrow i {
-  width: 16px;
-  height: 16px;
+  display: none;
 }
 
 /* Markets Card with TradingView Widgets */
 .markets-widgets {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.75rem;
-  padding: 1rem !important;
+  padding: 1.25rem 1.5rem !important;
 }
 
 .tradingview-widget-container {
@@ -623,9 +574,19 @@ main {
   overflow: hidden;
 }
 
+@media (max-width: 1024px) {
+  .markets-widgets {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .markets-widgets {
     grid-template-columns: 1fr;
+  }
+
+  .headline-item {
+    min-width: 100%;
   }
 }
 
@@ -710,23 +671,9 @@ main {
   }
 }
 
-/* Card Footer Links */
-.card-footer-link {
-  display: block;
-  padding: 0.75rem 1.5rem;
-  background: rgb(249, 250, 251);
-  color: var(--accent);
-  text-decoration: none;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-align: center;
-  border-top: 1px solid rgb(243, 244, 246);
-  transition: all 0.2s;
-}
-
-.card-footer-link:hover {
-  background: var(--accent);
-  color: white;
+/* Card Footer Links - Hidden for dashboard cards */
+.dashboard-card .card-footer-link {
+  display: none;
 }
 
 /* Responsive Dashboard */
