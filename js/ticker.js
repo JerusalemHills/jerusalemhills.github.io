@@ -92,16 +92,33 @@ async function fetchFeeds() {
     // Generate ticker items
     const tickerContent = document.getElementById('ticker-content');
     if (allItems.length === 0) {
+        console.warn('Ticker: No items fetched from RSS feeds');
         tickerContent.innerHTML = "<span class='ticker-item'>No recent news available.</span>";
     } else {
+        console.log(`Ticker: Successfully fetched ${allItems.length} news items`);
+        tickerContent.innerHTML = ''; // Clear loading message
+
         const fragment = document.createDocumentFragment();
-        allItems.forEach(item => {
+        allItems.forEach((item, index) => {
             const span = document.createElement('span');
             span.className = 'ticker-item';
-            span.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a>`;
+
+            const link = document.createElement('a');
+            link.href = item.link;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = item.title;
+            link.style.pointerEvents = 'auto'; // Ensure links are clickable
+
+            span.appendChild(link);
             fragment.appendChild(span);
+
+            console.log(`Ticker item ${index + 1}: ${item.title.substring(0, 50)}...`);
         });
+
         tickerContent.appendChild(fragment);
+        console.log('Ticker: Starting scroll animation');
+
         // Initialize the controlled scrolling after adding items
         initTickerScroll();
     }
@@ -130,12 +147,26 @@ function initTickerScroll() {
     
     // Add pause event on hover
     const tickerTape = document.querySelector('.ticker-tape');
-    tickerTape.addEventListener('mouseenter', () => {
-        animationPaused = true;
-    });
-    
-    tickerTape.addEventListener('mouseleave', () => {
-        animationPaused = false;
+    if (tickerTape) {
+        tickerTape.addEventListener('mouseenter', () => {
+            animationPaused = true;
+            console.log('Ticker: Animation paused (hover)');
+        });
+
+        tickerTape.addEventListener('mouseleave', () => {
+            animationPaused = false;
+            console.log('Ticker: Animation resumed');
+        });
+    }
+
+    // Pause when hovering over any link
+    document.querySelectorAll('.ticker-item a').forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            animationPaused = true;
+        });
+        link.addEventListener('mouseleave', () => {
+            animationPaused = false;
+        });
     });
     
     // Start the controlled scrolling
@@ -203,16 +234,25 @@ function reloadTicker() {
 
 // Initialize immediately and set up reload interval
 document.addEventListener("DOMContentLoaded", () => {
+    console.log('Ticker: DOM loaded, initializing...');
+
     // Add loading state immediately
     const tickerContent = document.getElementById('ticker-content');
-    if (tickerContent) {
-        tickerContent.innerHTML = "<span class='ticker-item'>Loading news...</span>";
+    if (!tickerContent) {
+        console.error('Ticker: #ticker-content element not found!');
+        return;
     }
-    
-    fetchFeeds().catch(error => {
-        console.error('Initial ticker load failed:', error);
-        // Error message will be shown by fetchFeedWithRetry
-    });
-    
+
+    console.log('Ticker: Found ticker-content element');
+    tickerContent.innerHTML = "<span class='ticker-item'>Loading news...</span>";
+
+    fetchFeeds()
+        .then(() => {
+            console.log('Ticker: Successfully loaded feeds');
+        })
+        .catch(error => {
+            console.error('Ticker: Initial load failed:', error);
+        });
+
     reloadTicker();
 });

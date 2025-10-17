@@ -549,11 +549,18 @@ main {
   transition: color 0.2s;
   white-space: nowrap;
   cursor: pointer;
+  pointer-events: auto;
+  position: relative;
+  z-index: 10;
 }
 
 .ticker-item a:hover {
   color: var(--primary);
   text-decoration: underline;
+}
+
+.ticker-item a:active {
+  color: var(--primary-dark);
 }
 
 /* Markets Card with TradingView Widgets - Separate Section Below */
