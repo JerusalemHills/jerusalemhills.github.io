@@ -114,15 +114,15 @@
           </div>
 
           <nav class="header-nav">
-            <a href="/marketplace.html" class="header-nav-link">
+            <a href="#marketplace" class="header-nav-link">
               <i data-lucide="shopping-bag"></i>
               <span>Marketplace</span>
             </a>
-            <a href="/forum/" class="header-nav-link">
+            <a href="#discussions" class="header-nav-link">
               <i data-lucide="message-square"></i>
               <span>Forum</span>
             </a>
-            <a href="/games/" class="header-nav-link">
+            <a href="#games" class="header-nav-link">
               <i data-lucide="gamepad-2"></i>
               <span>Games</span>
             </a>
@@ -130,10 +130,10 @@
               <i data-lucide="newspaper"></i>
               <span>News</span>
             </a>
-            <a href="/sidur.html" class="header-nav-link">
-              <i data-lucide="book-open"></i>
-              <span>Siddur</span>
-            </a>
+            <button class="header-nav-link" id="keyboard-toggle-nav" style="background: none; border: none; cursor: pointer;">
+              <i data-lucide="keyboard"></i>
+              <span>Hebrew KB</span>
+            </button>
             <span class="nav-divider"></span>
             <button class="header-nav-link icon-only" aria-label="Shopping Cart">
               <i data-lucide="shopping-cart"></i>
@@ -195,15 +195,15 @@
           </div>
         </div>
         <div class="mobile-menu-divider"></div>
-        <a href="/marketplace.html" class="mobile-link">
+        <a href="#marketplace" class="mobile-link">
           <i data-lucide="shopping-bag"></i>
           <span>Marketplace</span>
         </a>
-        <a href="/forum/" class="mobile-link">
+        <a href="#discussions" class="mobile-link">
           <i data-lucide="message-square"></i>
           <span>Forum</span>
         </a>
-        <a href="/games/" class="mobile-link">
+        <a href="#games" class="mobile-link">
           <i data-lucide="gamepad-2"></i>
           <span>Games</span>
         </a>
@@ -211,10 +211,10 @@
           <i data-lucide="newspaper"></i>
           <span>News</span>
         </a>
-        <a href="/sidur.html" class="mobile-link">
-          <i data-lucide="book-open"></i>
-          <span>Siddur</span>
-        </a>
+        <button class="mobile-link" id="keyboard-toggle-mobile" style="background: none; border: none; cursor: pointer; font-family: inherit;">
+          <i data-lucide="keyboard"></i>
+          <span>Hebrew KB</span>
+        </button>
         <div class="mobile-menu-divider"></div>
         <button class="mobile-link icon-link">
           <i data-lucide="shopping-cart"></i>
@@ -391,7 +391,7 @@
     </section>
 
     <!-- Trending Products Section -->
-    <section class="grid-section">
+    <section id="marketplace" class="grid-section">
       <h2 class="section-title">Trending in Marketplace</h2>
       <div class="grid">
         <div class="card">
@@ -418,7 +418,7 @@
     </section>
 
     <!-- Active Discussions Section -->
-    <section class="grid-section">
+    <section id="discussions" class="grid-section">
       <h2 class="section-title">Active Discussions</h2>
       <div class="post">
         <div class="post-author">Sarah M.</div>
@@ -497,6 +497,81 @@
     <p>© 2025 Jerusalem Hills — All Rights Reserved</p>
   </footer>
 
+  <!-- Hebrew Virtual Keyboard -->
+  <div id="hebrew-keyboard-container">
+    <div class="keyboard-header">
+      <span>🔴 מקלדת עברית פעילה - Hebrew Keyboard Active</span>
+      <button class="keyboard-close" id="keyboard-close">Close</button>
+    </div>
+    <div class="keyboard-keys">
+      <!-- Row 1 -->
+      <div class="keyboard-row">
+        <button class="key" data-char=";">;</button>
+        <button class="key" data-char="1">1</button>
+        <button class="key" data-char="2">2</button>
+        <button class="key" data-char="3">3</button>
+        <button class="key" data-char="4">4</button>
+        <button class="key" data-char="5">5</button>
+        <button class="key" data-char="6">6</button>
+        <button class="key" data-char="7">7</button>
+        <button class="key" data-char="8">8</button>
+        <button class="key" data-char="9">9</button>
+        <button class="key" data-char="0">0</button>
+        <button class="key" data-char="-">-</button>
+        <button class="key" data-char="=">=</button>
+      </div>
+      <!-- Row 2 -->
+      <div class="keyboard-row">
+        <button class="key" data-char="/">/ ק</button>
+        <button class="key" data-char="'">׳ ר</button>
+        <button class="key" data-char="ק">ק א</button>
+        <button class="key" data-char="ר">ר ט</button>
+        <button class="key" data-char="א">א ו</button>
+        <button class="key" data-char="ט">ט ן</button>
+        <button class="key" data-char="ו">ו ם</button>
+        <button class="key" data-char="ן">ן פ</button>
+        <button class="key" data-char="ם">ם</button>
+        <button class="key" data-char="פ">פ</button>
+        <button class="key" data-char="[">[</button>
+        <button class="key" data-char="]">]</button>
+        <button class="key special" data-action="backspace">⌫ Back</button>
+      </div>
+      <!-- Row 3 -->
+      <div class="keyboard-row">
+        <button class="key" data-char="ש">ש</button>
+        <button class="key" data-char="ד">ד</button>
+        <button class="key" data-char="ג">ג</button>
+        <button class="key" data-char="כ">כ</button>
+        <button class="key" data-char="ע">ע</button>
+        <button class="key" data-char="י">י</button>
+        <button class="key" data-char="ח">ח</button>
+        <button class="key" data-char="ל">ל</button>
+        <button class="key" data-char="ך">ך</button>
+        <button class="key" data-char="ף">ף</button>
+        <button class="key" data-char=",">,</button>
+        <button class="key special" data-action="enter">↵ Enter</button>
+      </div>
+      <!-- Row 4 -->
+      <div class="keyboard-row">
+        <button class="key" data-char="ז">ז</button>
+        <button class="key" data-char="ס">ס</button>
+        <button class="key" data-char="ב">ב</button>
+        <button class="key" data-char="ה">ה</button>
+        <button class="key" data-char="נ">נ</button>
+        <button class="key" data-char="מ">מ</button>
+        <button class="key" data-char="צ">צ</button>
+        <button class="key" data-char="ת">ת</button>
+        <button class="key" data-char="ץ">ץ</button>
+        <button class="key" data-char=".">.</button>
+        <button class="key" data-char="/">/</button>
+      </div>
+      <!-- Row 5 - Space bar -->
+      <div class="keyboard-row">
+        <button class="key space" data-char=" ">רווח - Space</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Main Scripts -->
   <script src="script-new.js"></script>
 
@@ -505,5 +580,88 @@
   <script src="/js/lazy-load.js"></script>
   <script src="/js/search.js"></script>
   <script src="/js/mobile-nav.js"></script>
+
+  <!-- Hebrew Keyboard Script -->
+  <script>
+    (function() {
+      const container = document.getElementById('hebrew-keyboard-container');
+      const toggleBtn = document.getElementById('keyboard-toggle-nav');
+      const toggleBtnMobile = document.getElementById('keyboard-toggle-mobile');
+      const closeBtn = document.getElementById('keyboard-close');
+      const keys = document.querySelectorAll('.key');
+      const searchInput = document.querySelector('.search-input');
+      let isKeyboardActive = false;
+      let currentInput = null;
+
+      function toggleKeyboard(e) {
+        e.preventDefault();
+        isKeyboardActive = !isKeyboardActive;
+        container.classList.toggle('active');
+        if (isKeyboardActive && searchInput) {
+          searchInput.focus();
+          currentInput = searchInput;
+        } else {
+          currentInput = null;
+        }
+      }
+
+      function closeKeyboard() {
+        isKeyboardActive = false;
+        container.classList.remove('active');
+        currentInput = null;
+      }
+
+      document.addEventListener('focusin', function(e) {
+        if (isKeyboardActive && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+          currentInput = e.target;
+        }
+      });
+
+      if (toggleBtn) toggleBtn.addEventListener('click', toggleKeyboard);
+      if (toggleBtnMobile) toggleBtnMobile.addEventListener('click', toggleKeyboard);
+      if (closeBtn) closeBtn.addEventListener('click', closeKeyboard);
+
+      keys.forEach(key => {
+        key.addEventListener('click', function() {
+          if (!currentInput) {
+            if (searchInput) {
+              searchInput.focus();
+              currentInput = searchInput;
+            } else {
+              return;
+            }
+          }
+
+          const char = this.getAttribute('data-char');
+          const action = this.getAttribute('data-action');
+
+          if (action === 'backspace') {
+            const cursorPos = currentInput.selectionStart;
+            if (cursorPos > 0) {
+              currentInput.value = currentInput.value.substring(0, cursorPos - 1) + currentInput.value.substring(cursorPos);
+              currentInput.selectionStart = currentInput.selectionEnd = cursorPos - 1;
+            }
+          } else if (action === 'enter') {
+            if (currentInput.tagName === 'TEXTAREA') {
+              const cursorPos = currentInput.selectionStart;
+              currentInput.value = currentInput.value.substring(0, cursorPos) + '\n' + currentInput.value.substring(cursorPos);
+              currentInput.selectionStart = currentInput.selectionEnd = cursorPos + 1;
+            }
+          } else if (char) {
+            const cursorPos = currentInput.selectionStart;
+            currentInput.value = currentInput.value.substring(0, cursorPos) + char + currentInput.value.substring(cursorPos);
+            currentInput.selectionStart = currentInput.selectionEnd = cursorPos + 1;
+          }
+          currentInput.focus();
+        });
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && isKeyboardActive) {
+          closeKeyboard();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
