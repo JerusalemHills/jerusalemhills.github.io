@@ -1,0 +1,16 @@
+Production domains
+
+Your project is always accessible at a netlify.app subdomain based on the project name. Custom domains allow visitors to access your project at your own domains.
+
+    jerusalemhills.netlify.app
+
+    Netlify subdomain
+
+jerusalemhills.com
+
+Primary domain
+www.jerusalemhills.com
+
+Redirects automatically to primary domain
+
+

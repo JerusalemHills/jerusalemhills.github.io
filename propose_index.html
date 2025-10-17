@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics 4 -->
+  <script src="/js/analytics.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Jerusalem Hills - Explore Jerusalem's Heritage, Culture & Unique Marketplace</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Discover Jerusalem Hills - your gateway to Jerusalem's rich heritage, culture, and history. Explore our unique marketplace featuring authentic Jerusalem products, join community discussions, and access essential local services.">
+  <meta name="keywords" content="Jerusalem Hills, Jerusalem heritage, Jerusalem marketplace, Jerusalem culture, Jerusalem history, Dead Sea products, Jerusalem crafts, Jerusalem community, Israeli products, Jerusalem tourism, authentic gifts, local services">
+  <meta name="author" content="Jerusalem Hills">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://jerusalemhills.com/">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Jerusalem Hills - Explore Jerusalem's Heritage, Culture & Unique Marketplace">
+  <meta property="og:description" content="Discover Jerusalem Hills - your gateway to Jerusalem's rich heritage, culture, and history. Explore our unique marketplace featuring authentic Jerusalem products, join community discussions, and access essential local services.">
+  <meta property="og:image" content="https://jerusalemhills.com/img/header-bg-city-wall.jpg">
+  <meta property="og:image:alt" content="Jerusalem's ancient city wall showcasing the historic beauty of Jerusalem Hills">
+  <meta property="og:url" content="https://jerusalemhills.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Jerusalem Hills">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jerusalem Hills - Explore Jerusalem's Heritage, Culture & Unique Marketplace">
+  <meta name="twitter:description" content="Discover Jerusalem Hills - your gateway to Jerusalem's rich heritage, culture, and history. Explore our unique marketplace featuring authentic Jerusalem products.">
+  <meta name="twitter:image" content="https://jerusalemhills.com/img/header-bg-city-wall.jpg">
+  <meta name="twitter:image:alt" content="Jerusalem's ancient city wall showcasing the historic beauty of Jerusalem Hills">
+  <meta name="twitter:site" content="@JerusalemHills">
+  <meta name="twitter:creator" content="@JerusalemHills">
+
+  <!-- Additional SEO Meta Tags -->
+  <meta name="theme-color" content="#4F46E5">
+  <meta name="apple-mobile-web-app-title" content="Jerusalem Hills">
+  <meta name="application-name" content="Jerusalem Hills">
+  <meta name="msapplication-TileColor" content="#4F46E5">
+  <meta name="google-site-verification" content="ZSCfkxbfCgbfz-qO3-L3cVpifny1S6dygLdSklzsgCU" />
+  <meta name="google-adsense-account" content="ca-pub-1738161253720" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="propose_styles.css" />
+
+  <!-- Favicon References -->
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon-16x16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/img/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/img/site.webmanifest">
+
+  <!-- External Scripts -->
+  <script src="js/hebcal.js"></script>
+  <script src="js/rss-feed-config.js"></script>
+  <script src="js/ticker.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="top-date-display">
+      <div class="hebrew-date"></div>
+      <div class="gregorian-date"></div>
+      <div class="world-clocks-container">
+        <div class="world-cities">
+          <span class="city-label">JLM</span>
+          <span class="clock-sep">:</span>
+          <span class="city-label">NYC</span>
+          <span class="clock-sep">:</span>
+          <span class="city-label">LON</span>
+          <span class="clock-sep">:</span>
+          <span class="city-label">TOK</span>
+          <span class="clock-sep">:</span>
+          <span class="city-label">MOS</span>
+        </div>
+        <div class="world-times">
+          <span class="time-value" id="time-jlm">--:--<span id="jlm-plus" class="day-indicator"></span></span>
+          <span class="clock-sep">:</span>
+          <span class="time-value" id="time-nyc">--:--<span id="nyc-plus" class="day-indicator"></span></span>
+          <span class="clock-sep">:</span>
+          <span class="time-value" id="time-lon">--:--<span id="lon-plus" class="day-indicator"></span></span>
+          <span class="clock-sep">:</span>
+          <span class="time-value" id="time-tok">--:--<span id="tok-plus" class="day-indicator"></span></span>
+          <span class="clock-sep">:</span>
+          <span class="time-value" id="time-mos">--:--<span id="mos-plus" class="day-indicator"></span></span>
+        </div>
+        <div class="world-weather">
+          <span class="weather-value" id="weather-jlm">--° ☼</span>
+          <span class="clock-sep">:</span>
+          <span class="weather-value" id="weather-nyc">--° ☼</span>
+          <span class="clock-sep">:</span>
+          <span class="weather-value" id="weather-lon">--° ☼</span>
+          <span class="clock-sep">:</span>
+          <span class="weather-value" id="weather-tok">--° ☼</span>
+          <span class="clock-sep">:</span>
+          <span class="weather-value" id="weather-mos">--° ☼</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-container">
+      <div class="header-content">
+        <div class="logo-section">
+          <a href="/" class="logo">
+            <img src="img/1.svg" alt="Jerusalem Hills Logo">
+          </a>
+        </div>
+
+        <div class="middle-section">
+          <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search everything...">
+            <i data-lucide="search" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgb(156, 163, 175);"></i>
+          </div>
+
+          <nav class="header-nav">
+            <a href="#marketplace" class="header-nav-link">
+              <i data-lucide="shopping-bag"></i>
+              <span>Marketplace</span>
+            </a>
+            <a href="#forum" class="header-nav-link">
+              <i data-lucide="message-square"></i>
+              <span>Forum</span>
+            </a>
+            <a href="#games" class="header-nav-link">
+              <i data-lucide="gamepad-2"></i>
+              <span>Games</span>
+            </a>
+            <a href="#news" class="header-nav-link">
+              <i data-lucide="newspaper"></i>
+              <span>News</span>
+            </a>
+            <span class="nav-divider"></span>
+            <button class="header-nav-link icon-only" aria-label="Shopping Cart">
+              <i data-lucide="shopping-cart"></i>
+            </button>
+            <button class="header-nav-link icon-only" aria-label="Notifications">
+              <i data-lucide="bell"></i>
+            </button>
+            <button class="header-nav-link icon-only" aria-label="User menu">
+              <i data-lucide="user"></i>
+            </button>
+          </nav>
+        </div>
+
+        <div class="header-icons">
+          <button class="icon-button menu-button" aria-label="Menu">
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-menu">
+        <div class="mobile-menu-header">
+          <div class="mobile-hebrew-date"></div>
+          <div class="mobile-gregorian-date"></div>
+          <div class="mobile-world-clocks">
+            <div class="mobile-world-cities">
+              <span class="city-label">JLM</span>
+              <span class="clock-sep">:</span>
+              <span class="city-label">NYC</span>
+              <span class="clock-sep">:</span>
+              <span class="city-label">LON</span>
+              <span class="clock-sep">:</span>
+              <span class="city-label">TOK</span>
+              <span class="clock-sep">:</span>
+              <span class="city-label">MOS</span>
+            </div>
+            <div class="mobile-world-times">
+              <span class="time-value" id="mobile-time-jlm">--:--<span id="mobile-jlm-plus" class="day-indicator"></span></span>
+              <span class="clock-sep">:</span>
+              <span class="time-value" id="mobile-time-nyc">--:--<span id="mobile-nyc-plus" class="day-indicator"></span></span>
+              <span class="clock-sep">:</span>
+              <span class="time-value" id="mobile-time-lon">--:--<span id="mobile-lon-plus" class="day-indicator"></span></span>
+              <span class="clock-sep">:</span>
+              <span class="time-value" id="mobile-time-tok">--:--<span id="mobile-tok-plus" class="day-indicator"></span></span>
+              <span class="clock-sep">:</span>
+              <span class="time-value" id="mobile-time-mos">--:--<span id="mobile-mos-plus" class="day-indicator"></span></span>
+            </div>
+            <div class="mobile-world-weather">
+              <span class="weather-value" id="mobile-weather-jlm">--° ☼</span>
+              <span class="clock-sep">:</span>
+              <span class="weather-value" id="mobile-weather-nyc">--° ☼</span>
+              <span class="clock-sep">:</span>
+              <span class="weather-value" id="mobile-weather-lon">--° ☼</span>
+              <span class="clock-sep">:</span>
+              <span class="weather-value" id="mobile-weather-tok">--° ☼</span>
+              <span class="clock-sep">:</span>
+              <span class="weather-value" id="mobile-weather-mos">--° ☼</span>
+            </div>
+          </div>
+        </div>
+        <div class="mobile-menu-divider"></div>
+        <a href="#marketplace" class="mobile-link">
+          <i data-lucide="shopping-bag"></i>
+          <span>Marketplace</span>
+        </a>
+        <a href="#forum" class="mobile-link">
+          <i data-lucide="message-square"></i>
+          <span>Forum</span>
+        </a>
+        <a href="#games" class="mobile-link">
+          <i data-lucide="gamepad-2"></i>
+          <span>Games</span>
+        </a>
+        <a href="#news" class="mobile-link">
+          <i data-lucide="newspaper"></i>
+          <span>News</span>
+        </a>
+        <div class="mobile-menu-divider"></div>
+        <button class="mobile-link icon-link">
+          <i data-lucide="shopping-cart"></i>
+          <span>Shopping Cart</span>
+        </button>
+        <button class="mobile-link icon-link">
+          <i data-lucide="bell"></i>
+          <span>Notifications</span>
+        </button>
+        <button class="mobile-link icon-link">
+          <i data-lucide="user"></i>
+          <span>Profile</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="dashboard-hero">
+      <div class="dashboard-card headlines-card">
+        <div class="card-header">
+          <i data-lucide="newspaper"></i>
+          <h3>Headlines</h3>
+        </div>
+        <div class="card-content">
+          <div class="headline-item">
+            <span class="headline-badge">Breaking</span>
+            <a href="#" class="headline-link">Jerusalem hosts annual cultural heritage festival</a>
+            <span class="headline-time">2h ago</span>
+          </div>
+          <div class="headline-item">
+            <span class="headline-badge">Local</span>
+            <a href="#" class="headline-link">New archaeological discovery in Old City</a>
+            <span class="headline-time">5h ago</span>
+          </div>
+          <div class="headline-item">
+            <span class="headline-badge">Community</span>
+            <a href="#" class="headline-link">Marketplace expands with 50+ new artisan vendors</a>
+            <span class="headline-time">1d ago</span>
+          </div>
+          <div class="headline-item">
+            <span class="headline-badge">Event</span>
+            <a href="#" class="headline-link">Weekly Torah study group welcomes new members</a>
+            <span class="headline-time">2d ago</span>
+          </div>
+        </div>
+        <a href="#news" class="card-footer-link">View more news →</a>
+      </div>
+
+      <div class="dashboard-card markets-tradingview-card">
+        <div class="card-header">
+          <i data-lucide="trending-up"></i>
+          <h3>Markets</h3>
+        </div>
+        <div class="card-content markets-widgets">
+          <!-- TradingView Widget: S&P 500 -->
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+            {
+              "symbol": "VANTAGE:SP500FT",
+              "chartOnly": false,
+              "dateRange": "1D",
+              "noTimeScale": false,
+              "colorTheme": "light",
+              "isTransparent": false,
+              "locale": "en",
+              "width": "100%",
+              "autosize": true,
+              "height": "100%"
+            }
+            </script>
+          </div>
+
+          <!-- TradingView Widget: VIX -->
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+            {
+              "symbol": "CAPITALCOM:VIX",
+              "chartOnly": false,
+              "dateRange": "1M",
+              "noTimeScale": false,
+              "colorTheme": "light",
+              "isTransparent": false,
+              "locale": "en",
+              "width": "100%",
+              "autosize": true,
+              "height": "100%"
+            }
+            </script>
+          </div>
+
+          <!-- TradingView Widget: GOLD -->
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+            {
+              "symbol": "TVC:GOLD",
+              "chartOnly": false,
+              "dateRange": "1D",
+              "noTimeScale": false,
+              "colorTheme": "light",
+              "isTransparent": false,
+              "locale": "en",
+              "width": "100%",
+              "autosize": true,
+              "height": "100%"
+            }
+            </script>
+          </div>
+
+          <!-- TradingView Widget: BRENT OIL -->
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+            {
+              "symbol": "PYTH:BRENT3!",
+              "chartOnly": false,
+              "dateRange": "1D",
+              "noTimeScale": false,
+              "colorTheme": "light",
+              "isTransparent": false,
+              "locale": "en",
+              "width": "100%",
+              "autosize": true,
+              "height": "100%"
+            }
+            </script>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="games" class="grid-section">
+      <h3>Games</h3>
+      <div class="grid">
+        <div class="card">
+          <a href="/games/backgammon/backgammon.html" style="text-decoration: none; color: inherit;">
+            <img src="/games/backgammon/backgammon-preview.jpg" alt="Backgammon" onerror="this.src='img/pic01.jpg'">
+            <h4>Backgammon</h4>
+            <p>Play classic backgammon online</p>
+          </a>
+        </div>
+        <div class="card">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23f3f4f6' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%239ca3af'%3EComing Soon...%3C/text%3E%3C/svg%3E" alt="Tetris">
+          <h4>Tetris</h4>
+          <p>Classic block puzzle game</p>
+        </div>
+        <div class="card">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23f3f4f6' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%239ca3af'%3EComing Soon...%3C/text%3E%3C/svg%3E" alt="Snake">
+          <h4>Snake</h4>
+          <p>Retro snake arcade game</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="news" class="grid-section">
+      <h3>News</h3>
+      <div class="grid news">
+        <div class="featured" id="featured-news">
+          <img src="img/Jerusalem_Old_City_market.jpg" alt="Loading..." id="featured-image">
+          <h4 id="featured-title">Loading featured story...</h4>
+          <p id="featured-description">Please wait while we fetch the latest news...</p>
+        </div>
+        <div class="list" id="news-list">
+          <div class="news-item">
+            <h5>Loading...</h5>
+            <p>Fetching latest stories...</p>
+          </div>
+          <div class="news-item">
+            <h5>Loading...</h5>
+            <p>Fetching latest stories...</p>
+          </div>
+          <div class="news-item">
+            <h5>Loading...</h5>
+            <p>Fetching latest stories...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trending Products Section -->
+    <section class="grid-section">
+      <h2 class="section-title">Trending in Marketplace</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="img/pic01.jpg" alt="Jerusalem Crafts">
+          <h4>Jerusalem Crafts</h4>
+          <p class="price">₪299</p>
+        </div>
+        <div class="card">
+          <img src="img/pic02.jpg" alt="Dead Sea Products">
+          <h4>Dead Sea Products</h4>
+          <p class="price">₪199</p>
+        </div>
+        <div class="card">
+          <img src="img/pic01.jpg" alt="Judaica Art">
+          <h4>Judaica Art</h4>
+          <p class="price">₪399</p>
+        </div>
+        <div class="card">
+          <img src="img/pic02.jpg" alt="Local Spices">
+          <h4>Local Spices</h4>
+          <p class="price">₪99</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Active Discussions Section -->
+    <section class="grid-section">
+      <h2 class="section-title">Active Discussions</h2>
+      <div class="post">
+        <div class="post-author">Sarah M.</div>
+        <div class="post-content">What are the best places to visit during Hanukkah in Jerusalem?</div>
+        <div class="post-meta">24 replies • 2 hours ago</div>
+      </div>
+      <div class="post">
+        <div class="post-author">David K.</div>
+        <div class="post-content">Looking for authentic Jerusalem stone crafts - any recommendations?</div>
+        <div class="post-meta">15 replies • 5 hours ago</div>
+      </div>
+      <div class="post">
+        <div class="post-author">Rachel B.</div>
+        <div class="post-content">Join our weekly Torah study group - all levels welcome!</div>
+        <div class="post-meta">32 replies • 1 day ago</div>
+      </div>
+    </section>
+
+    <!-- Featured Articles Section -->
+    <section class="grid-section">
+      <h2 class="section-title">Featured Articles</h2>
+      <div class="grid featured-grid">
+        <div class="card featured-card">
+          <img src="img/Jerusalem_Old_City_market.jpg" alt="Marketplace">
+          <div>
+            <h4>New Marketplace Features</h4>
+            <p>Discover our latest AI-powered recommendations and seamless shopping experience.</p>
+          </div>
+        </div>
+        <div class="card featured-card">
+          <img src="img/David's_Tower_11.jpg" alt="Gaming">
+          <div>
+            <h4>Gaming Tournament</h4>
+            <p>Join our weekly gaming tournaments and compete for amazing prizes!</p>
+          </div>
+        </div>
+        <div class="card featured-card">
+          <img src="img/header-bg-city-wall.jpg" alt="News">
+          <div>
+            <h4>Latest Updates</h4>
+            <p>Stay updated with the latest Jerusalem news and community insights.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest Videos Section -->
+    <section class="grid-section">
+      <h2 class="section-title">Latest Videos</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="img/header-bg-city-wall.jpg" alt="Jerusalem City Tour">
+          <h4>Jerusalem Old City Tour</h4>
+          <p>12:45</p>
+        </div>
+        <div class="card">
+          <img src="img/Jerusalem_Old_City_market.jpg" alt="Market Tour">
+          <h4>Market Shopping Guide</h4>
+          <p>8:30</p>
+        </div>
+        <div class="card">
+          <img src="img/David's_Tower_11.jpg" alt="Historical Sites">
+          <h4>David's Tower History</h4>
+          <p>15:20</p>
+        </div>
+        <div class="card">
+          <img src="img/pic01.jpg" alt="Local Crafts">
+          <h4>Artisan Workshop</h4>
+          <p>10:15</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Jerusalem Hills — All Rights Reserved</p>
+  </footer>
+
+  <!-- Main Scripts -->
+  <script src="propose_script.js"></script>
+
+  <!-- Additional Scripts -->
+  <script src="/js/adsense-config.js"></script>
+  <script src="/js/lazy-load.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/mobile-nav.js"></script>
+</body>
+</html>
