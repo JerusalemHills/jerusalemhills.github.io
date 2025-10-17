@@ -1,15 +1,16 @@
 // Load shared header component
 (function() {
-  // Create a placeholder for the header
-  const headerPlaceholder = document.getElementById('header-placeholder');
+  function loadHeader() {
+    // Create a placeholder for the header
+    const headerPlaceholder = document.getElementById('header-placeholder');
 
-  if (!headerPlaceholder) {
-    console.warn('Header placeholder not found. Add <div id="header-placeholder"></div> to your HTML.');
-    return;
-  }
+    if (!headerPlaceholder) {
+      console.warn('Header placeholder not found. Add <div id="header-placeholder"></div> to your HTML.');
+      return;
+    }
 
-  // Fetch and insert the header
-  fetch('/components/header.html')
+    // Fetch and insert the header
+    fetch('/components/header.html')
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to load header component');
@@ -71,5 +72,13 @@
         });
       });
     }
+  }
+
+  // Run when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadHeader);
+  } else {
+    // DOM already loaded
+    loadHeader();
   }
 })();
