@@ -357,16 +357,39 @@ We welcome contributions! Please:
 - ✅ SEO and analytics implementation
 - ✅ Security hardening and PCI compliance
 
+## 📚 Documentation
+
+This project uses a streamlined documentation structure:
+
+- **README.md** (this file) - Project overview, quick start, and architecture
+- **CLAUDE.md** - AI assistant instructions and development conventions
+- **OPERATIONS.md** - Comprehensive operational guide covering:
+  - Deployment procedures
+  - Marketplace operations (Amazon + Stripe)
+  - Performance optimization
+  - Monitoring & analytics
+  - Troubleshooting
+
+**Archive**: Older documentation has been consolidated and moved to `/archive/` for reference.
+
+### Quick Links
+- [Deployment Guide](OPERATIONS.md#deployment)
+- [Marketplace Setup](OPERATIONS.md#marketplace-operations)
+- [Troubleshooting](OPERATIONS.md#troubleshooting)
+- [Performance Tips](OPERATIONS.md#performance--optimization)
+
+---
+
 ## 📄 License
 
-© 2024 Jerusalem Hills. All rights reserved.
+© 2024-2025 Jerusalem Hills. All rights reserved.
 
 This project contains proprietary code and content. Redistribution or use without permission is prohibited.
 
 ---
 
-**Last Updated**: September 2024
-**Version**: 1.0.0
+**Last Updated**: October 2025
+**Version**: 1.1.0
 **Status**: Production Ready 🚀
 
 Built with ❤️ in Jerusalem
