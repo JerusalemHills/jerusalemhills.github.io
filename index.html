@@ -59,11 +59,23 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-  <!-- Header Placeholder - Loaded from /components/header.html -->
-  <div id="header-placeholder"></div>
-
-  <!-- Load Header Component (must be after placeholder) -->
-  <script src="/js/load-header.js"></script>
+  <!-- Load Header Component -->
+  <script>
+    // Inline header loading for immediate display
+    fetch('/components/header.html')
+      .then(response => response.text())
+      .then(html => {
+        document.body.insertAdjacentHTML('afterbegin', html);
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+        // Load mobile menu functionality
+        const script = document.createElement('script');
+        script.src = '/js/mobile-nav.js';
+        document.head.appendChild(script);
+      })
+      .catch(err => console.error('Header load error:', err));
+  </script>
 
   <main>
     <section class="dashboard-hero">
