@@ -34,6 +34,14 @@
     <!-- Additional SEO Meta Tags -->
     <meta name="theme-color" content="#4F46E5">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles-new.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Load Header Component -->
+    <script src="/js/load-header.js"></script>
+
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -41,15 +49,6 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-XXXXXXXXXX');
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        fetch("header.html")
-          .then(response => response.text())
-          .then(data => {
-            document.body.insertAdjacentHTML("afterbegin", data);
-          });
-      });
     </script>
     <style>
       header {
@@ -81,6 +80,9 @@
     </style>
 </head>
 <body>
+    <!-- Shared Header Component -->
+    <div id="header-placeholder"></div>
+
     <main>
         <section>
             <h2>Welcome to JerusalemHills.com</h2>

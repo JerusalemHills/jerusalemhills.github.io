@@ -1,0 +1,172 @@
+<header class="header">
+  <div class="top-date-display">
+    <div class="hebrew-date"></div>
+    <div class="gregorian-date"></div>
+    <div class="world-clocks-container">
+      <div class="world-cities">
+        <span class="city-label">JLM</span>
+        <span class="clock-sep">:</span>
+        <span class="city-label">NYC</span>
+        <span class="clock-sep">:</span>
+        <span class="city-label">LON</span>
+        <span class="clock-sep">:</span>
+        <span class="city-label">TOK</span>
+        <span class="clock-sep">:</span>
+        <span class="city-label">MOS</span>
+      </div>
+      <div class="world-times">
+        <span class="time-value" id="time-jlm">--:--<span id="jlm-plus" class="day-indicator"></span></span>
+        <span class="clock-sep">:</span>
+        <span class="time-value" id="time-nyc">--:--<span id="nyc-plus" class="day-indicator"></span></span>
+        <span class="clock-sep">:</span>
+        <span class="time-value" id="time-lon">--:--<span id="lon-plus" class="day-indicator"></span></span>
+        <span class="clock-sep">:</span>
+        <span class="time-value" id="time-tok">--:--<span id="tok-plus" class="day-indicator"></span></span>
+        <span class="clock-sep">:</span>
+        <span class="time-value" id="time-mos">--:--<span id="mos-plus" class="day-indicator"></span></span>
+      </div>
+      <div class="world-weather">
+        <span class="weather-value" id="weather-jlm">--° ☼</span>
+        <span class="clock-sep">:</span>
+        <span class="weather-value" id="weather-nyc">--° ☼</span>
+        <span class="clock-sep">:</span>
+        <span class="weather-value" id="weather-lon">--° ☼</span>
+        <span class="clock-sep">:</span>
+        <span class="weather-value" id="weather-tok">--° ☼</span>
+        <span class="clock-sep">:</span>
+        <span class="weather-value" id="weather-mos">--° ☼</span>
+      </div>
+    </div>
+  </div>
+  <div class="header-container">
+    <div class="header-content">
+      <div class="logo-section">
+        <a href="/" class="logo">
+          <img src="/img/1.svg" alt="Jerusalem Hills Logo">
+        </a>
+      </div>
+
+      <div class="middle-section">
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search everything...">
+          <i data-lucide="search" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgb(156, 163, 175);"></i>
+        </div>
+
+        <nav class="header-nav">
+          <a href="/#marketplace" class="header-nav-link">
+            <i data-lucide="shopping-bag"></i>
+            <span>Marketplace</span>
+          </a>
+          <a href="/#discussions" class="header-nav-link">
+            <i data-lucide="message-square"></i>
+            <span>Forum</span>
+          </a>
+          <a href="/#games" class="header-nav-link">
+            <i data-lucide="gamepad-2"></i>
+            <span>Games</span>
+          </a>
+          <a href="/#news" class="header-nav-link">
+            <i data-lucide="newspaper"></i>
+            <span>News</span>
+          </a>
+          <button class="header-nav-link" id="keyboard-toggle-nav" style="background: none; border: none; cursor: pointer;">
+            <i data-lucide="keyboard"></i>
+            <span>Hebrew KB</span>
+          </button>
+          <span class="nav-divider"></span>
+          <button class="header-nav-link icon-only" aria-label="Shopping Cart">
+            <i data-lucide="shopping-cart"></i>
+          </button>
+          <button class="header-nav-link icon-only" aria-label="Notifications">
+            <i data-lucide="bell"></i>
+          </button>
+          <button class="header-nav-link icon-only" aria-label="User menu">
+            <i data-lucide="user"></i>
+          </button>
+        </nav>
+      </div>
+
+      <div class="header-icons">
+        <button class="icon-button menu-button" aria-label="Menu">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-menu">
+      <div class="mobile-menu-header">
+        <div class="mobile-hebrew-date"></div>
+        <div class="mobile-gregorian-date"></div>
+        <div class="mobile-world-clocks">
+          <div class="mobile-world-cities">
+            <span class="city-label">JLM</span>
+            <span class="clock-sep">:</span>
+            <span class="city-label">NYC</span>
+            <span class="clock-sep">:</span>
+            <span class="city-label">LON</span>
+            <span class="clock-sep">:</span>
+            <span class="city-label">TOK</span>
+            <span class="clock-sep">:</span>
+            <span class="city-label">MOS</span>
+          </div>
+          <div class="mobile-world-times">
+            <span class="time-value" id="mobile-time-jlm">--:--<span id="mobile-jlm-plus" class="day-indicator"></span></span>
+            <span class="clock-sep">:</span>
+            <span class="time-value" id="mobile-time-nyc">--:--<span id="mobile-nyc-plus" class="day-indicator"></span></span>
+            <span class="clock-sep">:</span>
+            <span class="time-value" id="mobile-time-lon">--:--<span id="mobile-lon-plus" class="day-indicator"></span></span>
+            <span class="clock-sep">:</span>
+            <span class="time-value" id="mobile-time-tok">--:--<span id="mobile-tok-plus" class="day-indicator"></span></span>
+            <span class="clock-sep">:</span>
+            <span class="time-value" id="mobile-time-mos">--:--<span id="mobile-mos-plus" class="day-indicator"></span></span>
+          </div>
+          <div class="mobile-world-weather">
+            <span class="weather-value" id="mobile-weather-jlm">--° ☼</span>
+            <span class="clock-sep">:</span>
+            <span class="weather-value" id="mobile-weather-nyc">--° ☼</span>
+            <span class="clock-sep">:</span>
+            <span class="weather-value" id="mobile-weather-lon">--° ☼</span>
+            <span class="clock-sep">:</span>
+            <span class="weather-value" id="mobile-weather-tok">--° ☼</span>
+            <span class="clock-sep">:</span>
+            <span class="weather-value" id="mobile-weather-mos">--° ☼</span>
+          </div>
+        </div>
+      </div>
+      <div class="mobile-menu-divider"></div>
+      <a href="/#marketplace" class="mobile-link">
+        <i data-lucide="shopping-bag"></i>
+        <span>Marketplace</span>
+      </a>
+      <a href="/#discussions" class="mobile-link">
+        <i data-lucide="message-square"></i>
+        <span>Forum</span>
+      </a>
+      <a href="/#games" class="mobile-link">
+        <i data-lucide="gamepad-2"></i>
+        <span>Games</span>
+      </a>
+      <a href="/#news" class="mobile-link">
+        <i data-lucide="newspaper"></i>
+        <span>News</span>
+      </a>
+      <button class="mobile-link" id="keyboard-toggle-mobile" style="background: none; border: none; cursor: pointer; font-family: inherit;">
+        <i data-lucide="keyboard"></i>
+        <span>Hebrew KB</span>
+      </button>
+      <div class="mobile-menu-divider"></div>
+      <button class="mobile-link icon-link">
+        <i data-lucide="shopping-cart"></i>
+        <span>Shopping Cart</span>
+      </button>
+      <button class="mobile-link icon-link">
+        <i data-lucide="bell"></i>
+        <span>Notifications</span>
+      </button>
+      <button class="mobile-link icon-link">
+        <i data-lucide="user"></i>
+        <span>Profile</span>
+      </button>
+    </div>
+  </div>
+</header>

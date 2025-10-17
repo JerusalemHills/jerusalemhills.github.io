@@ -1,19 +1,31 @@
 User-agent: *
+
+# Disallow development/test files
 Disallow: /private/
 Disallow: /example_layout/
+Disallow: /node_modules/
+Disallow: /components/
 Disallow: *.md
 Disallow: *-old.html
 Disallow: *-new.html
 Disallow: *backup*.html
 Disallow: *test*.html
 Disallow: *wireframe*.html
+Disallow: *propose*.html
+Disallow: *propose*.css
+Disallow: *propose*.js
+Disallow: *.backup-*
+Disallow: /DEPLOYMENT_SUMMARY.md
+Disallow: /IMPORT_CHECKLIST.md
 
 # Allow important directories
 Allow: /games/
 Allow: /market/
+Allow: /marketplace.html
 Allow: /forum/
 Allow: /css/
 Allow: /js/
 Allow: /img/
 
+# Sitemap location
 Sitemap: https://jerusalemhills.com/sitemap.xml
