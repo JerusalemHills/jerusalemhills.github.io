@@ -29,10 +29,17 @@ class BackgammonGame {
         // Sound enabled
         this.soundEnabled = localStorage.getItem('bg-sound') !== 'false';
 
+        // Multiplayer support
+        this.multiplayer = null;
+        this.gameMode = 'local'; // 'local', 'online-host', or 'online-guest'
+
         // Initialize UI
         this.initializeUI();
         this.bindEvents();
         this.render();
+
+        // Initialize multiplayer
+        this.initMultiplayer();
     }
 
     initializeBoard() {
@@ -270,6 +277,14 @@ class BackgammonGame {
     }
 
     rollDice() {
+        // Turn validation for online games
+        if (this.multiplayer && this.gameMode.startsWith('online')) {
+            if (!this.multiplayer.isMyTurn()) {
+                this.showMessage('Not your turn!', "Wait for your opponent to finish their turn.");
+                return;
+            }
+        }
+
         // Animate dice roll
         const die1 = document.getElementById('die1');
         const die2 = document.getElementById('die2');
@@ -288,6 +303,11 @@ class BackgammonGame {
             // Update dice display
             die1.textContent = this.getDiceSymbol(this.dice[0]);
             die2.textContent = this.getDiceSymbol(this.dice[1]);
+
+            // Broadcast dice roll in online games
+            if (this.multiplayer && this.gameMode.startsWith('online')) {
+                this.multiplayer.broadcastDiceRoll(this.dice);
+            }
 
             die1.classList.remove('rolling');
             die2.classList.remove('rolling');
@@ -486,6 +506,11 @@ class BackgammonGame {
         const dieIndex = this.movesRemaining.indexOf(die);
         this.movesRemaining.splice(dieIndex, 1);
 
+        // Broadcast move in online games
+        if (this.multiplayer && this.gameMode.startsWith('online')) {
+            this.multiplayer.broadcastMove(move);
+        }
+
         // Update UI
         this.deselectChecker();
         this.render();
@@ -540,6 +565,11 @@ class BackgammonGame {
         this.winner = winner;
         this.gameStarted = false;
         this.playSound('win');
+
+        // Broadcast win in online games
+        if (this.multiplayer && this.gameMode.startsWith('online')) {
+            this.multiplayer.broadcastWin(winner);
+        }
 
         // Show victory message
         const message = document.createElement('div');
@@ -832,6 +862,206 @@ class BackgammonGame {
         const checker = document.createElement('div');
         checker.className = `checker ${color}`;
         return checker;
+    }
+
+    /**
+     * Initialize multiplayer functionality
+     */
+    initMultiplayer() {
+        // Listen for game mode changes
+        document.querySelectorAll('input[name="gameMode"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                this.handleGameModeChange(e.target.value);
+            });
+        });
+
+        // Host game button
+        const hostBtn = document.getElementById('btn-host-game');
+        if (hostBtn) {
+            hostBtn.addEventListener('click', () => this.hostOnlineGame());
+        }
+
+        // Join game button
+        const joinBtn = document.getElementById('btn-join-game');
+        if (joinBtn) {
+            joinBtn.addEventListener('click', () => this.joinOnlineGame());
+        }
+
+        // Copy link button
+        const copyBtn = document.getElementById('btn-copy-link');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => this.copyGameLink());
+        }
+
+        // Check URL for game ID (auto-join)
+        this.checkAutoJoin();
+    }
+
+    /**
+     * Handle game mode selection
+     */
+    handleGameModeChange(mode) {
+        const hostUI = document.getElementById('host-ui');
+        const joinUI = document.getElementById('join-ui');
+        const linkDisplay = document.getElementById('game-link-display');
+
+        // Hide all UIs
+        hostUI.style.display = 'none';
+        joinUI.style.display = 'none';
+        if (linkDisplay) linkDisplay.style.display = 'none';
+
+        // Show appropriate UI
+        if (mode === 'host') {
+            hostUI.style.display = 'block';
+            this.gameMode = 'local'; // Not online until game is created
+        } else if (mode === 'join') {
+            joinUI.style.display = 'block';
+            this.gameMode = 'local';
+        } else {
+            this.gameMode = 'local';
+            // Disconnect from multiplayer if connected
+            if (this.multiplayer) {
+                this.multiplayer.disconnect();
+                this.multiplayer = null;
+            }
+        }
+    }
+
+    /**
+     * Host an online game
+     */
+    hostOnlineGame() {
+        console.log('Hosting online game...');
+
+        // Initialize multiplayer if needed
+        if (!this.multiplayer) {
+            this.multiplayer = new BackgammonMultiplayer(this);
+        }
+
+        // Host game and get ID
+        const gameId = this.multiplayer.hostGame();
+
+        // Show game link
+        const linkDisplay = document.getElementById('game-link-display');
+        const linkInput = document.getElementById('game-link-input');
+        const link = this.multiplayer.getGameLink();
+
+        linkInput.value = link;
+        linkDisplay.style.display = 'block';
+
+        this.gameMode = 'online-host';
+
+        this.showStatus('Hosting game... Waiting for opponent', 'info');
+
+        console.log('Game hosted with ID:', gameId);
+        console.log('Share link:', link);
+    }
+
+    /**
+     * Join an online game
+     */
+    joinOnlineGame() {
+        const input = document.getElementById('game-id-input');
+        let gameId = input.value.trim();
+
+        if (!gameId) {
+            this.showStatus('Please enter a game ID or link', 'error');
+            return;
+        }
+
+        // Extract game ID from URL if full link was pasted
+        if (gameId.includes('?game=')) {
+            gameId = gameId.split('?game=')[1].split('&')[0];
+        }
+
+        console.log('Joining game:', gameId);
+
+        // Initialize multiplayer if needed
+        if (!this.multiplayer) {
+            this.multiplayer = new BackgammonMultiplayer(this);
+        }
+
+        // Join game
+        this.multiplayer.joinGame(gameId);
+        this.gameMode = 'online-guest';
+
+        this.showStatus('Connecting to game...', 'info');
+    }
+
+    /**
+     * Copy game link to clipboard
+     */
+    copyGameLink() {
+        const linkInput = document.getElementById('game-link-input');
+        linkInput.select();
+        linkInput.setSelectionRange(0, 99999); // For mobile devices
+
+        navigator.clipboard.writeText(linkInput.value).then(() => {
+            this.showStatus('Link copied! Send it to your friend.', 'success');
+        }).catch(() => {
+            // Fallback for older browsers
+            document.execCommand('copy');
+            this.showStatus('Link copied! Send it to your friend.', 'success');
+        });
+    }
+
+    /**
+     * Check URL for auto-join
+     */
+    checkAutoJoin() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameId = urlParams.get('game');
+
+        if (gameId) {
+            console.log('Auto-joining game from URL:', gameId);
+
+            // Select "Join Game" mode
+            const joinRadio = document.querySelector('input[value="join"]');
+            if (joinRadio) {
+                joinRadio.checked = true;
+                this.handleGameModeChange('join');
+
+                // Fill in game ID and auto-join
+                const input = document.getElementById('game-id-input');
+                if (input) {
+                    input.value = gameId;
+                    // Auto-join after a brief delay
+                    setTimeout(() => this.joinOnlineGame(), 500);
+                }
+            }
+        }
+    }
+
+    /**
+     * Show connection status
+     */
+    showStatus(message, type) {
+        const statusEl = document.getElementById('connection-status');
+        const statusText = document.getElementById('status-text');
+
+        if (!statusEl || !statusText) return;
+
+        statusEl.style.display = 'block';
+        statusText.textContent = message;
+
+        // Color based on type
+        if (type === 'success') {
+            statusEl.style.background = '#d4edda';
+            statusEl.style.color = '#155724';
+        } else if (type === 'error') {
+            statusEl.style.background = '#f8d7da';
+            statusEl.style.color = '#721c24';
+        } else {
+            statusEl.style.background = '#d1ecf1';
+            statusEl.style.color = '#0c5460';
+        }
+
+        // Auto-hide after 3 seconds for success/error
+        if (type !== 'info') {
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 3000);
+        }
     }
 }
 
