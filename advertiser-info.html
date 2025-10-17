@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advertiser Information - Jerusalem Hills</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles-new.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VE3Z9354M2"></script>
     <script>
@@ -14,24 +19,18 @@
 
       gtag('config', 'G-VE3Z9354M2');
     </script>
+    <style>
+      body {
+        padding-top: 100px;
+      }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="left-header">
-            <a href="/"><img src="img/1.svg" alt="Jerusalem Hills Logo" class="logo"></a>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="/index.html">Home</a></li>
-                <li><a href="/about.html">About</a></li>
-                <li><a href="/forum/forum.html">Forum</a></li>
-                <li><a href="/games/index.html">Games</a></li>
-                <li><a href="/market/index.html">Marketplace</a></li>
-                <li><a href="/services-directory.html">Services</a></li>
-                <li><a href="/advertise.html">Advertise</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Shared Header Component -->
+    <div id="header-placeholder"></div>
+
+    <!-- Load Header Component (must be after placeholder) -->
+    <script src="/js/load-header.js"></script>
 
     <main class="container advertiser-info-page">
         <section class="hero">

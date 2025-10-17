@@ -6,11 +6,15 @@
     <title>Advertise with Jerusalem Hills - Reach Our Community</title>
     <meta name="description" content="Advertise your business on Jerusalem Hills and reach our engaged community. View our advertising options, rates, and placement opportunities.">
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles-new.css">
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
     <link rel="manifest" href="/img/site.webmanifest">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VE3Z9354M2"></script>
@@ -20,15 +24,6 @@
       gtag('js', new Date());
 
       gtag('config', 'G-VE3Z9354M2');
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        fetch("header.html")
-          .then(response => response.text())
-          .then(data => {
-            document.body.insertAdjacentHTML("afterbegin", data);
-          });
-      });
     </script>
     <style>
       header {
@@ -60,6 +55,12 @@
     </style>
 </head>
 <body>
+    <!-- Shared Header Component -->
+    <div id="header-placeholder"></div>
+
+    <!-- Load Header Component (must be after placeholder) -->
+    <script src="/js/load-header.js"></script>
+
     <main class="container advertiser-page">
         <section class="hero">
             <h1>Advertise with Jerusalem Hills</h1>

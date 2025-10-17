@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Canceled - Jerusalem Hills</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/styles-new.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         .cancel-container {
             max-width: 600px;
@@ -98,24 +102,18 @@
         .btn:hover {
             opacity: 0.9;
         }
+
+        body {
+            padding-top: 100px;
+        }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <header>
-        <nav>
-            <div class="nav-container">
-                <a href="index.html" class="logo">Jerusalem Hills</a>
-                <ul class="nav-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="marketplace.html">Marketplace</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    <!-- Shared Header Component -->
+    <div id="header-placeholder"></div>
+
+    <!-- Load Header Component (must be after placeholder) -->
+    <script src="/js/load-header.js"></script>
 
     <!-- Main Content -->
     <main class="cancel-container">

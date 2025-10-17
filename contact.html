@@ -28,6 +28,8 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <link rel="stylesheet" href="/styles-new.css">
+
     <style>
         /* CSS Variables - Matching main site theme */
         :root {
@@ -311,25 +313,11 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-container">
-            <div class="header-content">
-                <a href="/" class="logo">
-                    <img src="img/1.svg" alt="Jerusalem Hills Logo">
-                </a>
-                <nav>
-                    <ul class="nav-links">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/marketplace.html">Marketplace</a></li>
-                        <li><a href="/services.html">Services</a></li>
-                        <li><a href="/about.html">About</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
+    <!-- Shared Header Component -->
+    <div id="header-placeholder"></div>
+
+    <!-- Load Header Component (must be after placeholder) -->
+    <script src="/js/load-header.js"></script>
 
     <!-- Main Content -->
     <main class="main-container">

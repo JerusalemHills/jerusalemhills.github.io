@@ -22,6 +22,12 @@ Example format:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Metrics</title>
+
+    <link rel="stylesheet" href="/styles-new.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -107,8 +113,19 @@ Example format:
 
         document.addEventListener('DOMContentLoaded', fetchFinancialData);
     </script>
+    <style>
+        body {
+            padding-top: 100px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Shared Header Component -->
+    <div id="header-placeholder"></div>
+
+    <!-- Load Header Component (must be after placeholder) -->
+    <script src="/js/load-header.js"></script>
+
     <div>
         <div id="sp500" class="metric">Loading S&P 500...</div>
         <div id="vix" class="metric">Loading VIX...</div>
