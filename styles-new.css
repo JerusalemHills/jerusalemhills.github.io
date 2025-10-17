@@ -509,30 +509,14 @@ main {
   flex: 1;
 }
 
-/* Markets Card with TradingView Widgets */
-.markets-widgets {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
-  padding: 0.75rem !important;
-  padding-top: 3rem !important; /* Space for ticker overlay */
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 8px;
-}
-
-/* Headlines Ticker Overlay - Single Scrolling Line Above Widgets */
-.headlines-ticker-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+/* Headlines Ticker - Separate Section on Top */
+.headlines-ticker {
+  overflow: hidden;
   height: 2.5rem;
   background: rgba(145, 217, 248, 0.15); /* Light blue from brand */
-  border-bottom: 1px solid rgba(145, 217, 248, 0.3);
-  overflow: hidden;
-  z-index: 10;
-  border-radius: 8px 8px 0 0;
+  border: 1px solid rgba(145, 217, 248, 0.3);
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
 .ticker-track {
@@ -583,6 +567,16 @@ main {
   font-size: 0.75rem;
   color: #9ca3af;
   white-space: nowrap;
+}
+
+/* Markets Card with TradingView Widgets - Separate Section Below */
+.markets-widgets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
 }
 
 .tradingview-widget-container {
