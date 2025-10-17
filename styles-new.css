@@ -557,10 +557,12 @@ main {
   font-weight: 500;
   transition: color 0.2s;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .headline-link:hover {
   color: var(--primary);
+  text-decoration: underline;
 }
 
 .headline-time {

@@ -57,25 +57,27 @@
   <script src="js/rss-feed-config.js"></script>
   <script src="js/ticker.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Load header after DOM and Lucide are ready
+    window.addEventListener('DOMContentLoaded', function() {
+      fetch('/components/header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.body.insertAdjacentHTML('afterbegin', html);
+          // Wait for Lucide to be available
+          if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+          }
+          // Load mobile menu functionality
+          const script = document.createElement('script');
+          script.src = '/js/mobile-nav.js';
+          document.head.appendChild(script);
+        })
+        .catch(err => console.error('Header load error:', err));
+    });
+  </script>
 </head>
 <body>
-  <!-- Load Header Component -->
-  <script>
-    // Inline header loading for immediate display
-    fetch('/components/header.html')
-      .then(response => response.text())
-      .then(html => {
-        document.body.insertAdjacentHTML('afterbegin', html);
-        if (typeof lucide !== 'undefined') {
-          lucide.createIcons();
-        }
-        // Load mobile menu functionality
-        const script = document.createElement('script');
-        script.src = '/js/mobile-nav.js';
-        document.head.appendChild(script);
-      })
-      .catch(err => console.error('Header load error:', err));
-  </script>
 
   <main>
     <section class="dashboard-hero">
@@ -84,36 +86,36 @@
         <div class="ticker-track">
           <!-- First set -->
           <div class="headline-item">
-            <a href="#" class="headline-link">Jerusalem hosts annual cultural heritage festival</a>
+            <a href="/#news" class="headline-link">Jerusalem hosts annual cultural heritage festival</a>
             <span class="headline-time">2h ago</span>
           </div>
           <div class="headline-item">
-            <a href="#" class="headline-link">New archaeological discovery in Old City</a>
+            <a href="/#news" class="headline-link">New archaeological discovery in Old City</a>
             <span class="headline-time">5h ago</span>
           </div>
           <div class="headline-item">
-            <a href="#" class="headline-link">Marketplace expands with 50+ new artisan vendors</a>
+            <a href="/marketplace.html" class="headline-link">Marketplace expands with 50+ new artisan vendors</a>
             <span class="headline-time">1d ago</span>
           </div>
           <div class="headline-item">
-            <a href="#" class="headline-link">Weekly Torah study group welcomes new members</a>
+            <a href="/#discussions" class="headline-link">Weekly Torah study group welcomes new members</a>
             <span class="headline-time">2d ago</span>
           </div>
           <!-- Duplicate set for seamless loop -->
           <div class="headline-item">
-            <a href="#" class="headline-link">Jerusalem hosts annual cultural heritage festival</a>
+            <a href="/#news" class="headline-link">Jerusalem hosts annual cultural heritage festival</a>
             <span class="headline-time">2h ago</span>
           </div>
           <div class="headline-item">
-            <a href="#" class="headline-link">New archaeological discovery in Old City</a>
+            <a href="/#news" class="headline-link">New archaeological discovery in Old City</a>
             <span class="headline-time">5h ago</span>
           </div>
           <div class="headline-item">
-            <a href="#" class="headline-link">Marketplace expands with 50+ new artisan vendors</a>
+            <a href="/marketplace.html" class="headline-link">Marketplace expands with 50+ new artisan vendors</a>
             <span class="headline-time">1d ago</span>
           </div>
           <div class="headline-item">
-            <a href="#" class="headline-link">Weekly Torah study group welcomes new members</a>
+            <a href="/#discussions" class="headline-link">Weekly Torah study group welcomes new members</a>
             <span class="headline-time">2d ago</span>
           </div>
         </div>
