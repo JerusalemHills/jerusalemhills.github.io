@@ -77,13 +77,15 @@ body {
 .middle-section {
   display: flex;
   align-items: center;
-  flex: 1;
-  margin: 0 1rem;
+  flex: 0 1 auto;
+  margin: 0 0.75rem;
+  gap: 0.5rem;
 }
 
 .search-container {
-  flex: 0.6;
-  max-width: 32rem;
+  flex: 0 0 auto;
+  width: 280px;
+  max-width: 280px;
   position: relative;
 }
 
@@ -104,8 +106,8 @@ body {
 .header-nav {
   display: flex;
   gap: 0.5rem;
-  margin-left: 1rem;
-  flex: 1;
+  margin-left: 0.75rem;
+  flex: 0 1 auto;
   align-items: center;
 }
 
