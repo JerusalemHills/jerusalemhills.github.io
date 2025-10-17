@@ -259,8 +259,88 @@
         <div style="text-align: center; margin-top: 20px;">
             <p><strong>Game Status:</strong> <span id="game-status">Ready to start</span></p>
         </div>
+
+        <!-- Multiplayer Controls -->
+        <div class="multiplayer-panel" id="multiplayer-panel" style="
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        ">
+            <h3 style="margin: 0 0 15px 0;">🌐 Online Multiplayer</h3>
+
+            <div class="game-mode-selector">
+                <label style="display: block; margin-bottom: 10px;">
+                    <input type="radio" name="gameMode" value="local" checked>
+                    Local Game (2 players on this device)
+                </label>
+                <label style="display: block; margin-bottom: 10px;">
+                    <input type="radio" name="gameMode" value="host">
+                    Host Online Game (invite a friend)
+                </label>
+                <label style="display: block;">
+                    <input type="radio" name="gameMode" value="join">
+                    Join Online Game (enter game ID)
+                </label>
+            </div>
+
+            <!-- Host Game UI -->
+            <div id="host-ui" style="display: none; margin-top: 15px;">
+                <button id="btn-host-game" class="btn" style="width: 100%; margin-bottom: 10px;">
+                    Create Game & Get Link
+                </button>
+                <div id="game-link-display" style="display: none;">
+                    <p style="margin: 10px 0 5px 0; font-weight: bold;">Share this link with your friend:</p>
+                    <input type="text" id="game-link-input" readonly style="
+                        width: 100%;
+                        padding: 10px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        margin-bottom: 10px;
+                        font-family: monospace;
+                    ">
+                    <button id="btn-copy-link" class="btn">📋 Copy Link</button>
+                    <p id="waiting-message" style="color: #666; font-style: italic; margin-top: 10px;">
+                        Waiting for opponent to join...
+                    </p>
+                </div>
+            </div>
+
+            <!-- Join Game UI -->
+            <div id="join-ui" style="display: none; margin-top: 15px;">
+                <input type="text" id="game-id-input" placeholder="Enter Game ID or paste link" style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    margin-bottom: 10px;
+                ">
+                <button id="btn-join-game" class="btn" style="width: 100%;">
+                    Join Game
+                </button>
+            </div>
+
+            <!-- Connection Status -->
+            <div id="connection-status" style="
+                display: none;
+                margin-top: 15px;
+                padding: 10px;
+                border-radius: 5px;
+                text-align: center;
+            ">
+                <strong id="status-text"></strong>
+            </div>
+        </div>
     </div>
 
+    <!-- GunDB for P2P Multiplayer -->
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+
+    <!-- Multiplayer Module -->
+    <script src="js/multiplayer.js"></script>
+
+    <!-- Main Game -->
     <script src="js/backgammon.js"></script>
 </body>
 </html>
