@@ -173,16 +173,16 @@ function startScrolling() {
                 animationPaused = true;
                 setTimeout(() => {
                     animationPaused = false;
-                }, 1000);
+                }, 100);
             } else {
                 // Pause briefly between items
                 animationPaused = true;
                 setTimeout(() => {
                     animationPaused = false;
-                }, 1000); // 1 second pause between items
+                }, 100); // 0.1 second pause between items
             }
         }
-    }, 30); // Controls the speed - higher number = slower scrolling
+    }, 3); // Controls the speed - higher number = slower scrolling
 }
 
 // Update reloadTicker to handle errors better

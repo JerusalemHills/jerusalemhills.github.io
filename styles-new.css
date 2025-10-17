@@ -509,7 +509,7 @@ main {
   flex: 1;
 }
 
-/* Headlines Ticker - Separate Section on Top */
+/* Headlines Ticker - Live RSS Feed */
 .headlines-ticker {
   overflow: hidden;
   height: 2.5rem;
@@ -517,40 +517,31 @@ main {
   border: 1px solid rgba(145, 217, 248, 0.3);
   border-radius: 8px;
   margin: 0;
+  position: relative;
 }
 
-.ticker-track {
+.ticker-tape {
+  height: 100%;
   display: flex;
-  gap: 3rem;
+  align-items: center;
+}
+
+#ticker-content {
+  display: flex;
+  gap: 2rem;
   white-space: nowrap;
-  animation: scroll-ticker 30s linear infinite;
   will-change: transform;
 }
 
-.ticker-track:hover {
-  animation-play-state: paused;
-}
-
-@keyframes scroll-ticker {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.headline-item {
+.ticker-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
   padding: 0 1.5rem;
-  height: 2.5rem;
-  flex-shrink: 0;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.headline-link {
+.ticker-item a {
   color: var(--text);
   text-decoration: none;
   font-size: 0.875rem;
@@ -560,15 +551,9 @@ main {
   cursor: pointer;
 }
 
-.headline-link:hover {
+.ticker-item a:hover {
   color: var(--primary);
   text-decoration: underline;
-}
-
-.headline-time {
-  font-size: 0.75rem;
-  color: #9ca3af;
-  white-space: nowrap;
 }
 
 /* Markets Card with TradingView Widgets - Separate Section Below */
