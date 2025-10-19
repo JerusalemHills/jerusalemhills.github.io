@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="../assets/css/game.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Sound Manager -->
+    <script src="../assets/js/sound-manager.js"></script>
+
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
@@ -87,6 +90,7 @@
         }
 
         document.getElementById('start').onclick = () => {
+            soundManager.play('start'); // Play start sound
             score = 0;
             s.textContent = `Score: ${score}`;
             newQuestion();
@@ -113,15 +117,23 @@
 
             if (userAnswer === answer) {
                 score++;
+                soundManager.play('correct'); // Play correct sound
+                if (score % 5 === 0 && score > 0) {
+                    soundManager.play('milestone'); // Play milestone sound every 5 points
+                }
                 r.textContent = "✅ Correct! Great job!";
                 r.style.color = "#4CAF50";
             } else {
+                soundManager.play('incorrect'); // Play incorrect sound
                 r.textContent = `❌ Not quite! The answer is ${answer}`;
                 r.style.color = "#ff6f61";
             }
             s.textContent = `Score: ${score}`;
 
-            setTimeout(newQuestion, 1500);
+            setTimeout(() => {
+                soundManager.play('next'); // Play next question sound
+                newQuestion();
+            }, 1500);
         }
     </script>
 </body>

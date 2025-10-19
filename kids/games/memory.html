@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="../assets/css/game.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Sound Manager -->
+    <script src="../assets/js/sound-manager.js"></script>
+
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
@@ -71,6 +74,7 @@
         let first = null, second = null, lock = false, matches = 0;
 
         function initGame() {
+            soundManager.play('start'); // Play start sound
             // Reset game state
             matches = 0;
             first = null;
@@ -103,6 +107,7 @@
             }
 
             // Show the emoji
+            soundManager.play('flip'); // Play flip sound
             this.textContent = this.dataset.emoji;
 
             if (!first) {
@@ -118,6 +123,7 @@
             setTimeout(() => {
                 if (first.dataset.emoji === second.dataset.emoji) {
                     // Match found!
+                    soundManager.play('match'); // Play match sound
                     first.style.visibility = 'hidden';
                     second.style.visibility = 'hidden';
                     matches++;
@@ -125,11 +131,13 @@
                     document.getElementById('score').textContent = `Matches: ${matches} / ${emojis.length}`;
 
                     if (matches === emojis.length) {
+                        soundManager.play('victory'); // Play victory sound
                         document.getElementById('message').textContent = "🎉 You matched all pairs! Great job!";
                         document.getElementById('message').style.color = "#4CAF50";
                     }
                 } else {
                     // No match - hide cards again
+                    soundManager.play('no-match'); // Play no-match sound
                     first.textContent = "";
                     second.textContent = "";
                 }
