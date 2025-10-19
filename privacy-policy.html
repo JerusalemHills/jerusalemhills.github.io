@@ -53,42 +53,54 @@
 <body>
     <header>
         <h1>Privacy Policy</h1>
-        <p>Effective Date: December 23, 2024</p>
+        <p>Effective Date: October 19, 2025</p>
         <img src="img/1.svg" alt="Jerusalem Hills Logo" class="logo">
     </header>
     <main>
         <section>
             <h2>1. Information We Collect</h2>
-            <p>We do not directly collect or store personal information from our users. Participation in any games, forums, or other activities on this site is entirely optional and anonymous.</p>
-            <p>However, our advertising partners, including Google AdSense, may collect information about you through the use of cookies, web beacons, and other tracking technologies. This information may include:</p>
+            <p><strong>Overview:</strong> Jerusalem Hills is committed to privacy-first practices. We do not use cookies for tracking or advertising personalization. Participation in games, forums, or other activities on this site is entirely optional and anonymous.</p>
+
+            <p><strong>Google Analytics (Cookie-less):</strong> We use Google Analytics 4 with cookie storage completely disabled. This means:</p>
             <ul>
-                <li>Your IP address</li>
-                <li>Browser type and version</li>
-                <li>Operating system</li>
-                <li>Pages visited on our site</li>
-                <li>Time and date of visits</li>
-                <li>Referring website addresses</li>
-                <li>Device identifiers</li>
+                <li>No cookies are set on your device</li>
+                <li>We collect anonymous, aggregated data: page views, referral sources, device types, and general location (city level)</li>
+                <li>IP addresses are anonymized before processing</li>
+                <li>No cross-site or cross-device tracking</li>
+                <li>You cannot be identified as a returning visitor</li>
             </ul>
+
+            <p><strong>AdSense Limited Ads (Optional):</strong> If we enable advertising, we use Google AdSense Limited Ads which minimizes data collection:</p>
+            <ul>
+                <li>No personalized advertising (ads are contextual based on page content only)</li>
+                <li>Minimal technical data collected for fraud prevention only</li>
+                <li>No tracking cookies for ad personalization</li>
+                <li>IP address may be used for geolocation (country/region level only)</li>
+            </ul>
+
+            <p><strong>Payment Processing:</strong> When you make a purchase, you are redirected to Stripe's secure checkout page (checkout.stripe.com). Stripe may use cookies on their domain for payment processing and fraud prevention. We do not store your payment information—it is handled exclusively by Stripe.</p>
         </section>
         <section>
-            <h2>2. Google AdSense and Third-Party Services</h2>
-            <p>We use Google AdSense to serve advertisements on our website. Google AdSense is an advertising service provided by Google Inc. ("Google"). Google AdSense uses cookies, web beacons, and other tracking technologies to:</p>
+            <h2>2. Stripe Payment Processing</h2>
+            <p>We use Stripe, Inc. for secure payment processing. When you make a purchase on our marketplace:</p>
             <ul>
-                <li>Serve advertisements based on your interests</li>
-                <li>Track ad performance and user engagement</li>
-                <li>Prevent fraud and abuse</li>
-                <li>Provide reporting to advertisers</li>
+                <li><strong>Redirect to Stripe:</strong> You are redirected to Stripe's hosted checkout page (checkout.stripe.com)</li>
+                <li><strong>Stripe's Cookies:</strong> Stripe uses cookies on their domain for session management, fraud prevention, and payment processing</li>
+                <li><strong>No Data Storage:</strong> We do not store your credit card information or payment details</li>
+                <li><strong>Secure Processing:</strong> All payment data is encrypted and processed by Stripe in compliance with PCI DSS standards</li>
             </ul>
-            <p>Google may use data collected from our site in combination with data from other websites to provide personalized advertising across the web. This practice is known as interest-based advertising.</p>
-            <p>For detailed information about Google's data practices, please review:</p>
+            <p><strong>What Stripe Collects:</strong></p>
             <ul>
-                <li><a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a></li>
-                <li><a href="https://policies.google.com/technologies/partner-sites" target="_blank">How Google uses data when you use our partners' sites or apps</a></li>
-                <li><a href="https://adssettings.google.com/" target="_blank">Google's Ad Settings</a> - to manage your ad preferences</li>
-                <li><a href="https://www.google.com/policies/technologies/ads/" target="_blank">Google's Advertising Policies</a></li>
+                <li>Payment information (credit card, billing address)</li>
+                <li>Transaction details (amount, currency, purchase description)</li>
+                <li>Device and browser information for fraud prevention</li>
             </ul>
-            <p>We do not have access to or control over the information collected by third-party advertisers, but we have implemented Google AdSense in accordance with their policies and guidelines.</p>
+            <p>For detailed information about Stripe's data practices, please review:</p>
+            <ul>
+                <li><a href="https://stripe.com/privacy" target="_blank">Stripe Privacy Policy</a></li>
+                <li><a href="https://stripe.com/legal/cookies-policy" target="_blank">Stripe Cookies Policy</a></li>
+            </ul>
+            <p>We receive only transaction confirmation and order details from Stripe—no payment information is shared with us.</p>
         </section>
         <section>
             <h2>3. Your Rights and GDPR Compliance</h2>
@@ -113,46 +125,58 @@
         </section>
         <section>
             <h2>4. Cookies and Tracking Technologies</h2>
-            <p>Our website itself does not place cookies, but we allow third-party services like Google AdSense to use cookies and similar tracking technologies. These technologies include:</p>
+            <p><strong>Jerusalem Hills does NOT use cookies for tracking or advertising.</strong> We have implemented a privacy-first architecture:</p>
+
+            <p><strong>What We DON'T Use:</strong></p>
             <ul>
-                <li><strong>Cookies:</strong> Small text files stored on your device that help track your browsing behavior</li>
-                <li><strong>Web Beacons:</strong> Small graphic images that monitor page visits and user interactions</li>
-                <li><strong>Local Storage:</strong> Data stored locally on your device by web applications</li>
-                <li><strong>Device Fingerprinting:</strong> Collection of device and browser characteristics for identification</li>
+                <li>❌ No tracking cookies</li>
+                <li>❌ No advertising personalization cookies</li>
+                <li>❌ No cross-site tracking</li>
+                <li>❌ No third-party data sharing for ad targeting</li>
             </ul>
-            <p><strong>Cookie Consent:</strong> By continuing to use our website, you consent to the use of cookies by our advertising partners. Most browsers allow you to:</p>
+
+            <p><strong>Limited Technical Data Collection:</strong></p>
             <ul>
-                <li>View and delete cookies</li>
-                <li>Block cookies from specific sites</li>
-                <li>Block third-party cookies</li>
-                <li>Block all cookies</li>
+                <li><strong>Google Analytics:</strong> Configured with <code>client_storage: 'none'</code> - no cookies set</li>
+                <li><strong>AdSense (if enabled):</strong> Limited Ads mode - minimal fraud prevention data only</li>
+                <li><strong>Stripe Checkout:</strong> Cookies on Stripe's domain only (checkout.stripe.com), not on jerusalemhills.com</li>
             </ul>
-            <p>Please note that disabling cookies may affect the functionality of advertisements and your browsing experience.</p>
+
+            <p><strong>Browser Tools:</strong> While we don't set cookies, you can still use browser privacy features:</p>
+            <ul>
+                <li>Developer Tools → Application → Cookies (verify no jerusalemhills.com cookies)</li>
+                <li>Privacy Badger or uBlock Origin browser extensions</li>
+                <li>"Do Not Track" browser setting</li>
+            </ul>
         </section>
         <section>
-            <h2>5. Advertising and Data Collection</h2>
-            <p>We participate in the Google AdSense advertising program to display relevant advertisements on our website. This program involves:</p>
+            <h2>5. Kids Zone - Enhanced Privacy</h2>
+            <p>Our Kids Zone (jerusalemhills.com/kids/) operates under the strictest privacy standards, fully compliant with COPPA (Children's Online Privacy Protection Act):</p>
             <ul>
-                <li><strong>Interest-Based Advertising:</strong> Ads are targeted based on your browsing history and interests</li>
-                <li><strong>Remarketing:</strong> You may see ads related to our site on other websites you visit</li>
-                <li><strong>Cross-Device Tracking:</strong> Your activity may be tracked across different devices you use</li>
-                <li><strong>Real-Time Bidding:</strong> Ad space is sold through automated auctions in real-time</li>
+                <li><strong>Zero Tracking:</strong> No Google Analytics or any analytics on Kids Zone pages</li>
+                <li><strong>No Advertisements:</strong> 100% ad-free zone</li>
+                <li><strong>No External Links:</strong> Kids stay within our safe, curated environment</li>
+                <li><strong>No Data Collection:</strong> We do not collect any personal information from children</li>
+                <li><strong>No Cookies:</strong> Absolutely no cookies or local storage used</li>
+                <li><strong>Browser-Only Games:</strong> All games run entirely in your child's browser - nothing is sent to servers</li>
             </ul>
-            <p><strong>Legal Basis for Processing (GDPR):</strong> We process your data based on:</p>
-            <ul>
-                <li>Your consent (for cookies and advertising)</li>
-                <li>Legitimate interests (for website operation and advertising revenue)</li>
-            </ul>
-            <p><strong>Data Retention:</strong> Google typically retains advertising data for up to 26 months, though this may vary. For specific retention periods, please refer to Google's privacy policy.</p>
-            <p>For comprehensive information about Google's data practices, please visit <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google's Privacy & Terms</a>.</p>
+            <p><strong>Age Restriction:</strong> The Kids Zone is designed for children ages 5-12. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately and we will delete such information.</p>
         </section>
         <section>
             <h2>6. International Data Transfers</h2>
             <p>Your information may be transferred to and processed in countries other than your country of residence, including the United States where Google's servers are located. These countries may have different data protection laws than your country. Google has implemented appropriate safeguards for international data transfers as required by applicable law.</p>
         </section>
         <section>
-            <h2>7. Children's Privacy</h2>
-            <p>Our website is not directed to children under the age of 13, and we do not knowingly collect personal information from children under 13. If we become aware that a child under 13 has provided us with personal information, we will take steps to delete such information. If you believe that a child under 13 has provided personal information to us, please contact us immediately.</p>
+            <h2>7. Data Retention and Security</h2>
+            <p><strong>Analytics Data:</strong> Google Analytics retains aggregated, anonymized data for up to 14 months. Since we use cookie-less tracking, individual users cannot be tracked across sessions.</p>
+            <p><strong>Payment Data:</strong> We do not store payment information. Stripe retains transaction data according to their retention policy and legal requirements.</p>
+            <p><strong>Security Measures:</strong> We implement industry-standard security measures:</p>
+            <ul>
+                <li>HTTPS encryption for all pages</li>
+                <li>Secure payment processing via Stripe (PCI DSS compliant)</li>
+                <li>Regular security updates and monitoring</li>
+                <li>No storage of sensitive personal information</li>
+            </ul>
         </section>
         <section>
             <h2>8. Limitation of Liability</h2>
@@ -160,7 +184,11 @@
         </section>
         <section>
             <h2>9. Updates to This Policy</h2>
-            <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Effective Date."</p>
+            <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Effective Date." Material changes will be highlighted at the top of the policy.</p>
+            <p><strong>Recent Updates:</strong></p>
+            <ul>
+                <li><strong>October 19, 2025:</strong> Transitioned to cookie-less tracking, added Stripe payment processing disclosure, enhanced Kids Zone privacy protections</li>
+            </ul>
         </section>
         <section>
             <h2>10. Contact Information</h2>
