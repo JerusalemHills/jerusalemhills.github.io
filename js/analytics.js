@@ -27,6 +27,9 @@
 
     gtag('js', new Date());
     gtag('config', GA_MEASUREMENT_ID, {
+        // Cookie-less tracking (privacy-first, COPPA compliant)
+        client_storage: 'none',  // Disables cookies entirely
+
         // Enhanced measurement settings
         page_path: window.location.pathname,
         page_title: document.title,
@@ -37,7 +40,10 @@
 
         // Privacy settings
         anonymize_ip: true,
-        cookie_flags: 'max-age=7200;secure;samesite=none'
+
+        // Additional privacy
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false
     });
 
     // Track custom events
