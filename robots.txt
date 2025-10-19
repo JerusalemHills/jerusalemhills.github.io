@@ -20,6 +20,7 @@ Disallow: /IMPORT_CHECKLIST.md
 
 # Allow important directories
 Allow: /games/
+Allow: /kids/
 Allow: /market/
 Allow: /marketplace.html
 Allow: /forum/

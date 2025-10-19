@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Match - Free Memory Game for Kids | Jerusalem Hills Kids</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Match pairs and train your memory with Memory Match! Fun concentration game for kids ages 5-12. Improve cognitive skills while playing. No ads, completely free.">
+    <meta name="keywords" content="memory game, matching game, concentration game, kids memory, brain training, educational game, cognitive development">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/kids/games/memory.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Memory Match - Free Memory Game for Kids">
+    <meta property="og:description" content="Match pairs and train your memory! Fun concentration game for kids ages 5-12.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jerusalemhills.com/kids/games/memory.html">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../assets/css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Game",
+      "name": "Memory Match",
+      "description": "Interactive memory matching game for children to improve concentration and cognitive skills",
+      "audience": {
+        "@type": "PeopleAudience",
+        "suggestedMinAge": 5,
+        "suggestedMaxAge": 12
+      },
+      "educationalUse": "Memory and concentration practice",
+      "educationalLevel": "Elementary",
+      "isAccessibleForFree": true,
+      "interactivityType": "active",
+      "learningResourceType": "game"
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>🧠 Memory Match</h1>
+        <div class="game-nav">
+            <a href="../index.html" class="nav-btn">Home</a>
+            <a href="math.html" class="nav-btn">Math Quest</a>
+            <a href="words.html" class="nav-btn">Word Builder</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="grid" id="grid"></div>
+        <div id="message">Click cards to find matching pairs!</div>
+        <button id="restart">New Game</button>
+        <div id="score">Matches: 0 / 6</div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Jerusalem Hills Kids - Safe & Educational</p>
+        <p><a href="../index.html">Back to Kids Zone</a> | <a href="../../index.html">Main Site</a></p>
+    </footer>
+
+    <script>
+        const emojis = ["🍎", "🍌", "🍒", "🍇", "🍉", "🥝"];
+        let cards = [];
+        let first = null, second = null, lock = false, matches = 0;
+
+        function initGame() {
+            // Reset game state
+            matches = 0;
+            first = null;
+            second = null;
+            lock = false;
+
+            // Create shuffled card array
+            cards = [...emojis, ...emojis].sort(() => 0.5 - Math.random());
+
+            // Clear and rebuild grid
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+
+            cards.forEach(emoji => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.dataset.emoji = emoji;
+                div.onclick = handleCardClick;
+                grid.appendChild(div);
+            });
+
+            document.getElementById('score').textContent = `Matches: 0 / ${emojis.length}`;
+            document.getElementById('message').textContent = 'Click cards to find matching pairs!';
+        }
+
+        function handleCardClick() {
+            // Prevent clicks during lock or on already revealed cards
+            if (lock || this === first || this.style.visibility === 'hidden' || this.textContent !== '') {
+                return;
+            }
+
+            // Show the emoji
+            this.textContent = this.dataset.emoji;
+
+            if (!first) {
+                // First card selected
+                first = this;
+                return;
+            }
+
+            // Second card selected
+            second = this;
+            lock = true;
+
+            setTimeout(() => {
+                if (first.dataset.emoji === second.dataset.emoji) {
+                    // Match found!
+                    first.style.visibility = 'hidden';
+                    second.style.visibility = 'hidden';
+                    matches++;
+
+                    document.getElementById('score').textContent = `Matches: ${matches} / ${emojis.length}`;
+
+                    if (matches === emojis.length) {
+                        document.getElementById('message').textContent = "🎉 You matched all pairs! Great job!";
+                        document.getElementById('message').style.color = "#4CAF50";
+                    }
+                } else {
+                    // No match - hide cards again
+                    first.textContent = "";
+                    second.textContent = "";
+                }
+
+                // Reset for next turn
+                first = null;
+                second = null;
+                lock = false;
+            }, 800);
+        }
+
+        document.getElementById('restart').onclick = initGame;
+
+        // Initialize game on load
+        window.onload = initGame;
+    </script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+/* Jerusalem Hills Kids Zone - Main Stylesheet */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fffdf6 0%, #fff5e6 100%);
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+.kids-header {
+    background: linear-gradient(135deg, #ffcc00 0%, #ffb700 100%);
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-bottom: 4px solid #ff6f61;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.kids-logo {
+    max-width: 60px;
+    height: auto;
+}
+
+.kids-header h1 {
+    color: #fff;
+    font-size: 2em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.kids-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.nav-button {
+    background: #fff;
+    color: #ff6f61;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.nav-button:hover {
+    background: #ff6f61;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255,111,97,0.4);
+}
+
+.parent-link {
+    background: #e0e0e0;
+    color: #666;
+}
+
+.parent-link:hover {
+    background: #999;
+    color: #fff;
+}
+
+/* Main Content */
+.kids-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.hero h2 {
+    font-size: 2.5em;
+    color: #ff6f61;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 1.3em;
+    color: #666;
+}
+
+/* Games Grid */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.game-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.game-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.math-game:hover {
+    border-color: #4CAF50;
+}
+
+.words-game:hover {
+    border-color: #2196F3;
+}
+
+.memory-game:hover {
+    border-color: #9C27B0;
+}
+
+.game-icon {
+    font-size: 4em;
+    margin-bottom: 15px;
+}
+
+.game-card h3 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: #ff6f61;
+}
+
+.game-card p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* Coming Soon Section */
+.coming-soon {
+    text-align: center;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.coming-soon h3 {
+    font-size: 2em;
+    color: #ffb700;
+    margin-bottom: 10px;
+}
+
+.coming-soon p {
+    color: #666;
+    font-size: 1.2em;
+}
+
+/* Footer */
+.kids-footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.kids-footer a {
+    color: #ffcc00;
+    text-decoration: none;
+}
+
+.kids-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .kids-header h1 {
+        font-size: 1.5em;
+    }
+
+    .hero h2 {
+        font-size: 2em;
+    }
+
+    .games-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}

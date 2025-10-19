@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Quest - Free Addition Game for Kids | Jerusalem Hills Kids</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Practice addition with Math Quest! Fun, interactive math game for kids ages 5-12. Improve mental math skills while having fun. No ads, completely free.">
+    <meta name="keywords" content="math game, addition game, kids math, learning math, educational game, arithmetic practice">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/kids/games/math.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Math Quest - Free Addition Game for Kids">
+    <meta property="og:description" content="Practice addition with Math Quest! Fun, interactive math game for kids ages 5-12.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jerusalemhills.com/kids/games/math.html">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../assets/css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Game",
+      "name": "Math Quest",
+      "description": "Interactive addition game for children to practice mental math skills",
+      "audience": {
+        "@type": "PeopleAudience",
+        "suggestedMinAge": 5,
+        "suggestedMaxAge": 12
+      },
+      "educationalUse": "Mathematics practice",
+      "educationalLevel": "Elementary",
+      "isAccessibleForFree": true,
+      "interactivityType": "active",
+      "learningResourceType": "game"
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>🧮 Math Quest</h1>
+        <div class="game-nav">
+            <a href="../index.html" class="nav-btn">Home</a>
+            <a href="words.html" class="nav-btn">Word Builder</a>
+            <a href="memory.html" class="nav-btn">Memory Match</a>
+        </div>
+    </header>
+
+    <main>
+        <div id="question">Press Start to Begin!</div>
+        <input id="answer" type="number" placeholder="Your answer">
+        <div>
+            <button id="submit">Submit Answer</button>
+            <button id="start">Start Game</button>
+        </div>
+        <div id="result"></div>
+        <div id="score">Score: 0</div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Jerusalem Hills Kids - Safe & Educational</p>
+        <p><a href="../index.html">Back to Kids Zone</a> | <a href="../../index.html">Main Site</a></p>
+    </footer>
+
+    <script>
+        let num1, num2, answer, score = 0;
+        const q = document.getElementById('question');
+        const a = document.getElementById('answer');
+        const r = document.getElementById('result');
+        const s = document.getElementById('score');
+
+        function newQuestion() {
+            num1 = Math.floor(Math.random() * 10) + 1;
+            num2 = Math.floor(Math.random() * 10) + 1;
+            answer = num1 + num2;
+            q.textContent = `What is ${num1} + ${num2}?`;
+            a.value = "";
+            r.textContent = "";
+            a.focus();
+        }
+
+        document.getElementById('start').onclick = () => {
+            score = 0;
+            s.textContent = `Score: ${score}`;
+            newQuestion();
+        };
+
+        document.getElementById('submit').onclick = checkAnswer;
+
+        // Allow Enter key to submit
+        a.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkAnswer();
+        });
+
+        function checkAnswer() {
+            if (q.textContent === "Press Start to Begin!") {
+                r.textContent = "Click Start Game first!";
+                return;
+            }
+
+            const userAnswer = parseInt(a.value);
+            if (isNaN(userAnswer)) {
+                r.textContent = "Please enter a number!";
+                return;
+            }
+
+            if (userAnswer === answer) {
+                score++;
+                r.textContent = "✅ Correct! Great job!";
+                r.style.color = "#4CAF50";
+            } else {
+                r.textContent = `❌ Not quite! The answer is ${answer}`;
+                r.style.color = "#ff6f61";
+            }
+            s.textContent = `Score: ${score}`;
+
+            setTimeout(newQuestion, 1500);
+        }
+    </script>
+</body>
+</html>
