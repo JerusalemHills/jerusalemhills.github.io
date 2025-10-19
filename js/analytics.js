@@ -1,16 +1,16 @@
 // Google Analytics 4 Configuration
-// Replace G-VE3Z9354M2 with your actual measurement ID
+// Jerusalem Hills Analytics - Stream ID: 2024248806
 
 // This script should be included in the <head> of every page
 // Example: <script src="/js/analytics.js"></script>
 
 (function() {
-    // GA4 Measurement ID - UPDATE THIS WITH YOUR ACTUAL ID
+    // GA4 Measurement ID - CONFIGURED
     const GA_MEASUREMENT_ID = 'G-VE3Z9354M2';
 
-    // Only load if not already loaded and ID is configured
-    if (window.gtag || GA_MEASUREMENT_ID === 'G-VE3Z9354M2') {
-        console.warn('Google Analytics: Please configure your GA4 measurement ID in /js/analytics.js');
+    // Only load if not already loaded
+    if (window.gtag) {
+        console.log('Google Analytics: Already loaded');
         return;
     }
 

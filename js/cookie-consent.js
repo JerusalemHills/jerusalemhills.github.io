@@ -60,7 +60,7 @@
 
         loadGoogleAnalytics: function() {
             // Only load if not already loaded and consent given
-            if (typeof gtag === 'undefined' && GA_MEASUREMENT_ID !== 'G-VE3Z9354M2') {
+            if (typeof gtag === 'undefined') {
                 const script = document.createElement('script');
                 script.async = true;
                 script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
