@@ -7,7 +7,7 @@
 
     // AdSense Configuration
     const ADSENSE_CONFIG = {
-        client: 'ca-pub-1738161253720', // Your AdSense publisher ID
+        client: 'ca-pub-1738161253720231', // Your AdSense publisher ID
         limitedAds: true,  // Enable Limited Ads (non-personalized)
         slots: {
             homepage_banner: 'XXXXXXXXXX',      // Replace with actual slot ID
