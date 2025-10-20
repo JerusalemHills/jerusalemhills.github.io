@@ -4,6 +4,24 @@
 // This script should be included in the <head> of every page
 // Example: <script src="/js/analytics.js"></script>
 
+// Google AdSense - Load first for verification
+(function() {
+    const ADSENSE_CLIENT_ID = 'ca-pub-1738161253720231';
+
+    // Only load if not already loaded
+    if (document.querySelector('script[src*="adsbygoogle.js"]')) {
+        console.log('Google AdSense: Already loaded');
+    } else {
+        const adsenseScript = document.createElement('script');
+        adsenseScript.async = true;
+        adsenseScript.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`;
+        adsenseScript.crossOrigin = 'anonymous';
+        document.head.appendChild(adsenseScript);
+        console.log('Google AdSense initialized with client:', ADSENSE_CLIENT_ID);
+    }
+})();
+
+// Google Analytics 4
 (function() {
     // GA4 Measurement ID - CONFIGURED
     const GA_MEASUREMENT_ID = 'G-VE3Z9354M2';
