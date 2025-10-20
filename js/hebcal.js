@@ -4,7 +4,7 @@
 const HebrewCalendar = {
     months: ['Nisan', 'Iyar', 'Sivan', 'Tammuz', 'Av', 'Elul', 'Tishrei', 'Cheshvan', 'Kislev', 'Tevet', 'Shevat', 'Adar', 'Adar II'],
     
-    // Get Hebrew date with day of week
+    // Get Hebrew date with day of week (using Jerusalem timezone)
     getHebrewDate() {
         const now = new Date();
         const hebrewFormatter = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', {
@@ -12,8 +12,9 @@ const HebrewCalendar = {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
+            timeZone: 'Asia/Jerusalem'
         });
-        
+
         return hebrewFormatter.format(now);
     },
     
@@ -47,7 +48,8 @@ const HebrewCalendar = {
             const gregorianDate = new Date().toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
-                day: 'numeric'
+                day: 'numeric',
+                timeZone: 'Asia/Jerusalem'
             });
             
             dateElement.innerHTML = `

@@ -56,6 +56,7 @@
   <script src="js/hebcal.js"></script>
   <script src="js/rss-feed-config.js"></script>
   <script src="js/ticker.js"></script>
+  <script src="js/hebrew-keyboard.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     // Load header after DOM and Lucide are ready
@@ -72,6 +73,10 @@
           const script = document.createElement('script');
           script.src = '/js/mobile-nav.js';
           document.head.appendChild(script);
+          // Initialize Hebrew keyboard after header is loaded
+          if (typeof window.initHebrewKeyboard === 'function') {
+            window.initHebrewKeyboard();
+          }
         })
         .catch(err => console.error('Header load error:', err));
     });
@@ -474,89 +479,6 @@
   <script src="/js/lazy-load.js"></script>
   <script src="/js/search.js"></script>
   <script src="/js/mobile-nav.js"></script>
-
-  <!-- Hebrew Keyboard Script -->
-  <script>
-    (function() {
-      const container = document.getElementById('hebrew-keyboard-container');
-      const toggleBtn = document.getElementById('keyboard-toggle-nav');
-      const toggleBtnMobile = document.getElementById('keyboard-toggle-mobile');
-      const closeBtn = document.getElementById('keyboard-close');
-      const keys = document.querySelectorAll('.key');
-      const searchInput = document.querySelector('.search-input');
-      let isKeyboardActive = false;
-      let currentInput = null;
-
-      function toggleKeyboard(e) {
-        e.preventDefault();
-        isKeyboardActive = !isKeyboardActive;
-        container.classList.toggle('active');
-        if (isKeyboardActive && searchInput) {
-          searchInput.focus();
-          currentInput = searchInput;
-        } else {
-          currentInput = null;
-        }
-      }
-
-      function closeKeyboard() {
-        isKeyboardActive = false;
-        container.classList.remove('active');
-        currentInput = null;
-      }
-
-      document.addEventListener('focusin', function(e) {
-        if (isKeyboardActive && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
-          currentInput = e.target;
-        }
-      });
-
-      if (toggleBtn) toggleBtn.addEventListener('click', toggleKeyboard);
-      if (toggleBtnMobile) toggleBtnMobile.addEventListener('click', toggleKeyboard);
-      if (closeBtn) closeBtn.addEventListener('click', closeKeyboard);
-
-      keys.forEach(key => {
-        key.addEventListener('click', function() {
-          if (!currentInput) {
-            if (searchInput) {
-              searchInput.focus();
-              currentInput = searchInput;
-            } else {
-              return;
-            }
-          }
-
-          const char = this.getAttribute('data-char');
-          const action = this.getAttribute('data-action');
-
-          if (action === 'backspace') {
-            const cursorPos = currentInput.selectionStart;
-            if (cursorPos > 0) {
-              currentInput.value = currentInput.value.substring(0, cursorPos - 1) + currentInput.value.substring(cursorPos);
-              currentInput.selectionStart = currentInput.selectionEnd = cursorPos - 1;
-            }
-          } else if (action === 'enter') {
-            if (currentInput.tagName === 'TEXTAREA') {
-              const cursorPos = currentInput.selectionStart;
-              currentInput.value = currentInput.value.substring(0, cursorPos) + '\n' + currentInput.value.substring(cursorPos);
-              currentInput.selectionStart = currentInput.selectionEnd = cursorPos + 1;
-            }
-          } else if (char) {
-            const cursorPos = currentInput.selectionStart;
-            currentInput.value = currentInput.value.substring(0, cursorPos) + char + currentInput.value.substring(cursorPos);
-            currentInput.selectionStart = currentInput.selectionEnd = cursorPos + 1;
-          }
-          currentInput.focus();
-        });
-      });
-
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && isKeyboardActive) {
-          closeKeyboard();
-        }
-      });
-    })();
-  </script>
 
   <!-- YouTube Video Carousel Script -->
   <script>
