@@ -28,6 +28,20 @@
       // Initialize mobile menu toggle after header is loaded
       initializeMobileMenu();
 
+      // Load and initialize Hebrew keyboard script
+      if (!document.querySelector('script[src="/js/hebrew-keyboard.js"]')) {
+        const hebrewKeyboardScript = document.createElement('script');
+        hebrewKeyboardScript.src = '/js/hebrew-keyboard.js';
+        hebrewKeyboardScript.onload = function() {
+          if (typeof window.initHebrewKeyboard === 'function') {
+            window.initHebrewKeyboard();
+          }
+        };
+        document.head.appendChild(hebrewKeyboardScript);
+      } else if (typeof window.initHebrewKeyboard === 'function') {
+        window.initHebrewKeyboard();
+      }
+
       // Dispatch custom event to notify that header is loaded
       document.dispatchEvent(new CustomEvent('headerLoaded'));
     })

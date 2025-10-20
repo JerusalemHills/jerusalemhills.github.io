@@ -376,7 +376,11 @@ class BackgammonMultiplayer {
      * Get shareable game link
      */
     getGameLink() {
-        const baseUrl = window.location.origin + window.location.pathname;
+        // Use production domain for shareable links
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const baseUrl = isLocalhost
+            ? 'https://jerusalemhills.com/games/backgammon/backgammon.html'
+            : window.location.origin + window.location.pathname;
         return `${baseUrl}?game=${this.gameId}`;
     }
 }
