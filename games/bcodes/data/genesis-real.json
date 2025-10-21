@@ -1,0 +1,14 @@
+{
+  "book": "genesis",
+  "title": "בראשית",
+  "hebrewTitle": "בְּרֵאשִׁית",
+  "description": "The first book of the Torah from the Leningrad Codex",
+  "source": "Leningrad Codex via torahcodes_fork repository",
+  "url": "https://raw.githubusercontent.com/roni762583/torahcodes_fork/main/texts/text_leningrad_1genesis.json",
+  "metadata": {
+    "version": "Tanach with Text Only",
+    "license": "Public Domain",
+    "language": "he",
+    "encoding": "UTF-8"
+  }
+}

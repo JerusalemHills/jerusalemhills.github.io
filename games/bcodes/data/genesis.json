@@ -1,0 +1,182 @@
+{
+  "book": "genesis",
+  "title": "בראשית",
+  "hebrewTitle": "בְּרֵאשִׁית",
+  "description": "The first book of the Torah, containing the creation narrative and the stories of the patriarchs",
+  "chapters": [
+    {
+      "number": 1,
+      "verses": [
+        {
+          "number": 1,
+          "text": "בראשית ברא אלהים את השמים ואת הארץ",
+          "transliteration": "B'reishit bara Elohim et hashamayim v'et ha'aretz"
+        },
+        {
+          "number": 2,
+          "text": "והארץ היתה תהו ובהו וחשך על פני תהום ורוח אלהים מרחפת על פני המים",
+          "transliteration": "V'ha'aretz haytah tohu vavohu v'choshech al p'nei t'hom v'ruach Elohim m'rachefet al p'nei hamayim"
+        },
+        {
+          "number": 3,
+          "text": "ויאמר אלהים יהי אור ויהי אור",
+          "transliteration": "Vayomer Elohim yehi or vayehi or"
+        },
+        {
+          "number": 4,
+          "text": "וירא אלהים את האור כי טוב ויבדל אלהים בין האור ובין החשך",
+          "transliteration": "Vayar Elohim et ha'or ki tov vayavdel Elohim bein ha'or uvein hachoshech"
+        },
+        {
+          "number": 5,
+          "text": "ויקרא אלהים לאור יום ולחשך קרא לילה ויהי ערב ויהי בקר יום אחד",
+          "transliteration": "Vayikra Elohim la'or yom v'lachoshech kara laylah vayehi erev vayehi voker yom echad"
+        },
+        {
+          "number": 6,
+          "text": "ויאמר אלהים יהי רקיע בתוך המים ויהי מבדיל בין מים למים",
+          "transliteration": "Vayomer Elohim yehi rakia b'toch hamayim vayehi mavdil bein mayim lamayim"
+        },
+        {
+          "number": 7,
+          "text": "ויעש אלהים את הרקיע ויבדל בין המים אשר מתחת לרקיע ובין המים אשר מעל לרקיע ויהי כן",
+          "transliteration": "Vaya'as Elohim et harakia vayavdel bein hamayim asher mitachat larakia uvein hamayim asher me'al larakia vayehi chen"
+        },
+        {
+          "number": 8,
+          "text": "ויקרא אלהים לרקיע שמים ויהי ערב ויהי בקר יום שני",
+          "transliteration": "Vayikra Elohim larakia shamayim vayehi erev vayehi voker yom sheini"
+        },
+        {
+          "number": 9,
+          "text": "ויאמר אלהים יקוו המים מתחת השמים אל מקום אחד ותראה היבשה ויהי כן",
+          "transliteration": "Vayomer Elohim yikavu hamayim mitachat hashamayim el makom echad v'tera'eh hayabashah vayehi chen"
+        },
+        {
+          "number": 10,
+          "text": "ויקרא אלהים ליבשהארץ ולמקוה המים קרא ימים וירא אלהים כי טוב",
+          "transliteration": "Vayikra Elohim layabashah eretz ul'mikveh hamayim kara yamim vayar Elohim ki tov"
+        },
+        {
+          "number": 11,
+          "text": "ויאמר אלהים תדשא הארץ דשא עשב מזריע זרע עץ פרי עשה פרי למינו אשר זרעו בו על הארץ ויהי כן",
+          "transliteration": "Vayomer Elohim tadsheh ha'aretz deshah esev mazria zera etz p'ri oseh p'ri l'mino asher zaro vo al ha'aretz vayehi chen"
+        },
+        {
+          "number": 12,
+          "text": "ותוצא הארץ דשא עשב מזריע זרע למינהו ועץ עשה פרי אשר זרעו בו למינהו וירא אלהים כי טוב",
+          "transliteration": "Vatotze ha'aretz deshah esev mazria zera l'minehu v'etz oseh p'ri asher zaro vo l'minehu vayar Elohim ki tov"
+        },
+        {
+          "number": 13,
+          "text": "ויהי ערב ויהי בקר יום שלישי",
+          "transliteration": "Vayehi erev vayehi voker yom sh'lishi"
+        },
+        {
+          "number": 14,
+          "text": "ויאמר אלהים יהי מארת ברקיע השמים להבדיל בין היום ובין הלילה והיו לאתת ולמועדים ולימים ושנים",
+          "transliteration": "Vayomer Elohim yehi m'orot birakia hashamayim l'havdil bein hayom uvein halaylah v'hayu l'otot ul'mo'adim ul'yamim v'shanim"
+        },
+        {
+          "number": 15,
+          "text": "והיו למאורת ברקיע השמים להאיר על הארץ ויהי כן",
+          "transliteration": "V'hayu lim'orot birakia hashamayim l'ha'ir al ha'aretz vayehi chen"
+        },
+        {
+          "number": 16,
+          "text": "ויעש אלהים את שני המארת הגדלים את המאור הגדל לממשלת היום ואת המאור הקטן לממשלת הלילה ואת הכוכבים",
+          "transliteration": "Vaya'as Elohim et sh'nei ham'orot hag'dolim et hamaor hagadol l'memshelet hayom v'et hamaor hakaton l'memshelet halaylah v'et hakochavim"
+        },
+        {
+          "number": 17,
+          "text": "ויתן אתם אלהים ברקיע השמים להאיר על הארץ",
+          "transliteration": "Vayiten otam Elohim birakia hashamayim l'ha'ir al ha'aretz"
+        },
+        {
+          "number": 18,
+          "text": "ולמשל ביום ובלילה ולהבדיל בין האור ובין החשך וירא אלהים כי טוב",
+          "transliteration": "V'limshol bayom uvalaylah ul'havdil bein ha'or uvein hachoshech vayar Elohim ki tov"
+        },
+        {
+          "number": 19,
+          "text": "ויהי ערב ויהי בקר יום רביעי",
+          "transliteration": "Vayehi erev vayehi voker yom r'vi'i"
+        },
+        {
+          "number": 20,
+          "text": "ויאמר אלהים ישרצו המים שרץ נפש חיה ועוף יעופף על הארץ על פני רקיע השמים",
+          "transliteration": "Vayomer Elohim yishretzu hamayim sheretz nefesh chayah v'of ye'ofef al ha'aretz al p'nei rakia hashamayim"
+        },
+        {
+          "number": 21,
+          "text": "ויברא אלהים את התנינם הגדלים ואת כל נפש החיה הרמשת אשר שרצו המים למינהם ואת כל עוף כנף למינהו וירא אלהים כי טוב",
+          "transliteration": "Vayivra Elohim et hataninim hag'dolim v'et kol nefesh hachayah haromeset asher shartzu hamayim l'mineihem v'et kol of kanaf l'minehu vayar Elohim ki tov"
+        },
+        {
+          "number": 22,
+          "text": "ויברך אתם אלהים לאמר פרו ורבו ומלאו את המים בימים והעוף ירב בארץ",
+          "transliteration": "Vayvarech otam Elohim lemor p'ru urvu umil'u et hamayim bayamim v'ha'of yirev ba'aretz"
+        },
+        {
+          "number": 23,
+          "text": "ויהי ערב ויהי בקר יום חמישי",
+          "transliteration": "Vayehi erev vayehi voker yom chamishi"
+        },
+        {
+          "number": 24,
+          "text": "ויאמר אלהים תוצא הארץ נפש חיה למינה בהמה ורמש וחיתו ארץ למינה ויהי כן",
+          "transliteration": "Vayomer Elohim totze ha'aretz nefesh chayah l'minah b'hemah varemes v'chayto eretz l'minah vayehi chen"
+        },
+        {
+          "number": 25,
+          "text": "ויעש אלהים את חית הארץ למינה ואת הבהמה למינה ואת כל רמש האדמה למינהו וירא אלהים כי טוב",
+          "transliteration": "Vaya'as Elohim et chayat ha'aretz l'minah v'et hab'hemah l'minah v'et kol remes ha'adamah l'minehu vayar Elohim ki tov"
+        },
+        {
+          "number": 26,
+          "text": "ויאמר אלהים נעשה אדם בצלמנו כדמותנו וירדו בדגת הים ובעוף השמים ובבהמה ובכל הארץ ובכל הרמש הרמש על הארץ",
+          "transliteration": "Vayomer Elohim na'aseh adam b'tzalmenu kid'mutenu v'yirdu bidgat hayam uv'of hashamayim uvab'hemah uv'chol ha'aretz uv'chol haremes haromes al ha'aretz"
+        },
+        {
+          "number": 27,
+          "text": "ויברא אלהים את האדם בצלמו בצלם אלהים ברא אתו זכר ונקבה ברא אתם",
+          "transliteration": "Vayivra Elohim et ha'adam b'tzalmo b'tzelem Elohim bara oto zachar un'kevah bara otam"
+        },
+        {
+          "number": 28,
+          "text": "ויברך אתם אלהים ויאמר להם אלהים פרו ורבו ומלאו את הארץ וכבשה ורדו בדגת הים ובעוף השמים ובכל חיה הרמשת על הארץ",
+          "transliteration": "Vayvarech otam Elohim vayomer lahem Elohim p'ru urvu umil'u et ha'aretz v'chivshuhah urdu bidgat hayam uv'of hashamayim uv'chol chayah haromeset al ha'aretz"
+        },
+        {
+          "number": 29,
+          "text": "ויאמר אלהים הנה נתתי לכם את כל עשב זרע זרע אשר על פני כל הארץ ואת כל העץ אשר בו פרי עץ זרע זרע לכם יהיה לאכלה",
+          "transliteration": "Vayomer Elohim hineh natati lachem et kol esev zorea zera asher al p'nei chol ha'aretz v'et kol ha'etz asher bo f'ri etz zorea zera lachem yihyeh l'ochlah"
+        },
+        {
+          "number": 30,
+          "text": "ולכל חית הארץ ולכל עוף השמים ולכל רומש על הארץ אשר בו נפש חיה את כל ירק עשב לאכלה ויהי כן",
+          "transliteration": "Ul'chol chayat ha'aretz ul'chol of hashamayim ul'chol romes al ha'aretz asher bo nefesh chayah et kol yerek esev l'ochlah vayehi chen"
+        },
+        {
+          "number": 31,
+          "text": "וירא אלהים את כל אשר עשה והנה טוב מאד ויהי ערב ויהי בקר יום הששי",
+          "transliteration": "Vayar Elohim et kol asher asah v'hineh tov m'od vayehi erev vayehi voker yom hashishi"
+        }
+      ]
+    }
+  ],
+  "fullText": "בראשיתבראאלהיםאתהשמיםואתהארץוהארץהיתהתהוובהווחשךעלפניתהוםורוחאלהיםמרחפתעלפניהמיםויאמראלהיםיהיאורויהיאורויראאלהיםאתהאורכיטובויבדלאלהיםביןהאורוביןהחשךויקראאלהיםלאוריוםולחשךקראלילהויהיערבויהיבקריוםאחדויאמראלהיםיהירקיעבתוךהמיםויהימבדילביןמיםלמיםויעשאלהיםאתהרקיעויבדלביןהמיםאשרמתחתלרקיעוביןהמיםאשרמעללרקיעויהיכןויקראאלהיםלרקיעשמיםויהיערבויהיבקריוםשניויאמראלהיםיקווהמיםמתחתהשמיםאלמקוםאחדותראההיבשהויהיכןויקראאלהיםליבשהארץולמקוההמיםקראימיםויראאלהיםכיטובויאמראלהיםתדשאהארץדשאעשבמזריעזרעעץפריעשהפרילמינואשרזרעובועלהארץויהיכןותוצאהארץדשאעשבמזריעזרעלמינהוועץעשהפריאשרזרעובולמינהוויראאלהיםכיטובויהיערבויהיבקריוםשלישיויאמראלהיםיהימארתברקיעהשמיםלהבדילביןהיוםוביןהלילהוהיולאתתולמועדיםולימיםושניםוהיולמאורתברקיעהשמיםלהאירעלהארץויהיכןויעשאלהיםאתשניהמארתהגדליםאתהמאורהגדללממשלתהיוםואתהמאורהקטןלממשלתהלילהואתהכוכביםויתןאתםאלהיםברקיעהשמיםלהאירעלהארץולמשלביוםובלילהולהבדילביןהאורוביןהחשךויראאלהיםכיטובויהיערבויהיבקריוםרביעיויאמראלהיםישרצוהמיםשרץנפשחיהועופיעופפעלהארץעלפנירקיעהשמיםויבראאלהיםאתהתניניםהגדליםואתכלנפשהחיההרמשתאשרשרצוהמיםלמינהםואתכלעופכנףלמינהוויראאלהיםכיטובויברךאתםאלהיםלאמרפרוורבוומלאואתהמיםבימיםוהעופירבבארץויהיערבויהיבקריוםחמישיויאמראלהיםתוצאהארץנפשחיהלמינהבהמהורמשוחיתוארץלמינהויהיכןויעשאלהיםאתחיתהארץלמינהואתהבהמהלמינהואתכלרמשהאדמהלמינהוויראאלהיםכיטובויאמראלהיםנעשהאדםבצלמנוכדמותנוויردובדגתהיםובעופהשמיםובבהמהובכלהארץובכלהרמשהרמשעלהארץויבראאלהיםאתהאדםבצלמובצלםאלהיםבראאתוזכרונקבהבראאתםויברךאתםאלהיםויאמרלהםאלהיםפרוורבוומלאואתהארץוכבשהורדובדגתהיםובעופהשמיםובכלחיההרמשתעלהארץויאמראלהיםהנהנתתילכםאתכלעשבזרעזרעאשרעלפניכלהארץואתכלהעץאשרבופריעץזרעזרעלכםיהיהלאכלהולכלחיתהארץולכלעופהשמיםולכלרומשעלהארץאשרבונפשחיהאתכלירקעשבלאכלהויהיכןויראאלהיםאתכלאשרעשהוהנהטובמאדויהיערבויהיבקריוםהששי",
+  "statistics": {
+    "totalLetters": 2066,
+    "totalWords": 492,
+    "totalVerses": 31,
+    "totalChapters": 1
+  },
+  "metadata": {
+    "created": "2024-01-01",
+    "version": "1.0",
+    "source": "Koren Jerusalem Bible",
+    "encoding": "UTF-8",
+    "language": "Hebrew"
+  }
+}

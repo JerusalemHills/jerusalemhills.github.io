@@ -1,0 +1,475 @@
+/* Torah Codes Styling */
+.torah-codes-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+    direction: rtl;
+}
+
+/* Game Header */
+.game-header {
+    background: linear-gradient(135deg, #8B7355 0%, #D4A574 100%);
+    padding: 2rem;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.game-header h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.game-header h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.game-header p {
+    margin: 0;
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+/* Search Section */
+.search-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.search-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-weight: 500;
+    color: #333;
+    font-size: 1rem;
+}
+
+.input-group input,
+.input-group select {
+    padding: 0.75rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: #8B7355;
+    box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+}
+
+#search-term {
+    direction: rtl;
+    text-align: right;
+}
+
+.search-button {
+    grid-column: 1 / -1;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #8B7355 0%, #D4A574 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+}
+
+.search-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 115, 85, 0.3);
+}
+
+.search-button:active {
+    transform: translateY(0);
+}
+
+.search-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Progress Bar */
+.progress-container {
+    margin-top: 1rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #8B7355 0%, #D4A574 100%);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Results Section */
+.results-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.results-section h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.search-summary {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    border-right: 4px solid #8B7355;
+}
+
+.results-list {
+    margin-bottom: 2rem;
+}
+
+.result-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.result-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.result-term {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #8B7355;
+}
+
+.result-skip {
+    background: #e9ecef;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.9rem;
+}
+
+.result-positions {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #666;
+    direction: ltr;
+    text-align: left;
+}
+
+.gematria-value {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+/* Visualization */
+.visualization-container {
+    margin-top: 2rem;
+}
+
+.visualization-container h4 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+#matrix-canvas {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: white;
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+}
+
+.canvas-controls {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.canvas-controls button {
+    padding: 0.5rem 1rem;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.canvas-controls button:hover {
+    background: #e9ecef;
+}
+
+/* Information Section */
+.info-section {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.info-section h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.info-content {
+    line-height: 1.8;
+    color: #555;
+}
+
+.formula {
+    background: white;
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+    font-family: monospace;
+    font-size: 1.1rem;
+    text-align: center;
+    border: 1px solid #ddd;
+    direction: ltr;
+}
+
+.info-content ul {
+    margin: 1rem 0;
+}
+
+.info-content li {
+    margin-bottom: 0.5rem;
+}
+
+/* Hebrew Keyboard */
+.hebrew-keyboard {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    z-index: 1000;
+    max-width: 400px;
+}
+
+.keyboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    border-radius: 10px 10px 0 0;
+}
+
+.keyboard-header span {
+    font-weight: 500;
+}
+
+#close-keyboard {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.keyboard-keys {
+    padding: 1rem;
+}
+
+.key-row {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 0.25rem;
+    justify-content: center;
+}
+
+.key {
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+    min-width: 2.5rem;
+    text-align: center;
+    font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+    transition: background-color 0.2s ease;
+}
+
+.key:hover {
+    background: #e9ecef;
+}
+
+.key.wide {
+    flex: 1;
+    max-width: 100px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .torah-codes-container {
+        padding: 10px;
+    }
+    
+    .search-controls {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .game-header {
+        padding: 1.5rem;
+    }
+    
+    .game-header h1 {
+        font-size: 2rem;
+    }
+    
+    .game-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    #matrix-canvas {
+        max-width: 100%;
+    }
+    
+    .hebrew-keyboard {
+        right: 10px;
+        left: 10px;
+        bottom: 10px;
+        max-width: none;
+    }
+    
+    .result-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .canvas-controls {
+        flex-direction: column;
+    }
+    
+    .canvas-controls button {
+        width: 100%;
+    }
+    
+    .search-section {
+        padding: 1rem;
+    }
+    
+    .results-section {
+        padding: 1rem;
+    }
+}
+
+/* Loading States */
+.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #8B7355;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error States */
+.error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    border-radius: 5px;
+    border: 1px solid #f5c6cb;
+    margin: 1rem 0;
+}
+
+.warning {
+    background: #fff3cd;
+    color: #856404;
+    padding: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ffeaa7;
+    margin: 1rem 0;
+}
+
+.success {
+    background: #d1e7dd;
+    color: #0f5132;
+    padding: 1rem;
+    border-radius: 5px;
+    border: 1px solid #a3cfbb;
+    margin: 1rem 0;
+}

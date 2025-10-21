@@ -41,7 +41,7 @@
                 const headerIcons = document.querySelector('.header-icons');
                 if (headerIcons) {
                     const button = document.createElement('button');
-                    button.className = 'menu-button icon-button';
+                    button.className = 'menu-button';
                     button.setAttribute('aria-label', 'Menu');
                     button.innerHTML = `
                         <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -51,8 +51,10 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     `;
-                    headerIcons.insertBefore(button, headerIcons.firstChild);
+                    headerIcons.appendChild(button);
                     this.menuButton = button;
+                } else {
+                    console.warn('No .header-icons element found. Mobile navigation will not work.');
                 }
             }
 
@@ -79,6 +81,12 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path>
                             </svg>
                             Games
+                        </a>
+                        <a href="/games/bcodes/bcodes.html" class="mobile-link" style="padding-left: 40px;">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Torah Codes
                         </a>
                         <a href="/forum/" class="mobile-link">
                             <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
