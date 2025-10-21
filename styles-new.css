@@ -450,7 +450,7 @@ body {
     transition: max-height 0.3s ease-in-out;
   }
 
-  .mobile-menu.open {
+  .mobile-menu.active {
     max-height: 400px;
     padding: 0.5rem 0;
   }
