@@ -11,16 +11,33 @@
             { url: '/', title: 'Home', description: 'Jerusalem Hills homepage', keywords: ['home', 'main', 'jerusalem', 'hills'] },
             { url: '/about.html', title: 'About Us', description: 'Learn about Jerusalem Hills', keywords: ['about', 'information', 'history', 'mission'] },
             { url: '/contact.html', title: 'Contact', description: 'Get in touch with us', keywords: ['contact', 'email', 'support', 'help'] },
-            { url: '/market/', title: 'Marketplace', description: 'Jerusalem marketplace for authentic products', keywords: ['market', 'shop', 'products', 'buy', 'sell'] },
-            { url: '/games/', title: 'Games', description: 'Play online games', keywords: ['games', 'play', 'backgammon', 'chess', 'tetris', 'snake'] },
+            { url: '/marketplace.html', title: 'Marketplace', description: 'Jerusalem marketplace for authentic products', keywords: ['market', 'shop', 'products', 'buy', 'sell', 'stripe', 'checkout'] },
+            { url: '/games/', title: 'Games', description: 'Play online games', keywords: ['games', 'play', 'backgammon', 'chess', 'tetris', 'snake', '2048', 'trivia'] },
             { url: '/services-directory.html', title: 'Services', description: 'Local services directory', keywords: ['services', 'directory', 'local', 'utilities', 'emergency'] },
             { url: '/privacy-policy.html', title: 'Privacy Policy', description: 'Our privacy policy', keywords: ['privacy', 'policy', 'data', 'cookies'] },
             { url: '/terms-of-service.html', title: 'Terms of Service', description: 'Terms and conditions', keywords: ['terms', 'service', 'conditions', 'legal'] },
             { url: '/sidur.html', title: 'Siddur', description: 'Online prayer book', keywords: ['siddur', 'prayer', 'jewish', 'hebrew', 'תפילה'] },
-            { url: '/games/backgammon/backgammon.html', title: 'Backgammon', description: 'Play Backgammon online', keywords: ['backgammon', 'board game', 'strategy'] },
-            { url: '/games/tetris/', title: 'Tetris', description: 'Classic Tetris game', keywords: ['tetris', 'puzzle', 'blocks'] },
+            
+            // Games
+            { url: '/games/backgammon/backgammon.html', title: 'Backgammon', description: 'Play Backgammon online', keywords: ['backgammon', 'board game', 'strategy', 'classic'] },
+            { url: '/games/tetris/', title: 'Tetris', description: 'Classic Tetris game', keywords: ['tetris', 'puzzle', 'blocks', 'classic'] },
             { url: '/games/snake/', title: 'Snake', description: 'Classic Snake game', keywords: ['snake', 'arcade', 'classic'] },
-            { url: '/games/permutations/permutations.html', title: 'צירופים', description: 'Hebrew word game', keywords: ['hebrew', 'words', 'permutations', 'צירופים'] }
+            { url: '/games/permutations/permutations.html', title: 'צירופים', description: 'Hebrew word game', keywords: ['hebrew', 'words', 'permutations', 'צירופים', 'cultural'] },
+            { url: '/games/2048/2048.html', title: '2048', description: 'Classic addictive puzzle game', keywords: ['2048', 'puzzle', 'numbers', 'tiles', 'brain training'] },
+            { url: '/games/trivia/trivia.html', title: 'Jerusalem Heritage Quiz', description: 'Test your knowledge of Jerusalem history and culture', keywords: ['trivia', 'quiz', 'jerusalem', 'heritage', 'history', 'culture', 'educational'] },
+            { url: '/games/bcodes/bcodes.html', title: 'קודי תורה', description: 'Search for Torah Codes (ELS)', keywords: ['torah codes', 'bible codes', 'els', 'hebrew', 'religious', 'קודי תורה'] },
+            
+            // Kids Zone
+            { url: '/kids/', title: 'Kids Zone', description: 'Safe educational games for children ages 5-12', keywords: ['kids', 'children', 'educational', 'safe', 'family', 'coppa', 'games'] },
+            { url: '/kids/games/math.html', title: 'Math Quest', description: 'Addition practice game for kids', keywords: ['math', 'addition', 'kids', 'educational', 'arithmetic', 'practice'] },
+            { url: '/kids/games/subtraction.html', title: 'Subtraction Quest', description: 'Subtraction practice game for kids', keywords: ['subtraction', 'math', 'kids', 'educational', 'arithmetic', 'practice'] },
+            { url: '/kids/games/multiplication.html', title: 'Multiplication Master', description: 'Times tables practice game for kids', keywords: ['multiplication', 'times tables', 'math', 'kids', 'educational', 'arithmetic'] },
+            { url: '/kids/games/words.html', title: 'Word Builder', description: 'Word building game for kids', keywords: ['words', 'spelling', 'kids', 'educational', 'vocabulary'] },
+            { url: '/kids/games/memory.html', title: 'Memory Match', description: 'Memory matching game for kids', keywords: ['memory', 'matching', 'kids', 'educational', 'brain training'] },
+            
+            // Forum
+            { url: '/forum/', title: 'Community Forum', description: 'Jerusalem Hills community discussions', keywords: ['forum', 'community', 'discussion', 'chat'] },
+            { url: '/forum/forum.html', title: 'Forum', description: 'Community discussions and support', keywords: ['forum', 'community', 'discussion', 'support'] }
         ]
     };
 

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Master - Free Times Tables Game for Kids | Jerusalem Hills Kids</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Master multiplication tables with Multiplication Master! Interactive times tables game for kids ages 6-12. Practice multiplication facts in a fun way. No ads, completely free.">
+    <meta name="keywords" content="multiplication game, times tables, math game, kids math, learning multiplication, educational game, arithmetic practice">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/kids/games/multiplication.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Multiplication Master - Free Times Tables Game for Kids">
+    <meta property="og:description" content="Master multiplication tables with Multiplication Master! Interactive times tables game for kids ages 6-12.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jerusalemhills.com/kids/games/multiplication.html">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../assets/css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Sound Manager -->
+    <script src="../assets/js/sound-manager.js"></script>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Game",
+      "name": "Multiplication Master",
+      "description": "Interactive multiplication tables game for children to practice times tables",
+      "audience": {
+        "@type": "PeopleAudience",
+        "suggestedMinAge": 6,
+        "suggestedMaxAge": 12
+      },
+      "educationalUse": "Mathematics practice",
+      "educationalLevel": "Elementary",
+      "isAccessibleForFree": true,
+      "interactivityType": "active",
+      "learningResourceType": "game"
+    }
+    </script>
+
+    <style>
+        .table-select {
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 10px;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        .table-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .table-btn:hover {
+            transform: scale(1.05);
+        }
+        .table-btn.active {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+        }
+        .progress-ring {
+            width: 120px;
+            height: 120px;
+            margin: 20px auto;
+            position: relative;
+        }
+        .progress-ring svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        .progress-ring circle {
+            fill: none;
+            stroke-width: 8;
+        }
+        .progress-ring .bg {
+            stroke: #f0f0f0;
+        }
+        .progress-ring .progress {
+            stroke: #667eea;
+            stroke-linecap: round;
+            stroke-dasharray: 314;
+            stroke-dashoffset: 314;
+            transition: stroke-dashoffset 0.3s ease;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .achievement {
+            background: linear-gradient(135deg, #F2994A 0%, #F2C94C 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin: 10px 0;
+            display: none;
+            animation: bounceIn 0.5s ease;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .timer {
+            font-size: 20px;
+            color: #ff6f61;
+            margin: 10px 0;
+        }
+        .mode-select {
+            margin: 20px 0;
+        }
+        .mode-btn {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .mode-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>✖️ Multiplication Master</h1>
+        <div class="game-nav">
+            <a href="../index.html" class="nav-btn">Home</a>
+            <a href="math.html" class="nav-btn">Math Quest</a>
+            <a href="subtraction.html" class="nav-btn">Subtraction Quest</a>
+            <a href="words.html" class="nav-btn">Word Builder</a>
+            <a href="memory.html" class="nav-btn">Memory Match</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="mode-select">
+            <h3>Choose Mode:</h3>
+            <button class="mode-btn active" data-mode="practice">Practice Mode</button>
+            <button class="mode-btn" data-mode="challenge">Time Challenge</button>
+            <button class="mode-btn" data-mode="mixed">Mixed Tables</button>
+        </div>
+
+        <div class="table-select" id="tableSelect">
+            <h3 style="grid-column: 1 / -1; text-align: center;">Choose Times Table:</h3>
+            <button class="table-btn active" data-table="2">2×</button>
+            <button class="table-btn" data-table="3">3×</button>
+            <button class="table-btn" data-table="4">4×</button>
+            <button class="table-btn" data-table="5">5×</button>
+            <button class="table-btn" data-table="6">6×</button>
+            <button class="table-btn" data-table="7">7×</button>
+            <button class="table-btn" data-table="8">8×</button>
+            <button class="table-btn" data-table="9">9×</button>
+            <button class="table-btn" data-table="10">10×</button>
+            <button class="table-btn" data-table="11">11×</button>
+            <button class="table-btn" data-table="12">12×</button>
+        </div>
+
+        <div class="progress-ring">
+            <svg>
+                <circle class="bg" cx="60" cy="60" r="50"></circle>
+                <circle class="progress" cx="60" cy="60" r="50" id="progressCircle"></circle>
+            </svg>
+            <div class="progress-text" id="progressText">0/10</div>
+        </div>
+
+        <div class="timer" id="timer" style="display: none;">Time: 60s</div>
+
+        <div class="achievement" id="achievement"></div>
+
+        <div id="question">Choose a table and press Start!</div>
+        <input id="answer" type="number" placeholder="Your answer">
+        <div>
+            <button id="submit">Submit Answer</button>
+            <button id="start">Start Learning</button>
+            <button id="showTable" style="display: none;">Show Table 📋</button>
+        </div>
+        <div id="result"></div>
+        <div id="score">Score: 0 | Best: 0</div>
+        <div id="tableDisplay" style="display: none; margin: 20px 0; font-family: monospace;"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Jerusalem Hills Kids - Safe & Educational</p>
+        <p><a href="../index.html">Back to Kids Zone</a></p>
+    </footer>
+
+    <script>
+        let num1, num2, answer, score = 0, questionsAnswered = 0, totalQuestions = 10;
+        let selectedTable = 2;
+        let gameMode = 'practice';
+        let timeLeft = 60;
+        let timer;
+        let bestScores = JSON.parse(localStorage.getItem('multiplication-best') || '{}');
+        
+        const q = document.getElementById('question');
+        const a = document.getElementById('answer');
+        const r = document.getElementById('result');
+        const s = document.getElementById('score');
+        const progressCircle = document.getElementById('progressCircle');
+        const progressText = document.getElementById('progressText');
+        const achievement = document.getElementById('achievement');
+        const timerDisplay = document.getElementById('timer');
+        const tableDisplay = document.getElementById('tableDisplay');
+
+        // Update best score display
+        updateScoreDisplay();
+
+        // Mode selection
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                gameMode = btn.dataset.mode;
+                
+                if (gameMode === 'challenge') {
+                    timerDisplay.style.display = 'block';
+                    totalQuestions = 20;
+                } else {
+                    timerDisplay.style.display = 'none';
+                    totalQuestions = 10;
+                }
+                
+                if (gameMode === 'mixed') {
+                    document.getElementById('tableSelect').style.display = 'none';
+                } else {
+                    document.getElementById('tableSelect').style.display = 'grid';
+                }
+                
+                soundManager.play('select');
+                updateProgressDisplay();
+            });
+        });
+
+        // Table selection
+        document.querySelectorAll('.table-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.table-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedTable = parseInt(btn.dataset.table);
+                soundManager.play('select');
+            });
+        });
+
+        function updateScoreDisplay() {
+            const bestScore = bestScores[`${gameMode}-${selectedTable}`] || 0;
+            s.textContent = `Score: ${score} | Best: ${bestScore}`;
+        }
+
+        function updateProgressDisplay() {
+            const progress = (questionsAnswered / totalQuestions) * 314;
+            progressCircle.style.strokeDashoffset = 314 - progress;
+            progressText.textContent = `${questionsAnswered}/${totalQuestions}`;
+        }
+
+        function showTable() {
+            let tableText = `${selectedTable} Times Table:\n\n`;
+            for (let i = 1; i <= 12; i++) {
+                tableText += `${selectedTable} × ${i} = ${selectedTable * i}\n`;
+            }
+            tableDisplay.textContent = tableText;
+            tableDisplay.style.display = tableDisplay.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function newQuestion() {
+            if (gameMode === 'mixed') {
+                num1 = Math.floor(Math.random() * 11) + 2; // 2-12
+                num2 = Math.floor(Math.random() * 12) + 1; // 1-12
+            } else {
+                num1 = selectedTable;
+                num2 = Math.floor(Math.random() * 12) + 1;
+            }
+            
+            answer = num1 * num2;
+            q.textContent = `What is ${num1} × ${num2}?`;
+            a.value = "";
+            r.textContent = "";
+            a.focus();
+        }
+
+        function startTimer() {
+            timeLeft = 60;
+            timerDisplay.textContent = `Time: ${timeLeft}s`;
+            timer = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = `Time: ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            const accuracy = questionsAnswered > 0 ? Math.round((score / questionsAnswered) * 100) : 0;
+            q.textContent = `Game Over! Accuracy: ${accuracy}%`;
+            
+            // Save best score
+            const key = `${gameMode}-${selectedTable}`;
+            if (score > (bestScores[key] || 0)) {
+                bestScores[key] = score;
+                localStorage.setItem('multiplication-best', JSON.stringify(bestScores));
+                showAchievement("New Personal Best! 🏆");
+            }
+            
+            updateScoreDisplay();
+        }
+
+        function showAchievement(text) {
+            achievement.textContent = text;
+            achievement.style.display = 'block';
+            setTimeout(() => {
+                achievement.style.display = 'none';
+            }, 3000);
+        }
+
+        document.getElementById('start').onclick = () => {
+            soundManager.play('start');
+            score = 0;
+            questionsAnswered = 0;
+            updateScoreDisplay();
+            updateProgressDisplay();
+            
+            if (gameMode === 'challenge') {
+                startTimer();
+            } else if (timer) {
+                clearInterval(timer);
+            }
+            
+            newQuestion();
+            document.getElementById('showTable').style.display = 'inline-block';
+        };
+
+        document.getElementById('submit').onclick = checkAnswer;
+        document.getElementById('showTable').onclick = showTable;
+
+        // Allow Enter key to submit
+        a.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkAnswer();
+        });
+
+        function checkAnswer() {
+            if (q.textContent === "Choose a table and press Start!") {
+                r.textContent = "Click Start Learning first!";
+                return;
+            }
+
+            const userAnswer = parseInt(a.value);
+            if (isNaN(userAnswer)) {
+                r.textContent = "Please enter a number!";
+                return;
+            }
+
+            questionsAnswered++;
+
+            if (userAnswer === answer) {
+                score++;
+                soundManager.play('correct');
+                
+                if (score % 5 === 0 && score > 0) {
+                    soundManager.play('milestone');
+                    showAchievement("Great job! Keep going! 🌟");
+                }
+                
+                r.textContent = "✅ Excellent! Well done!";
+                r.style.color = "#4CAF50";
+            } else {
+                soundManager.play('incorrect');
+                r.textContent = `❌ ${num1} × ${num2} = ${answer}. Try to remember!`;
+                r.style.color = "#ff6f61";
+            }
+            
+            updateScoreDisplay();
+            updateProgressDisplay();
+
+            if (questionsAnswered >= totalQuestions) {
+                setTimeout(() => {
+                    if (timer) clearInterval(timer);
+                    endGame();
+                }, 1500);
+            } else {
+                setTimeout(() => {
+                    soundManager.play('next');
+                    newQuestion();
+                }, 1500);
+            }
+        }
+    </script>
+</body>
+</html>

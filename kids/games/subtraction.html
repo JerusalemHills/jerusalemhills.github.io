@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtraction Quest - Free Math Game for Kids | Jerusalem Hills Kids</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Practice subtraction with Subtraction Quest! Fun, interactive math game for kids ages 5-12. Improve mental math skills while having fun. No ads, completely free.">
+    <meta name="keywords" content="subtraction game, math game, kids math, learning math, educational game, arithmetic practice">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/kids/games/subtraction.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Subtraction Quest - Free Math Game for Kids">
+    <meta property="og:description" content="Practice subtraction with Subtraction Quest! Fun, interactive math game for kids ages 5-12.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jerusalemhills.com/kids/games/subtraction.html">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../assets/css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Sound Manager -->
+    <script src="../assets/js/sound-manager.js"></script>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Game",
+      "name": "Subtraction Quest",
+      "description": "Interactive subtraction game for children to practice mental math skills",
+      "audience": {
+        "@type": "PeopleAudience",
+        "suggestedMinAge": 5,
+        "suggestedMaxAge": 12
+      },
+      "educationalUse": "Mathematics practice",
+      "educationalLevel": "Elementary",
+      "isAccessibleForFree": true,
+      "interactivityType": "active",
+      "learningResourceType": "game"
+    }
+    </script>
+
+    <style>
+        .difficulty-select {
+            margin: 20px 0;
+        }
+        .difficulty-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+        .difficulty-btn:hover {
+            transform: scale(1.05);
+        }
+        .difficulty-btn.active {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .streak-counter {
+            font-size: 18px;
+            color: #ff6f61;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>➖ Subtraction Quest</h1>
+        <div class="game-nav">
+            <a href="../index.html" class="nav-btn">Home</a>
+            <a href="math.html" class="nav-btn">Math Quest</a>
+            <a href="words.html" class="nav-btn">Word Builder</a>
+            <a href="memory.html" class="nav-btn">Memory Match</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="difficulty-select">
+            <h3>Choose Difficulty:</h3>
+            <button class="difficulty-btn active" data-level="easy">Easy (1-10)</button>
+            <button class="difficulty-btn" data-level="medium">Medium (1-20)</button>
+            <button class="difficulty-btn" data-level="hard">Hard (1-50)</button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div class="streak-counter" id="streak">🔥 Streak: 0</div>
+
+        <div id="question">Press Start to Begin Your Quest!</div>
+        <input id="answer" type="number" placeholder="Your answer">
+        <div>
+            <button id="submit">Submit Answer</button>
+            <button id="start">Start Quest</button>
+            <button id="hint" style="display: none;">Need a Hint? 💡</button>
+        </div>
+        <div id="result"></div>
+        <div id="score">Score: 0 | Best: 0</div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Jerusalem Hills Kids - Safe & Educational</p>
+        <p><a href="../index.html">Back to Kids Zone</a></p>
+    </footer>
+
+    <script>
+        let num1, num2, answer, score = 0, streak = 0, questionsAnswered = 0;
+        let difficulty = 'easy';
+        let bestScore = localStorage.getItem('subtraction-best') || 0;
+        
+        const q = document.getElementById('question');
+        const a = document.getElementById('answer');
+        const r = document.getElementById('result');
+        const s = document.getElementById('score');
+        const progressBar = document.getElementById('progress');
+        const streakDisplay = document.getElementById('streak');
+        const hintBtn = document.getElementById('hint');
+
+        // Update best score display
+        s.textContent = `Score: ${score} | Best: ${bestScore}`;
+
+        // Difficulty selection
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                difficulty = btn.dataset.level;
+                soundManager.play('select');
+            });
+        });
+
+        function getRange() {
+            switch(difficulty) {
+                case 'easy': return { min: 1, max: 10 };
+                case 'medium': return { min: 1, max: 20 };
+                case 'hard': return { min: 1, max: 50 };
+                default: return { min: 1, max: 10 };
+            }
+        }
+
+        function newQuestion() {
+            const range = getRange();
+            num1 = Math.floor(Math.random() * range.max) + range.min;
+            num2 = Math.floor(Math.random() * num1) + 1; // Ensure num2 <= num1 for positive answers
+            answer = num1 - num2;
+            
+            q.textContent = `What is ${num1} - ${num2}?`;
+            a.value = "";
+            r.textContent = "";
+            hintBtn.style.display = "none";
+            a.focus();
+            
+            // Update progress bar
+            const progress = (questionsAnswered % 10) * 10;
+            progressBar.style.width = progress + '%';
+        }
+
+        function showHint() {
+            const hintText = `Think: Start with ${num1} and take away ${num2}. Try counting down!`;
+            r.textContent = `💡 Hint: ${hintText}`;
+            r.style.color = "#3498db";
+            hintBtn.style.display = "none";
+        }
+
+        document.getElementById('start').onclick = () => {
+            soundManager.play('start');
+            score = 0;
+            streak = 0;
+            questionsAnswered = 0;
+            s.textContent = `Score: ${score} | Best: ${bestScore}`;
+            streakDisplay.textContent = `🔥 Streak: ${streak}`;
+            progressBar.style.width = "0%";
+            newQuestion();
+        };
+
+        document.getElementById('submit').onclick = checkAnswer;
+        document.getElementById('hint').onclick = showHint;
+
+        // Allow Enter key to submit
+        a.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkAnswer();
+        });
+
+        function checkAnswer() {
+            if (q.textContent === "Press Start to Begin Your Quest!") {
+                r.textContent = "Click Start Quest first!";
+                return;
+            }
+
+            const userAnswer = parseInt(a.value);
+            if (isNaN(userAnswer)) {
+                r.textContent = "Please enter a number!";
+                return;
+            }
+
+            questionsAnswered++;
+
+            if (userAnswer === answer) {
+                score++;
+                streak++;
+                
+                soundManager.play('correct');
+                if (score % 5 === 0 && score > 0) {
+                    soundManager.play('milestone');
+                }
+                
+                const encouragement = streak >= 5 ? "Amazing streak! 🌟" : 
+                                    streak >= 3 ? "Great work! 🎉" : "Correct! ✅";
+                r.textContent = encouragement;
+                r.style.color = "#4CAF50";
+                
+                // Check for new best score
+                if (score > bestScore) {
+                    bestScore = score;
+                    localStorage.setItem('subtraction-best', bestScore);
+                    r.textContent += " NEW BEST! 🏆";
+                }
+            } else {
+                streak = 0;
+                soundManager.play('incorrect');
+                r.textContent = `❌ Not quite! ${num1} - ${num2} = ${answer}`;
+                r.style.color = "#ff6f61";
+                
+                // Show hint button after wrong answer
+                setTimeout(() => {
+                    hintBtn.style.display = "inline-block";
+                }, 1000);
+            }
+            
+            s.textContent = `Score: ${score} | Best: ${bestScore}`;
+            streakDisplay.textContent = `🔥 Streak: ${streak}`;
+
+            setTimeout(() => {
+                if (userAnswer === answer) {
+                    soundManager.play('next');
+                    newQuestion();
+                }
+            }, userAnswer === answer ? 1500 : 3000);
+        }
+    </script>
+</body>
+</html>
