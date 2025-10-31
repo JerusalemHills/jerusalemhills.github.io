@@ -326,6 +326,16 @@
         </a>
         <h1>Community Forum</h1>
         <p>Connect, discuss, and share with the Jerusalem Hills community</p>
+        
+        <!-- Privacy Notice -->
+        <div style="background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 10px; margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; border: 2px solid var(--text-accent);">
+            <h3 style="color: var(--text-accent); margin-bottom: 10px; font-size: 16px;">🔒 Privacy-First Forum</h3>
+            <p style="color: var(--text-accent); font-size: 14px; margin: 0; line-height: 1.5;">
+                <strong>No data collection:</strong> We don't store cookies, track users, or collect personal information. 
+                Your name and posts are shared only through the decentralized GunDB network. Nothing is stored on our servers.
+                <br><strong>Anonymous:</strong> Each browser session is temporary and anonymous.
+            </p>
+        </div>
     </div>
 
     <!-- Main Content -->
@@ -352,6 +362,12 @@
                 <div class="category-stats">12 discussions • 78 messages</div>
             </div>
 
+            <div class="category" onclick="filterCategory('suggestions')">
+                <h3>💡 Website Feedback & Suggestions</h3>
+                <p>Share ideas, report bugs, and suggest improvements for the website</p>
+                <div class="category-stats">8 discussions • 32 messages</div>
+            </div>
+
             <div class="category" onclick="filterCategory('general')">
                 <h3>💬 General Discussion</h3>
                 <p>Off-topic conversations and community chat</p>
@@ -375,6 +391,7 @@
                         <option value="culture">Culture & Heritage</option>
                         <option value="marketplace">Marketplace</option>
                         <option value="events">Local Events</option>
+                        <option value="suggestions">Website Feedback & Suggestions</option>
                         <option value="general">General Discussion</option>
                     </select>
                 </div>
@@ -412,11 +429,122 @@
         let currentFilter = 'all';
         let allPosts = [];
 
-        // Store username in localStorage
-        const savedUsername = localStorage.getItem('jh-forum-username');
-        if (savedUsername) {
-            document.getElementById('username').value = savedUsername;
-        }
+        // Anonymous session - no data stored persistently
+        // Generate temporary session identifier for this browser session only
+        const sessionId = 'anon-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+        console.log('Anonymous session started:', sessionId);
+
+        // Content moderation - client-side filtering for basic abuse prevention
+        const contentFilter = {
+            // Basic inappropriate words filter (not censorship, just abuse prevention)
+            inappropriateWords: [
+                // Keep this list minimal - focus on clearly abusive terms only
+                'spam', 'scam', 'fake', 'virus', 'malware', 'hack', 'password', 'login',
+                // Add specific terms that are clearly harmful/abusive
+                'hate', 'kill', 'murder', 'terrorist', 'bomb', 'weapon', 'drugs'
+            ],
+            
+            // Spam patterns
+            spamPatterns: [
+                /(.)\1{10,}/g,  // Repeated characters (more than 10)
+                /[A-Z]{20,}/g,   // All caps (more than 20 chars)
+                /https?:\/\/[^\s]+\.tk|\.ml|\.ga/g,  // Suspicious domains
+                /\b\d{10,}\b/g,  // Long number sequences (phone numbers, etc.)
+                /[^\w\s]{5,}/g   // Multiple special characters in sequence
+            ],
+
+            // Check for inappropriate content
+            checkContent: function(text) {
+                if (!text || typeof text !== 'string') return { allowed: false, reason: 'Invalid content' };
+                
+                const lowerText = text.toLowerCase();
+                
+                // Block image posting attempts (no image screening capability)
+                const imagePatterns = [
+                    /\.(jpg|jpeg|png|gif|bmp|webp|svg|ico)/gi,  // Image file extensions
+                    /data:image\//gi,  // Base64 images
+                    /<img/gi,  // HTML img tags
+                    /\[img\]/gi,  // BBCode images
+                    /!\[.*\]\(.*\)/gi  // Markdown images
+                ];
+                
+                for (let pattern of imagePatterns) {
+                    if (pattern.test(text)) {
+                        return { allowed: false, reason: 'Images not allowed at this time' };
+                    }
+                }
+                
+                // Check for inappropriate words
+                for (let word of this.inappropriateWords) {
+                    if (lowerText.includes(word)) {
+                        return { allowed: false, reason: 'Contains inappropriate content' };
+                    }
+                }
+                
+                // Check for spam patterns
+                for (let pattern of this.spamPatterns) {
+                    if (pattern.test(text)) {
+                        return { allowed: false, reason: 'Contains spam-like content' };
+                    }
+                }
+                
+                // Check length limits
+                if (text.length > 2000) {
+                    return { allowed: false, reason: 'Message too long (max 2000 characters)' };
+                }
+                
+                if (text.trim().length < 3) {
+                    return { allowed: false, reason: 'Message too short' };
+                }
+                
+                return { allowed: true };
+            },
+
+            // Rate limiting per session
+            postTimes: [],
+            checkRateLimit: function() {
+                const now = Date.now();
+                const fiveMinutesAgo = now - (5 * 60 * 1000);
+                
+                // Clean old timestamps
+                this.postTimes = this.postTimes.filter(time => time > fiveMinutesAgo);
+                
+                // Check if too many posts in 5 minutes
+                if (this.postTimes.length >= 5) {
+                    return { allowed: false, reason: 'Too many posts. Please wait a few minutes.' };
+                }
+                
+                this.postTimes.push(now);
+                return { allowed: true };
+            },
+
+            // Validate links
+            validateLinks: function(text) {
+                const urlRegex = /https?:\/\/[^\s]+/g;
+                const urls = text.match(urlRegex) || [];
+                
+                const bannedDomains = [
+                    '.tk', '.ml', '.ga', '.cf',  // Free suspicious domains
+                    'bit.ly', 'tinyurl.com',     // URL shorteners
+                    'telegram.me', 'discord.gg'  // Messaging platforms
+                ];
+                
+                for (let url of urls) {
+                    for (let domain of bannedDomains) {
+                        if (url.includes(domain)) {
+                            return { allowed: false, reason: 'Suspicious links not allowed' };
+                        }
+                    }
+                }
+                
+                // Limit number of links
+                if (urls.length > 2) {
+                    return { allowed: false, reason: 'Too many links (max 2 per post)' };
+                }
+                
+                return { allowed: true };
+            }
+        };
 
         // Post Form Handler
         document.getElementById('postForm').addEventListener('submit', function(e) {
@@ -432,8 +560,32 @@
                 return;
             }
 
-            // Save username
-            localStorage.setItem('jh-forum-username', username);
+            // Content moderation checks
+            const rateCheck = contentFilter.checkRateLimit();
+            if (!rateCheck.allowed) {
+                alert(rateCheck.reason);
+                return;
+            }
+
+            const titleCheck = contentFilter.checkContent(title);
+            if (!titleCheck.allowed) {
+                alert('Title: ' + titleCheck.reason);
+                return;
+            }
+
+            const messageCheck = contentFilter.checkContent(message);
+            if (!messageCheck.allowed) {
+                alert('Message: ' + messageCheck.reason);
+                return;
+            }
+
+            const linkCheck = contentFilter.validateLinks(message);
+            if (!linkCheck.allowed) {
+                alert(linkCheck.reason);
+                return;
+            }
+
+            // No data persistence - anonymous posting only
 
             // Create post object
             const post = {
@@ -528,9 +680,9 @@
                         <h3 style="color: var(--text-accent); margin-bottom: 8px; font-size: 18px;">${escapeHtml(post.title)}</h3>
                         <div class="post-content">${escapeHtml(post.message)}</div>
                         <div class="post-actions">
-                            <span class="post-action">👍 Like</span>
+                            <span class="post-action" onclick="likePost('${post.id}')">👍 Like</span>
                             <span class="post-action">💬 Reply</span>
-                            <span class="post-action">🔗 Share</span>
+                            <span class="post-action" onclick="flagPost('${post.id}', '${escapeHtml(post.title)}')">🚩 Flag</span>
                         </div>
                     </div>
                 `;
@@ -562,6 +714,7 @@
                 'culture': '🏛️ Culture & Heritage',
                 'marketplace': '🛍️ Marketplace',
                 'events': '📅 Local Events',
+                'suggestions': '💡 Website Suggestions',
                 'general': '💬 General'
             };
             return names[category] || category;
@@ -572,6 +725,39 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        // Community moderation functions
+        function likePost(postId) {
+            // Simple like functionality (session-based)
+            console.log('Liked post:', postId);
+            alert('👍 Thanks for your feedback!');
+        }
+
+        function flagPost(postId, title) {
+            const reason = prompt(
+                `Flag "${title}" for inappropriate content?\n\n` +
+                'Please briefly explain why this post should be reviewed:\n' +
+                '(This helps the community maintain quality discussions)'
+            );
+            
+            if (reason && reason.trim()) {
+                // Store flag in GunDB for community awareness
+                const flag = {
+                    postId: postId,
+                    reason: reason.trim(),
+                    timestamp: Date.now(),
+                    sessionId: sessionId  // Anonymous session identifier
+                };
+                
+                forum.get('flags').get('flag-' + Date.now()).put(flag, function(ack) {
+                    if (ack.err) {
+                        alert('Error submitting flag. Please try again.');
+                    } else {
+                        alert('Thank you for helping maintain community standards. The post has been flagged for review.');
+                    }
+                });
+            }
         }
 
         // Initialize
@@ -613,6 +799,22 @@
                         title: 'Local Events This Weekend',
                         message: 'Anyone know of any interesting events happening this weekend in Jerusalem?',
                         timestamp: Date.now() - 10800000
+                    },
+                    {
+                        id: 'sample-4',
+                        username: 'Forum Admin',
+                        category: 'suggestions',
+                        title: 'Welcome to Website Feedback!',
+                        message: 'This section is for sharing ideas about improving the Jerusalem Hills website. Found a bug? Have a feature suggestion? Let us know here! We read every suggestion.',
+                        timestamp: Date.now() - 14400000
+                    },
+                    {
+                        id: 'sample-5',
+                        username: 'Alex Tech',
+                        category: 'suggestions',
+                        title: 'Mobile Experience Feedback',
+                        message: 'The historical map works great on mobile! The touch controls are very responsive. Maybe add a back button to make navigation easier?',
+                        timestamp: Date.now() - 18000000
                     }
                 ];
 
