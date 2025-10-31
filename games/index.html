@@ -140,6 +140,59 @@
             max-width: 800px;
             margin: 0 auto;
         }
+
+        /* Game Category Navigation */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            padding: 12px 24px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 1em;
+        }
+
+        .category-btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .category-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(145, 217, 248, 0.3);
+        }
+
+        .game-card {
+            transition: all 0.3s ease;
+        }
+
+        .game-card.hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .category-nav {
+                margin: 20px 0;
+                gap: 10px;
+            }
+            
+            .category-btn {
+                padding: 10px 18px;
+                font-size: 0.9em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -171,9 +224,18 @@
         <p>Challenge your friends or play against our AI in popular games!</p>
     </div>
 
+    <!-- Category Navigation -->
+    <div class="category-nav">
+        <button class="category-btn active" onclick="filterGames('all')">All Games</button>
+        <button class="category-btn" onclick="filterGames('classic')">Classic Games</button>
+        <button class="category-btn" onclick="filterGames('puzzle')">Puzzle Games</button>
+        <button class="category-btn" onclick="filterGames('family')">Family Zone</button>
+        <button class="category-btn" onclick="filterGames('cultural')">Cultural</button>
+    </div>
+
     <main>
         <div class="games-grid">
-            <div class="game-card">
+            <div class="game-card" data-category="classic">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Backgammon_lg.png"
                      alt="Backgammon game board with pieces arranged for play"
                      width="200"
@@ -185,53 +247,60 @@
                 <a href="/games/backgammon/backgammon.html" class="play-button">Play Now</a>
             </div>
 
-            <div class="game-card">
+            <div class="game-card" data-category="classic">
                 <div style="width: 200px; height: 200px; margin: 0 auto 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 4em;">🟦</div>
                 <h3>Tetris</h3>
                 <p>Classic block-stacking puzzle game. Clear lines and beat your high score!</p>
                 <a href="/games/tetris/" class="play-button">Play Now</a>
             </div>
 
-            <div class="game-card">
+            <div class="game-card" data-category="classic">
                 <div style="width: 200px; height: 200px; margin: 0 auto 15px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 4em;">🐍</div>
                 <h3>Snake</h3>
                 <p>Guide the snake to eat food and grow longer. A timeless arcade classic!</p>
                 <a href="/games/snake/" class="play-button">Play Now</a>
             </div>
 
-            <div class="game-card">
+            <div class="game-card" data-category="classic">
                 <div style="width: 200px; height: 200px; margin: 0 auto 15px; background: linear-gradient(135deg, #434343 0%, #000000 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 4em;">♟️</div>
                 <h3>Chess</h3>
                 <p>The ultimate game of strategy. Coming soon to Jerusalem Hills!</p>
                 <a href="javascript:void(0)" class="play-button" onclick="alert('Chess coming soon! Check back later.')">Coming Soon</a>
             </div>
 
-            <div class="game-card">
+            <div class="game-card" data-category="classic">
                 <div style="width: 200px; height: 200px; margin: 0 auto 15px; background: linear-gradient(135deg, #C33764 0%, #1D2671 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 4em;">🃏</div>
                 <h3>Poker</h3>
                 <p>Texas Hold'em poker. Test your skills and luck!</p>
                 <a href="javascript:void(0)" class="play-button" onclick="alert('Poker coming soon! Check back later.')">Coming Soon</a>
             </div>
 
-            <div class="game-card">
+            <div class="game-card" data-category="classic">
                 <div style="width: 200px; height: 200px; margin: 0 auto 15px; background: linear-gradient(135deg, #F2994A 0%, #F2C94C 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 4em;">🔤</div>
                 <h3>צירופים</h3>
                 <p>Test your Hebrew word skills in this engaging word permutation game.</p>
                 <a href="/games/permutations/permutations.html" class="play-button">Play Now</a>
             </div>
 
-            <div class="game-card">
+            <div class="game-card" data-category="cultural">
                 <div style="width: 200px; height: 200px; margin: 0 auto 15px; background: linear-gradient(135deg, #8B7355 0%, #D4A574 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 4em;">📜</div>
                 <h3>קודי תורה</h3>
                 <p>Search for Equidistant Letter Sequences (ELS) in Hebrew biblical texts. Discover hidden patterns in the Torah.</p>
                 <a href="/games/bcodes/bcodes.html" class="play-button">Search Now</a>
             </div>
 
-            <div class="game-card">
+            <div class="game-card" data-category="family">
                 <div style="width: 200px; height: 200px; margin: 0 auto 15px; background: linear-gradient(135deg, #ffcc00 0%, #ff6f61 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 4em;">😊</div>
                 <h3>Kids Zone</h3>
                 <p>Safe, educational games for children ages 5-12. Math Quest, Word Builder, and Memory Match - all ad-free!</p>
                 <a href="/kids/" class="play-button">Play Now</a>
+            </div>
+
+            <div class="game-card" data-category="puzzle">
+                <div style="width: 200px; height: 200px; margin: 0 auto 15px; background: linear-gradient(135deg, #edc22e 0%, #f67c5f 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 3em; color: white; font-weight: bold;">2048</div>
+                <h3>2048</h3>
+                <p>Classic addictive puzzle game! Combine tiles to reach 2048. Perfect for quick brain training sessions.</p>
+                <a href="/games/2048/2048.html" class="play-button">Play Now</a>
             </div>
         </div>
     </main>
@@ -251,6 +320,33 @@
     <script src="/js/mobile-nav.js"></script>
 
     <script>
+        // Game Category Filtering
+        function filterGames(category) {
+            const games = document.querySelectorAll('.game-card');
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter games
+            games.forEach(game => {
+                if (category === 'all' || game.dataset.category === category) {
+                    game.classList.remove('hidden');
+                } else {
+                    game.classList.add('hidden');
+                }
+            });
+            
+            // Analytics tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'game_category_filter', {
+                    'category': category,
+                    'event_category': 'games'
+                });
+            }
+        }
+
         // Make entire game card clickable
         document.querySelectorAll('.game-card').forEach(card => {
             card.addEventListener('click', function(e) {
