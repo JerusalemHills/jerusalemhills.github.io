@@ -16,6 +16,9 @@
             { url: '/services-directory.html', title: 'Services', description: 'Local services directory', keywords: ['services', 'directory', 'local', 'utilities', 'emergency'] },
             { url: '/privacy-policy.html', title: 'Privacy Policy', description: 'Our privacy policy', keywords: ['privacy', 'policy', 'data', 'cookies'] },
             { url: '/terms-of-service.html', title: 'Terms of Service', description: 'Terms and conditions', keywords: ['terms', 'service', 'conditions', 'legal'] },
+            { url: '/disclaimer.html', title: 'Educational Disclaimer', description: 'Educational disclaimers and community guidelines', keywords: ['disclaimer', 'legal', 'educational', 'community', 'guidelines', 'financial', 'privacy', 'GDPR'] },
+            { url: '/forum/terms.html', title: 'Forum Terms', description: 'Forum Terms of Service and community rules', keywords: ['forum', 'terms', 'community', 'adults only', 'moderation', 'rules'] },
+            { url: '/kids/educational-disclaimer.html', title: 'Kids Zone Educational Info', description: 'Educational disclaimers for Kids Zone content', keywords: ['kids', 'educational', 'disclaimer', 'children', 'parents', 'learning'] },
             { url: '/sidur.html', title: 'Siddur', description: 'Online prayer book', keywords: ['siddur', 'prayer', 'jewish', 'hebrew', 'תפילה'] },
             
             // Games
