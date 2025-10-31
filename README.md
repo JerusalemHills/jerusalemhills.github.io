@@ -12,8 +12,10 @@
 Jerusalem Hills is a comprehensive web platform that connects people worldwide with Jerusalem's rich heritage through:
 - **E-commerce Marketplace**: Authentic Jerusalem crafts, Dead Sea products, and Judaica art
 - **Community Features**: Forums, discussions, and cultural content
+- **Educational Kids Zone**: COPPA-compliant educational games and historical content
+- **Interactive Historical Map**: Comprehensive Mediterranean history timeline (3500 BCE - Present)
 - **Local Services**: Essential Jerusalem information and services directory
-- **Interactive Games**: Including a fully functional backgammon game
+- **Interactive Games**: Including a fully functional backgammon game and educational content
 - **Cultural Resources**: Siddur (prayer book) and heritage content
 
 ### Key Features
@@ -96,6 +98,17 @@ jerusalemhills.github.io/
 ├── contact.html              # Contact page
 ├── success.html              # Payment success page
 ├── cancel.html               # Payment cancel page
+├── kids/                     # Educational Kids Zone (COPPA compliant)
+│   ├── index.html           # Kids Zone homepage
+│   ├── games/               # Educational games
+│   │   ├── math.html       # Addition practice
+│   │   ├── subtraction.html # Subtraction practice  
+│   │   ├── multiplication.html # Times tables
+│   │   ├── words.html      # Word building game
+│   │   ├── memory.html     # Memory matching
+│   │   └── history-map.html # Historical Land of Israel Map
+│   ├── assets/             # Kids-specific assets
+│   └── sounds/             # Educational audio files
 ├── games/
 │   ├── index.html           # Games directory
 │   └── backgammon/          # Backgammon game
@@ -277,6 +290,46 @@ netlify deploy --prod
 - Touch-optimized interactions
 - Progressive Web App ready
 
+### Kids Zone & Educational Content 🎓
+
+#### COPPA-Compliant Educational Platform
+- **Safe Environment**: No external links, child-friendly design
+- **Age-Appropriate**: Designed for ages 5-12
+- **Educational Focus**: Math, vocabulary, history, and memory games
+
+#### Educational Games
+- **Math Quest**: Addition practice with difficulty levels
+- **Subtraction Quest**: Subtraction practice with hints system
+- **Multiplication Master**: Times tables with time challenges
+- **Word Builder**: Vocabulary and spelling development
+- **Memory Match**: Brain training and pattern recognition
+
+#### 🗺️ Historical Land of Israel Interactive Map
+**Comprehensive Mediterranean History Timeline (3500 BCE - Present)**
+
+Enhanced with extensive research from multiple Wikipedia sources:
+
+**Features:**
+- **20 Historical Periods**: From Canaanite Bronze Age to Modern State
+- **Mediterranean Context**: Shows region as crossroads of civilizations
+- **Interactive Timeline**: Slider navigation through millennia
+- **Educational Audio**: Period-appropriate ambient sounds with automatic playback
+- **Rich Historical Data**: Enhanced with Bronze Age collapse, Phoenician trade networks, Roman Mediterranean empire details
+- **Cultural Context**: Emphasis on trade routes, cultural exchange, and civilizational interactions
+
+**Research Sources:**
+- History of the Mediterranean region (Wikipedia)
+- Bronze Age collapse detailed analysis
+- Phoenician civilization and trade networks
+- Matt Baker's historical timeline research
+
+**Educational Value:**
+- Shows Land of Israel as Mediterranean crossroads
+- Demonstrates cultural exchange and trade networks
+- Explains major historical transitions (Bronze Age collapse, Sea Peoples, etc.)
+- Contextualizes biblical and archaeological periods
+- Highlights technological and cultural innovations
+
 ### Games Section
 - **Backgammon**: Full local multiplayer implementation
   - Complete game logic
@@ -356,6 +409,10 @@ We welcome contributions! Please:
 - ✅ Performance optimization (<3s load)
 - ✅ SEO and analytics implementation
 - ✅ Security hardening and PCI compliance
+- ✅ Kids Zone educational platform (October 2024)
+- ✅ Historical Land of Israel Interactive Map with Mediterranean research
+- ✅ Comprehensive Wikipedia-based historical enhancements
+- ✅ Educational audio system with period-appropriate sounds
 
 ## 📚 Documentation
 
@@ -389,7 +446,7 @@ This project contains proprietary code and content. Redistribution or use withou
 ---
 
 **Last Updated**: October 2025
-**Version**: 1.1.0
+**Version**: 1.2.0
 **Status**: Production Ready 🚀
 
 Built with ❤️ in Jerusalem
