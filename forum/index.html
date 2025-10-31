@@ -327,13 +327,14 @@
         <h1>Community Forum</h1>
         <p>Connect, discuss, and share with the Jerusalem Hills community</p>
         
-        <!-- Privacy Notice -->
-        <div style="background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 10px; margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; border: 2px solid var(--text-accent);">
-            <h3 style="color: var(--text-accent); margin-bottom: 10px; font-size: 16px;">🔒 Privacy-First Forum</h3>
-            <p style="color: var(--text-accent); font-size: 14px; margin: 0; line-height: 1.5;">
-                <strong>No data collection:</strong> We don't store cookies, track users, or collect personal information. 
-                Your name and posts are shared only through the decentralized GunDB network. Nothing is stored on our servers.
-                <br><strong>Anonymous:</strong> Each browser session is temporary and anonymous.
+        <!-- Age Restriction & Terms Notice -->
+        <div style="background: rgba(255, 255, 255, 0.95); padding: 15px; border-radius: 10px; margin-top: 20px; max-width: 700px; margin-left: auto; margin-right: auto; border: 2px solid var(--text-accent);">
+            <h3 style="color: var(--text-accent); margin-bottom: 10px; font-size: 16px;">🔞 Adults Only Forum (18+)</h3>
+            <p style="color: var(--text-accent); font-size: 14px; margin: 10px 0; line-height: 1.5;">
+                <strong>Age Restriction:</strong> You must be 18+ to use this forum. By participating, you confirm you are an adult.
+                <br><strong>Zero Data Collection:</strong> We don't store cookies, track users, or collect personal information. 
+                Your posts flow through the decentralized GunDB network - nothing stored on our servers.
+                <br><strong>Terms:</strong> <a href="/forum/terms.html" style="color: var(--text-accent); text-decoration: underline;">Read our Terms of Service</a> which include comprehensive legal protections and user responsibilities.
             </p>
         </div>
     </div>
@@ -383,9 +384,9 @@
             <div style="background: #f0f8ff; border: 1px solid #ddeeff; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
                 <h4 style="color: var(--text-accent); margin-bottom: 8px; font-size: 14px;">📝 Community Guidelines</h4>
                 <p style="color: var(--text-medium); font-size: 13px; margin: 0; line-height: 1.4;">
-                    <strong>Family-friendly forum:</strong> Profanity is automatically replaced with asterisks (****). 
-                    Images are not allowed. Be respectful and constructive in your discussions.
-                    <br><strong>Privacy:</strong> No personal information is stored - this is an anonymous forum.
+                    <strong>Family-friendly forum:</strong> Only vulgar language/cuss words are automatically replaced with asterisks (****). 
+                    Normal dictionary words are perfectly fine - discuss history, politics, current events freely!
+                    <br><strong>Images not allowed</strong> at this time. <strong>Privacy:</strong> This is a completely anonymous forum.
                 </p>
             </div>
             
@@ -447,25 +448,58 @@
 
         // Content moderation - client-side filtering for basic abuse prevention
         const contentFilter = {
-            // Profanity replacement list (English + Russian + other languages)
+            // Profanity replacement list - ONLY actual cuss words/vulgar language
             profanityWords: [
-                // English profanity
-                'fuck', 'shit', 'damn', 'hell', 'bitch', 'ass', 'bastard', 'crap',
-                'motherfucker', 'asshole', 'dickhead', 'prick', 'whore', 'slut',
-                // Russian profanity  
-                'блят', 'блядь', 'хуй', 'пизда', 'сука', 'гавно', 'дерьмо', 'ебать',
-                'blat', 'blyat', 'hui', 'pisda', 'suka', 'gavno', 'derimo', 'ebat',
-                // Hebrew profanity
-                'זיין', 'כוס', 'חרא', 'מניאק', 'בן זונה',
-                // Other common profanity
-                'merde', 'putain', 'scheisse', 'puta', 'cazzo', 'merda'
+                // English profanity/cuss words
+                'fuck', 'fucking', 'fucked', 'fucker', 'fucks',
+                'shit', 'shitting', 'shitty', 'bullshit',
+                'bitch', 'bitching', 'bitches',
+                'ass', 'asshole', 'asses', 
+                'damn', 'damned', 'dammit',
+                'motherfucker', 'motherfucking',
+                'dickhead', 'prick', 'cock', 'dick',
+                'whore', 'slut', 'sluts', 'whores',
+                'bastard', 'bastards',
+                'cunt', 'cunts',
+                'tits', 'boobs', 'pussy',
+                
+                // Russian profanity/cuss words
+                'блят', 'блядь', 'бляди', 'бляха',
+                'хуй', 'хуя', 'хуе', 'хую',
+                'пизда', 'пизде', 'пизду', 'пиздец',
+                'сука', 'суки', 'сучка',
+                'гавно', 'говно', 'дерьмо',
+                'ебать', 'ебал', 'ебет', 'ебут',
+                'blat', 'blyat', 'blyad', 'blyadi',
+                'hui', 'huya', 'huy', 'khuy',
+                'pisda', 'pizda', 'pizdets',
+                'suka', 'suki', 'suchka',
+                'gavno', 'govno', 'derimo',
+                'ebat', 'ebal', 'ebet',
+                
+                // Hebrew profanity/cuss words
+                'זיין', 'זין', 'זינה',
+                'כוס', 'כוסית',
+                'חרא', 'חרות',
+                'מניאק', 'מניאקים',
+                'בן זונה', 'זונה',
+                
+                // Other languages - only actual cuss words
+                'merde', 'putain', 'salope',  // French
+                'scheisse', 'scheiße', 'fotze',  // German
+                'puta', 'puto', 'joder',  // Spanish
+                'cazzo', 'merda', 'stronzo',  // Italian
+                'kurwa', 'kurwy',  // Polish
+                'porra', 'caralho'  // Portuguese
             ],
             
-            // Serious inappropriate words that should block posts entirely
+            // Only block truly problematic content (spam/technical threats)
             seriousInappropriateWords: [
-                'spam', 'scam', 'fake', 'virus', 'malware', 'hack', 'password', 'login',
-                'hate', 'kill', 'murder', 'terrorist', 'bomb', 'weapon', 'drugs', 'suicide',
-                'nazi', 'hitler', 'rape', 'pedophile', 'child abuse'
+                // Spam/scam related
+                'spam', 'scam', 'fake website', 'virus download', 'malware',
+                'phishing', 'click here to hack', 'free money',
+                // Only block if promoting illegal activity, not discussing
+                'how to hack', 'buy drugs', 'sell drugs', 'free hacking tools'
             ],
             
             // Spam patterns
