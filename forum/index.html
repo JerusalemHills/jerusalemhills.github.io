@@ -378,6 +378,17 @@
         <!-- Post Form -->
         <div class="post-form">
             <h3>Start a New Discussion</h3>
+            
+            <!-- Community Guidelines Notice -->
+            <div style="background: #f0f8ff; border: 1px solid #ddeeff; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+                <h4 style="color: var(--text-accent); margin-bottom: 8px; font-size: 14px;">📝 Community Guidelines</h4>
+                <p style="color: var(--text-medium); font-size: 13px; margin: 0; line-height: 1.4;">
+                    <strong>Family-friendly forum:</strong> Profanity is automatically replaced with asterisks (****). 
+                    Images are not allowed. Be respectful and constructive in your discussions.
+                    <br><strong>Privacy:</strong> No personal information is stored - this is an anonymous forum.
+                </p>
+            </div>
+            
             <form id="postForm">
                 <div class="form-group">
                     <label for="username">Your Name</label>
@@ -436,12 +447,25 @@
 
         // Content moderation - client-side filtering for basic abuse prevention
         const contentFilter = {
-            // Basic inappropriate words filter (not censorship, just abuse prevention)
-            inappropriateWords: [
-                // Keep this list minimal - focus on clearly abusive terms only
+            // Profanity replacement list (English + Russian + other languages)
+            profanityWords: [
+                // English profanity
+                'fuck', 'shit', 'damn', 'hell', 'bitch', 'ass', 'bastard', 'crap',
+                'motherfucker', 'asshole', 'dickhead', 'prick', 'whore', 'slut',
+                // Russian profanity  
+                'блят', 'блядь', 'хуй', 'пизда', 'сука', 'гавно', 'дерьмо', 'ебать',
+                'blat', 'blyat', 'hui', 'pisda', 'suka', 'gavno', 'derimo', 'ebat',
+                // Hebrew profanity
+                'זיין', 'כוס', 'חרא', 'מניאק', 'בן זונה',
+                // Other common profanity
+                'merde', 'putain', 'scheisse', 'puta', 'cazzo', 'merda'
+            ],
+            
+            // Serious inappropriate words that should block posts entirely
+            seriousInappropriateWords: [
                 'spam', 'scam', 'fake', 'virus', 'malware', 'hack', 'password', 'login',
-                // Add specific terms that are clearly harmful/abusive
-                'hate', 'kill', 'murder', 'terrorist', 'bomb', 'weapon', 'drugs'
+                'hate', 'kill', 'murder', 'terrorist', 'bomb', 'weapon', 'drugs', 'suicide',
+                'nazi', 'hitler', 'rape', 'pedophile', 'child abuse'
             ],
             
             // Spam patterns
@@ -453,9 +477,24 @@
                 /[^\w\s]{5,}/g   // Multiple special characters in sequence
             ],
 
+            // Replace profanity with asterisks
+            replaceProfanity: function(text) {
+                if (!text || typeof text !== 'string') return text;
+                
+                let cleanText = text;
+                
+                // Replace profanity words with asterisks
+                this.profanityWords.forEach(word => {
+                    const regex = new RegExp('\\b' + word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'gi');
+                    cleanText = cleanText.replace(regex, '*'.repeat(word.length));
+                });
+                
+                return cleanText;
+            },
+
             // Check for inappropriate content
             checkContent: function(text) {
-                if (!text || typeof text !== 'string') return { allowed: false, reason: 'Invalid content' };
+                if (!text || typeof text !== 'string') return { allowed: false, reason: 'Invalid content', cleanText: text };
                 
                 const lowerText = text.toLowerCase();
                 
@@ -470,34 +509,37 @@
                 
                 for (let pattern of imagePatterns) {
                     if (pattern.test(text)) {
-                        return { allowed: false, reason: 'Images not allowed at this time' };
+                        return { allowed: false, reason: 'Images not allowed at this time', cleanText: text };
                     }
                 }
                 
-                // Check for inappropriate words
-                for (let word of this.inappropriateWords) {
+                // Check for seriously inappropriate words (these block the post)
+                for (let word of this.seriousInappropriateWords) {
                     if (lowerText.includes(word)) {
-                        return { allowed: false, reason: 'Contains inappropriate content' };
+                        return { allowed: false, reason: 'Contains inappropriate content', cleanText: text };
                     }
                 }
                 
-                // Check for spam patterns
+                // Replace profanity with asterisks (don't block, just clean)
+                const cleanText = this.replaceProfanity(text);
+                
+                // Check for spam patterns on cleaned text
                 for (let pattern of this.spamPatterns) {
-                    if (pattern.test(text)) {
-                        return { allowed: false, reason: 'Contains spam-like content' };
+                    if (pattern.test(cleanText)) {
+                        return { allowed: false, reason: 'Contains spam-like content', cleanText: cleanText };
                     }
                 }
                 
                 // Check length limits
-                if (text.length > 2000) {
-                    return { allowed: false, reason: 'Message too long (max 2000 characters)' };
+                if (cleanText.length > 2000) {
+                    return { allowed: false, reason: 'Message too long (max 2000 characters)', cleanText: cleanText };
                 }
                 
-                if (text.trim().length < 3) {
-                    return { allowed: false, reason: 'Message too short' };
+                if (cleanText.trim().length < 3) {
+                    return { allowed: false, reason: 'Message too short', cleanText: cleanText };
                 }
                 
-                return { allowed: true };
+                return { allowed: true, cleanText: cleanText };
             },
 
             // Rate limiting per session
@@ -579,6 +621,10 @@
                 return;
             }
 
+            // Use cleaned versions of title and message (with profanity replaced)
+            const cleanTitle = titleCheck.cleanText;
+            const cleanMessage = messageCheck.cleanText;
+
             const linkCheck = contentFilter.validateLinks(message);
             if (!linkCheck.allowed) {
                 alert(linkCheck.reason);
@@ -587,15 +633,21 @@
 
             // No data persistence - anonymous posting only
 
-            // Create post object
+            // Create post object with cleaned content
             const post = {
                 username: username,
                 category: category,
-                title: title,
-                message: message,
+                title: cleanTitle,
+                message: cleanMessage,
                 timestamp: Date.now(),
                 id: 'post-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9)
             };
+
+            // Show user if content was cleaned
+            if (cleanTitle !== title || cleanMessage !== message) {
+                const changesMessage = 'Note: Some words were automatically replaced with asterisks (****) to keep the forum family-friendly.';
+                alert(changesMessage);
+            }
 
             // Save to GunDB with confirmation
             forum.get('posts').get(post.id).put(post, function(ack) {
