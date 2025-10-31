@@ -34,6 +34,16 @@
     <!-- Favicon -->
     <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+    
+    <!-- PWA Manifest for Kids Zone -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kids Zone">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Kids Zone">
 
     <link rel="stylesheet" href="assets/css/kids.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -137,5 +147,199 @@
         <p><small>Educational content provided for informational purposes with respect for every soul • <a href="educational-disclaimer.html" style="color: #FFD700; text-decoration: underline;">Community feedback welcome</a></small></p>
         <p>Have questions? Ask a grown-up to contact us!</p>
     </footer>
+
+    <!-- Kids Zone PWA Script -->
+    <script>
+        // Kids Zone PWA with parental-friendly install prompts
+        (function() {
+            'use strict';
+
+            let deferredPrompt;
+
+            // Register service worker for offline games
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/service-worker.js')
+                        .then(function(registration) {
+                            console.log('🎮 Kids Zone offline games ready!');
+                        })
+                        .catch(function(error) {
+                            console.log('❌ Offline games not available:', error);
+                        });
+                });
+            }
+
+            // Kids Zone install prompt
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+                // Show kid-friendly install button
+                showKidsInstallButton();
+            });
+
+            function showKidsInstallButton() {
+                // Don't show if already installed
+                if (window.matchMedia('(display-mode: standalone)').matches) {
+                    return;
+                }
+
+                const installButton = document.createElement('button');
+                installButton.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.75rem; flex-direction: column;">
+                        <div style="font-size: 24px;">🎮</div>
+                        <div>
+                            <div style="font-weight: 700; margin-bottom: 4px;">Install Kids Zone</div>
+                            <div style="font-size: 12px; opacity: 0.8;">Play games offline!</div>
+                        </div>
+                    </div>
+                `;
+                installButton.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: linear-gradient(135deg, #FFD700, #FFA500);
+                    color: #2C3E50;
+                    border: 3px solid #FF6B6B;
+                    padding: 20px;
+                    border-radius: 20px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+                    z-index: 10000;
+                    font-size: 16px;
+                    text-align: center;
+                    font-family: 'Poppins', sans-serif;
+                    animation: bounce 2s infinite;
+                `;
+
+                // Add bounce animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes bounce {
+                        0%, 20%, 50%, 80%, 100% { transform: translate(-50%, -50%) translateY(0); }
+                        40% { transform: translate(-50%, -50%) translateY(-10px); }
+                        60% { transform: translate(-50%, -50%) translateY(-5px); }
+                    }
+                `;
+                document.head.appendChild(style);
+
+                // Create backdrop
+                const backdrop = document.createElement('div');
+                backdrop.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0,0,0,0.7);
+                    z-index: 9999;
+                `;
+
+                // Add message for parents
+                const parentMessage = document.createElement('div');
+                parentMessage.innerHTML = `
+                    <div style="text-align: center; color: white; font-size: 14px; margin-bottom: 20px;">
+                        👨‍👩‍👧‍👦 <strong>For Parents:</strong><br>
+                        Install this as a safe app for your kids<br>
+                        • Educational games work offline<br>
+                        • No internet browsing<br>
+                        • No ads when offline
+                    </div>
+                `;
+                parentMessage.style.cssText = `
+                    position: fixed;
+                    top: 20%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 10001;
+                    background: rgba(0,0,0,0.8);
+                    padding: 15px;
+                    border-radius: 10px;
+                    max-width: 300px;
+                `;
+
+                // Install click handler
+                installButton.addEventListener('click', async () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        const { outcome } = await deferredPrompt.userChoice;
+                        
+                        // Remove install prompt
+                        backdrop.remove();
+                        installButton.remove();
+                        parentMessage.remove();
+                        
+                        deferredPrompt = null;
+                    }
+                });
+
+                // Close on backdrop click
+                backdrop.addEventListener('click', () => {
+                    backdrop.remove();
+                    installButton.remove();
+                    parentMessage.remove();
+                });
+
+                document.body.appendChild(backdrop);
+                document.body.appendChild(parentMessage);
+                document.body.appendChild(installButton);
+
+                // Auto-hide after 15 seconds
+                setTimeout(() => {
+                    if (backdrop.parentNode) backdrop.remove();
+                    if (installButton.parentNode) installButton.remove();
+                    if (parentMessage.parentNode) parentMessage.remove();
+                }, 15000);
+            }
+
+            // Track installation for kids apps
+            window.addEventListener('appinstalled', () => {
+                console.log('🎉 Kids Zone app installed!');
+                
+                // Show success message
+                const successMsg = document.createElement('div');
+                successMsg.innerHTML = '🎉 Kids Zone app installed! Look for it on your home screen!';
+                successMsg.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: #4CAF50;
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 25px;
+                    font-weight: 600;
+                    z-index: 10000;
+                    text-align: center;
+                `;
+                document.body.appendChild(successMsg);
+                
+                setTimeout(() => {
+                    if (successMsg.parentNode) successMsg.remove();
+                }, 5000);
+            });
+
+            // PWA-specific styling for kids
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                document.body.classList.add('kids-pwa-mode');
+                
+                // Add app-like styling
+                const pwaStyle = document.createElement('style');
+                pwaStyle.textContent = `
+                    .kids-pwa-mode .kids-header {
+                        padding-top: env(safe-area-inset-top, 20px);
+                    }
+                    .kids-pwa-mode {
+                        padding-top: env(safe-area-inset-top);
+                        padding-bottom: env(safe-area-inset-bottom);
+                    }
+                `;
+                document.head.appendChild(pwaStyle);
+            }
+
+        })();
+    </script>
 </body>
 </html>

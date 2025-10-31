@@ -1,0 +1,44 @@
+{
+  "name": "Jerusalem Hills Kids Zone - Educational Games",
+  "short_name": "Kids Zone",
+  "description": "Safe educational games for children ages 5-12. Math, memory, word games and historical content - all offline capable",
+  "start_url": "/kids/",
+  "display": "standalone",
+  "orientation": "natural",
+  "theme_color": "#FFD700",
+  "background_color": "#FFF9E6",
+  "scope": "/kids/",
+  "categories": ["education", "games", "kids"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/img/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/android-chrome-512x512.png",
+      "sizes": "512x512", 
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/img/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Educational games for kids"
+    }
+  ],
+  "features": [
+    "offline-games",
+    "educational-content", 
+    "safe-for-children",
+    "no-ads",
+    "no-external-links"
+  ],
+  "prefer_related_applications": false
+}

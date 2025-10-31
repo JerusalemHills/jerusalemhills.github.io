@@ -1,1 +1,35 @@
-{"name":"","short_name":"","icons":[{"src":"/android-chrome-192x192.png","sizes":"192x192","type":"image/png"},{"src":"/android-chrome-512x512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#ffffff","background_color":"#ffffff","display":"standalone"}
+{
+  "name": "Jerusalem Hills - Community & Educational Platform",
+  "short_name": "Jerusalem Hills",
+  "description": "Educational games for kids, community forum, marketplace, and Jerusalem heritage content - respectful of everybody",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "natural",
+  "theme_color": "#87CEEB",
+  "background_color": "#ffffff",
+  "scope": "/",
+  "categories": ["education", "games", "social", "lifestyle"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/img/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/android-chrome-512x512.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/img/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}

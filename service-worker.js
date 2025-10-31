@@ -1,27 +1,74 @@
-// Service Worker for caching essential files
-const CACHE_NAME = 'jerusalem-hills-v2';
+// Service Worker for caching essential files for offline PWA experience
+const CACHE_NAME = 'jerusalem-hills-v3';
 const urlsToCache = [
+  // Core pages
   '/',
   '/index.html',
   '/offline.html',
+  
+  // Styles and core scripts
+  '/styles-new.css',
   '/styles.css',
-  '/img/1.svg',
-  '/img/logo.jpg',
   '/js/main.js',
   '/js/pwa.js',
-  '/js/rss-feed-config.js',
-  '/js/cookie-consent.js',
-  '/js/adsense-config.js',
-  '/js/lazy-load.js',
   '/js/search.js',
   '/js/mobile-nav.js',
+  '/js/load-header.js',
+  '/components/header.html',
+  
+  // PWA assets
+  '/img/1.svg',
+  '/img/logo.jpg',
   '/favicon.ico',
   '/img/favicon-32x32.png',
   '/img/favicon-16x16.png',
   '/img/apple-touch-icon.png',
   '/img/android-chrome-192x192.png',
   '/img/android-chrome-512x512.png',
-  '/img/site.webmanifest'
+  '/img/site.webmanifest',
+  
+  // Kids Zone - Educational games for offline play
+  '/kids/',
+  '/kids/index.html',
+  '/kids/assets/css/kids.css',
+  '/kids/assets/css/game.css',
+  '/kids/educational-disclaimer.html',
+  
+  // Math games
+  '/kids/games/math.html',
+  '/kids/games/subtraction.html', 
+  '/kids/games/multiplication.html',
+  '/kids/assets/js/math-game.js',
+  '/kids/assets/js/subtraction-game.js',
+  '/kids/assets/js/multiplication-game.js',
+  
+  // Educational games
+  '/kids/games/words.html',
+  '/kids/games/memory.html',
+  '/kids/games/history-map.html',
+  '/kids/assets/js/word-game.js',
+  '/kids/assets/js/memory-game.js',
+  '/kids/assets/js/sound-manager.js',
+  
+  // Classic games for offline entertainment
+  '/games/',
+  '/games/index.html',
+  '/games/2048/2048.html',
+  '/games/2048/2048.js',
+  '/games/tetris/tetris.html',
+  '/games/snake/snake.html',
+  '/games/backgammon/backgammon.html',
+  '/games/backgammon/scripts/backgammon.js',
+  
+  // Essential community pages
+  '/forum/',
+  '/forum/index.html',
+  '/forum/terms.html',
+  '/disclaimer.html',
+  '/contact.html',
+  
+  // Marketplace (for browsing offline)
+  '/marketplace.html'
 ];
 
 // Install event: cache all necessary resources
