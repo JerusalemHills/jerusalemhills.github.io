@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Land of Israel Map - Educational Timeline | Jerusalem Hills Kids</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore the historical timeline of the Land of Israel through interactive maps. Educational journey from ancient times to modern day for kids ages 8-15.">
+    <meta name="keywords" content="Israel history, historical maps, biblical history, ancient civilizations, educational timeline, kids history, interactive learning">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/kids/games/history-map.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Historical Land of Israel Map - Educational Timeline">
+    <meta property="og:description" content="Explore the historical timeline of the Land of Israel through interactive maps. Educational journey from ancient times to modern day.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jerusalemhills.com/kids/games/history-map.html">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../assets/css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Sound Manager -->
+    <script src="../assets/js/sound-manager.js"></script>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Game",
+      "name": "Historical Land of Israel Map",
+      "description": "Interactive educational timeline showing the historical development of the Land of Israel",
+      "audience": {
+        "@type": "PeopleAudience",
+        "suggestedMinAge": 8,
+        "suggestedMaxAge": 15
+      },
+      "educationalUse": "History education",
+      "educationalLevel": "Elementary and Middle School",
+      "isAccessibleForFree": true,
+      "interactivityType": "active",
+      "learningResourceType": "interactive map"
+    }
+    </script>
+
+    <style>
+        .map-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar h3 {
+            color: #8B4513;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid #8B4513;
+            padding-bottom: 10px;
+        }
+
+        .historical-context {
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .key-events {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .key-events h4 {
+            color: #8B4513;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .key-events ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .key-events li {
+            margin-bottom: 5px;
+            font-size: 0.85em;
+        }
+
+        .transition-info {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #2196F3;
+        }
+
+        .transition-info h4 {
+            color: #1976D2;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .map-display {
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            border: 3px solid #8B4513;
+            border-radius: 15px;
+            background: #F5E6D3;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .map-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .timeline-controls {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .timeline-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            margin: 20px 0;
+            -webkit-appearance: none;
+        }
+
+        .timeline-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .timeline-slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .period-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .period-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .period-description {
+            font-size: 1em;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .period-years {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .timeline-markers {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .control-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            border: 1px solid #333;
+        }
+
+        .territory {
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .territory:hover {
+            opacity: 0.8;
+            stroke-width: 2;
+        }
+
+        .city-marker {
+            fill: #333;
+            stroke: white;
+            stroke-width: 1;
+            transition: all 0.3s ease;
+        }
+
+        .city-marker:hover {
+            r: 6;
+            fill: #ff6f61;
+        }
+
+        .city-label {
+            font-size: 12px;
+            fill: #333;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+
+        .quiz-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .quiz-question {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #333;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .quiz-option {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #4CAF50;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        @media (max-width: 1024px) {
+            .map-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .sidebar {
+                order: 2;
+                position: static;
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .map-display {
+                height: 400px;
+            }
+            
+            .timeline-controls {
+                padding: 15px;
+            }
+            
+            .control-buttons {
+                gap: 8px;
+            }
+            
+            .control-btn {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+            
+            .legend {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🗺️ Historical Land of Israel Map</h1>
+        <div class="game-nav">
+            <a href="../index.html" class="nav-btn">Kids Home</a>
+            <a href="math.html" class="nav-btn">Math Quest</a>
+            <a href="subtraction.html" class="nav-btn">Subtraction Quest</a>
+            <a href="multiplication.html" class="nav-btn">Multiplication Master</a>
+        </div>
+    </header>
+
+    <main class="map-container">
+        <div class="main-content">
+            <div class="period-info" id="periodInfo">
+                <div class="period-years" id="periodYears">1200 BCE</div>
+                <div class="period-title" id="periodTitle">Canaanite Period</div>
+                <div class="period-description" id="periodDescription">
+                    The ancient land was inhabited by various Canaanite tribes and city-states.
+                </div>
+            </div>
+
+        <div class="map-display">
+            <svg class="map-svg" viewBox="0 0 300 400" id="mapSvg">
+                <!-- Base map outline -->
+                <defs>
+                    <pattern id="seaPattern" patternUnits="userSpaceOnUse" width="10" height="10">
+                        <rect width="10" height="10" fill="#4A90E2"/>
+                        <path d="M0,10 L10,0 M-2,2 L2,-2 M8,12 L12,8" stroke="#357ABD" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                
+                <!-- Mediterranean Sea -->
+                <rect x="0" y="0" width="80" height="400" fill="url(#seaPattern)" stroke="#2E5C8A" stroke-width="1"/>
+                
+                <!-- Dead Sea -->
+                <ellipse cx="220" cy="250" rx="25" ry="60" fill="url(#seaPattern)" stroke="#2E5C8A" stroke-width="1"/>
+                
+                <!-- Sea of Galilee -->
+                <ellipse cx="200" cy="120" rx="15" ry="20" fill="url(#seaPattern)" stroke="#2E5C8A" stroke-width="1"/>
+                
+                <!-- Jordan River -->
+                <path d="M200,140 Q210,180 220,190 Q210,220 220,250 Q230,280 225,320 Q220,350 230,380" 
+                      stroke="url(#seaPattern)" stroke-width="4" fill="none"/>
+                
+                <!-- Main territories (will be updated by JavaScript) -->
+                <g id="territories">
+                    <!-- Northern region -->
+                    <polygon id="north" points="80,80 300,80 300,160 250,160 200,140 150,150 80,140" 
+                             fill="#8FBC8F" stroke="#2F4F2F" stroke-width="1" class="territory"/>
+                    
+                    <!-- Central region -->
+                    <polygon id="central" points="80,140 150,150 200,140 250,160 300,160 300,280 220,290 180,270 120,280 80,270" 
+                             fill="#DEB887" stroke="#8B7355" stroke-width="1" class="territory"/>
+                    
+                    <!-- Southern region -->
+                    <polygon id="south" points="80,270 120,280 180,270 220,290 300,280 300,400 80,400" 
+                             fill="#F4A460" stroke="#CD853F" stroke-width="1" class="territory"/>
+                </g>
+                
+                <!-- Cities -->
+                <g id="cities">
+                    <circle cx="160" cy="200" r="4" class="city-marker" id="jerusalem"/>
+                    <text x="160" y="215" class="city-label">Jerusalem</text>
+                    
+                    <circle cx="120" cy="320" r="3" class="city-marker" id="hebron"/>
+                    <text x="120" y="335" class="city-label">Hebron</text>
+                    
+                    <circle cx="140" cy="180" r="3" class="city-marker" id="bethel"/>
+                    <text x="140" y="195" class="city-label">Bethel</text>
+                    
+                    <circle cx="180" cy="240" r="3" class="city-marker" id="jericho"/>
+                    <text x="180" y="255" class="city-label">Jericho</text>
+                    
+                    <circle cx="190" cy="120" r="3" class="city-marker" id="tiberias"/>
+                    <text x="190" y="135" class="city-label">Tiberias</text>
+                    
+                    <circle cx="120" cy="160" r="3" class="city-marker" id="samaria"/>
+                    <text x="120" y="175" class="city-label">Samaria</text>
+                </g>
+            </svg>
+        </div>
+
+        <div class="timeline-controls">
+            <div style="text-align: center; margin-bottom: 15px;">
+                <strong>Historical Timeline Slider</strong>
+            </div>
+            
+            <input type="range" 
+                   id="timelineSlider" 
+                   class="timeline-slider" 
+                   min="0" 
+                   max="19" 
+                   value="0" 
+                   step="1">
+            
+            <div class="timeline-markers">
+                <span>1200 BCE</span>
+                <span>Biblical</span>
+                <span>Empires</span>
+                <span>Modern</span>
+                <span>2020 CE</span>
+            </div>
+        </div>
+
+        <div class="control-buttons">
+            <button class="control-btn" id="prevBtn">⬅️ Previous Era</button>
+            <button class="control-btn" id="playBtn">▶️ Auto Play</button>
+            <button class="control-btn" id="nextBtn">Next Era ➡️</button>
+            <button class="control-btn" id="quizBtn">📝 Take Quiz</button>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #4A90E2;"></div>
+                <span>Water Bodies</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #8FBC8F;"></div>
+                <span>Northern Territories</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #DEB887;"></div>
+                <span>Central Territories</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #F4A460;"></div>
+                <span>Southern Territories</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #333;"></div>
+                <span>Important Cities</span>
+            </div>
+        </div>
+
+        <div class="quiz-section" id="quizSection">
+            <div class="quiz-question" id="quizQuestion"></div>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div id="quizResult" style="text-align: center; margin-top: 15px;"></div>
+        </div>
+        </div>
+
+        <div class="sidebar">
+            <h3>📚 Historical Context</h3>
+            <div class="historical-context" id="historicalContext">
+                Select a period to learn about the historical transitions and key events that shaped the land.
+            </div>
+            
+            <div class="key-events" id="keyEvents" style="display: none;">
+                <h4>🗝️ Key Events</h4>
+                <ul id="eventsList"></ul>
+            </div>
+            
+            <div class="transition-info" id="transitionInfo" style="display: none;">
+                <h4>🔄 What Changed?</h4>
+                <p id="transitionText"></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Jerusalem Hills Kids - Educational & Historical</p>
+        <p><a href="../index.html">Back to Kids Zone</a></p>
+    </footer>
+
+    <script>
+        // Historical periods data based on archaeological and historical evidence
+        const historicalPeriods = [
+            {
+                years: "1200 BCE",
+                title: "Canaanite Period",
+                description: "The ancient land was inhabited by various Canaanite tribes and city-states. Archaeological evidence shows early agricultural communities and walled cities like Jericho.",
+                colors: { north: "#8FBC8F", central: "#DEB887", south: "#F4A460" },
+                context: "During the Bronze Age (3000-1200 BCE), independent Canaanite city-states flourished. The region was a crossroads for trade and culture between Egypt, Mesopotamia, and the Mediterranean world.",
+                keyEvents: [
+                    "c. 8500 BCE: Jericho becomes one of the world's first walled cities",
+                    "c. 3000 BCE: Canaanite city-states established",
+                    "c. 1550-1200 BCE: Egyptian influence in the region",
+                    "c. 1200 BCE: Sea Peoples and other migrations"
+                ],
+                transition: "Archaeological evidence suggests gradual assimilation rather than violent conquest by incoming peoples."
+            },
+            {
+                years: "1000-920 BCE",
+                title: "United Kingdom of Israel",
+                description: "According to biblical sources, Kings Saul, David, and Solomon unified the Israelite tribes. Archaeological evidence suggests a more modest kingdom than described in scripture.",
+                colors: { north: "#9370DB", central: "#9370DB", south: "#9370DB" },
+                context: "The Hebrew Bible describes a vast kingdom, but archaeological evidence shows Jerusalem was sparsely populated. The actual kingdom may have been smaller than traditionally believed.",
+                keyEvents: [
+                    "c. 1020 BCE: King Saul anointed as first king",
+                    "c. 1000 BCE: David captures Jerusalem",
+                    "c. 970-930 BCE: Solomon's reign and First Temple",
+                    "Trade relationships with neighboring kingdoms"
+                ],
+                transition: "Transition from tribal confederation to centralized monarchy with Jerusalem as capital."
+            },
+            {
+                years: "920-722 BCE",
+                title: "Divided Kingdoms",
+                description: "After Solomon's death, the kingdom split into Israel (north) and Judah (south). Israel was more prosperous with 160,000 people across 500 settlements by the 8th century BCE.",
+                colors: { north: "#4169E1", central: "#DC143C", south: "#DC143C" },
+                context: "Political and religious tensions led to the split. The northern Kingdom of Israel was larger and more prosperous, while Judah centered around Jerusalem remained smaller but culturally significant.",
+                keyEvents: [
+                    "930 BCE: Kingdom divides after Solomon's death",
+                    "Capital of Israel: Samaria; Capital of Judah: Jerusalem",
+                    "Both kingdoms faced Assyrian pressure",
+                    "Israel developed into a regional power"
+                ],
+                transition: "Civil war and tribal tensions led to permanent division of the united monarchy."
+            },
+            {
+                years: "722-586 BCE",
+                title: "Assyrian Conquest",
+                description: "The Kingdom of Israel was destroyed by Assyria in 722 BCE. Sargon II deported 27,290 inhabitants to Mesopotamia. Judah survived as an Assyrian vassal.",
+                colors: { north: "#8B0000", central: "#DC143C", south: "#DC143C" },
+                context: "The Assyrian Empire was expanding westward. Israel's location made it a strategic target. The deportation policy prevented rebellions and is the origin of the 'Lost Ten Tribes' tradition.",
+                keyEvents: [
+                    "722 BCE: Fall of Samaria to Assyrian forces",
+                    "Mass deportation of Israelites to Mesopotamia",
+                    "Judah becomes Assyrian vassal state",
+                    "Foreign populations settled in former Israel"
+                ],
+                transition: "Assyrian military superiority and siege warfare ended the northern kingdom permanently."
+            },
+            {
+                years: "586-538 BCE",
+                title: "Babylonian Exile",
+                description: "Nebuchadnezzar destroyed Jerusalem and exiled the people to Babylon.",
+                colors: { north: "#8B4513", central: "#8B4513", south: "#8B4513" }
+            },
+            {
+                years: "538-332 BCE",
+                title: "Persian Period",
+                description: "Cyrus the Great allowed the exiles to return and rebuild the Temple.",
+                colors: { north: "#FF6347", central: "#FF6347", south: "#FF6347" }
+            },
+            {
+                years: "332-63 BCE",
+                title: "Greek/Hellenistic Period",
+                description: "Alexander the Great conquered the region, bringing Greek culture and influence.",
+                colors: { north: "#00CED1", central: "#00CED1", south: "#00CED1" }
+            },
+            {
+                years: "63 BCE-324 CE",
+                title: "Roman Period",
+                description: "The Romans controlled the land, eventually destroying the Second Temple in 70 CE.",
+                colors: { north: "#B22222", central: "#B22222", south: "#B22222" }
+            },
+            {
+                years: "324-638 CE",
+                title: "Byzantine Period",
+                description: "The Christian Byzantine Empire ruled, with Christianity becoming dominant.",
+                colors: { north: "#9932CC", central: "#9932CC", south: "#9932CC" }
+            },
+            {
+                years: "638-1099 CE",
+                title: "Early Islamic Period",
+                description: "Islamic caliphates controlled the region, building the Dome of the Rock.",
+                colors: { north: "#228B22", central: "#228B22", south: "#228B22" }
+            },
+            {
+                years: "1099-1187 CE",
+                title: "Crusader Period",
+                description: "European Crusaders established kingdoms in the Holy Land.",
+                colors: { north: "#8B0000", central: "#FFD700", south: "#8B0000" }
+            },
+            {
+                years: "1187-1517 CE",
+                title: "Ayyubid/Mamluk Period",
+                description: "Islamic dynasties regained control after defeating the Crusaders.",
+                colors: { north: "#006400", central: "#006400", south: "#006400" }
+            },
+            {
+                years: "1517-1917 CE",
+                title: "Ottoman Empire",
+                description: "The Ottoman Turks ruled for 400 years. The region was divided into administrative districts, with gradual decline in later centuries and increased European influence.",
+                colors: { north: "#8B0000", central: "#8B0000", south: "#8B0000" },
+                context: "The Ottoman Empire brought stability and Islamic law. Jerusalem's importance grew as a pilgrimage site. In the 19th century, European powers gained influence and Jewish immigration began.",
+                keyEvents: [
+                    "1517: Ottomans defeat Mamluks, gain control",
+                    "Administrative reorganization into districts",
+                    "19th century: European influence increases",
+                    "Late 1800s: First waves of Jewish immigration (Aliyah)"
+                ],
+                transition: "World War I and Ottoman defeat opened the region to British control and international intervention."
+            },
+            {
+                years: "1917-1948 CE",
+                title: "British Mandate",
+                description: "Britain governed under League of Nations mandate. The 1917 Balfour Declaration supported a Jewish homeland. Large-scale Jewish immigration occurred, especially in the 1930s.",
+                colors: { north: "#4682B4", central: "#4682B4", south: "#4682B4" },
+                context: "The British Mandate incorporated the Balfour Declaration supporting Jewish national home. Rising tensions between Arab and Jewish populations led to violence and competing national movements.",
+                keyEvents: [
+                    "1917: Balfour Declaration issued by Britain",
+                    "1922-1947: British Mandate period",
+                    "1930s: Increased Jewish immigration fleeing Nazi persecution",
+                    "1937: Arab rebellion against British rule and immigration"
+                ],
+                transition: "UN Partition Plan of 1947 attempted to resolve competing national claims through territorial division."
+            },
+            {
+                years: "1948 CE",
+                title: "Independence & Partition",
+                description: "May 14, 1948: Israel declared independence. Arab states invaded the next day. The war resulted in Israeli control of more territory than allocated by UN partition, and 700,000 Palestinian refugees.",
+                colors: { north: "#0047AB", central: "#0047AB", south: "#DEB887" },
+                context: "The 1947 UN Partition Plan was accepted by Jewish leaders but rejected by Arab states. David Ben-Gurion proclaimed Israeli independence as British forces withdrew.",
+                keyEvents: [
+                    "November 29, 1947: UN Resolution 181 (Partition Plan)",
+                    "May 14, 1948: Israel declares independence",
+                    "May 15, 1948: Arab states invade",
+                    "1949: Armistice agreements establish new borders"
+                ],
+                transition: "End of British Mandate led to first Arab-Israeli war and establishment of two competing national entities."
+            },
+            {
+                years: "1967 CE",
+                title: "Six-Day War",
+                description: "June 5-10, 1967: Israel captured West Bank, East Jerusalem, Gaza Strip, Sinai Peninsula, and Golan Heights. Second exodus of 500,000 Palestinians occurred.",
+                colors: { north: "#0047AB", central: "#0047AB", south: "#0047AB" },
+                context: "Rising tensions between Israel, Egypt, and Syria led to war. Israel's decisive victory dramatically changed regional geography and created ongoing occupation issues.",
+                keyEvents: [
+                    "June 5: Israel launches preemptive strikes",
+                    "June 7: Jerusalem reunified under Israeli control",
+                    "June 10: Ceasefire declared",
+                    "UN Resolution 242 calls for withdrawal from occupied territories"
+                ],
+                transition: "Overwhelming Israeli military victory expanded territory but created new demographic and political challenges."
+            },
+            {
+                years: "1978-1982 CE",
+                title: "Camp David Accords",
+                description: "Peace agreement with Egypt. Sinai Peninsula returned to Egypt.",
+                colors: { north: "#0047AB", central: "#0047AB", south: "#32CD32" }
+            },
+            {
+                years: "1993-1995 CE",
+                title: "Oslo Accords",
+                description: "Secret negotiations in Norway led to mutual recognition between Israel and PLO. Palestinian Authority established with limited self-governance in parts of West Bank and Gaza.",
+                colors: { north: "#0047AB", central: "#90EE90", south: "#228B22" },
+                context: "The First Intifada (1987) and international pressure led to breakthrough negotiations. Arafat, Rabin, and Peres won Nobel Peace Prize in 1994.",
+                keyEvents: [
+                    "September 1993: Oslo I Accords signed",
+                    "Mutual recognition between Israel and PLO",
+                    "1995: Oslo II expands Palestinian self-rule",
+                    "Establishment of Palestinian Authority"
+                ],
+                transition: "Secret diplomacy breakthrough aimed to resolve conflict through gradual Palestinian autonomy and eventual final status negotiations."
+            },
+            {
+                years: "2005 CE",
+                title: "Gaza Disengagement",
+                description: "Israel withdrew settlements and military from Gaza Strip.",
+                colors: { north: "#0047AB", central: "#90EE90", south: "#FF6347" }
+            },
+            {
+                years: "2020 CE",
+                title: "Modern Day",
+                description: "Complex situation with Israeli control, Palestinian Authority in parts of West Bank, Hamas in Gaza. Ongoing diplomatic efforts include regional normalization agreements and international mediation.",
+                colors: { north: "#0047AB", central: "#90EE90", south: "#FF6347" },
+                context: "After the Second Intifada (2000-2005), various peace initiatives continued. Regional dynamics changed with Arab Spring and Abraham Accords normalizing Israel-Arab relations.",
+                keyEvents: [
+                    "2005: Israeli disengagement from Gaza",
+                    "2007: Hamas takes control of Gaza",
+                    "2020: Abraham Accords with UAE, Bahrain",
+                    "Ongoing: Various diplomatic initiatives"
+                ],
+                transition: "Current period marked by status quo management, regional integration, and continued search for sustainable peace solutions."
+            }
+        ];
+
+        // Quiz questions
+        const quizQuestions = [
+            {
+                question: "Which ancient empire destroyed the First Temple in Jerusalem?",
+                options: ["Assyrians", "Babylonians", "Persians", "Greeks"],
+                correct: 1
+            },
+            {
+                question: "Under which rulers was the Kingdom of Israel united?",
+                options: ["David and Solomon", "Abraham and Isaac", "Moses and Joshua", "Saul and David"],
+                correct: 0
+            },
+            {
+                question: "What happened to the northern kingdom in 722 BCE?",
+                options: ["It joined with Judah", "It was conquered by Assyria", "It became independent", "It was destroyed by Egypt"],
+                correct: 1
+            },
+            {
+                question: "Which empire allowed the Jewish exiles to return from Babylon?",
+                options: ["Greek", "Roman", "Persian", "Egyptian"],
+                correct: 2
+            },
+            {
+                question: "In what year did Israel declare independence?",
+                options: ["1947", "1948", "1949", "1950"],
+                correct: 1
+            }
+        ];
+
+        // Game state
+        let currentPeriod = 0;
+        let isPlaying = false;
+        let playInterval;
+        let currentQuizQuestion = 0;
+
+        // DOM elements
+        const slider = document.getElementById('timelineSlider');
+        const periodInfo = document.getElementById('periodInfo');
+        const periodYears = document.getElementById('periodYears');
+        const periodTitle = document.getElementById('periodTitle');
+        const periodDescription = document.getElementById('periodDescription');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const playBtn = document.getElementById('playBtn');
+        const quizBtn = document.getElementById('quizBtn');
+        const quizSection = document.getElementById('quizSection');
+        const territories = document.getElementById('territories');
+
+        // Initialize
+        function init() {
+            updateDisplay();
+            setupEventListeners();
+            soundManager.play('start');
+        }
+
+        function setupEventListeners() {
+            slider.addEventListener('input', (e) => {
+                currentPeriod = parseInt(e.target.value);
+                updateDisplay();
+                soundManager.play('select');
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentPeriod > 0) {
+                    currentPeriod--;
+                    slider.value = currentPeriod;
+                    updateDisplay();
+                    soundManager.play('select');
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentPeriod < historicalPeriods.length - 1) {
+                    currentPeriod++;
+                    slider.value = currentPeriod;
+                    updateDisplay();
+                    soundManager.play('select');
+                }
+            });
+
+            playBtn.addEventListener('click', toggleAutoPlay);
+            quizBtn.addEventListener('click', showQuiz);
+        }
+
+        function updateDisplay() {
+            const period = historicalPeriods[currentPeriod];
+            
+            // Update period information
+            periodYears.textContent = period.years;
+            periodTitle.textContent = period.title;
+            periodDescription.textContent = period.description;
+            
+            // Update sidebar with detailed information
+            updateSidebar(period);
+            
+            // Update map colors
+            const northTerritory = document.getElementById('north');
+            const centralTerritory = document.getElementById('central');
+            const southTerritory = document.getElementById('south');
+            
+            if (northTerritory) northTerritory.setAttribute('fill', period.colors.north);
+            if (centralTerritory) centralTerritory.setAttribute('fill', period.colors.central);
+            if (southTerritory) southTerritory.setAttribute('fill', period.colors.south);
+            
+            // Update button states
+            prevBtn.disabled = currentPeriod === 0;
+            nextBtn.disabled = currentPeriod === historicalPeriods.length - 1;
+            
+            // Update period info background based on period
+            const infoElement = document.getElementById('periodInfo');
+            if (currentPeriod < 8) {
+                infoElement.style.background = 'linear-gradient(135deg, #8B4513 0%, #D2691E 100%)'; // Ancient periods
+            } else if (currentPeriod < 13) {
+                infoElement.style.background = 'linear-gradient(135deg, #4682B4 0%, #5F9EA0 100%)'; // Medieval periods
+            } else {
+                infoElement.style.background = 'linear-gradient(135deg, #2E8B57 0%, #3CB371 100%)'; // Modern periods
+            }
+        }
+
+        function updateSidebar(period) {
+            const contextElement = document.getElementById('historicalContext');
+            const keyEventsElement = document.getElementById('keyEvents');
+            const transitionElement = document.getElementById('transitionInfo');
+            const eventsListElement = document.getElementById('eventsList');
+            const transitionTextElement = document.getElementById('transitionText');
+            
+            // Update historical context
+            if (period.context) {
+                contextElement.textContent = period.context;
+            } else {
+                contextElement.textContent = period.description;
+            }
+            
+            // Update key events
+            if (period.keyEvents && period.keyEvents.length > 0) {
+                keyEventsElement.style.display = 'block';
+                eventsListElement.innerHTML = '';
+                period.keyEvents.forEach(event => {
+                    const li = document.createElement('li');
+                    li.textContent = event;
+                    eventsListElement.appendChild(li);
+                });
+            } else {
+                keyEventsElement.style.display = 'none';
+            }
+            
+            // Update transition information
+            if (period.transition) {
+                transitionElement.style.display = 'block';
+                transitionTextElement.textContent = period.transition;
+            } else {
+                transitionElement.style.display = 'none';
+            }
+        }
+
+        function toggleAutoPlay() {
+            if (isPlaying) {
+                clearInterval(playInterval);
+                isPlaying = false;
+                playBtn.textContent = '▶️ Auto Play';
+                soundManager.play('stop');
+            } else {
+                isPlaying = true;
+                playBtn.textContent = '⏸️ Pause';
+                soundManager.play('start');
+                
+                playInterval = setInterval(() => {
+                    if (currentPeriod < historicalPeriods.length - 1) {
+                        currentPeriod++;
+                        slider.value = currentPeriod;
+                        updateDisplay();
+                    } else {
+                        toggleAutoPlay(); // Stop at the end
+                    }
+                }, 3000); // Change every 3 seconds
+            }
+        }
+
+        function showQuiz() {
+            quizSection.style.display = 'block';
+            currentQuizQuestion = Math.floor(Math.random() * quizQuestions.length);
+            displayQuizQuestion();
+            soundManager.play('start');
+            
+            // Scroll to quiz
+            quizSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function displayQuizQuestion() {
+            const question = quizQuestions[currentQuizQuestion];
+            document.getElementById('quizQuestion').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => checkAnswer(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            document.getElementById('quizResult').textContent = '';
+        }
+
+        function checkAnswer(selectedIndex) {
+            const question = quizQuestions[currentQuizQuestion];
+            const options = document.querySelectorAll('.quiz-option');
+            const resultElement = document.getElementById('quizResult');
+            
+            options.forEach((option, index) => {
+                option.style.pointerEvents = 'none';
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            if (selectedIndex === question.correct) {
+                resultElement.innerHTML = '✅ Correct! Well done!';
+                resultElement.style.color = '#4CAF50';
+                soundManager.play('correct');
+            } else {
+                resultElement.innerHTML = '❌ Not quite right. The correct answer is highlighted in green.';
+                resultElement.style.color = '#dc3545';
+                soundManager.play('incorrect');
+            }
+            
+            setTimeout(() => {
+                if (Math.random() > 0.5 && quizQuestions.length > 1) {
+                    // Show another question
+                    let newQuestion;
+                    do {
+                        newQuestion = Math.floor(Math.random() * quizQuestions.length);
+                    } while (newQuestion === currentQuizQuestion);
+                    currentQuizQuestion = newQuestion;
+                    displayQuizQuestion();
+                } else {
+                    quizSection.style.display = 'none';
+                }
+            }, 3000);
+        }
+
+        // Territory click handlers for additional interactivity
+        document.addEventListener('DOMContentLoaded', () => {
+            const territoryElements = document.querySelectorAll('.territory');
+            territoryElements.forEach(territory => {
+                territory.addEventListener('click', (e) => {
+                    const territoryId = e.target.id;
+                    const period = historicalPeriods[currentPeriod];
+                    alert(`${territoryId.charAt(0).toUpperCase() + territoryId.slice(1)} region during ${period.title} (${period.years})`);
+                });
+            });
+        });
+
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>

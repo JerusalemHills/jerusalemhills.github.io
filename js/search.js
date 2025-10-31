@@ -34,6 +34,7 @@
             { url: '/kids/games/multiplication.html', title: 'Multiplication Master', description: 'Times tables practice game for kids', keywords: ['multiplication', 'times tables', 'math', 'kids', 'educational', 'arithmetic'] },
             { url: '/kids/games/words.html', title: 'Word Builder', description: 'Word building game for kids', keywords: ['words', 'spelling', 'kids', 'educational', 'vocabulary'] },
             { url: '/kids/games/memory.html', title: 'Memory Match', description: 'Memory matching game for kids', keywords: ['memory', 'matching', 'kids', 'educational', 'brain training'] },
+            { url: '/kids/games/history-map.html', title: 'Historical Land of Israel Map', description: 'Interactive timeline map showing historical periods', keywords: ['history', 'map', 'israel', 'timeline', 'historical', 'educational', 'ancient', 'biblical'] },
             
             // Forum
             { url: '/forum/', title: 'Community Forum', description: 'Jerusalem Hills community discussions', keywords: ['forum', 'community', 'discussion', 'chat'] },

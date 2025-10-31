@@ -198,6 +198,10 @@ body {
     border-color: #FF9800;
 }
 
+.history-game:hover {
+    border-color: #8B4513;
+}
+
 /* Fun Facts Section */
 .fun-facts {
     margin: 60px auto 40px;
