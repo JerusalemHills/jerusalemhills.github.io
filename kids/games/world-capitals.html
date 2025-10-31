@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Capitals Quiz - Educational Geography Game | Jerusalem Hills Kids</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Test your geography knowledge with World Capitals Quiz! Learn capital cities from around the globe. Educational quiz game for kids ages 8-14.">
+    <meta name="keywords" content="world capitals, geography quiz, capital cities, educational game, kids geography, world knowledge, geography learning">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/kids/games/world-capitals.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="World Capitals Quiz - Educational Geography Game">
+    <meta property="og:description" content="Test your geography knowledge with World Capitals Quiz! Learn capital cities from around the globe.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jerusalemhills.com/kids/games/world-capitals.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" href="../assets/css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Sound Manager -->
+    <script src="../assets/js/sound-manager.js"></script>
+    
+    <style>
+        .game-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            color: #333;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .difficulty-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .difficulty-btn.active {
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .quiz-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FFE66D;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .quiz-area {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .question-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .question-number {
+            font-size: 1rem;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .question {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 15px 0;
+            color: #333;
+            text-align: center;
+        }
+
+        .country-flag {
+            font-size: 4rem;
+            margin: 20px 0;
+            text-align: center;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        .answer-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .answer-btn {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: #333;
+            border: 2px solid #dee2e6;
+            padding: 15px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .answer-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .answer-btn.correct {
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            color: white;
+            border-color: #2E7D32;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .answer-btn.incorrect {
+            background: linear-gradient(135deg, #FF6B6B, #FF8A80);
+            color: white;
+            border-color: #D32F2F;
+            animation: incorrectShake 0.6s ease;
+        }
+
+        .answer-btn.disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ECDC4, #44A08D);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 15px;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .timer {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 15px 0;
+            color: #FFE66D;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .timer.warning {
+            color: #FF6B6B;
+            animation: timerPulse 1s infinite;
+        }
+
+        .result-area {
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-correct {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(139, 195, 74, 0.9));
+            color: white;
+            animation: bounceIn 0.6s ease;
+        }
+
+        .result-incorrect {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.9), rgba(255, 107, 107, 0.9));
+            color: white;
+            animation: shake 0.6s ease;
+        }
+
+        .country-info {
+            background: rgba(78, 205, 196, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #4ECDC4;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .game-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .game-btn.secondary {
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            color: #333;
+        }
+
+        .final-score {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .achievements {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .achievement {
+            background: linear-gradient(135deg, #F2994A, #F2C94C);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes timerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 2rem;
+            }
+            
+            .question {
+                font-size: 1.4rem;
+            }
+            
+            .answer-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .difficulty-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .game-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .game-btn {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1 class="game-title">🌍 World Capitals Quiz</h1>
+            <p>Test your geography knowledge and explore the world!</p>
+            <div class="game-nav">
+                <a href="../index.html" class="nav-btn">Home</a>
+                <a href="israel-map.html" class="nav-btn">Israel Map</a>
+                <a href="math.html" class="nav-btn">Math Games</a>
+                <a href="words.html" class="nav-btn">Word Games</a>
+            </div>
+        </header>
+
+        <main>
+            <div class="difficulty-selector">
+                <h3 style="width: 100%; text-align: center; margin-bottom: 15px;">Choose Difficulty Level:</h3>
+                <button class="difficulty-btn active" data-level="easy">Easy (Europe & Americas)</button>
+                <button class="difficulty-btn" data-level="medium">Medium (World Mix)</button>
+                <button class="difficulty-btn" data-level="hard">Hard (All Continents)</button>
+                <button class="difficulty-btn" data-level="expert">Expert (Challenging)</button>
+            </div>
+
+            <div class="quiz-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="scoreValue">0</div>
+                    <div class="stat-label">Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="streakValue">0</div>
+                    <div class="stat-label">Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="accuracyValue">0%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="bestValue">0</div>
+                    <div class="stat-label">Best Score</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Ready to start! Click Begin Quiz</div>
+            </div>
+
+            <div class="timer" id="timer" style="display: none;">⏰ Time: 30s</div>
+
+            <div class="quiz-area" id="quizArea">
+                <div class="question-header">
+                    <div class="question-number" id="questionNumber">Welcome to World Capitals Quiz!</div>
+                    <div class="question" id="question">Discover capital cities from around the globe!</div>
+                    <div class="country-flag" id="countryFlag">🌍</div>
+                </div>
+                
+                <div class="answer-options" id="answerOptions">
+                    <!-- Answer buttons will be inserted here -->
+                </div>
+            </div>
+
+            <div class="result-area" id="resultArea" style="display: none;"></div>
+
+            <div class="game-controls">
+                <button class="game-btn" id="startBtn">Begin Quiz</button>
+                <button class="game-btn secondary" id="skipBtn" style="display: none;">Skip Question</button>
+                <button class="game-btn secondary" id="pauseBtn" style="display: none;">Pause</button>
+            </div>
+
+            <div class="final-score" id="finalScore" style="display: none;">
+                <h2>Quiz Complete! 🎉</h2>
+                <div class="score-circle" id="finalScoreCircle">0/10</div>
+                <div class="achievements" id="achievements"></div>
+                <p id="finalMessage">Great job exploring the world!</p>
+            </div>
+        </main>
+
+        <footer style="text-align: center; margin-top: 40px; opacity: 0.8;">
+            <p>&copy; 2025 Jerusalem Hills Kids - Safe & Educational</p>
+            <p><a href="../index.html" style="color: #FFE66D;">Back to Kids Zone</a></p>
+        </footer>
+    </div>
+
+    <script>
+        class WorldCapitalsQuiz {
+            constructor() {
+                this.difficulty = 'easy';
+                this.score = 0;
+                this.streak = 0;
+                this.questionsAnswered = 0;
+                this.correctAnswers = 0;
+                this.totalQuestions = 10;
+                this.currentQuestion = null;
+                this.gameActive = false;
+                this.timeLeft = 30;
+                this.timer = null;
+                this.isPaused = false;
+                this.bestScores = JSON.parse(localStorage.getItem('capitals-quiz-best-scores') || '{}');
+                
+                this.capitalsData = {
+                    easy: [
+                        { country: 'France', capital: 'Paris', flag: '🇫🇷', continent: 'Europe' },
+                        { country: 'Germany', capital: 'Berlin', flag: '🇩🇪', continent: 'Europe' },
+                        { country: 'Italy', capital: 'Rome', flag: '🇮🇹', continent: 'Europe' },
+                        { country: 'Spain', capital: 'Madrid', flag: '🇪🇸', continent: 'Europe' },
+                        { country: 'United Kingdom', capital: 'London', flag: '🇬🇧', continent: 'Europe' },
+                        { country: 'USA', capital: 'Washington D.C.', flag: '🇺🇸', continent: 'North America' },
+                        { country: 'Canada', capital: 'Ottawa', flag: '🇨🇦', continent: 'North America' },
+                        { country: 'Mexico', capital: 'Mexico City', flag: '🇲🇽', continent: 'North America' },
+                        { country: 'Brazil', capital: 'Brasília', flag: '🇧🇷', continent: 'South America' },
+                        { country: 'Argentina', capital: 'Buenos Aires', flag: '🇦🇷', continent: 'South America' }
+                    ],
+                    medium: [
+                        { country: 'Japan', capital: 'Tokyo', flag: '🇯🇵', continent: 'Asia' },
+                        { country: 'China', capital: 'Beijing', flag: '🇨🇳', continent: 'Asia' },
+                        { country: 'India', capital: 'New Delhi', flag: '🇮🇳', continent: 'Asia' },
+                        { country: 'Australia', capital: 'Canberra', flag: '🇦🇺', continent: 'Oceania' },
+                        { country: 'Russia', capital: 'Moscow', flag: '🇷🇺', continent: 'Europe/Asia' },
+                        { country: 'South Africa', capital: 'Pretoria', flag: '🇿🇦', continent: 'Africa' },
+                        { country: 'Egypt', capital: 'Cairo', flag: '🇪🇬', continent: 'Africa' },
+                        { country: 'Turkey', capital: 'Ankara', flag: '🇹🇷', continent: 'Europe/Asia' },
+                        { country: 'Thailand', capital: 'Bangkok', flag: '🇹🇭', continent: 'Asia' },
+                        { country: 'Netherlands', capital: 'Amsterdam', flag: '🇳🇱', continent: 'Europe' }
+                    ],
+                    hard: [
+                        { country: 'Kazakhstan', capital: 'Nur-Sultan', flag: '🇰🇿', continent: 'Asia' },
+                        { country: 'Chile', capital: 'Santiago', flag: '🇨🇱', continent: 'South America' },
+                        { country: 'Norway', capital: 'Oslo', flag: '🇳🇴', continent: 'Europe' },
+                        { country: 'Kenya', capital: 'Nairobi', flag: '🇰🇪', continent: 'Africa' },
+                        { country: 'Philippines', capital: 'Manila', flag: '🇵🇭', continent: 'Asia' },
+                        { country: 'Morocco', capital: 'Rabat', flag: '🇲🇦', continent: 'Africa' },
+                        { country: 'Peru', capital: 'Lima', flag: '🇵🇪', continent: 'South America' },
+                        { country: 'Finland', capital: 'Helsinki', flag: '🇫🇮', continent: 'Europe' },
+                        { country: 'New Zealand', capital: 'Wellington', flag: '🇳🇿', continent: 'Oceania' },
+                        { country: 'Vietnam', capital: 'Hanoi', flag: '🇻🇳', continent: 'Asia' }
+                    ],
+                    expert: [
+                        { country: 'Bhutan', capital: 'Thimphu', flag: '🇧🇹', continent: 'Asia' },
+                        { country: 'Madagascar', capital: 'Antananarivo', flag: '🇲🇬', continent: 'Africa' },
+                        { country: 'Sri Lanka', capital: 'Sri Jayawardenepura Kotte', flag: '🇱🇰', continent: 'Asia' },
+                        { country: 'Moldova', capital: 'Chișinău', flag: '🇲🇩', continent: 'Europe' },
+                        { country: 'Uzbekistan', capital: 'Tashkent', flag: '🇺🇿', continent: 'Asia' },
+                        { country: 'Botswana', capital: 'Gaborone', flag: '🇧🇼', continent: 'Africa' },
+                        { country: 'Latvia', capital: 'Riga', flag: '🇱🇻', continent: 'Europe' },
+                        { country: 'Uruguay', capital: 'Montevideo', flag: '🇺🇾', continent: 'South America' },
+                        { country: 'Myanmar', capital: 'Naypyidaw', flag: '🇲🇲', continent: 'Asia' },
+                        { country: 'Belarus', capital: 'Minsk', flag: '🇧🇾', continent: 'Europe' }
+                    ]
+                };
+                
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.updateDisplay();
+                this.resetQuiz();
+                console.log('🌍 World Capitals Quiz initialized!');
+            }
+
+            setupEventListeners() {
+                // Difficulty buttons
+                document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.setDifficulty(e.target.dataset.level);
+                    });
+                });
+
+                // Game controls
+                document.getElementById('startBtn').addEventListener('click', () => this.startQuiz());
+                document.getElementById('skipBtn').addEventListener('click', () => this.skipQuestion());
+                document.getElementById('pauseBtn').addEventListener('click', () => this.pauseGame());
+            }
+
+            setDifficulty(level) {
+                this.difficulty = level;
+                
+                // Update UI
+                document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-level="${level}"]`).classList.add('active');
+
+                // Reset quiz
+                this.resetQuiz();
+                
+                // Play sound
+                if (window.soundManager) {
+                    window.soundManager.playUISound('click');
+                }
+
+                this.updateDisplay();
+            }
+
+            startQuiz() {
+                if (this.isPaused) {
+                    this.resumeGame();
+                    return;
+                }
+
+                this.gameActive = true;
+                this.score = 0;
+                this.streak = 0;
+                this.questionsAnswered = 0;
+                this.correctAnswers = 0;
+                
+                // Update UI
+                document.getElementById('startBtn').style.display = 'none';
+                document.getElementById('skipBtn').style.display = 'inline-block';
+                document.getElementById('pauseBtn').style.display = 'inline-block';
+                document.getElementById('timer').style.display = 'block';
+                document.getElementById('finalScore').style.display = 'none';
+                
+                // Play start sound
+                if (window.soundManager) {
+                    window.soundManager.playGameSound('correct');
+                }
+
+                this.generateQuestion();
+                this.updateDisplay();
+            }
+
+            generateQuestion() {
+                if (!this.gameActive) return;
+
+                const data = this.capitalsData[this.difficulty];
+                const questionData = data[Math.floor(Math.random() * data.length)];
+                
+                // Generate wrong answers from the same difficulty pool
+                const wrongAnswers = [];
+                while (wrongAnswers.length < 3) {
+                    const randomCapital = data[Math.floor(Math.random() * data.length)];
+                    if (randomCapital.capital !== questionData.capital && 
+                        !wrongAnswers.includes(randomCapital.capital)) {
+                        wrongAnswers.push(randomCapital.capital);
+                    }
+                }
+
+                // Combine correct and wrong answers, then shuffle
+                const allAnswers = [questionData.capital, ...wrongAnswers];
+                const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
+
+                this.currentQuestion = {
+                    ...questionData,
+                    answers: shuffledAnswers,
+                    correctAnswer: questionData.capital
+                };
+
+                this.displayQuestion();
+                this.startTimer();
+            }
+
+            displayQuestion() {
+                const questionNumber = document.getElementById('questionNumber');
+                const question = document.getElementById('question');
+                const countryFlag = document.getElementById('countryFlag');
+                const answerOptions = document.getElementById('answerOptions');
+                const resultArea = document.getElementById('resultArea');
+
+                questionNumber.textContent = `Question ${this.questionsAnswered + 1} of ${this.totalQuestions}`;
+                question.textContent = `What is the capital of ${this.currentQuestion.country}?`;
+                countryFlag.textContent = this.currentQuestion.flag;
+                
+                // Clear previous answers and results
+                answerOptions.innerHTML = '';
+                resultArea.style.display = 'none';
+                resultArea.className = 'result-area';
+
+                // Create answer buttons
+                this.currentQuestion.answers.forEach((answer, index) => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-btn';
+                    button.textContent = answer;
+                    button.addEventListener('click', () => this.selectAnswer(answer, button));
+                    answerOptions.appendChild(button);
+                });
+            }
+
+            selectAnswer(selectedAnswer, buttonElement) {
+                if (!this.gameActive || buttonElement.classList.contains('disabled')) return;
+
+                this.clearTimer();
+                
+                // Disable all buttons
+                document.querySelectorAll('.answer-btn').forEach(btn => {
+                    btn.classList.add('disabled');
+                });
+
+                const isCorrect = selectedAnswer === this.currentQuestion.correctAnswer;
+                
+                // Highlight answers
+                document.querySelectorAll('.answer-btn').forEach(btn => {
+                    if (btn.textContent === this.currentQuestion.correctAnswer) {
+                        btn.classList.add('correct');
+                    } else if (btn === buttonElement && !isCorrect) {
+                        btn.classList.add('incorrect');
+                    }
+                });
+
+                if (isCorrect) {
+                    this.handleCorrectAnswer();
+                } else {
+                    this.handleIncorrectAnswer();
+                }
+
+                this.questionsAnswered++;
+                this.updateDisplay();
+
+                setTimeout(() => {
+                    if (this.questionsAnswered >= this.totalQuestions) {
+                        this.endQuiz();
+                    } else {
+                        this.generateQuestion();
+                    }
+                }, 3000);
+            }
+
+            handleCorrectAnswer() {
+                this.score++;
+                this.correctAnswers++;
+                this.streak++;
+
+                // Play sound
+                if (window.soundManager) {
+                    window.soundManager.createEducationalFeedback(true, this.difficulty);
+                }
+
+                // Show result
+                const resultArea = document.getElementById('resultArea');
+                const encouragements = [
+                    "🌟 Excellent! Perfect geography knowledge!",
+                    "🎉 Outstanding! You know your capitals!",
+                    "✨ Brilliant! Geography expert in action!",
+                    "🏆 Amazing! World traveler knowledge!",
+                    "🎯 Fantastic! You're a geography star!"
+                ];
+
+                let message = encouragements[Math.floor(Math.random() * encouragements.length)];
+                
+                if (this.streak >= 3) {
+                    message += ` ${this.streak}-question streak! 🔥`;
+                }
+
+                const countryInfo = `
+                    <div class="country-info">
+                        💡 ${this.currentQuestion.capital} is the capital of ${this.currentQuestion.country} 
+                        in ${this.currentQuestion.continent}!
+                    </div>
+                `;
+
+                resultArea.innerHTML = message + countryInfo;
+                resultArea.className = 'result-area result-correct';
+                resultArea.style.display = 'block';
+            }
+
+            handleIncorrectAnswer() {
+                this.streak = 0;
+
+                // Play sound
+                if (window.soundManager) {
+                    window.soundManager.createEducationalFeedback(false);
+                }
+
+                // Show result
+                const resultArea = document.getElementById('resultArea');
+                const message = `❌ Not quite! The capital of ${this.currentQuestion.country} is ${this.currentQuestion.correctAnswer}.`;
+                
+                const countryInfo = `
+                    <div class="country-info">
+                        📍 ${this.currentQuestion.correctAnswer} is located in ${this.currentQuestion.continent}. 
+                        Try to remember this for next time!
+                    </div>
+                `;
+
+                resultArea.innerHTML = message + countryInfo;
+                resultArea.className = 'result-area result-incorrect';
+                resultArea.style.display = 'block';
+            }
+
+            skipQuestion() {
+                if (!this.gameActive) return;
+
+                this.clearTimer();
+                this.streak = 0;
+                this.questionsAnswered++;
+
+                // Show correct answer
+                const resultArea = document.getElementById('resultArea');
+                resultArea.innerHTML = `⏭️ Skipped! The capital of ${this.currentQuestion.country} is ${this.currentQuestion.correctAnswer}.`;
+                resultArea.className = 'result-area';
+                resultArea.style.background = 'linear-gradient(135deg, rgba(156, 156, 156, 0.9), rgba(189, 189, 189, 0.9))';
+                resultArea.style.display = 'block';
+
+                // Highlight correct answer
+                document.querySelectorAll('.answer-btn').forEach(btn => {
+                    if (btn.textContent === this.currentQuestion.correctAnswer) {
+                        btn.classList.add('correct');
+                    }
+                    btn.classList.add('disabled');
+                });
+
+                this.updateDisplay();
+
+                setTimeout(() => {
+                    if (this.questionsAnswered >= this.totalQuestions) {
+                        this.endQuiz();
+                    } else {
+                        this.generateQuestion();
+                    }
+                }, 3000);
+            }
+
+            pauseGame() {
+                if (!this.gameActive) return;
+
+                this.isPaused = !this.isPaused;
+                const pauseBtn = document.getElementById('pauseBtn');
+
+                if (this.isPaused) {
+                    this.clearTimer();
+                    pauseBtn.textContent = 'Resume';
+                    document.getElementById('quizArea').style.opacity = '0.5';
+                    document.querySelectorAll('.answer-btn').forEach(btn => {
+                        btn.classList.add('disabled');
+                    });
+                } else {
+                    this.resumeGame();
+                }
+            }
+
+            resumeGame() {
+                this.isPaused = false;
+                document.getElementById('pauseBtn').textContent = 'Pause';
+                document.getElementById('quizArea').style.opacity = '1';
+                document.querySelectorAll('.answer-btn').forEach(btn => {
+                    btn.classList.remove('disabled');
+                });
+                this.startTimer();
+            }
+
+            startTimer() {
+                this.timeLeft = 30;
+                const timerDisplay = document.getElementById('timer');
+                
+                this.timer = setInterval(() => {
+                    this.timeLeft--;
+                    timerDisplay.textContent = `⏰ Time: ${this.timeLeft}s`;
+                    
+                    if (this.timeLeft <= 5) {
+                        timerDisplay.classList.add('warning');
+                    } else {
+                        timerDisplay.classList.remove('warning');
+                    }
+                    
+                    if (this.timeLeft <= 0) {
+                        this.timeUp();
+                    }
+                }, 1000);
+            }
+
+            clearTimer() {
+                if (this.timer) {
+                    clearInterval(this.timer);
+                    this.timer = null;
+                }
+                document.getElementById('timer').classList.remove('warning');
+            }
+
+            timeUp() {
+                this.clearTimer();
+                this.streak = 0;
+
+                // Show time up message
+                const resultArea = document.getElementById('resultArea');
+                resultArea.innerHTML = `⏰ Time's up! The capital of ${this.currentQuestion.country} is ${this.currentQuestion.correctAnswer}.`;
+                resultArea.className = 'result-area';
+                resultArea.style.background = 'linear-gradient(135deg, rgba(255, 152, 0, 0.9), rgba(255, 193, 7, 0.9))';
+                resultArea.style.display = 'block';
+
+                // Highlight correct answer
+                document.querySelectorAll('.answer-btn').forEach(btn => {
+                    if (btn.textContent === this.currentQuestion.correctAnswer) {
+                        btn.classList.add('correct');
+                    }
+                    btn.classList.add('disabled');
+                });
+
+                this.questionsAnswered++;
+                this.updateDisplay();
+
+                setTimeout(() => {
+                    if (this.questionsAnswered >= this.totalQuestions) {
+                        this.endQuiz();
+                    } else {
+                        this.generateQuestion();
+                    }
+                }, 3000);
+            }
+
+            endQuiz() {
+                this.gameActive = false;
+                this.clearTimer();
+                
+                const accuracy = this.questionsAnswered > 0 ? Math.round((this.correctAnswers / this.questionsAnswered) * 100) : 0;
+                
+                // Save best score
+                const key = this.difficulty;
+                if (this.score > (this.bestScores[key] || 0)) {
+                    this.bestScores[key] = this.score;
+                    localStorage.setItem('capitals-quiz-best-scores', JSON.stringify(this.bestScores));
+                    
+                    // Play achievement sound
+                    if (window.soundManager) {
+                        window.soundManager.celebrate();
+                    }
+                }
+
+                this.showFinalScore(accuracy);
+                this.resetUIForNewGame();
+            }
+
+            showFinalScore(accuracy) {
+                const finalScore = document.getElementById('finalScore');
+                const finalScoreCircle = document.getElementById('finalScoreCircle');
+                const achievements = document.getElementById('achievements');
+                const finalMessage = document.getElementById('finalMessage');
+
+                finalScoreCircle.textContent = `${this.score}/${this.totalQuestions}`;
+                
+                // Generate achievements
+                const achievementsList = [];
+                if (accuracy === 100) achievementsList.push("🏆 Perfect Score!");
+                if (accuracy >= 90) achievementsList.push("🌟 Geography Expert!");
+                if (accuracy >= 80) achievementsList.push("✈️ World Traveler!");
+                if (accuracy >= 70) achievementsList.push("🗺️ Map Master!");
+                if (this.streak >= 5) achievementsList.push("🔥 Hot Streak!");
+                if (this.score > (this.bestScores[this.difficulty] || 0)) achievementsList.push("🎯 New Best!");
+
+                achievements.innerHTML = achievementsList.map(achievement => 
+                    `<div class="achievement">${achievement}</div>`
+                ).join('');
+
+                // Final message based on performance
+                const messages = {
+                    100: "Perfect! You're a true geography champion! 🏆",
+                    90: "Excellent work! You know the world well! 🌟",
+                    80: "Great job! Your geography skills are impressive! ✈️",
+                    70: "Good effort! Keep exploring the world! 🗺️",
+                    60: "Nice try! Practice makes perfect! 📚",
+                    0: "Keep learning! The world is full of amazing places! 🌍"
+                };
+
+                const messageKey = Object.keys(messages)
+                    .map(Number)
+                    .sort((a, b) => b - a)
+                    .find(threshold => accuracy >= threshold);
+
+                finalMessage.textContent = messages[messageKey];
+                finalScore.style.display = 'block';
+            }
+
+            resetUIForNewGame() {
+                document.getElementById('startBtn').textContent = 'Play Again';
+                document.getElementById('startBtn').style.display = 'inline-block';
+                document.getElementById('skipBtn').style.display = 'none';
+                document.getElementById('pauseBtn').style.display = 'none';
+                document.getElementById('timer').style.display = 'none';
+                document.getElementById('quizArea').style.opacity = '1';
+            }
+
+            resetQuiz() {
+                this.gameActive = false;
+                this.isPaused = false;
+                this.score = 0;
+                this.streak = 0;
+                this.questionsAnswered = 0;
+                this.correctAnswers = 0;
+                this.currentQuestion = null;
+                this.clearTimer();
+                
+                // Reset UI
+                document.getElementById('questionNumber').textContent = 'Welcome to World Capitals Quiz!';
+                document.getElementById('question').textContent = 'Discover capital cities from around the globe!';
+                document.getElementById('countryFlag').textContent = '🌍';
+                document.getElementById('answerOptions').innerHTML = '';
+                document.getElementById('resultArea').style.display = 'none';
+                document.getElementById('finalScore').style.display = 'none';
+                
+                this.resetUIForNewGame();
+                this.updateDisplay();
+            }
+
+            updateDisplay() {
+                // Update stats
+                document.getElementById('scoreValue').textContent = this.score;
+                document.getElementById('streakValue').textContent = this.streak;
+                
+                const accuracy = this.questionsAnswered > 0 ? 
+                    Math.round((this.correctAnswers / this.questionsAnswered) * 100) : 0;
+                document.getElementById('accuracyValue').textContent = accuracy + '%';
+                
+                const bestScore = this.bestScores[this.difficulty] || 0;
+                document.getElementById('bestValue').textContent = bestScore;
+
+                // Update progress
+                const progress = this.gameActive ? (this.questionsAnswered / this.totalQuestions) * 100 : 0;
+                document.getElementById('progressFill').style.width = progress + '%';
+                
+                if (this.gameActive) {
+                    document.getElementById('progressText').textContent = 
+                        `Question ${this.questionsAnswered + 1} of ${this.totalQuestions}`;
+                } else if (this.questionsAnswered === this.totalQuestions) {
+                    document.getElementById('progressText').textContent = 'Quiz Complete! 🎉';
+                } else {
+                    document.getElementById('progressText').textContent = 'Ready to start! Click Begin Quiz';
+                }
+            }
+        }
+
+        // Initialize the game when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.worldCapitalsQuiz = new WorldCapitalsQuiz();
+            console.log('🌍 World Capitals Quiz game loaded successfully!');
+        });
+    </script>
+</body>
+</html>

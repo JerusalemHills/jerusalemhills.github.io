@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Israel Map Explorer - Educational Geography Game | Jerusalem Hills Kids</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore Israel through interactive geography! Learn about cities, landmarks, and regions of the Holy Land. Educational map game for kids ages 6-12.">
+    <meta name="keywords" content="Israel map, geography game, Holy Land, educational game, kids geography, Jerusalem, Tel Aviv, learning Israel">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/kids/games/israel-map.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Israel Map Explorer - Educational Geography Game">
+    <meta property="og:description" content="Explore Israel through interactive geography! Learn about cities, landmarks, and regions.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jerusalemhills.com/kids/games/israel-map.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" href="../assets/css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Sound Manager -->
+    <script src="../assets/js/sound-manager.js"></script>
+    
+    <style>
+        .game-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #4A90E2 0%, #7ED321 50%, #F5A623 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .game-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .game-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            color: #333;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .game-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FFE66D;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .map-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-svg {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            cursor: pointer;
+        }
+
+        .region {
+            fill: #E8F4FD;
+            stroke: #4A90E2;
+            stroke-width: 2;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .region:hover {
+            fill: #B8E6B8;
+            stroke: #2E7D32;
+            stroke-width: 3;
+            transform: scale(1.02);
+        }
+
+        .region.correct {
+            fill: #4CAF50;
+            stroke: #2E7D32;
+            animation: pulse 0.6s ease;
+        }
+
+        .region.incorrect {
+            fill: #FF6B6B;
+            stroke: #D32F2F;
+            animation: shake 0.6s ease;
+        }
+
+        .city-marker {
+            fill: #FF6B6B;
+            stroke: white;
+            stroke-width: 2;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .city-marker:hover {
+            fill: #4CAF50;
+            transform: scale(1.3);
+        }
+
+        .city-label {
+            fill: #333;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+
+        .question-area {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .question {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .game-btn {
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .game-btn.secondary {
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            color: #333;
+        }
+
+        .result-area {
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 20px 0;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .result-correct {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(139, 195, 74, 0.9));
+            color: white;
+            animation: bounceIn 0.6s ease;
+        }
+
+        .result-incorrect {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.9), rgba(255, 107, 107, 0.9));
+            color: white;
+            animation: shake 0.6s ease;
+        }
+
+        .info-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .location-info {
+            display: none;
+            text-align: center;
+        }
+
+        .location-info.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .location-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #FFE66D;
+        }
+
+        .location-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .fun-facts {
+            background: linear-gradient(135deg, rgba(255, 230, 109, 0.2), rgba(78, 205, 196, 0.2));
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #FFE66D;
+        }
+
+        .progress-ring {
+            width: 100px;
+            height: 100px;
+            margin: 15px auto;
+            position: relative;
+        }
+
+        .progress-ring svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring circle {
+            fill: none;
+            stroke-width: 6;
+        }
+
+        .progress-ring .bg {
+            stroke: rgba(255, 255, 255, 0.3);
+        }
+
+        .progress-ring .progress {
+            stroke: #FFE66D;
+            stroke-linecap: round;
+            stroke-dasharray: 251;
+            stroke-dashoffset: 251;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 2rem;
+            }
+            
+            .question {
+                font-size: 1.4rem;
+            }
+            
+            .game-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .map-container {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-modes {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .game-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .game-btn {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1 class="game-title">🗺️ Israel Map Explorer</h1>
+            <p class="game-subtitle">Discover the Amazing Geography of the Holy Land!</p>
+            <div class="game-nav">
+                <a href="../index.html" class="nav-btn">Home</a>
+                <a href="math.html" class="nav-btn">Math Games</a>
+                <a href="words.html" class="nav-btn">Word Games</a>
+                <a href="memory.html" class="nav-btn">Memory Games</a>
+            </div>
+        </header>
+
+        <main>
+            <div class="game-modes">
+                <h3 style="width: 100%; text-align: center; margin-bottom: 15px;">Choose Your Adventure:</h3>
+                <button class="mode-btn active" data-mode="cities">Find Cities 🏙️</button>
+                <button class="mode-btn" data-mode="regions">Explore Regions 🌄</button>
+                <button class="mode-btn" data-mode="landmarks">Famous Places 🏛️</button>
+                <button class="mode-btn" data-mode="explore">Free Explore 🔍</button>
+            </div>
+
+            <div class="game-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="scoreValue">0</div>
+                    <div class="stat-label">Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="streakValue">0</div>
+                    <div class="stat-label">Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="questionsValue">0/10</div>
+                    <div class="stat-label">Progress</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="bestValue">0</div>
+                    <div class="stat-label">Best Score</div>
+                </div>
+            </div>
+
+            <div class="question-area" id="questionArea">
+                <div class="question" id="question">Welcome to Israel! Click "Start Adventure" to begin exploring!</div>
+                <div class="progress-ring" id="progressRing" style="display: none;">
+                    <svg>
+                        <circle class="bg" cx="50" cy="50" r="40"></circle>
+                        <circle class="progress" cx="50" cy="50" r="40" id="progressCircle"></circle>
+                    </svg>
+                    <div class="progress-text" id="progressText">0/10</div>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <svg class="map-svg" id="israelMap" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Simplified Israel Map -->
+                    <!-- Northern Region -->
+                    <path id="north" class="region" d="M120 50 L280 50 L300 120 L250 140 L180 130 L120 100 Z" data-name="Northern Israel" />
+                    
+                    <!-- Central Region -->
+                    <path id="central" class="region" d="M120 100 L180 130 L250 140 L280 200 L200 220 L120 200 Z" data-name="Central Israel" />
+                    
+                    <!-- Jerusalem Area -->
+                    <path id="jerusalem" class="region" d="M120 200 L200 220 L180 280 L120 260 Z" data-name="Jerusalem Region" />
+                    
+                    <!-- Tel Aviv Area -->
+                    <path id="telaviv" class="region" d="M80 150 L120 200 L120 260 L80 240 Z" data-name="Tel Aviv Region" />
+                    
+                    <!-- Southern Region -->
+                    <path id="south" class="region" d="M120 260 L180 280 L200 220 L280 200 L300 350 L180 400 L120 380 Z" data-name="Southern Israel" />
+                    
+                    <!-- Negev Desert -->
+                    <path id="negev" class="region" d="M120 380 L180 400 L200 500 L160 550 L120 520 Z" data-name="Negev Desert" />
+                    
+                    <!-- City Markers -->
+                    <circle id="marker-jerusalem" class="city-marker" cx="160" cy="240" r="8" data-city="Jerusalem" />
+                    <text class="city-label" x="160" y="255">Jerusalem</text>
+                    
+                    <circle id="marker-telaviv" class="city-marker" cx="100" cy="190" r="6" data-city="Tel Aviv" />
+                    <text class="city-label" x="100" y="205">Tel Aviv</text>
+                    
+                    <circle id="marker-haifa" class="city-marker" cx="140" cy="80" r="6" data-city="Haifa" />
+                    <text class="city-label" x="140" y="95">Haifa</text>
+                    
+                    <circle id="marker-beersheva" class="city-marker" cx="150" cy="350" r="6" data-city="Beersheva" />
+                    <text class="city-label" x="150" y="365">Beersheva</text>
+                    
+                    <circle id="marker-eilat" class="city-marker" cx="160" cy="520" r="5" data-city="Eilat" />
+                    <text class="city-label" x="160" y="535">Eilat</text>
+                    
+                    <circle id="marker-nazareth" class="city-marker" cx="180" cy="100" r="5" data-city="Nazareth" />
+                    <text class="city-label" x="180" y="115">Nazareth</text>
+                    
+                    <circle id="marker-tiberias" class="city-marker" cx="220" cy="90" r="5" data-city="Tiberias" />
+                    <text class="city-label" x="220" y="105">Tiberias</text>
+                    
+                    <!-- Landmarks -->
+                    <rect id="landmark-dead-sea" x="240" y="260" width="30" height="60" fill="#4A90E2" stroke="white" stroke-width="2" rx="5" data-landmark="Dead Sea" />
+                    <text class="city-label" x="255" y="345">Dead Sea</text>
+                    
+                    <polygon id="landmark-galilee" points="200,70 240,70 230,110 210,110" fill="#4A90E2" stroke="white" stroke-width="2" data-landmark="Sea of Galilee" />
+                    <text class="city-label" x="220" y="125" font-size="10">Sea of Galilee</text>
+                </svg>
+            </div>
+
+            <div class="game-controls">
+                <button class="game-btn" id="startBtn">Start Adventure</button>
+                <button class="game-btn secondary" id="hintBtn" style="display: none;">Show Hint 💡</button>
+                <button class="game-btn secondary" id="skipBtn" style="display: none;">Skip Question ⏭️</button>
+            </div>
+
+            <div class="result-area" id="resultArea"></div>
+
+            <div class="info-panel">
+                <div class="location-info" id="locationInfo">
+                    <div class="location-title" id="locationTitle">Explore the Map!</div>
+                    <div class="location-description" id="locationDescription">
+                        Click on cities, regions, or landmarks to learn fascinating facts about Israel!
+                    </div>
+                    <div class="fun-facts" id="funFacts" style="display: none;">
+                        <h4>🌟 Fun Fact:</h4>
+                        <p id="funFactText"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer style="text-align: center; margin-top: 40px; opacity: 0.8;">
+            <p>&copy; 2025 Jerusalem Hills Kids - Safe & Educational</p>
+            <p><a href="../index.html" style="color: #FFE66D;">Back to Kids Zone</a></p>
+        </footer>
+    </div>
+
+    <script>
+        class IsraelMapExplorer {
+            constructor() {
+                this.gameMode = 'cities';
+                this.score = 0;
+                this.streak = 0;
+                this.questionsAnswered = 0;
+                this.totalQuestions = 10;
+                this.gameActive = false;
+                this.currentQuestion = null;
+                this.bestScores = JSON.parse(localStorage.getItem('israel-map-best-scores') || '{}');
+                
+                this.gameData = {
+                    cities: [
+                        { name: 'Jerusalem', id: 'marker-jerusalem', description: 'The holy city and capital of Israel, home to the Western Wall, Church of the Holy Sepulchre, and Dome of the Rock.' },
+                        { name: 'Tel Aviv', id: 'marker-telaviv', description: 'The modern economic center of Israel, known for its beaches, technology companies, and vibrant nightlife.' },
+                        { name: 'Haifa', id: 'marker-haifa', description: 'A beautiful port city built on Mount Carmel, famous for the Baháʼí Gardens and its diverse population.' },
+                        { name: 'Beersheva', id: 'marker-beersheva', description: 'The largest city in the Negev desert, known as the capital of the Negev and for its university.' },
+                        { name: 'Eilat', id: 'marker-eilat', description: 'A resort city on the Red Sea, famous for coral reefs, diving, and year-round sunshine.' },
+                        { name: 'Nazareth', id: 'marker-nazareth', description: 'The childhood home of Jesus, an important pilgrimage site for Christians worldwide.' },
+                        { name: 'Tiberias', id: 'marker-tiberias', description: 'An ancient city on the Sea of Galilee, significant in Jewish history and Christian tradition.' }
+                    ],
+                    regions: [
+                        { name: 'Northern Israel', id: 'north', description: 'The mountainous region including the Galilee, known for its natural beauty and historical sites.' },
+                        { name: 'Central Israel', id: 'central', description: 'The heartland of Israel, including major cities and agricultural areas.' },
+                        { name: 'Jerusalem Region', id: 'jerusalem', description: 'The area surrounding the holy city, rich in religious and historical significance.' },
+                        { name: 'Tel Aviv Region', id: 'telaviv', description: 'The coastal metropolitan area, Israel\'s economic and cultural center.' },
+                        { name: 'Southern Israel', id: 'south', description: 'The transition zone between the central regions and the Negev desert.' },
+                        { name: 'Negev Desert', id: 'negev', description: 'The vast desert covering southern Israel, home to unique wildlife and ancient trade routes.' }
+                    ],
+                    landmarks: [
+                        { name: 'Dead Sea', id: 'landmark-dead-sea', description: 'The lowest point on Earth, famous for its high salt content that lets you float easily!' },
+                        { name: 'Sea of Galilee', id: 'landmark-galilee', description: 'Israel\'s largest freshwater lake, where Jesus walked on water according to Christian tradition.' }
+                    ]
+                };
+                
+                this.funFacts = {
+                    'Jerusalem': 'Jerusalem has been continuously inhabited for over 3,000 years and is sacred to three major religions!',
+                    'Tel Aviv': 'Tel Aviv was built on sand dunes and is now home to more museums per capita than any other city!',
+                    'Haifa': 'The Baháʼí Gardens in Haifa have 19 terraces representing the 19 months of the Baháʼí calendar!',
+                    'Dead Sea': 'The Dead Sea is 10 times saltier than the ocean - you can read a book while floating!',
+                    'Sea of Galilee': 'The Sea of Galilee provides about 40% of Israel\'s fresh water supply!',
+                    'Negev Desert': 'The Negev covers 60% of Israel but is home to only 10% of its population!'
+                };
+                
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.updateDisplay();
+                this.setupMapInteractions();
+                console.log('🗺️ Israel Map Explorer initialized!');
+            }
+
+            setupEventListeners() {
+                // Mode buttons
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.setGameMode(e.target.dataset.mode);
+                    });
+                });
+
+                // Game controls
+                document.getElementById('startBtn').addEventListener('click', () => this.startGame());
+                document.getElementById('hintBtn').addEventListener('click', () => this.showHint());
+                document.getElementById('skipBtn').addEventListener('click', () => this.skipQuestion());
+            }
+
+            setupMapInteractions() {
+                // City markers
+                document.querySelectorAll('.city-marker').forEach(marker => {
+                    marker.addEventListener('click', (e) => {
+                        this.handleMapClick(e.target.dataset.city, 'cities');
+                    });
+                });
+
+                // Regions
+                document.querySelectorAll('.region').forEach(region => {
+                    region.addEventListener('click', (e) => {
+                        this.handleMapClick(e.target.dataset.name, 'regions');
+                    });
+                });
+
+                // Landmarks
+                document.querySelectorAll('[data-landmark]').forEach(landmark => {
+                    landmark.addEventListener('click', (e) => {
+                        this.handleMapClick(e.target.dataset.landmark, 'landmarks');
+                    });
+                });
+
+                // Hover effects for exploration mode
+                this.setupExplorationMode();
+            }
+
+            setupExplorationMode() {
+                const allInteractiveElements = [
+                    ...document.querySelectorAll('.city-marker'),
+                    ...document.querySelectorAll('.region'),
+                    ...document.querySelectorAll('[data-landmark]')
+                ];
+
+                allInteractiveElements.forEach(element => {
+                    element.addEventListener('mouseenter', () => {
+                        if (this.gameMode === 'explore') {
+                            const name = element.dataset.city || element.dataset.name || element.dataset.landmark;
+                            this.showLocationInfo(name);
+                        }
+                    });
+                });
+            }
+
+            setGameMode(mode) {
+                this.gameMode = mode;
+                
+                // Update UI
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+
+                // Reset game
+                this.resetGame();
+                
+                // Handle explore mode
+                if (mode === 'explore') {
+                    this.enableExploreMode();
+                } else {
+                    this.disableExploreMode();
+                }
+
+                // Play sound
+                if (window.soundManager) {
+                    window.soundManager.playUISound('click');
+                }
+
+                this.updateDisplay();
+            }
+
+            enableExploreMode() {
+                document.getElementById('question').textContent = 'Free Exploration Mode - Click anywhere on the map to learn!';
+                document.getElementById('startBtn').style.display = 'none';
+                document.getElementById('progressRing').style.display = 'none';
+                document.getElementById('locationInfo').classList.add('show');
+            }
+
+            disableExploreMode() {
+                document.getElementById('startBtn').style.display = 'inline-block';
+                document.getElementById('locationInfo').classList.remove('show');
+            }
+
+            startGame() {
+                if (this.gameMode === 'explore') return;
+                
+                this.gameActive = true;
+                this.score = 0;
+                this.streak = 0;
+                this.questionsAnswered = 0;
+                
+                // Update UI
+                document.getElementById('startBtn').textContent = 'Next Question';
+                document.getElementById('progressRing').style.display = 'block';
+                document.getElementById('hintBtn').style.display = 'inline-block';
+                document.getElementById('skipBtn').style.display = 'inline-block';
+                
+                // Play start sound
+                if (window.soundManager) {
+                    window.soundManager.playGameSound('correct');
+                }
+
+                this.generateQuestion();
+                this.updateDisplay();
+            }
+
+            generateQuestion() {
+                if (!this.gameActive) return;
+
+                const data = this.gameData[this.gameMode];
+                if (!data || data.length === 0) return;
+
+                this.currentQuestion = data[Math.floor(Math.random() * data.length)];
+                
+                const questionTypes = [
+                    `Find ${this.currentQuestion.name} on the map!`,
+                    `Where is ${this.currentQuestion.name} located?`,
+                    `Click on ${this.currentQuestion.name}!`,
+                    `Can you spot ${this.currentQuestion.name}?`
+                ];
+
+                const question = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+                document.getElementById('question').textContent = question;
+                
+                // Clear previous feedback
+                document.getElementById('resultArea').textContent = '';
+                document.getElementById('resultArea').className = 'result-area';
+                this.clearMapHighlights();
+            }
+
+            handleMapClick(clickedName, category) {
+                if (!this.gameActive && this.gameMode !== 'explore') return;
+
+                if (this.gameMode === 'explore') {
+                    this.showLocationInfo(clickedName);
+                    return;
+                }
+
+                if (this.gameMode !== category) return;
+
+                // Check if answer is correct
+                const isCorrect = clickedName === this.currentQuestion.name;
+                
+                if (isCorrect) {
+                    this.handleCorrectAnswer();
+                } else {
+                    this.handleIncorrectAnswer(clickedName);
+                }
+
+                // Highlight the clicked element
+                this.highlightElement(clickedName, isCorrect);
+                
+                this.questionsAnswered++;
+                this.updateDisplay();
+
+                if (this.questionsAnswered >= this.totalQuestions) {
+                    setTimeout(() => this.endGame(), 2000);
+                } else {
+                    setTimeout(() => this.generateQuestion(), 2500);
+                }
+            }
+
+            handleCorrectAnswer() {
+                this.score++;
+                this.streak++;
+
+                // Play sound
+                if (window.soundManager) {
+                    window.soundManager.createEducationalFeedback(true, 'normal');
+                }
+
+                // Show result
+                const resultArea = document.getElementById('resultArea');
+                const encouragements = [
+                    "🌟 Excellent! You found it!",
+                    "🎉 Perfect! Great geography skills!",
+                    "✨ Outstanding! You know Israel well!",
+                    "🏆 Brilliant! Spot on!",
+                    "🎯 Amazing! You're a geography expert!"
+                ];
+
+                let message = encouragements[Math.floor(Math.random() * encouragements.length)];
+                
+                if (this.streak >= 3) {
+                    message += ` ${this.streak}-question streak! 🔥`;
+                }
+
+                resultArea.textContent = message;
+                resultArea.className = 'result-area result-correct';
+
+                // Show interesting fact
+                const fact = this.funFacts[this.currentQuestion.name];
+                if (fact) {
+                    setTimeout(() => {
+                        resultArea.innerHTML += `<br><small>💡 ${fact}</small>`;
+                    }, 1000);
+                }
+            }
+
+            handleIncorrectAnswer(clickedName) {
+                this.streak = 0;
+
+                // Play sound
+                if (window.soundManager) {
+                    window.soundManager.createEducationalFeedback(false);
+                }
+
+                // Show result
+                const resultArea = document.getElementById('resultArea');
+                resultArea.innerHTML = `
+                    ❌ Not quite! That's ${clickedName}.<br>
+                    Look for ${this.currentQuestion.name}!
+                `;
+                resultArea.className = 'result-area result-incorrect';
+            }
+
+            showHint() {
+                if (!this.currentQuestion) return;
+
+                const hints = {
+                    cities: {
+                        'Jerusalem': 'Look in the central mountains, the heart of the Holy Land!',
+                        'Tel Aviv': 'Find the big city on the Mediterranean coast!',
+                        'Haifa': 'Look north, on the coast near Mount Carmel!',
+                        'Beersheva': 'Look south, at the edge of the desert!',
+                        'Eilat': 'Look at the very bottom, by the Red Sea!',
+                        'Nazareth': 'Look in the north, in the Galilee region!',
+                        'Tiberias': 'Look by the Sea of Galilee in the north!'
+                    },
+                    regions: {
+                        'Northern Israel': 'Look at the top part of the map!',
+                        'Central Israel': 'Look in the middle section of the country!',
+                        'Jerusalem Region': 'Look around the holy city in the center!',
+                        'Tel Aviv Region': 'Look on the western coast!',
+                        'Southern Israel': 'Look in the lower middle part!',
+                        'Negev Desert': 'Look at the bottom, the largest region!'
+                    },
+                    landmarks: {
+                        'Dead Sea': 'Look for the blue rectangle on the eastern border!',
+                        'Sea of Galilee': 'Look for the blue shape in the north!'
+                    }
+                };
+
+                const hint = hints[this.gameMode]?.[this.currentQuestion.name] || 'Look carefully at the map!';
+                
+                const resultArea = document.getElementById('resultArea');
+                resultArea.innerHTML = `💡 Hint: ${hint}`;
+                resultArea.className = 'result-area';
+                resultArea.style.background = 'linear-gradient(135deg, rgba(255, 230, 109, 0.9), rgba(78, 205, 196, 0.9))';
+                resultArea.style.color = '#333';
+
+                // Play hint sound
+                if (window.soundManager) {
+                    window.soundManager.play('chime');
+                }
+            }
+
+            skipQuestion() {
+                if (!this.currentQuestion) return;
+
+                this.streak = 0;
+                this.questionsAnswered++;
+
+                // Show correct answer
+                const resultArea = document.getElementById('resultArea');
+                resultArea.innerHTML = `⏭️ Skipped! ${this.currentQuestion.name} is here:`;
+                resultArea.className = 'result-area';
+                resultArea.style.background = 'linear-gradient(135deg, rgba(156, 156, 156, 0.9), rgba(189, 189, 189, 0.9))';
+                
+                // Highlight correct answer
+                this.highlightElement(this.currentQuestion.name, true);
+
+                if (this.questionsAnswered >= this.totalQuestions) {
+                    setTimeout(() => this.endGame(), 2000);
+                } else {
+                    setTimeout(() => this.generateQuestion(), 2500);
+                }
+
+                this.updateDisplay();
+            }
+
+            showLocationInfo(name) {
+                const locationInfo = document.getElementById('locationInfo');
+                const title = document.getElementById('locationTitle');
+                const description = document.getElementById('locationDescription');
+                const funFacts = document.getElementById('funFacts');
+                const funFactText = document.getElementById('funFactText');
+
+                // Find location data
+                let locationData = null;
+                for (const category of ['cities', 'regions', 'landmarks']) {
+                    locationData = this.gameData[category].find(item => item.name === name);
+                    if (locationData) break;
+                }
+
+                if (locationData) {
+                    title.textContent = locationData.name;
+                    description.textContent = locationData.description;
+                    
+                    const fact = this.funFacts[name];
+                    if (fact) {
+                        funFactText.textContent = fact;
+                        funFacts.style.display = 'block';
+                    } else {
+                        funFacts.style.display = 'none';
+                    }
+                    
+                    locationInfo.classList.add('show');
+
+                    // Play info sound
+                    if (window.soundManager) {
+                        window.soundManager.play('pop');
+                    }
+                }
+            }
+
+            highlightElement(name, isCorrect) {
+                // Find and highlight the element
+                const selectors = [
+                    `[data-city="${name}"]`,
+                    `[data-name="${name}"]`,
+                    `[data-landmark="${name}"]`
+                ];
+
+                for (const selector of selectors) {
+                    const element = document.querySelector(selector);
+                    if (element) {
+                        element.classList.add(isCorrect ? 'correct' : 'incorrect');
+                        setTimeout(() => {
+                            element.classList.remove('correct', 'incorrect');
+                        }, 2000);
+                        break;
+                    }
+                }
+            }
+
+            clearMapHighlights() {
+                document.querySelectorAll('.correct, .incorrect').forEach(element => {
+                    element.classList.remove('correct', 'incorrect');
+                });
+            }
+
+            endGame() {
+                this.gameActive = false;
+                const accuracy = this.questionsAnswered > 0 ? Math.round((this.score / this.questionsAnswered) * 100) : 0;
+                
+                // Save best score
+                const key = this.gameMode;
+                if (this.score > (this.bestScores[key] || 0)) {
+                    this.bestScores[key] = this.score;
+                    localStorage.setItem('israel-map-best-scores', JSON.stringify(this.bestScores));
+                    
+                    // Show achievement
+                    if (window.soundManager) {
+                        window.soundManager.celebrate();
+                    }
+                }
+
+                // Show final results
+                document.getElementById('question').innerHTML = `
+                    🎉 Adventure Complete!<br>
+                    <div style="font-size: 1.2rem; margin-top: 15px;">
+                        Final Score: ${this.score}/${this.totalQuestions}<br>
+                        Accuracy: ${accuracy}%<br>
+                        Geography Level: ${this.getGeographyLevel(accuracy)}
+                    </div>
+                `;
+
+                // Reset UI
+                document.getElementById('startBtn').textContent = 'Start New Adventure';
+                document.getElementById('hintBtn').style.display = 'none';
+                document.getElementById('skipBtn').style.display = 'none';
+                
+                this.updateDisplay();
+            }
+
+            getGeographyLevel(accuracy) {
+                if (accuracy >= 90) return "Geography Master! 🏆";
+                if (accuracy >= 80) return "Explorer! 🌟";
+                if (accuracy >= 70) return "Navigator! 🧭";
+                if (accuracy >= 60) return "Traveler! 🎒";
+                return "Tourist! 📷";
+            }
+
+            resetGame() {
+                this.gameActive = false;
+                this.score = 0;
+                this.streak = 0;
+                this.questionsAnswered = 0;
+                this.currentQuestion = null;
+                this.clearMapHighlights();
+                
+                document.getElementById('startBtn').textContent = 'Start Adventure';
+                document.getElementById('resultArea').textContent = '';
+                document.getElementById('resultArea').className = 'result-area';
+                document.getElementById('progressRing').style.display = 'none';
+                document.getElementById('hintBtn').style.display = 'none';
+                document.getElementById('skipBtn').style.display = 'none';
+                
+                if (this.gameMode !== 'explore') {
+                    document.getElementById('question').textContent = 'Welcome to Israel! Click "Start Adventure" to begin exploring!';
+                    document.getElementById('locationInfo').classList.remove('show');
+                }
+            }
+
+            updateDisplay() {
+                // Update stats
+                document.getElementById('scoreValue').textContent = this.score;
+                document.getElementById('streakValue').textContent = this.streak;
+                document.getElementById('questionsValue').textContent = `${this.questionsAnswered}/${this.totalQuestions}`;
+                
+                const bestScore = this.bestScores[this.gameMode] || 0;
+                document.getElementById('bestValue').textContent = bestScore;
+
+                // Update progress ring
+                if (this.gameActive) {
+                    const progress = (this.questionsAnswered / this.totalQuestions) * 251;
+                    document.getElementById('progressCircle').style.strokeDashoffset = 251 - progress;
+                    document.getElementById('progressText').textContent = `${this.questionsAnswered}/${this.totalQuestions}`;
+                }
+            }
+        }
+
+        // Initialize the game when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.israelMapExplorer = new IsraelMapExplorer();
+            console.log('🗺️ Israel Map Explorer game loaded successfully!');
+        });
+    </script>
+</body>
+</html>
