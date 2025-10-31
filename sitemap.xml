@@ -3,7 +3,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://jerusalemhills.com/</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,19 +11,19 @@
   <!-- Main Pages -->
   <url>
     <loc>https://jerusalemhills.com/about.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/marketplace.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/contact.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -31,25 +31,25 @@
   <!-- Services & Markets -->
   <url>
     <loc>https://jerusalemhills.com/services-directory.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/markets.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/financial.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/technicalwebtrader.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -57,13 +57,13 @@
   <!-- Forum -->
   <url>
     <loc>https://jerusalemhills.com/forum/</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/forum/forum.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -71,31 +71,31 @@
   <!-- Kids Zone -->
   <url>
     <loc>https://jerusalemhills.com/kids/</loc>
-    <lastmod>2025-10-19</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/kids/about.html</loc>
-    <lastmod>2025-10-19</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/kids/games/math.html</loc>
-    <lastmod>2025-10-19</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/kids/games/words.html</loc>
-    <lastmod>2025-10-19</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/kids/games/memory.html</loc>
-    <lastmod>2025-10-19</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -103,31 +103,31 @@
   <!-- Games -->
   <url>
     <loc>https://jerusalemhills.com/games/</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/games/backgammon/backgammon.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/games/tetris/tetris.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/games/snake/snake.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/games/permutations/permutations.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -135,13 +135,13 @@
   <!-- Religious/Cultural -->
   <url>
     <loc>https://jerusalemhills.com/sidur.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/hebrew-fonts.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -149,7 +149,7 @@
   <!-- Articles -->
   <url>
     <loc>https://jerusalemhills.com/articles/koranit.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -157,19 +157,19 @@
   <!-- Advertising -->
   <url>
     <loc>https://jerusalemhills.com/advertise.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/advertiser-info.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/ad-policy.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
@@ -177,13 +177,13 @@
   <!-- Legal Pages -->
   <url>
     <loc>https://jerusalemhills.com/privacy-policy.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://jerusalemhills.com/terms-of-service.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -191,7 +191,7 @@
   <!-- User Info -->
   <url>
     <loc>https://jerusalemhills.com/user_info.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

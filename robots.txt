@@ -4,19 +4,20 @@ User-agent: *
 Disallow: /private/
 Disallow: /example_layout/
 Disallow: /node_modules/
-Disallow: /components/
-Disallow: *.md
+Disallow: /archive/
 Disallow: *-old.html
 Disallow: *-new.html
 Disallow: *backup*.html
 Disallow: *test*.html
 Disallow: *wireframe*.html
-Disallow: *propose*.html
-Disallow: *propose*.css
-Disallow: *propose*.js
 Disallow: *.backup-*
+
+# Block specific documentation files
 Disallow: /DEPLOYMENT_SUMMARY.md
 Disallow: /IMPORT_CHECKLIST.md
+Disallow: /PROJECT_TODOS.md
+Disallow: /CLAUDE.md
+Disallow: /GEMINI.md
 
 # Allow important directories
 Allow: /games/

@@ -1,12 +1,5 @@
-# Netlify Redirects
-# Redirect visitors from Netlify URLs to the main site
-# This file only works on Netlify, GitHub Pages will ignore it
+# GitHub Pages Redirects
+# Only redirect Netlify function API calls
 
-# Redirect marketplace page to main site
-/marketplace.html https://jerusalemhills.com/marketplace.html 301!
-
-# Redirect homepage to main site
-/ https://jerusalemhills.com 301!
-
-# Allow API functions to work (don't redirect these)
+# API functions (for Netlify deployment)
 /.netlify/functions/* /.netlify/functions/:splat 200
