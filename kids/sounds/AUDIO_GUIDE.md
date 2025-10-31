@@ -98,4 +98,34 @@ The system automatically displays attribution for each audio clip in the sidebar
 4. **Professional Quality**: Proper attribution maintains educational standards
 5. **Data Efficient**: Short loops minimize bandwidth usage
 
+## Biblical Peoples Reference
+
+The historical map now includes detailed information about the various ancient peoples mentioned in biblical and historical sources:
+
+### Canaanite Tribes and Peoples (Pre-1200 BCE)
+
+**Major Groups:**
+- **Hittites** - Known for advanced iron-working technology and military prowess
+- **Jebusites** - Controlled Jerusalem until conquered by King David  
+- **Amorites** - Mountain-dwelling people, mentioned frequently in biblical accounts
+- **Girgashites** - One of the seven nations mentioned in Deuteronomy
+- **Perizzites** - Rural/village peoples scattered throughout the land
+- **Hivites** - Associated with Shechem and other central regions
+- **Canaanites** - General term for inhabitants of the lowlands and coastal areas
+
+**Historical Context:**
+- These peoples had distinct cultures, religions, and territorial boundaries
+- Archaeological evidence shows they often coexisted and intermarried
+- Each group contributed to the region's cultural and technological development
+- Many were absorbed into later populations rather than completely displaced
+
+### Educational Value:
+- Demonstrates the complexity of ancient Near Eastern demographics  
+- Shows how the land was a melting pot of cultures and peoples
+- Illustrates the gradual nature of cultural change vs. sudden conquest narratives
+- Provides context for understanding modern Middle Eastern diversity
+
+### Biblical References:
+The map references these peoples as mentioned in various biblical texts while maintaining historical accuracy based on archaeological evidence.
+
 The ambient sound system transforms the static timeline into a rich, multisensory educational experience that brings history to life for students of all ages!
