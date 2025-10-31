@@ -403,30 +403,110 @@
             }
         }
 
+        /* Enhanced mobile responsiveness */
         @media (max-width: 768px) {
             .map-display {
-                height: 400px;
+                height: 350px;
+                margin: 10px 0;
             }
             
             .timeline-controls {
                 padding: 15px;
+                background: #f8f9fa;
+                border-radius: 10px;
+                margin: 10px 0;
+            }
+            
+            .timeline-slider {
+                height: 8px; /* Thicker slider for easier touch */
+                border-radius: 4px;
+            }
+            
+            .timeline-slider::-webkit-slider-thumb {
+                width: 25px; /* Larger thumb for mobile */
+                height: 25px;
+            }
+            
+            .timeline-slider::-moz-range-thumb {
+                width: 25px;
+                height: 25px;
             }
             
             .control-buttons {
                 gap: 8px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
             .control-btn {
-                padding: 10px 16px;
+                padding: 12px 16px; /* Larger touch targets */
                 font-size: 14px;
+                min-height: 44px; /* iOS recommended touch target size */
+                border-radius: 22px;
             }
             
             .legend {
                 grid-template-columns: 1fr;
+                font-size: 14px;
             }
             
             .sidebar {
                 padding: 15px;
+                font-size: 14px;
+                line-height: 1.5;
+            }
+            
+            .period-info {
+                padding: 15px;
+                text-align: center;
+            }
+            
+            .period-years {
+                font-size: 1.2em;
+            }
+            
+            .period-title {
+                font-size: 1.4em;
+            }
+            
+            .period-description {
+                font-size: 14px;
+            }
+            
+            /* Touch-friendly quiz buttons */
+            .quiz-option {
+                padding: 16px;
+                min-height: 44px;
+                font-size: 14px;
+            }
+            
+            /* Mobile audio controls */
+            .audio-toggle {
+                padding: 12px 20px;
+                font-size: 16px;
+                min-height: 44px;
+            }
+        }
+        
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            .map-container {
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .control-buttons {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            
+            .control-btn {
+                font-size: 12px;
+                padding: 10px;
+            }
+            
+            .sidebar {
+                max-height: 300px;
             }
         }
     </style>
@@ -620,7 +700,7 @@
                 ],
                 transition: "The Bronze Age Collapse (c. 1200 BCE) was a perfect storm: severe drought, possible pandemic, technological changes, and Sea Peoples migrations fundamentally transformed Mediterranean civilization. Most cities survived but complex trade networks collapsed, ushering in the Iron Age.",
                 audio: {
-                    file: "sounds/ancient-winds.mp3",
+                    file: "sounds/ancient-winds.m4a",
                     description: "Desert winds and distant hammering of bronze tools",
                     attribution: "Ancient crafting sounds mixed with Middle Eastern winds",
                     educational: "🏺 Did you know? Bronze Age craftsmen heated copper and tin together to create bronze - one of humanity's first metal alloys! The ancient land was home to many peoples: Hittites (known for iron weapons), Jebusites (who controlled Jerusalem), Amorites (mountain dwellers), Girgashites, Perizzites (rural peoples), and Hivites. Each had their own customs, crafts, and settlements throughout the region."
@@ -643,7 +723,7 @@
                 ],
                 transition: "Babylonian expansion under Nebuchadnezzar integrated remaining Philistine territories into the Neo-Babylonian Empire, while Mediterranean trade continued under Phoenician and Greek influence.",
                 audio: {
-                    file: "sounds/sea-peoples.mp3",
+                    file: "sounds/sea-peoples.m4a",
                     description: "Mediterranean waves and ancient Greek-style flutes",
                     attribution: "Sea sounds with ancient wind instruments",
                     educational: "🌊 Fun Fact! The Philistines were 'Sea Peoples' who probably came from the Greek islands. They gave Palestine its name and were master seafarers. The flute sounds represent their cultural connection to the Mediterranean world, and Gaza was their southernmost port city!"
@@ -693,7 +773,7 @@
                 ],
                 transition: "Assyrian military superiority and siege warfare ended the northern kingdom permanently.",
                 audio: {
-                    file: "sounds/assyrian-march.mp3",
+                    file: "sounds/assyrian-march.m4a",
                     description: "Distant war drums and marching armies",
                     attribution: "Ancient military march sounds",
                     educational: "⚔️ Historical Note: The Assyrians were the ancient world's first great military empire! They used iron weapons, cavalry, and siege engines. When they conquered a city, they often relocated entire populations to prevent rebellions - that's why 27,290 Israelites were moved to Mesopotamia."
@@ -753,7 +833,7 @@
                 ],
                 transition: "Constantine's conversion (312 CE) and new capital Constantinople (330 CE) shifted Roman power eastward, beginning the Byzantine transformation of Mediterranean civilization toward Christianity and Greek culture.",
                 audio: {
-                    file: "sounds/roman-forum.mp3",
+                    file: "sounds/roman-forum.m4a",
                     description: "Distant Latin voices with marketplace ambience",
                     attribution: "Roman administrative sounds and urban activity",
                     educational: "🏛️ Amazing Fact: For nearly 200 years (130-326 CE), Jerusalem was a pagan Roman city called 'Aelia Capitolina' where Jews were completely banned! A temple to Jupiter stood exactly where the Jewish Temple once was. This shows how dramatically cities could change in ancient times!"
@@ -789,7 +869,7 @@
                 ],
                 transition: "1099: Crusaders captured Jerusalem and established European-style kingdom, causing most Gaza inhabitants to flee to Egypt or Arabia.",
                 audio: {
-                    file: "sounds/islamic-call.mp3",
+                    file: "sounds/islamic-call.m4a",
                     description: "Call to prayer echoing across ancient city",
                     attribution: "Traditional Islamic call to prayer ambience",
                     educational: "🕌 Amazing History: 691 CE - The Dome of the Rock was built on the exact spot where the Jewish Temple once stood! It covers the Foundation Stone, believed to be where the Holy of Holies was located. Below is the mysterious 'Well of Souls' chamber. The Dome stands next to Al-Aqsa Mosque and remains Jerusalem's most famous landmark today!"
@@ -821,7 +901,7 @@
                 ],
                 transition: "World War I and Ottoman defeat opened the region to British control and international intervention.",
                 audio: {
-                    file: "sounds/ottoman-oud.mp3",
+                    file: "sounds/ottoman-oud.m4a",
                     description: "Traditional Turkish oud music with distant marketplace sounds",
                     attribution: "Ottoman-era traditional music ambience",
                     educational: "🎵 Musical History: The oud is an ancient stringed instrument that's the ancestor of the guitar! During Ottoman rule, Gaza was larger and more important than Jerusalem. The marketplace sounds reflect the spice trade routes that made Gaza wealthy - connecting Asia, Africa, and Europe!"
@@ -1061,13 +1141,22 @@
             currentAudio.volume = audioVolume;
             currentAudio.loop = true; // Enable looping for efficiency
             
+            // Mobile-friendly audio attributes
+            currentAudio.preload = 'metadata'; // Lighter preload for mobile
+            currentAudio.playsInline = true; // Required for iOS inline playback
+            
             // Handle loading and errors gracefully
             currentAudio.addEventListener('canplaythrough', () => {
                 if (audioEnabled && currentPeriod === periodIndex) {
-                    currentAudio.play().catch(e => {
-                        console.log('Audio autoplay prevented by browser:', e);
-                        // Gracefully handle autoplay restrictions
-                    });
+                    // Try to play, with mobile-specific handling
+                    const playPromise = currentAudio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(e => {
+                            console.log('Audio autoplay prevented by browser (likely mobile):', e);
+                            // Show mobile-friendly audio prompt
+                            showMobileAudioPrompt();
+                        });
+                    }
                 }
             });
             
@@ -1105,6 +1194,57 @@
                 <small>Source: ${audioData.attribution}</small>
                 ${audioData.educational ? `<br><br><div style="background: #e8f4fd; padding: 10px; border-radius: 8px; margin-top: 8px; border-left: 3px solid #2196F3;">${audioData.educational}</div>` : ''}
             `;
+        }
+
+        // Mobile audio prompt for when autoplay is blocked
+        function showMobileAudioPrompt() {
+            // Check if we're on mobile
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile && !document.getElementById('mobileAudioPrompt')) {
+                const prompt = document.createElement('div');
+                prompt.id = 'mobileAudioPrompt';
+                prompt.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(255, 255, 255, 0.95);
+                    padding: 20px;
+                    border-radius: 15px;
+                    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                    z-index: 10000;
+                    text-align: center;
+                    max-width: 300px;
+                `;
+                
+                prompt.innerHTML = `
+                    <div style="font-size: 2em; margin-bottom: 10px;">🎵</div>
+                    <h3 style="color: #8B4513; margin-bottom: 10px;">Enable Audio?</h3>
+                    <p style="font-size: 14px; margin-bottom: 15px;">Tap to hear historical sounds as you explore!</p>
+                    <button onclick="enableMobileAudio()" style="background: #4CAF50; color: white; border: none; padding: 12px 20px; border-radius: 20px; font-size: 16px; cursor: pointer;">🔊 Enable Sounds</button>
+                    <br><br>
+                    <button onclick="closeMobilePrompt()" style="background: #ccc; color: #666; border: none; padding: 8px 15px; border-radius: 15px; font-size: 14px; cursor: pointer;">Skip Audio</button>
+                `;
+                
+                document.body.appendChild(prompt);
+            }
+        }
+
+        // Enable audio on mobile after user interaction
+        window.enableMobileAudio = function() {
+            if (currentAudio) {
+                currentAudio.play().catch(e => console.log('Mobile audio play failed:', e));
+            }
+            closeMobilePrompt();
+        }
+
+        // Close mobile audio prompt
+        window.closeMobilePrompt = function() {
+            const prompt = document.getElementById('mobileAudioPrompt');
+            if (prompt) {
+                prompt.remove();
+            }
         }
 
         function updateDisplay() {
