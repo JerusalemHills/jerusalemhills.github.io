@@ -117,6 +117,12 @@
         // Enable auto ads with Limited Ads configuration
         enableAutoAds: function() {
             try {
+                // Check if auto ads are already enabled to prevent duplicate initialization
+                if (window.adsbygoogle && window.adsbygoogle.some(item => item && item.enable_page_level_ads)) {
+                    console.log('AdSense: Auto ads already enabled, skipping');
+                    return;
+                }
+
                 window.adsbygoogle = window.adsbygoogle || [];
                 const autoAdsConfig = {
                     google_ad_client: ADSENSE_CONFIG.client,

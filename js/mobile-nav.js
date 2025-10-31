@@ -13,8 +13,8 @@
         init: function() {
             if (this.initialized) return;
 
-            // Find menu button
-            this.menuButton = document.querySelector('.menu-button');
+            // Find menu button - try multiple selectors
+            this.menuButton = document.querySelector('.menu-button, .icon-button[aria-label="Menu"], button[aria-label="Menu"]');
             this.mobileMenu = document.querySelector('.mobile-menu');
 
             if (!this.menuButton || !this.mobileMenu) {
@@ -38,23 +38,23 @@
         createMobileMenu: function() {
             // Find or create menu button
             if (!this.menuButton) {
-                const headerIcons = document.querySelector('.header-icons');
-                if (headerIcons) {
-                    const button = document.createElement('button');
-                    button.className = 'menu-button';
-                    button.setAttribute('aria-label', 'Menu');
-                    button.innerHTML = `
-                        <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                        <svg class="close-icon" style="display:none;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    `;
-                    headerIcons.appendChild(button);
-                    this.menuButton = button;
-                } else {
-                    console.warn('No .header-icons element found. Mobile navigation will not work.');
+                // Try to find existing button first
+                this.menuButton = document.querySelector('.menu-button, .icon-button[aria-label="Menu"], button[aria-label="Menu"]');
+                
+                if (!this.menuButton) {
+                    // Look for right-section or header-icons
+                    const rightSection = document.querySelector('.right-section, .header-icons');
+                    if (rightSection) {
+                        const button = document.createElement('button');
+                        button.className = 'icon-button menu-button';
+                        button.setAttribute('aria-label', 'Menu');
+                        button.innerHTML = `<i data-lucide="menu"></i>`;
+                        rightSection.appendChild(button);
+                        this.menuButton = button;
+                    } else {
+                        console.warn('No suitable parent element found for mobile navigation button.');
+                        return;
+                    }
                 }
             }
 
@@ -331,14 +331,26 @@
         }
     };
 
-    // Initialize on DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
+    // Initialize on DOM ready or when header is loaded
+    function initializeWhenReady() {
+        // Wait a bit for header to be loaded
+        setTimeout(() => {
             MobileNav.init();
-        });
-    } else {
-        MobileNav.init();
+        }, 500);
     }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeWhenReady);
+    } else {
+        initializeWhenReady();
+    }
+
+    // Also listen for headerLoaded event
+    document.addEventListener('headerLoaded', function() {
+        setTimeout(() => {
+            MobileNav.init();
+        }, 100);
+    });
 
     // Expose to global scope
     window.MobileNav = MobileNav;

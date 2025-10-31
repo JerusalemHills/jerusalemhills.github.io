@@ -213,7 +213,7 @@ function startScrolling() {
                 }, 100); // 0.1 second pause between items
             }
         }
-    }, 3); // Controls the speed - higher number = slower scrolling
+    }, 3.3); // Controls the speed - higher number = slower scrolling (slowed down 10%)
 }
 
 // Update reloadTicker to handle errors better

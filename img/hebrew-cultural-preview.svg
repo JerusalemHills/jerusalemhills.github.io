@@ -1,0 +1,99 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hebrew & Cultural Background -->
+  <rect width="300" height="200" fill="#F5F5DC" stroke="#8B7355" stroke-width="3" rx="15"/>
+  
+  <!-- Torah scroll -->
+  <rect x="20" y="30" width="100" height="60" fill="#F5DEB3" stroke="#8B7355" stroke-width="2" rx="5"/>
+  
+  <!-- Torah text lines -->
+  <line x1="30" y1="40" x2="110" y2="40" stroke="#654321" stroke-width="1"/>
+  <line x1="30" y1="50" x2="110" y2="50" stroke="#654321" stroke-width="1"/>
+  <line x1="30" y1="60" x2="110" y2="60" stroke="#654321" stroke-width="1"/>
+  <line x1="30" y1="70" x2="110" y2="70" stroke="#654321" stroke-width="1"/>
+  <line x1="30" y1="80" x2="110" y2="80" stroke="#654321" stroke-width="1"/>
+  
+  <!-- Hebrew letters preview -->
+  <text x="40" y="45" fill="#654321" font-family="serif" font-size="8">א ב ג ד ה</text>
+  <text x="40" y="55" fill="#654321" font-family="serif" font-size="8">ו ז ח ט י</text>
+  <text x="40" y="65" fill="#654321" font-family="serif" font-size="8">כ ל ם מ נ</text>
+  <text x="40" y="75" fill="#654321" font-family="serif" font-size="8">ס ע פ צ ק</text>
+  <text x="40" y="85" fill="#654321" font-family="serif" font-size="8">ר ש ת</text>
+  
+  <!-- Torah codes visualization -->
+  <rect x="140" y="30" width="80" height="60" fill="#E6E6FA" stroke="#9370DB" stroke-width="2" rx="5"/>
+  <text x="180" y="45" text-anchor="middle" fill="#4B0082" font-family="Arial, sans-serif" font-size="10" font-weight="bold">Torah Codes</text>
+  
+  <!-- Grid pattern for codes -->
+  <circle cx="155" cy="55" r="3" fill="#9370DB"/>
+  <circle cx="165" cy="55" r="3" fill="#CCCCCC"/>
+  <circle cx="175" cy="55" r="3" fill="#9370DB"/>
+  <circle cx="185" cy="55" r="3" fill="#CCCCCC"/>
+  <circle cx="195" cy="55" r="3" fill="#9370DB"/>
+  <circle cx="205" cy="55" r="3" fill="#CCCCCC"/>
+  
+  <circle cx="155" cy="65" r="3" fill="#CCCCCC"/>
+  <circle cx="165" cy="65" r="3" fill="#9370DB"/>
+  <circle cx="175" cy="65" r="3" fill="#CCCCCC"/>
+  <circle cx="185" cy="65" r="3" fill="#9370DB"/>
+  <circle cx="195" cy="65" r="3" fill="#CCCCCC"/>
+  <circle cx="205" cy="65" r="3" fill="#9370DB"/>
+  
+  <circle cx="155" cy="75" r="3" fill="#9370DB"/>
+  <circle cx="165" cy="75" r="3" fill="#CCCCCC"/>
+  <circle cx="175" cy="75" r="3" fill="#9370DB"/>
+  <circle cx="185" cy="75" r="3" fill="#CCCCCC"/>
+  <circle cx="195" cy="75" r="3" fill="#9370DB"/>
+  <circle cx="205" cy="75" r="3" fill="#CCCCCC"/>
+  
+  <!-- Hebrew word game -->
+  <rect x="240" y="30" width="50" height="60" fill="#FFE4E1" stroke="#DC143C" stroke-width="2" rx="5"/>
+  <text x="265" y="45" text-anchor="middle" fill="#8B0000" font-family="Arial, sans-serif" font-size="10" font-weight="bold">צירופים</text>
+  
+  <!-- Word building blocks -->
+  <rect x="245" y="50" width="15" height="12" fill="#DC143C" rx="2"/>
+  <text x="252.5" y="58" text-anchor="middle" fill="white" font-family="serif" font-size="8">ש</text>
+  
+  <rect x="262" y="50" width="15" height="12" fill="#DC143C" rx="2"/>
+  <text x="269.5" y="58" text-anchor="middle" fill="white" font-family="serif" font-size="8">ל</text>
+  
+  <rect x="245" y="65" width="15" height="12" fill="#DC143C" rx="2"/>
+  <text x="252.5" y="73" text-anchor="middle" fill="white" font-family="serif" font-size="8">ו</text>
+  
+  <rect x="262" y="65" width="15" height="12" fill="#DC143C" rx="2"/>
+  <text x="269.5" y="73" text-anchor="middle" fill="white" font-family="serif" font-size="8">ם</text>
+  
+  <!-- Jerusalem historical timeline -->
+  <rect x="20" y="110" width="260" height="50" fill="#DEB887" stroke="#8B7355" stroke-width="2" rx="5"/>
+  <text x="150" y="125" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Jerusalem Through Time</text>
+  
+  <!-- Timeline markers -->
+  <circle cx="40" cy="140" r="5" fill="#DAA520"/>
+  <text x="40" y="155" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="8">1000 BCE</text>
+  
+  <circle cx="90" cy="140" r="5" fill="#DAA520"/>
+  <text x="90" y="155" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="8">70 CE</text>
+  
+  <circle cx="140" cy="140" r="5" fill="#DAA520"/>
+  <text x="140" y="155" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="8">1099 CE</text>
+  
+  <circle cx="190" cy="140" r="5" fill="#DAA520"/>
+  <text x="190" y="155" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="8">1516 CE</text>
+  
+  <circle cx="240" cy="140" r="5" fill="#DAA520"/>
+  <text x="240" y="155" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="8">1948 CE</text>
+  
+  <!-- Connecting line -->
+  <line x1="40" y1="140" x2="240" y2="140" stroke="#8B7355" stroke-width="2"/>
+  
+  <!-- Cultural badge -->
+  <rect x="20" y="170" width="80" height="20" fill="#B8860B" rx="10"/>
+  <text x="60" y="183" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">CULTURAL</text>
+  
+  <!-- Hebrew learning badge -->
+  <rect x="110" y="170" width="100" height="20" fill="#8B7355" rx="10"/>
+  <text x="160" y="183" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">HEBREW LEARNING</text>
+  
+  <!-- Historical badge -->
+  <rect x="220" y="170" width="70" height="20" fill="#DAA520" rx="10"/>
+  <text x="255" y="183" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">HISTORICAL</text>
+</svg>

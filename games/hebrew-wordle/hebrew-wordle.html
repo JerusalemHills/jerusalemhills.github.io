@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מילה יומית - Hebrew Daily Word | Jerusalem Hills</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="משחק מילה יומית בעברית - נחש את המילה בעברית ב-6 ניסיונות. משחק יומי חדש מדי יום!">
+    <meta name="keywords" content="עברית, מילה יומית, חידה, משחק מילים, Hebrew Wordle, Jerusalem Hills">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    
+    <!-- Main styles -->
+    <link rel="stylesheet" href="/css/theme.css">
+    
+    <style>
+        :root {
+            --primary-color: #87CEEB;
+            --text-accent: #2C3E50;
+            --correct: #10B981;
+            --present: #F59E0B;
+            --absent: #6B7280;
+            --border: #D1D5DB;
+            --background: #F9FAFB;
+            --tile-size: 62px;
+        }
+
+        body {
+            font-family: 'Arial', 'Noto Sans Hebrew', sans-serif;
+            background: var(--background);
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+
+        .game-header {
+            background: linear-gradient(135deg, var(--primary-color), #F0E68C);
+            padding: 1rem;
+            text-align: center;
+            color: var(--text-accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .game-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .game-header p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.8;
+        }
+
+        .game-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .game-info {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .daily-challenge {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: var(--text-accent);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-rows: repeat(6, var(--tile-size));
+            grid-gap: 5px;
+            margin: 20px auto;
+            max-width: 350px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(5, var(--tile-size));
+            grid-gap: 5px;
+        }
+
+        .tile {
+            width: var(--tile-size);
+            height: var(--tile-size);
+            border: 2px solid var(--border);
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+        }
+
+        .tile.filled {
+            border-color: var(--text-accent);
+            color: var(--text-accent);
+        }
+
+        .tile.correct {
+            background: var(--correct);
+            border-color: var(--correct);
+            color: white;
+        }
+
+        .tile.present {
+            background: var(--present);
+            border-color: var(--present);
+            color: white;
+        }
+
+        .tile.absent {
+            background: var(--absent);
+            border-color: var(--absent);
+            color: white;
+        }
+
+        .tile.flip {
+            animation: flip 0.6s ease-in-out;
+        }
+
+        @keyframes flip {
+            0% { transform: rotateY(0); }
+            50% { transform: rotateY(90deg); }
+            100% { transform: rotateY(0); }
+        }
+
+        .virtual-keyboard {
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        .keyboard-row {
+            display: flex;
+            gap: 3px;
+            margin: 5px 0;
+            justify-content: center;
+        }
+
+        .key {
+            background: #D1D5DB;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.1s;
+            min-width: 30px;
+            font-family: 'Arial', 'Noto Sans Hebrew', sans-serif;
+        }
+
+        .key:hover {
+            background: #9CA3AF;
+        }
+
+        .key.correct {
+            background: var(--correct) !important;
+            color: white !important;
+        }
+
+        .key.present {
+            background: var(--present) !important;
+            color: white !important;
+        }
+
+        .key.absent {
+            background: var(--absent) !important;
+            color: white !important;
+        }
+
+        .key.special {
+            background: var(--text-accent);
+            color: white;
+            padding: 12px 15px;
+            font-size: 12px;
+        }
+
+        .game-controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: var(--text-accent);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: #6BB6D6;
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .game-stats {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-accent);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #6B7280;
+            margin-top: 5px;
+        }
+
+        .message {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid var(--primary-color);
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        .message.success {
+            border-left-color: var(--correct);
+            background: #ECFDF5;
+        }
+
+        .message.warning {
+            border-left-color: var(--present);
+            background: #FFFBEB;
+        }
+
+        .message.error {
+            border-left-color: #EF4444;
+            background: #FEF2F2;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-link {
+            display: inline-block;
+            background: var(--text-accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            background: #34495E;
+            transform: translateY(-1px);
+        }
+
+        .instructions {
+            background: #EBF8FF;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: var(--text-accent);
+        }
+
+        .instructions ul {
+            margin: 10px 0;
+            padding-right: 20px;
+        }
+
+        .timer {
+            background: var(--text-accent);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 480px) {
+            .game-container {
+                padding: 10px;
+            }
+            
+            :root {
+                --tile-size: 50px;
+            }
+            
+            .key {
+                padding: 10px 6px;
+                font-size: 12px;
+                min-width: 25px;
+            }
+            
+            .virtual-keyboard {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-header">
+        <a href="/" style="position: absolute; left: 20px; top: 20px;">
+            <img src="/img/1.svg" alt="Jerusalem Hills Logo" style="height: 40px;">
+        </a>
+        <h1>מילה יומית</h1>
+        <p>נחש את המילה בעברית ב-6 ניסיונות • Hebrew Daily Word Challenge</p>
+    </div>
+
+    <div class="game-container">
+        <a href="/games/" class="back-link">← חזור למשחקים</a>
+
+        <div class="daily-challenge">
+            <div id="daily-info">
+                <strong>אתגר יומי #<span id="puzzle-number">1</span></strong>
+                <div class="timer" id="next-puzzle-timer">
+                    המילה הבאה בעוד: <span id="countdown">--:--:--</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>🎯 איך לשחק:</h3>
+            <ul>
+                <li><strong>נחש מילה בעברית בת 5 אותיות</strong></li>
+                <li><strong style="color: #10B981;">ירוק</strong> - האות במקום הנכון</li>
+                <li><strong style="color: #F59E0B;">כתום</strong> - האות קיימת במילה אבל במקום אחר</li>
+                <li><strong style="color: #6B7280;">אפור</strong> - האות לא קיימת במילה</li>
+                <li>יש לך 6 ניסיונות למצוא את המילה!</li>
+            </ul>
+        </div>
+
+        <div class="game-info">
+            <div id="current-attempt">ניסיון: <strong><span id="attempt-number">1</span>/6</strong></div>
+        </div>
+
+        <div class="message" id="message"></div>
+
+        <div class="game-board" id="game-board">
+            <!-- Rows will be generated by JavaScript -->
+        </div>
+
+        <div class="virtual-keyboard" id="keyboard">
+            <!-- Keyboard will be generated by JavaScript -->
+        </div>
+
+        <div class="game-controls">
+            <button class="btn" onclick="newGame()">משחק חדש</button>
+            <button class="btn" onclick="showStats()">סטטיסטיקות</button>
+            <button class="btn" onclick="shareResult()">שתף תוצאה</button>
+        </div>
+
+        <div class="game-stats" id="stats" style="display: none;">
+            <h3>הסטטיסטיקות שלך</h3>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number" id="games-played">0</div>
+                    <div class="stat-label">משחקים</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="win-percentage">0%</div>
+                    <div class="stat-label">אחוז הצלחה</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="current-streak">0</div>
+                    <div class="stat-label">רצף נוכחי</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="max-streak">0</div>
+                    <div class="stat-label">רצף מקסימלי</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/hebrew-wordle.js"></script>
+</body>
+</html>

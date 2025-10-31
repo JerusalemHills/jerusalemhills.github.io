@@ -1178,3 +1178,80 @@ footer {
     width: 95%;
   }
 }
+
+/* Mobile Improvements - Compact Financial Indicators & Working Hamburger Menu */
+@media (max-width: 768px) {
+  /* Compact financial indicators for mobile */
+  .top-date-display {
+    font-size: 0.65rem !important;
+    line-height: 1.2 !important;
+    max-width: 180px !important;
+    text-align: right !important;
+  }
+  
+  .hebrew-date, .gregorian-date {
+    font-size: 0.6rem !important;
+    margin-bottom: 1px !important;
+  }
+  
+  .world-clocks-container {
+    margin-top: 2px !important;
+  }
+  
+  .world-cities {
+    font-size: 0.55rem !important;
+    gap: 0 !important;
+    letter-spacing: 0.2px !important;
+  }
+  
+  .world-times {
+    font-size: 0.55rem !important;
+    margin-top: 1px !important;
+  }
+  
+  .world-weather {
+    font-size: 0.5rem !important;
+    margin-top: 1px !important;
+  }
+  
+  .clock-sep {
+    margin: 0 1px !important;
+    font-size: 0.5rem !important;
+  }
+  
+  .city-label {
+    font-size: 0.55rem !important;
+  }
+  
+  .time-value, .weather-value {
+    font-size: inherit !important;
+  }
+  
+  /* Make hamburger menu button visible and functional */
+  .menu-button, .icon-button[aria-label="Menu"] {
+    display: flex !important;
+    background: none !important;
+    border: none !important;
+    padding: 8px !important;
+    cursor: pointer !important;
+    color: #4b5563 !important;
+    border-radius: 8px !important;
+    transition: all 0.2s !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+  
+  .menu-button:hover, .icon-button[aria-label="Menu"]:hover {
+    background: #f3f4f6 !important;
+  }
+  
+  .menu-button svg,
+  .menu-button i,
+  .icon-button[aria-label="Menu"] svg,
+  .icon-button[aria-label="Menu"] i {
+    width: 24px !important;
+    height: 24px !important;
+  }
+}

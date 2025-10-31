@@ -533,62 +533,144 @@
             </div>
 
         <div class="map-display">
-            <svg class="map-svg" viewBox="0 0 300 400" id="mapSvg">
-                <!-- Base map outline -->
+            <svg class="map-svg" viewBox="0 0 400 500" id="mapSvg">
+                <!-- Enhanced map with improved geography -->
                 <defs>
-                    <pattern id="seaPattern" patternUnits="userSpaceOnUse" width="10" height="10">
-                        <rect width="10" height="10" fill="#4A90E2"/>
-                        <path d="M0,10 L10,0 M-2,2 L2,-2 M8,12 L12,8" stroke="#357ABD" stroke-width="1"/>
+                    <!-- Realistic water pattern -->
+                    <pattern id="seaPattern" patternUnits="userSpaceOnUse" width="20" height="20">
+                        <rect width="20" height="20" fill="#2980B9"/>
+                        <circle cx="5" cy="5" r="1" fill="#3498DB" opacity="0.6"/>
+                        <circle cx="15" cy="15" r="1" fill="#3498DB" opacity="0.6"/>
+                        <path d="M0,20 Q10,10 20,20" stroke="#5DADE2" stroke-width="0.5" fill="none" opacity="0.8"/>
                     </pattern>
+                    
+                    <!-- Mountain pattern -->
+                    <pattern id="mountainPattern" patternUnits="userSpaceOnUse" width="15" height="15">
+                        <rect width="15" height="15" fill="#8D6E63"/>
+                        <path d="M0,15 L7.5,5 L15,15" fill="#A1887F" opacity="0.7"/>
+                        <path d="M0,15 L3,12 L6,15" fill="#6D4C41" opacity="0.5"/>
+                        <path d="M9,15 L12,12 L15,15" fill="#6D4C41" opacity="0.5"/>
+                    </pattern>
+                    
+                    <!-- Desert pattern -->
+                    <pattern id="desertPattern" patternUnits="userSpaceOnUse" width="12" height="12">
+                        <rect width="12" height="12" fill="#F4A460"/>
+                        <circle cx="3" cy="3" r="0.5" fill="#DEB887" opacity="0.6"/>
+                        <circle cx="9" cy="9" r="0.5" fill="#DEB887" opacity="0.6"/>
+                        <circle cx="6" cy="8" r="0.3" fill="#D2B48C" opacity="0.8"/>
+                    </pattern>
+                    
+                    <!-- Fertile plains pattern -->
+                    <pattern id="plainsPattern" patternUnits="userSpaceOnUse" width="10" height="10">
+                        <rect width="10" height="10" fill="#90EE90"/>
+                        <circle cx="2" cy="2" r="0.5" fill="#228B22" opacity="0.4"/>
+                        <circle cx="8" cy="8" r="0.5" fill="#228B22" opacity="0.4"/>
+                        <path d="M0,5 Q5,3 10,5" stroke="#006400" stroke-width="0.3" opacity="0.6"/>
+                    </pattern>
+                    
+                    <!-- City symbol -->
+                    <g id="citySymbol">
+                        <circle r="6" fill="#8B4513" stroke="#654321" stroke-width="1"/>
+                        <rect x="-3" y="-4" width="2" height="6" fill="#DEB887"/>
+                        <rect x="1" y="-4" width="2" height="6" fill="#DEB887"/>
+                        <rect x="-1" y="-6" width="2" height="2" fill="#CD853F"/>
+                    </g>
                 </defs>
                 
-                <!-- Mediterranean Sea -->
-                <rect x="0" y="0" width="80" height="400" fill="url(#seaPattern)" stroke="#2E5C8A" stroke-width="1"/>
+                <!-- Realistic Mediterranean coastline -->
+                <path d="M0,0 L90,0 Q95,50 100,80 Q98,120 95,160 Q92,200 88,240 Q85,280 82,320 Q80,360 78,400 Q76,450 75,500 L0,500 Z" 
+                      fill="url(#seaPattern)" stroke="#1B4F72" stroke-width="2"/>
                 
-                <!-- Dead Sea -->
-                <ellipse cx="220" cy="250" rx="25" ry="60" fill="url(#seaPattern)" stroke="#2E5C8A" stroke-width="1"/>
+                <!-- Realistic Dead Sea shape -->
+                <ellipse cx="280" cy="320" rx="35" ry="80" fill="url(#seaPattern)" stroke="#1B4F72" stroke-width="2"/>
                 
-                <!-- Sea of Galilee -->
-                <ellipse cx="200" cy="120" rx="15" ry="20" fill="url(#seaPattern)" stroke="#2E5C8A" stroke-width="1"/>
+                <!-- Sea of Galilee (Lake Kinneret) -->
+                <ellipse cx="250" cy="140" rx="18" ry="25" fill="url(#seaPattern)" stroke="#1B4F72" stroke-width="2"/>
                 
-                <!-- Jordan River -->
-                <path d="M200,140 Q210,180 220,190 Q210,220 220,250 Q230,280 225,320 Q220,350 230,380" 
-                      stroke="url(#seaPattern)" stroke-width="4" fill="none"/>
+                <!-- Jordan River - more realistic path -->
+                <path d="M250,165 Q255,190 265,220 Q270,250 275,280 Q280,300 280,320" 
+                      stroke="#2980B9" stroke-width="6" fill="none" opacity="0.8"/>
                 
-                <!-- Main territories (will be updated by JavaScript) -->
-                <g id="territories">
-                    <!-- Northern region -->
-                    <polygon id="north" points="80,80 300,80 300,160 250,160 200,140 150,150 80,140" 
-                             fill="#8FBC8F" stroke="#2F4F2F" stroke-width="1" class="territory"/>
+                <!-- Mountain ranges - Judean Hills -->
+                <polygon points="120,180 180,160 220,180 260,200 280,240 260,280 220,300 180,280 140,260 120,220" 
+                         fill="url(#mountainPattern)" stroke="#5D4037" stroke-width="1" class="territory" id="judeanHills"/>
+                
+                <!-- Galilee region -->
+                <polygon id="galilee" points="100,80 320,80 320,180 280,180 250,165 200,170 150,160 100,140" 
+                         fill="url(#plainsPattern)" stroke="#2E7D32" stroke-width="1" class="territory"/>
+                
+                <!-- Samarian Hills -->
+                <polygon id="samaria" points="100,140 200,170 250,165 280,180 320,180 320,240 280,240 220,200 180,160 140,160 100,180" 
+                         fill="url(#mountainPattern)" stroke="#5D4037" stroke-width="1" class="territory"/>
+                
+                <!-- Judean region -->
+                <polygon id="judea" points="100,180 180,160 220,180 280,240 320,240 320,340 280,360 220,340 180,320 140,300 100,280" 
+                         fill="url(#mountainPattern)" stroke="#5D4037" stroke-width="1" class="territory"/>
+                
+                <!-- Negev Desert -->
+                <polygon id="negev" points="100,280 180,320 220,340 280,360 320,340 320,500 100,500" 
+                         fill="url(#desertPattern)" stroke="#D4AC0D" stroke-width="1" class="territory"/>
+                
+                <!-- Coastal Plains -->
+                <polygon id="coastalPlains" points="78,100 100,140 100,360 78,400" 
+                         fill="url(#plainsPattern)" stroke="#2E7D32" stroke-width="1" class="territory"/>
+                
+                <!-- Enhanced Cities with better positioning -->
+                <g id="cities">
+                    <!-- Jerusalem - most important city -->
+                    <g id="jerusalem" class="city-marker" transform="translate(200,220)">
+                        <use href="#citySymbol" transform="scale(1.5)"/>
+                        <circle r="12" fill="none" stroke="#FFD700" stroke-width="2" opacity="0.8"/>
+                        <text x="0" y="25" class="city-label" text-anchor="middle" font-weight="bold" font-size="14">Jerusalem</text>
+                    </g>
                     
-                    <!-- Central region -->
-                    <polygon id="central" points="80,140 150,150 200,140 250,160 300,160 300,280 220,290 180,270 120,280 80,270" 
-                             fill="#DEB887" stroke="#8B7355" stroke-width="1" class="territory"/>
+                    <!-- Other major cities -->
+                    <g id="bethlehem" class="city-marker" transform="translate(190,240)">
+                        <use href="#citySymbol"/>
+                        <text x="0" y="18" class="city-label" text-anchor="middle">Bethlehem</text>
+                    </g>
                     
-                    <!-- Southern region -->
-                    <polygon id="south" points="80,270 120,280 180,270 220,290 300,280 300,400 80,400" 
-                             fill="#F4A460" stroke="#CD853F" stroke-width="1" class="territory"/>
+                    <g id="hebron" class="city-marker" transform="translate(180,280)">
+                        <use href="#citySymbol"/>
+                        <text x="0" y="18" class="city-label" text-anchor="middle">Hebron</text>
+                    </g>
+                    
+                    <g id="jericho" class="city-marker" transform="translate(240,260)">
+                        <use href="#citySymbol"/>
+                        <text x="0" y="18" class="city-label" text-anchor="middle">Jericho</text>
+                    </g>
+                    
+                    <g id="nazareth" class="city-marker" transform="translate(220,120)">
+                        <use href="#citySymbol"/>
+                        <text x="0" y="18" class="city-label" text-anchor="middle">Nazareth</text>
+                    </g>
+                    
+                    <g id="capernaum" class="city-marker" transform="translate(260,130)">
+                        <use href="#citySymbol"/>
+                        <text x="0" y="18" class="city-label" text-anchor="middle">Capernaum</text>
+                    </g>
+                    
+                    <g id="caesarea" class="city-marker" transform="translate(120,180)">
+                        <use href="#citySymbol"/>
+                        <text x="0" y="18" class="city-label" text-anchor="middle">Caesarea</text>
+                    </g>
+                    
+                    <g id="gaza" class="city-marker" transform="translate(110,360)">
+                        <use href="#citySymbol"/>
+                        <text x="0" y="18" class="city-label" text-anchor="middle">Gaza</text>
+                    </g>
                 </g>
                 
-                <!-- Cities -->
-                <g id="cities">
-                    <circle cx="160" cy="200" r="4" class="city-marker" id="jerusalem"/>
-                    <text x="160" y="215" class="city-label">Jerusalem</text>
-                    
-                    <circle cx="120" cy="320" r="3" class="city-marker" id="hebron"/>
-                    <text x="120" y="335" class="city-label">Hebron</text>
-                    
-                    <circle cx="140" cy="180" r="3" class="city-marker" id="bethel"/>
-                    <text x="140" y="195" class="city-label">Bethel</text>
-                    
-                    <circle cx="180" cy="240" r="3" class="city-marker" id="jericho"/>
-                    <text x="180" y="255" class="city-label">Jericho</text>
-                    
-                    <circle cx="190" cy="120" r="3" class="city-marker" id="tiberias"/>
-                    <text x="190" y="135" class="city-label">Tiberias</text>
-                    
-                    <circle cx="120" cy="160" r="3" class="city-marker" id="samaria"/>
-                    <text x="120" y="175" class="city-label">Samaria</text>
+                <!-- Geographic labels -->
+                <g id="geoLabels" font-family="serif" font-style="italic" opacity="0.7">
+                    <text x="50" y="250" font-size="16" fill="#1B4F72" text-anchor="middle" transform="rotate(-90 50 250)">Mediterranean Sea</text>
+                    <text x="300" y="320" font-size="12" fill="#1B4F72" text-anchor="middle">Dead Sea</text>
+                    <text x="250" y="140" font-size="10" fill="#1B4F72" text-anchor="middle">Sea of Galilee</text>
+                    <text x="265" y="240" font-size="10" fill="#1B4F72" text-anchor="middle" transform="rotate(-60 265 240)">Jordan River</text>
+                    <text x="200" y="400" font-size="14" fill="#D4AC0D" text-anchor="middle">Negev Desert</text>
+                    <text x="200" y="100" font-size="12" fill="#2E7D32" text-anchor="middle">Galilee</text>
+                    <text x="180" y="160" font-size="11" fill="#5D4037" text-anchor="middle">Samaria</text>
+                    <text x="200" y="200" font-size="11" fill="#5D4037" text-anchor="middle">Judea</text>
                 </g>
             </svg>
         </div>
@@ -624,24 +706,28 @@
 
         <div class="legend">
             <div class="legend-item">
-                <div class="legend-color" style="background: #4A90E2;"></div>
-                <span>Water Bodies</span>
+                <div class="legend-color" style="background: #2980B9;"></div>
+                <span>Water Bodies (Sea, Rivers)</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #8FBC8F;"></div>
-                <span>Northern Territories</span>
+                <div class="legend-color" style="background: #90EE90;"></div>
+                <span>Fertile Plains & Valleys</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #DEB887;"></div>
-                <span>Central Territories</span>
+                <div class="legend-color" style="background: #8D6E63;"></div>
+                <span>Mountain Ranges & Hills</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #F4A460;"></div>
-                <span>Southern Territories</span>
+                <span>Desert Regions</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #333;"></div>
-                <span>Important Cities</span>
+                <div class="legend-color" style="background: #8B4513;"></div>
+                <span>Important Cities & Settlements</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FFD700;"></div>
+                <span>Jerusalem (Holy City)</span>
             </div>
         </div>
 
@@ -1137,40 +1223,39 @@
             // Stop current audio
             stopCurrentAudio();
             
-            // Create new audio element
-            currentAudio = new Audio(period.audio.file);
-            currentAudio.volume = audioVolume;
-            currentAudio.loop = true; // Enable looping for efficiency
-            
-            // Mobile-friendly audio attributes
-            currentAudio.preload = 'metadata'; // Lighter preload for mobile
-            currentAudio.playsInline = true; // Required for iOS inline playback
-            
-            // Handle loading and errors gracefully
-            currentAudio.addEventListener('canplaythrough', () => {
-                if (audioEnabled && currentPeriod === periodIndex) {
-                    // Try to play, with mobile-specific handling
-                    const playPromise = currentAudio.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(e => {
-                            console.log('Audio autoplay prevented by browser (likely mobile):', e);
-                            // Show mobile-friendly audio prompt
-                            showMobileAudioPrompt();
-                        });
-                    }
-                }
-            });
-            
-            currentAudio.addEventListener('error', (e) => {
-                console.log('Audio file not found:', period.audio.file);
-                // Silently fail if audio file doesn't exist
-            });
-            
-            // Start loading
-            currentAudio.load();
+            // Use sound manager for atmospheric sounds based on period
+            const soundType = getPeriodSoundType(periodIndex);
+            if (soundType) {
+                soundManager.play(soundType);
+            }
             
             // Update audio attribution
             updateAudioAttribution(period.audio);
+        }
+        
+        function getPeriodSoundType(periodIndex) {
+            // Map different historical periods to appropriate sound types
+            const period = historicalPeriods[periodIndex];
+            
+            if (period.title.includes('Canaanite') || period.title.includes('Bronze Age')) {
+                return 'start'; // Ancient beginning sounds
+            } else if (period.title.includes('Sea Peoples') || period.title.includes('Philistine')) {
+                return 'hint'; // Mediterranean sounds
+            } else if (period.title.includes('Assyrian') || period.title.includes('War')) {
+                return 'milestone'; // Military/conquest sounds
+            } else if (period.title.includes('Persian') || period.title.includes('Greek')) {
+                return 'next'; // Imperial transition sounds
+            } else if (period.title.includes('Roman') || period.title.includes('Byzantine')) {
+                return 'correct'; // Administrative empire sounds
+            } else if (period.title.includes('Islamic') || period.title.includes('Ottoman')) {
+                return 'match'; // Cultural flowering sounds
+            } else if (period.title.includes('Crusader') || period.title.includes('conflict')) {
+                return 'no-match'; // Conflict period sounds
+            } else if (period.title.includes('Modern') || period.title.includes('Independence')) {
+                return 'victory'; // Modern achievement sounds
+            }
+            
+            return 'start'; // Default sound
         }
 
         function stopCurrentAudio() {
@@ -1262,14 +1347,20 @@
             // Play period-appropriate ambient sound
             playPeriodAudio(currentPeriod);
             
-            // Update map colors
-            const northTerritory = document.getElementById('north');
-            const centralTerritory = document.getElementById('central');
-            const southTerritory = document.getElementById('south');
+            // Update map colors for different regions
+            const galilee = document.getElementById('galilee');
+            const samaria = document.getElementById('samaria');
+            const judea = document.getElementById('judea');
+            const negev = document.getElementById('negev');
+            const coastalPlains = document.getElementById('coastalPlains');
             
-            if (northTerritory) northTerritory.setAttribute('fill', period.colors.north);
-            if (centralTerritory) centralTerritory.setAttribute('fill', period.colors.central);
-            if (southTerritory) southTerritory.setAttribute('fill', period.colors.south);
+            if (period.colors) {
+                if (galilee) galilee.setAttribute('fill', period.colors.north || 'url(#plainsPattern)');
+                if (samaria) samaria.setAttribute('fill', period.colors.central || 'url(#mountainPattern)');
+                if (judea) judea.setAttribute('fill', period.colors.central || 'url(#mountainPattern)');
+                if (negev) negev.setAttribute('fill', period.colors.south || 'url(#desertPattern)');
+                if (coastalPlains) coastalPlains.setAttribute('fill', period.colors.north || 'url(#plainsPattern)');
+            }
             
             // Update button states
             prevBtn.disabled = currentPeriod === 0;
