@@ -128,4 +128,38 @@ The historical map now includes detailed information about the various ancient p
 ### Biblical References:
 The map references these peoples as mentioned in various biblical texts while maintaining historical accuracy based on archaeological evidence.
 
+## Jerusalem Timeline Integration
+
+Based on Matt Baker's detailed Jerusalem research, the map now includes:
+
+### Key Jerusalem Historical Points:
+- **4000 BCE**: First permanent settlement near Jerusalem
+- **2000 BCE**: First written record as Egyptian "Rusalimum" 
+- **1000 BCE**: David conquers Jerusalem from Jebusites
+- **586 BCE**: Babylonian destruction of First Temple
+- **70 CE**: Roman destruction of Second Temple (never rebuilt)
+- **130-326 CE**: Pagan "Aelia Capitolina" period - Jews banned for 200 years
+- **636 CE**: "Most important turning point" - Islamic conquest by Caliph Umar
+- **691 CE**: Dome of the Rock built on exact Temple Mount site
+
+### Religious Timeline Totals (per Matt Baker):
+- **Islam**: 1,283 years of control
+- **Judaism**: 1,197 years of control  
+- **Christianity**: 410 years of control
+- **Paganism**: 196 years of control
+
+### Educational Significance:
+- **Foundation Stone**: Covered by Dome of the Rock, believed site of Holy of Holies
+- **Well of Souls**: Mysterious chamber beneath Foundation Stone
+- **Aelia Capitolina**: Shows dramatic transformation - pagan Jupiter temple where Jewish Temple stood
+- **Mixed Demographics**: Starting 1850, Jerusalem became mixed Jewish/Muslim population
+
+### New Quiz Questions Added:
+- Pagan Roman name for Jerusalem (Aelia Capitolina)
+- Year Dome of the Rock was built (691 CE)
+- Which empire controlled Jerusalem longest (Roman/Byzantine - 676 years)
+- Jerusalem's role in regional history and religious significance
+
+The map now provides unprecedented detail about the world's most fought-over city, combining archaeological evidence with historical records to create a comprehensive educational experience.
+
 The ambient sound system transforms the static timeline into a rich, multisensory educational experience that brings history to life for students of all ages!
