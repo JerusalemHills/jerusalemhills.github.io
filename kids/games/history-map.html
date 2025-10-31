@@ -355,6 +355,41 @@
             border-color: #dc3545;
         }
 
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .audio-toggle {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .audio-toggle.muted {
+            background: #ccc;
+        }
+
+
+        .sound-attribution {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 10px;
+            padding: 8px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
         @media (max-width: 1024px) {
             .map-container {
                 grid-template-columns: 1fr;
@@ -539,6 +574,12 @@
 
         <div class="sidebar">
             <h3>📚 Historical Context</h3>
+            
+            <div class="audio-controls">
+                <button class="audio-toggle" id="audioToggle">🔊 Sound On</button>
+                <span style="font-size: 0.9em; color: #666;">Automatic period sounds</span>
+            </div>
+            
             <div class="historical-context" id="historicalContext">
                 Select a period to learn about the historical transitions and key events that shaped the land.
             </div>
@@ -564,32 +605,58 @@
         // Historical periods data based on archaeological and historical evidence
         const historicalPeriods = [
             {
-                years: "1200 BCE",
+                years: "3500-1200 BCE",
                 title: "Canaanite Period",
-                description: "The ancient land was inhabited by various Canaanite tribes and city-states. Archaeological evidence shows early agricultural communities and walled cities like Jericho.",
+                description: "Ancient settlements like Tell es-Sakan (3500 BCE) and Tell el-Ajjul (2000 BCE) show continuous habitation. Gaza was called 'Ghazzat' meaning 'the strong city' under Egyptian control.",
                 colors: { north: "#8FBC8F", central: "#DEB887", south: "#F4A460" },
-                context: "During the Bronze Age (3000-1200 BCE), independent Canaanite city-states flourished. The region was a crossroads for trade and culture between Egypt, Mesopotamia, and the Mediterranean world.",
+                context: "Gaza is really, REALLY old. Tell es-Sakan was built by Ancient Egyptians during the predynastic period - before the first pharaoh and almost 1000 years before the Great Pyramid. The region was a crossroads between Egypt, Mesopotamia and the Mediterranean.",
                 keyEvents: [
-                    "c. 8500 BCE: Jericho becomes one of the world's first walled cities",
-                    "c. 3000 BCE: Canaanite city-states established",
-                    "c. 1550-1200 BCE: Egyptian influence in the region",
-                    "c. 1200 BCE: Sea Peoples and other migrations"
+                    "3500 BCE: Tell es-Sakan built by predynastic Egyptians",
+                    "2600 BCE: Site resettled by local Canaanites", 
+                    "2000 BCE: Tell el-Ajjul established, massive gold hoard found",
+                    "1550-1200 BCE: Egyptian New Kingdom control, city named Ghazzat"
                 ],
-                transition: "Archaeological evidence suggests gradual assimilation rather than violent conquest by incoming peoples."
+                transition: "The Bronze Age Collapse (c. 1200 BCE) brought Sea Peoples migrations, fundamentally changing the region's culture and population.",
+                audio: {
+                    file: "sounds/ancient-winds.mp3",
+                    description: "Desert winds and distant hammering of bronze tools",
+                    attribution: "Ancient crafting sounds mixed with Middle Eastern winds",
+                    educational: "🏺 Did you know? Bronze Age craftsmen heated copper and tin together to create bronze - one of humanity's first metal alloys! The hammering sounds represent the daily work of ancient metalworkers who created tools, weapons, and beautiful jewelry like the golden hoard found at Tell el-Ajjul."
+                }
+            },
+            {
+                years: "1200-600 BCE",
+                title: "Philistine Pentapolis",
+                description: "The Sea Peoples, including Philistines, built a powerful confederation of five cities: Gaza, Ashkelon, Ashdod, Ekron, and Gath (Goliath's hometown). Gaza was their southernmost stronghold.",
+                colors: { north: "#4169E1", central: "#8FBC8F", south: "#9370DB" },
+                context: "The mysterious Sea Peoples probably came from near Greece. From the word 'Philistine' comes the modern word 'Palestine.' The Philistines maintained independence even as most of Canaan was controlled by Israelites.",
+                keyEvents: [
+                    "c. 1200 BCE: Sea Peoples arrive after Bronze Age Collapse",
+                    "Philistine Pentapolis established: Gaza, Ashkelon, Ashdod, Ekron, Gath",
+                    "Biblical conflicts: Samson dies in Gaza, David vs. Goliath",
+                    "600 BCE: Sudden disappearance during Babylonian conquest"
+                ],
+                transition: "The Philistines disappeared from history around 600 BCE, either destroyed or integrated into the Babylonian population during Nebuchadnezzar's campaigns.",
+                audio: {
+                    file: "sounds/sea-peoples.mp3",
+                    description: "Mediterranean waves and ancient Greek-style flutes",
+                    attribution: "Sea sounds with ancient wind instruments",
+                    educational: "🌊 Fun Fact! The Philistines were 'Sea Peoples' who probably came from the Greek islands. They gave Palestine its name and were master seafarers. The flute sounds represent their cultural connection to the Mediterranean world, and Gaza was their southernmost port city!"
+                }
             },
             {
                 years: "1000-920 BCE",
-                title: "United Kingdom of Israel",
-                description: "According to biblical sources, Kings Saul, David, and Solomon unified the Israelite tribes. Archaeological evidence suggests a more modest kingdom than described in scripture.",
+                title: "United Kingdom vs Philistines",
+                description: "While biblical sources describe Kings Saul, David, and Solomon unifying Israelite tribes, Gaza remained under Philistine control. Archaeological evidence suggests the Israelite kingdom was more modest than described.",
                 colors: { north: "#9370DB", central: "#9370DB", south: "#9370DB" },
-                context: "The Hebrew Bible describes a vast kingdom, but archaeological evidence shows Jerusalem was sparsely populated. The actual kingdom may have been smaller than traditionally believed.",
+                context: "Biblical stories tell of conflicts between Israelite heroes (Samson, David) and Philistines. According to archaeological records, Philistines maintained independence at Gaza, their southernmost city, even as most of Canaan was controlled by Israelites.",
                 keyEvents: [
-                    "c. 1020 BCE: King Saul anointed as first king",
-                    "c. 1000 BCE: David captures Jerusalem",
-                    "c. 970-930 BCE: Solomon's reign and First Temple",
-                    "Trade relationships with neighboring kingdoms"
+                    "Biblical period: Samson's conflicts with Philistines",
+                    "David vs. Goliath of Gath (Philistine city)",
+                    "Gaza remains under Philistine control",
+                    "According to Bible: Philistines eventually absorbed into Israel"
                 ],
-                transition: "Transition from tribal confederation to centralized monarchy with Jerusalem as capital."
+                transition: "The Philistines appear to have maintained independence at Gaza throughout this period, particularly as their southernmost stronghold."
             },
             {
                 years: "920-722 BCE",
@@ -617,19 +684,41 @@
                     "Judah becomes Assyrian vassal state",
                     "Foreign populations settled in former Israel"
                 ],
-                transition: "Assyrian military superiority and siege warfare ended the northern kingdom permanently."
+                transition: "Assyrian military superiority and siege warfare ended the northern kingdom permanently.",
+                audio: {
+                    file: "sounds/assyrian-march.mp3",
+                    description: "Distant war drums and marching armies",
+                    attribution: "Ancient military march sounds",
+                    educational: "⚔️ Historical Note: The Assyrians were the ancient world's first great military empire! They used iron weapons, cavalry, and siege engines. When they conquered a city, they often relocated entire populations to prevent rebellions - that's why 27,290 Israelites were moved to Mesopotamia."
+                }
             },
             {
                 years: "586-538 BCE",
                 title: "Babylonian Exile",
-                description: "Nebuchadnezzar destroyed Jerusalem and exiled the people to Babylon.",
-                colors: { north: "#8B4513", central: "#8B4513", south: "#8B4513" }
+                description: "600 BCE: Babylonians destroyed the last Philistine cities as part of power struggle with Egypt. Archaeological record shows 90% population decrease in entire Southern Levant.",
+                colors: { north: "#8B4513", central: "#8B4513", south: "#8B4513" },
+                context: "Around 600 BCE, Nebuchadnezzar's campaigns were part of larger power struggle between Babylon and Egypt. Gaza was almost certainly destroyed at this point along with Jerusalem and other cities.",
+                keyEvents: [
+                    "600 BCE: Philistines suddenly disappear from history",
+                    "586 BCE: Destruction of Jerusalem by Nebuchadnezzar",
+                    "90% population decrease across Southern Levant",
+                    "End of independent kingdoms in the region"
+                ],
+                transition: "Persian conquest allowed rebuilding and return of some exiles, creating mixed population in rebuilt cities."
             },
             {
                 years: "538-332 BCE",
                 title: "Persian Period",
-                description: "Cyrus the Great allowed the exiles to return and rebuild the Temple.",
-                colors: { north: "#FF6347", central: "#FF6347", south: "#FF6347" }
+                description: "Persian Empire rebuilt the region including Gaza. Mixed population: some returning Judahite prisoners, survivors of wars, newcomers brought by Babylonians and Persians to resettle the land.",
+                colors: { north: "#FF6347", central: "#FF6347", south: "#FF6347" },
+                context: "Population was a mixture of different groups: descendants of Philistines (originally from Greece), Egyptians (living there 3000+ years), Bedouins (Arabian Peninsula), former Canaanites (now Jews/Samaritans), plus newcomers from crossroads of three continents.",
+                keyEvents: [
+                    "539 BCE: Cyrus the Great conquers Babylon",
+                    "Return of some Judahite exiles to Jerusalem",
+                    "Foundation of Judaism as we know it",
+                    "Regional rebuilding and resettlement"
+                ],
+                transition: "Alexander the Great's conquests brought Hellenistic culture and Greek political control to the region."
             },
             {
                 years: "332-63 BCE",
@@ -646,14 +735,37 @@
             {
                 years: "324-638 CE",
                 title: "Byzantine Period",
-                description: "The Christian Byzantine Empire ruled, with Christianity becoming dominant.",
-                colors: { north: "#9932CC", central: "#9932CC", south: "#9932CC" }
+                description: "395 CE: Saint Porphyrius became Bishop of Gaza, destroyed pagan temples, established Christianity. For first time, Jews frequently visited Gaza since they were banned from Jerusalem (135 CE).",
+                colors: { north: "#9932CC", central: "#9932CC", south: "#9932CC" },
+                context: "Gaza became Christian city as Christianity was now state religion of Rome. Jewish pilgrims visiting land of ancestors used Gaza as 'next best thing' to Jerusalem, from which they were banned.",
+                keyEvents: [
+                    "395 CE: Saint Porphyrius becomes Bishop of Gaza",
+                    "Destruction of pagan temples, building of churches",
+                    "c. 500 CE: Synagogue built with Byzantine mosaic of King David",
+                    "Gaza becomes destination for Jewish pilgrims"
+                ],
+                transition: "634 CE: Battle of Ajnadayn between Muslim and Roman armies - Muslims won decisively and turned attention to Gaza."
             },
             {
-                years: "638-1099 CE",
+                years: "637-1099 CE",
                 title: "Early Islamic Period",
-                description: "Islamic caliphates controlled the region, building the Dome of the Rock.",
-                colors: { north: "#228B22", central: "#228B22", south: "#228B22" }
+                description: "637 CE: Muslims captured Gaza after 3-year siege, occupying peacefully - killed enemy soldiers, not civilians. Gaza became part of Jund Filastin district of Arab Empire for 462 years.",
+                colors: { north: "#228B22", central: "#228B22", south: "#228B22" },
+                context: "634 CE was just 2 years after Muhammad's death. First Muslim-Roman battle at Ajnadayn (between Jerusalem and Gaza). Most churches turned to mosques, gradual conversion to Islam. Great Mosque of Gaza had been church, before that pagan temple to Philistine god Dagon.",
+                keyEvents: [
+                    "634 CE: Battle of Ajnadayn - Muslims defeat Romans",
+                    "637 CE: Gaza captured after 3-year siege",
+                    "Churches converted to mosques",
+                    "Gradual conversion of population to Islam",
+                    "Gaza part of Jund Filastin administrative district"
+                ],
+                transition: "1099: Crusaders captured Jerusalem and established European-style kingdom, causing most Gaza inhabitants to flee to Egypt or Arabia.",
+                audio: {
+                    file: "sounds/islamic-call.mp3",
+                    description: "Call to prayer echoing across ancient city",
+                    attribution: "Traditional Islamic call to prayer ambience",
+                    educational: "🕌 Cultural Learning: The Islamic call to prayer (Adhan) has been heard in this region for over 1,400 years! It calls Muslims to pray five times daily. During this period, many churches were converted to mosques, but Christians and Jews were protected as 'People of the Book' under Islamic law."
+                }
             },
             {
                 years: "1099-1187 CE",
@@ -679,7 +791,13 @@
                     "19th century: European influence increases",
                     "Late 1800s: First waves of Jewish immigration (Aliyah)"
                 ],
-                transition: "World War I and Ottoman defeat opened the region to British control and international intervention."
+                transition: "World War I and Ottoman defeat opened the region to British control and international intervention.",
+                audio: {
+                    file: "sounds/ottoman-oud.mp3",
+                    description: "Traditional Turkish oud music with distant marketplace sounds",
+                    attribution: "Ottoman-era traditional music ambience",
+                    educational: "🎵 Musical History: The oud is an ancient stringed instrument that's the ancestor of the guitar! During Ottoman rule, Gaza was larger and more important than Jerusalem. The marketplace sounds reflect the spice trade routes that made Gaza wealthy - connecting Asia, Africa, and Europe!"
+                }
             },
             {
                 years: "1917-1948 CE",
@@ -765,31 +883,36 @@
             }
         ];
 
-        // Quiz questions
+        // Quiz questions based on historical research
         const quizQuestions = [
             {
-                question: "Which ancient empire destroyed the First Temple in Jerusalem?",
-                options: ["Assyrians", "Babylonians", "Persians", "Greeks"],
+                question: "Which ancient people controlled Gaza from 1200-600 BCE and gave Palestine its name?",
+                options: ["Canaanites", "Philistines", "Egyptians", "Israelites"],
                 correct: 1
             },
             {
-                question: "Under which rulers was the Kingdom of Israel united?",
-                options: ["David and Solomon", "Abraham and Isaac", "Moses and Joshua", "Saul and David"],
-                correct: 0
-            },
-            {
-                question: "What happened to the northern kingdom in 722 BCE?",
-                options: ["It joined with Judah", "It was conquered by Assyria", "It became independent", "It was destroyed by Egypt"],
+                question: "What does the ancient name 'Ghazzat' mean?",
+                options: ["The holy city", "The strong city", "The trading post", "The coastal city"],
                 correct: 1
             },
             {
-                question: "Which empire allowed the Jewish exiles to return from Babylon?",
-                options: ["Greek", "Roman", "Persian", "Egyptian"],
-                correct: 2
+                question: "According to Matt Baker's research, what happened to 90% of the Southern Levant's population around 600 BCE?",
+                options: ["They moved to Egypt", "Population decreased dramatically", "They joined the Babylonian army", "They built new cities"],
+                correct: 1
             },
             {
-                question: "In what year did Israel declare independence?",
-                options: ["1947", "1948", "1949", "1950"],
+                question: "Why is it difficult to identify a single 'indigenous' group for this region?",
+                options: ["Records were lost", "Too many groups mixed over thousands of years", "Only recent history is known", "All groups left the area"],
+                correct: 1
+            },
+            {
+                question: "Who was the only Jewish power to control Gaza between the Philistines and 1948?",
+                options: ["King David", "Alexander Jannaeus (Hasmonean)", "Herod the Great", "Bar Kokhba"],
+                correct: 1
+            },
+            {
+                question: "What was unique about the Muslim conquest of Gaza in 637 CE?",
+                options: ["They destroyed the city", "They occupied it peacefully", "They built new walls", "They renamed it"],
                 correct: 1
             }
         ];
@@ -799,6 +922,11 @@
         let isPlaying = false;
         let playInterval;
         let currentQuizQuestion = 0;
+        
+        // Audio system
+        let currentAudio = null;
+        let audioEnabled = true;
+        let audioVolume = 0.3;
 
         // DOM elements
         const slider = document.getElementById('timelineSlider');
@@ -812,6 +940,7 @@
         const quizBtn = document.getElementById('quizBtn');
         const quizSection = document.getElementById('quizSection');
         const territories = document.getElementById('territories');
+        const audioToggle = document.getElementById('audioToggle');
 
         // Initialize
         function init() {
@@ -847,6 +976,82 @@
 
             playBtn.addEventListener('click', toggleAutoPlay);
             quizBtn.addEventListener('click', showQuiz);
+            audioToggle.addEventListener('click', toggleAudio);
+        }
+
+        // Audio Management Functions
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            
+            if (audioEnabled) {
+                audioToggle.textContent = '🔊 Sound On';
+                audioToggle.classList.remove('muted');
+                playPeriodAudio(currentPeriod);
+            } else {
+                audioToggle.textContent = '🔇 Sound Off';
+                audioToggle.classList.add('muted');
+                stopCurrentAudio();
+            }
+        }
+
+        function playPeriodAudio(periodIndex) {
+            if (!audioEnabled) return;
+            
+            const period = historicalPeriods[periodIndex];
+            if (!period.audio) return;
+            
+            // Stop current audio
+            stopCurrentAudio();
+            
+            // Create new audio element
+            currentAudio = new Audio(period.audio.file);
+            currentAudio.volume = audioVolume;
+            currentAudio.loop = true; // Enable looping for efficiency
+            
+            // Handle loading and errors gracefully
+            currentAudio.addEventListener('canplaythrough', () => {
+                if (audioEnabled && currentPeriod === periodIndex) {
+                    currentAudio.play().catch(e => {
+                        console.log('Audio autoplay prevented by browser:', e);
+                        // Gracefully handle autoplay restrictions
+                    });
+                }
+            });
+            
+            currentAudio.addEventListener('error', (e) => {
+                console.log('Audio file not found:', period.audio.file);
+                // Silently fail if audio file doesn't exist
+            });
+            
+            // Start loading
+            currentAudio.load();
+            
+            // Update audio attribution
+            updateAudioAttribution(period.audio);
+        }
+
+        function stopCurrentAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                currentAudio = null;
+            }
+        }
+
+        function updateAudioAttribution(audioData) {
+            let attributionElement = document.getElementById('audioAttribution');
+            if (!attributionElement) {
+                attributionElement = document.createElement('div');
+                attributionElement.id = 'audioAttribution';
+                attributionElement.className = 'sound-attribution';
+                document.querySelector('.sidebar').appendChild(attributionElement);
+            }
+            
+            attributionElement.innerHTML = `
+                <strong>🎵 Ambient Sound:</strong> ${audioData.description}<br>
+                <small>Source: ${audioData.attribution}</small>
+                ${audioData.educational ? `<br><br><div style="background: #e8f4fd; padding: 10px; border-radius: 8px; margin-top: 8px; border-left: 3px solid #2196F3;">${audioData.educational}</div>` : ''}
+            `;
         }
 
         function updateDisplay() {
@@ -859,6 +1064,9 @@
             
             // Update sidebar with detailed information
             updateSidebar(period);
+            
+            // Play period-appropriate ambient sound
+            playPeriodAudio(currentPeriod);
             
             // Update map colors
             const northTerritory = document.getElementById('north');
