@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum Explorer - Jerusalem Hills Kids</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Interactive curriculum explorer for ages 5-12. Gamified learning experience covering math, science, literacy, financial literacy, and more.">
+    <meta name="keywords" content="kids curriculum, gamified learning, educational games, homeschool curriculum, montessori, financial literacy for kids">
+    <meta name="author" content="Jerusalem Hills">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/kids/curriculum/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" href="../assets/css/kids.css">
+    <link rel="stylesheet" href="curriculum.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOccupationalProgram",
+      "name": "Jerusalem Hills Kids Curriculum Explorer",
+      "description": "Comprehensive gamified curriculum for children ages 5-12",
+      "provider": {
+        "@type": "Organization",
+        "name": "Jerusalem Hills",
+        "url": "https://jerusalemhills.com"
+      },
+      "audience": {
+        "@type": "EducationalAudience",
+        "educationalRole": "student",
+        "audienceType": "children aged 5-12"
+      },
+      "educationalLevel": "Elementary School",
+      "educationalProgramMode": "online"
+    }
+    </script>
+</head>
+<body>
+    <header class="kids-header">
+        <div class="logo-container">
+            <img src="../assets/images/kids-logo.png" alt="Jerusalem Hills Kids" class="kids-logo">
+            <h1>Curriculum Explorer</h1>
+        </div>
+        <nav class="kids-nav">
+            <a href="../index.html" class="nav-button">🏠 Home</a>
+            <a href="../games/" class="nav-button">🎮 Games</a>
+            <a href="#" class="nav-button active">📚 Curriculum</a>
+            <a href="../about.html" class="nav-button">👨‍👩‍👧‍👦 About</a>
+        </nav>
+    </header>
+
+    <main class="curriculum-main">
+        <!-- Hero Section -->
+        <section class="curriculum-hero">
+            <div class="hero-content">
+                <h2>🎓 Interactive Learning Adventure</h2>
+                <p>Explore our complete curriculum designed like a video game! Unlock new subjects, earn badges, and level up your knowledge.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Subjects</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">Age Levels</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Activities</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Age Level Selector -->
+        <section class="level-selector">
+            <h3>🎯 Choose Your Level</h3>
+            <div class="level-buttons">
+                <button class="level-btn active" data-level="all">All Levels</button>
+                <button class="level-btn" data-level="1">Level 1 (Ages 5-6)</button>
+                <button class="level-btn" data-level="2">Level 2 (Ages 7-8)</button>
+                <button class="level-btn" data-level="3">Level 3 (Ages 9-10)</button>
+                <button class="level-btn" data-level="4">Level 4 (Ages 11-12)</button>
+            </div>
+        </section>
+
+        <!-- Curriculum Grid -->
+        <section class="curriculum-grid-section">
+            <h3>📖 Subject Adventure Worlds</h3>
+            
+            <div class="curriculum-grid" id="curriculumGrid">
+                <!-- Grid Header -->
+                <div class="grid-header">
+                    <div class="header-cell empty"></div>
+                    <div class="header-cell">🔢 Math</div>
+                    <div class="header-cell">📖 Literacy</div>
+                    <div class="header-cell">🔬 Science</div>
+                    <div class="header-cell">🌍 Social Studies</div>
+                    <div class="header-cell">💰 Financial Literacy</div>
+                    <div class="header-cell">🌐 Languages</div>
+                    <div class="header-cell">🎨 Arts</div>
+                    <div class="header-cell">🎵 Music</div>
+                    <div class="header-cell">⚽ PE & Health</div>
+                    <div class="header-cell">💻 Technology</div>
+                    <div class="header-cell">🛠️ Life Skills</div>
+                    <div class="header-cell">🕊️ Heritage</div>
+                </div>
+
+                <!-- Level 1 Row -->
+                <div class="grid-row" data-level="1">
+                    <div class="level-label">
+                        <span class="level-icon">🌱</span>
+                        <span class="level-text">Level 1<br><small>(Ages 5-6)</small></span>
+                    </div>
+                    <div class="curriculum-cell" data-subject="math" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">🧮</div>
+                            <div class="cell-title">Number Kingdom</div>
+                            <div class="cell-desc">Counting & Shapes</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="literacy" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">🔤</div>
+                            <div class="cell-title">Letter Land</div>
+                            <div class="cell-desc">Phonics & Words</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="science" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">🐛</div>
+                            <div class="cell-title">Nature Detective</div>
+                            <div class="cell-desc">Living Things</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="social" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">🏘️</div>
+                            <div class="cell-title">Community Helper</div>
+                            <div class="cell-desc">My Neighborhood</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="financial" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">🪙</div>
+                            <div class="cell-title">Trade Village</div>
+                            <div class="cell-desc">Work & Save</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="languages" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">🗣️</div>
+                            <div class="cell-title">Word World</div>
+                            <div class="cell-desc">First Words</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="arts" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">🎨</div>
+                            <div class="cell-title">Color Studio</div>
+                            <div class="cell-desc">Creating & Exploring</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="music" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">🎵</div>
+                            <div class="cell-title">Rhythm Ranch</div>
+                            <div class="cell-desc">Songs & Movement</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="pe" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">🤸</div>
+                            <div class="cell-title">Move & Play</div>
+                            <div class="cell-desc">Body & Health</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="technology" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">💻</div>
+                            <div class="cell-title">Digital Playground</div>
+                            <div class="cell-desc">Safe Computing</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="life" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">🧸</div>
+                            <div class="cell-title">Daily Helper</div>
+                            <div class="cell-desc">Self Care</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="heritage" data-level="1">
+                        <div class="cell-content">
+                            <div class="cell-icon">🕊️</div>
+                            <div class="cell-title">Story Time</div>
+                            <div class="cell-desc">Family Tales</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Level 2 Row -->
+                <div class="grid-row" data-level="2">
+                    <div class="level-label">
+                        <span class="level-icon">🌿</span>
+                        <span class="level-text">Level 2<br><small>(Ages 7-8)</small></span>
+                    </div>
+                    <div class="curriculum-cell" data-subject="math" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">🏰</div>
+                            <div class="cell-title">Math Castle</div>
+                            <div class="cell-desc">Operations & Fractions</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="literacy" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">📚</div>
+                            <div class="cell-title">Reading Academy</div>
+                            <div class="cell-desc">Fluent Reading</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="science" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">🌦️</div>
+                            <div class="cell-title">Weather Station</div>
+                            <div class="cell-desc">Forces & Patterns</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="social" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">🗺️</div>
+                            <div class="cell-title">Map Explorer</div>
+                            <div class="cell-desc">Geography & Culture</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="financial" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">🏪</div>
+                            <div class="cell-title">Shop & Save</div>
+                            <div class="cell-desc">Money & Banking</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="languages" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">🌍</div>
+                            <div class="cell-title">Language Bridge</div>
+                            <div class="cell-desc">Conversations</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="arts" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">🖼️</div>
+                            <div class="cell-title">Art Gallery</div>
+                            <div class="cell-desc">Techniques & Culture</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="music" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">🎼</div>
+                            <div class="cell-title">Music Maker</div>
+                            <div class="cell-desc">Instruments & Songs</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="pe" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">⚽</div>
+                            <div class="cell-title">Sports Arena</div>
+                            <div class="cell-desc">Team Games</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="technology" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">🤖</div>
+                            <div class="cell-title">Code Camp</div>
+                            <div class="cell-desc">Block Coding</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="life" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">🍳</div>
+                            <div class="cell-title">Kitchen Helper</div>
+                            <div class="cell-desc">Cooking & Organization</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="heritage" data-level="2">
+                        <div class="cell-content">
+                            <div class="cell-icon">🏛️</div>
+                            <div class="cell-title">History House</div>
+                            <div class="cell-desc">Traditions & Festivals</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Level 3 Row -->
+                <div class="grid-row" data-level="3">
+                    <div class="level-label">
+                        <span class="level-icon">🌳</span>
+                        <span class="level-text">Level 3<br><small>(Ages 9-10)</small></span>
+                    </div>
+                    <div class="curriculum-cell" data-subject="math" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">⚔️</div>
+                            <div class="cell-title">Math Warrior</div>
+                            <div class="cell-desc">Multiplication & Decimals</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="literacy" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">✍️</div>
+                            <div class="cell-title">Writer's Workshop</div>
+                            <div class="cell-desc">Research & Writing</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="science" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">🔬</div>
+                            <div class="cell-title">Science Lab</div>
+                            <div class="cell-desc">Ecosystems & Energy</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="social" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">🏛️</div>
+                            <div class="cell-title">Civics Center</div>
+                            <div class="cell-desc">Government & Economics</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="financial" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">🏦</div>
+                            <div class="cell-title">Business City</div>
+                            <div class="cell-desc">Entrepreneurship</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="languages" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">📝</div>
+                            <div class="cell-title">Language Lab</div>
+                            <div class="cell-desc">Writing & Literature</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="arts" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">🎭</div>
+                            <div class="cell-title">Creative Studio</div>
+                            <div class="cell-desc">Multimedia Projects</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="music" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">🎹</div>
+                            <div class="cell-title">Composer's Corner</div>
+                            <div class="cell-desc">Composition & Analysis</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="pe" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">🏃</div>
+                            <div class="cell-title">Fitness Academy</div>
+                            <div class="cell-desc">Skills & Strategy</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="technology" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">💻</div>
+                            <div class="cell-title">Tech Workshop</div>
+                            <div class="cell-desc">Programming & Logic</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="life" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">🎯</div>
+                            <div class="cell-title">Life Manager</div>
+                            <div class="cell-desc">Planning & Goals</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="heritage" data-level="3">
+                        <div class="cell-content">
+                            <div class="cell-icon">📜</div>
+                            <div class="cell-title">Heritage Explorer</div>
+                            <div class="cell-desc">Cultural Deep Dive</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Level 4 Row -->
+                <div class="grid-row" data-level="4">
+                    <div class="level-label">
+                        <span class="level-icon">🎓</span>
+                        <span class="level-text">Level 4<br><small>(Ages 11-12)</small></span>
+                    </div>
+                    <div class="curriculum-cell" data-subject="math" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">🧙</div>
+                            <div class="cell-title">Math Master</div>
+                            <div class="cell-desc">Algebra & Statistics</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="literacy" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">📖</div>
+                            <div class="cell-title">Literary Scholar</div>
+                            <div class="cell-desc">Essays & Analysis</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="science" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">⚗️</div>
+                            <div class="cell-title">Research Station</div>
+                            <div class="cell-desc">Engineering & Environment</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="social" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">🌍</div>
+                            <div class="cell-title">Global Citizen</div>
+                            <div class="cell-desc">World Systems</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="financial" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">📈</div>
+                            <div class="cell-title">Investment Academy</div>
+                            <div class="cell-desc">Markets & Finance</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="languages" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">🌐</div>
+                            <div class="cell-title">Polyglot Palace</div>
+                            <div class="cell-desc">Advanced Communication</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="arts" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">🎬</div>
+                            <div class="cell-title">Digital Artist</div>
+                            <div class="cell-desc">Portfolio Development</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="music" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">🎵</div>
+                            <div class="cell-title">Music Producer</div>
+                            <div class="cell-desc">Performance & Tech</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="pe" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">🏆</div>
+                            <div class="cell-title">Elite Athlete</div>
+                            <div class="cell-desc">Leadership & Wellness</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="technology" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">⚡</div>
+                            <div class="cell-title">Code Master</div>
+                            <div class="cell-desc">Web & AI Development</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="life" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">🌟</div>
+                            <div class="cell-title">Life Navigator</div>
+                            <div class="cell-desc">Independence & Future</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                    <div class="curriculum-cell" data-subject="heritage" data-level="4">
+                        <div class="cell-content">
+                            <div class="cell-icon">🕊️</div>
+                            <div class="cell-title">Wisdom Keeper</div>
+                            <div class="cell-desc">Leadership & Service</div>
+                            <div class="progress-bar"><div class="progress" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Access Links -->
+        <section class="quick-access">
+            <h3>🚀 Quick Access</h3>
+            <div class="quick-links">
+                <a href="subjects/" class="quick-link">
+                    <div class="quick-icon">📚</div>
+                    <div class="quick-text">Subject Details</div>
+                </a>
+                <a href="levels/" class="quick-link">
+                    <div class="quick-icon">🎯</div>
+                    <div class="quick-text">Age Level Guides</div>
+                </a>
+                <a href="../dashboard/" class="quick-link">
+                    <div class="quick-icon">📊</div>
+                    <div class="quick-text">Progress Dashboard</div>
+                </a>
+                <a href="../resources/" class="quick-link">
+                    <div class="quick-icon">🛠️</div>
+                    <div class="quick-text">Parent Resources</div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="kids-footer">
+        <p>Jerusalem Hills Kids Curriculum - Research-Based Learning</p>
+        <p><small>Blending Montessori, IB PYP, Finnish & Norwegian methods • <a href="../educational-disclaimer.html" style="color: #FFD700;">Educational disclaimer</a></small></p>
+    </footer>
+
+    <script src="curriculum.js"></script>
+</body>
+</html>
