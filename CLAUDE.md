@@ -2,6 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🎯 PROJECT TODO LIST
+
+**Primary Reference:** `COMPREHENSIVE_TODO_MASTER.md`
+
+Use this comprehensive master file for all task planning and progress tracking. It consolidates 280+ tasks from all project documentation including:
+- Implementation plans
+- Feature roadmaps  
+- Bug fixes and enhancements
+- Performance optimizations
+- Testing requirements
+
+All todo items are categorized by priority and include detailed implementation guidance.
+
 ## Project Overview
 
 Jerusalem Hills is a **static e-commerce and community platform** celebrating Jerusalem's heritage. The architecture uses GitHub Pages for static hosting with Netlify Functions for serverless payment processing via Stripe.

@@ -18,7 +18,20 @@ function addInputBox() {
 
     const input = document.createElement("input");
     input.type = "text";
-    input.placeholder = "Enter text";
+    input.placeholder = "Enter Hebrew letters";
+    
+    // Add focus tracking to new input
+    input.addEventListener('focus', () => {
+        currentActiveInput = input;
+    });
+    input.addEventListener('blur', () => {
+        // Keep the reference for a short while in case user clicks keyboard
+        setTimeout(() => {
+            if (document.activeElement !== input) {
+                currentActiveInput = input; // Keep the last focused input active
+            }
+        }, 100);
+    });
 
     const addButton = document.createElement("button");
     addButton.textContent = "+";
@@ -161,6 +174,47 @@ const hebrewLetters = [
     ['ז', 'ס', 'ב', 'ה', 'נ', 'מ', 'צ', 'ת', 'ץ']
 ];
 
+let currentActiveInput = null;
+
+// Track which input field is currently focused
+function trackActiveInput() {
+    const inputs = document.querySelectorAll('#input-container input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            currentActiveInput = input;
+        });
+        input.addEventListener('blur', () => {
+            // Keep the reference for a short while in case user clicks keyboard
+            setTimeout(() => {
+                if (document.activeElement !== input) {
+                    currentActiveInput = input; // Keep the last focused input active
+                }
+            }, 100);
+        });
+    });
+}
+
+// Function to insert Hebrew letter into the currently active input
+function insertHebrewLetter(letter) {
+    // If no input is active, use the first input field
+    if (!currentActiveInput) {
+        currentActiveInput = document.querySelector('#input-container input');
+    }
+    
+    if (currentActiveInput) {
+        const currentValue = currentActiveInput.value;
+        const cursorPosition = currentActiveInput.selectionStart || currentValue.length;
+        
+        // Insert the letter at cursor position
+        const newValue = currentValue.slice(0, cursorPosition) + letter + currentValue.slice(cursorPosition);
+        currentActiveInput.value = newValue;
+        
+        // Move cursor after the inserted letter
+        currentActiveInput.focus();
+        currentActiveInput.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+    }
+}
+
 function createVirtualKeyboard() {
     const keyboardContainer = document.createElement("div");
     keyboardContainer.id = "virtual-keyboard";
@@ -169,6 +223,13 @@ function createVirtualKeyboard() {
     keyboardContainer.style.alignItems = "center";
     keyboardContainer.style.gap = "10px";
     keyboardContainer.style.marginTop = "20px";
+
+    // Add title for the keyboard
+    const keyboardTitle = document.createElement("h3");
+    keyboardTitle.textContent = "Hebrew Virtual Keyboard";
+    keyboardTitle.style.margin = "0 0 10px 0";
+    keyboardTitle.style.color = "#4b3832";
+    keyboardContainer.appendChild(keyboardTitle);
 
     hebrewLetters.forEach(row => {
         const rowDiv = document.createElement("div");
@@ -181,15 +242,78 @@ function createVirtualKeyboard() {
             button.style.borderRadius = "5px";
             button.style.cursor = "pointer";
             button.style.fontSize = "1.2rem";
-            button.onclick = () => addInputBox();
+            button.style.minWidth = "40px";
+            button.style.minHeight = "40px";
+            button.onclick = () => insertHebrewLetter(letter);
             rowDiv.appendChild(button);
         });
         keyboardContainer.appendChild(rowDiv);
     });
 
+    // Add utility buttons
+    const utilityRow = document.createElement("div");
+    utilityRow.style.display = "flex";
+    utilityRow.style.gap = "10px";
+    utilityRow.style.marginTop = "10px";
+
+    // Space button
+    const spaceButton = document.createElement("button");
+    spaceButton.textContent = "Space";
+    spaceButton.style.padding = "10px 20px";
+    spaceButton.style.borderRadius = "5px";
+    spaceButton.style.cursor = "pointer";
+    spaceButton.onclick = () => insertHebrewLetter(" ");
+    utilityRow.appendChild(spaceButton);
+
+    // Backspace button
+    const backspaceButton = document.createElement("button");
+    backspaceButton.textContent = "⌫";
+    backspaceButton.style.padding = "10px 15px";
+    backspaceButton.style.borderRadius = "5px";
+    backspaceButton.style.cursor = "pointer";
+    backspaceButton.style.fontSize = "1.2rem";
+    backspaceButton.onclick = () => {
+        if (currentActiveInput) {
+            const currentValue = currentActiveInput.value;
+            const cursorPosition = currentActiveInput.selectionStart || currentValue.length;
+            if (cursorPosition > 0) {
+                const newValue = currentValue.slice(0, cursorPosition - 1) + currentValue.slice(cursorPosition);
+                currentActiveInput.value = newValue;
+                currentActiveInput.focus();
+                currentActiveInput.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+            }
+        }
+    };
+    utilityRow.appendChild(backspaceButton);
+
+    // Clear button
+    const clearButton = document.createElement("button");
+    clearButton.textContent = "Clear";
+    clearButton.style.padding = "10px 15px";
+    clearButton.style.borderRadius = "5px";
+    clearButton.style.cursor = "pointer";
+    clearButton.onclick = () => {
+        if (currentActiveInput) {
+            currentActiveInput.value = "";
+            currentActiveInput.focus();
+        }
+    };
+    utilityRow.appendChild(clearButton);
+
+    keyboardContainer.appendChild(utilityRow);
     document.body.appendChild(keyboardContainer);
 }
 
-// Trigger the keyboard setup
+// Trigger the keyboard setup and focus tracking
 createVirtualKeyboard();
+
+// Set up focus tracking for the initial input field when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    trackActiveInput();
+    // Set the first input as default active
+    const firstInput = document.querySelector('#input-container input');
+    if (firstInput) {
+        currentActiveInput = firstInput;
+    }
+});
 

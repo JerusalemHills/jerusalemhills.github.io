@@ -6,13 +6,32 @@
     <title>צירופים Game Solver</title>
     <script src="app.js" defer></script>
     <style>
+        /* Global font size increases */
+        body {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        h2 {
+            font-size: 2rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+        }
+        
+        p, li {
+            font-size: 1.2rem;
+        }
+        
         /* Basic styling for the virtual keyboard */
         #virtual-keyboard button {
             background-color: #f9f3c2;
             border: 1px solid #d4af37;
             color: #4b3832;
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
+            font-size: 1.4rem;
         }
         #virtual-keyboard button:hover {
             background-color: #f4d03f;
@@ -21,18 +40,33 @@
             margin-bottom: 20px;
         }
         .input-row {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         .input-row input {
-            padding: 10px;
-            font-size: 1rem;
-            width: 200px;
+            padding: 15px;
+            font-size: 1.3rem;
+            width: 300px;
+            border: 2px solid #d4af37;
+            border-radius: 5px;
         }
         .input-row button {
-            padding: 10px;
-            font-size: 1rem;
+            padding: 15px;
+            font-size: 1.2rem;
             cursor: pointer;
-            margin-left: 5px;
+            margin-left: 8px;
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            background-color: #f9f3c2;
+        }
+        .input-row button:hover {
+            background-color: #f4d03f;
+        }
+        
+        /* Status and control buttons */
+        #status-indicator {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
         .running {
             color: green;
@@ -40,16 +74,72 @@
         .stopped {
             color: red;
         }
+        
+        /* Checkbox labels */
+        label {
+            font-size: 1.2rem;
+            margin-right: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        /* Main control buttons */
+        button[onclick*="Search"], button[onclick*="download"] {
+            padding: 15px 25px;
+            font-size: 1.3rem;
+            margin: 10px 5px;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            background-color: #f9f3c2;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        button[onclick*="Search"]:hover, button[onclick*="download"]:hover {
+            background-color: #f4d03f;
+            transform: translateY(-1px);
+        }
+        
         /* New styles for the fixed size result window */
         #output {
             width: 100%;
-            height: 400px;
+            height: 450px;
             overflow-y: auto;
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            background-color: #f4f4f4;
+            margin-top: 25px;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f9f9f9;
             box-sizing: border-box;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        /* Output result styling */
+        #output div {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: white;
+            border-radius: 4px;
+            border-left: 4px solid #d4af37;
+        }
+        
+        /* Description section */
+        #description {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #d4af37;
+        }
+        
+        #description ol {
+            padding-left: 25px;
+        }
+        
+        #description li {
+            margin-bottom: 8px;
         }
     </style>
 </head>
