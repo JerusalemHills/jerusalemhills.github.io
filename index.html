@@ -6,11 +6,11 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Jerusalem Hills - Explore Jerusalem's Heritage, Culture & Unique Marketplace</title>
+  <title>Jerusalem Hills | Official Site - Jerusalem Heritage, Culture & Community</title>
 
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Discover Jerusalem Hills - your gateway to Jerusalem's rich heritage, culture, and history. Explore our unique marketplace featuring authentic Jerusalem products, join community discussions, and access essential local services.">
-  <meta name="keywords" content="Jerusalem Hills, Jerusalem heritage, Jerusalem marketplace, Jerusalem culture, Jerusalem history, Dead Sea products, Jerusalem crafts, Jerusalem community, Israeli products, Jerusalem tourism, authentic gifts, local services">
+  <meta name="description" content="Jerusalem Hills - Official community site for Jerusalem heritage, culture & authentic marketplace. Connect with Jerusalem's history, traditions, and local crafts. Your gateway to the Holy City.">
+  <meta name="keywords" content="Jerusalem Hills, Jerusalem heritage, Jerusalem marketplace, Jerusalem culture, Jerusalem history, Dead Sea products, Jerusalem crafts, Jerusalem community, Israeli products, Jerusalem tourism, authentic gifts, local services, סידור תפילה, גופנים עברית, Holy City, Old City Jerusalem">
   <meta name="author" content="Jerusalem Hills">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://jerusalemhills.com/">
@@ -80,6 +80,82 @@
         })
         .catch(err => console.error('Header load error:', err));
     });
+  </script>
+
+  <!-- Brand Schema Markup for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://jerusalemhills.com/#organization",
+        "name": "Jerusalem Hills",
+        "alternateName": ["Jerusalem Hills Community", "JerusalemHills.com"],
+        "url": "https://jerusalemhills.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://jerusalemhills.com/img/1.svg",
+          "width": 512,
+          "height": 512
+        },
+        "description": "Official community site for Jerusalem heritage, culture and authentic marketplace connecting people worldwide with Jerusalem's rich history and traditions.",
+        "sameAs": [
+          "https://jerusalemhills.com"
+        ],
+        "foundingDate": "2024",
+        "areaServed": {
+          "@type": "Country",
+          "name": ["Israel", "United States", "United Kingdom", "Global"]
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Jerusalem Hills Marketplace",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Product",
+                "name": "Jerusalem Heritage Products",
+                "category": "Judaica & Cultural Items"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://jerusalemhills.com/#website",
+        "url": "https://jerusalemhills.com",
+        "name": "Jerusalem Hills",
+        "description": "Official site for Jerusalem heritage, culture and community",
+        "publisher": {
+          "@id": "https://jerusalemhills.com/#organization"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://jerusalemhills.com/search?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        },
+        "inLanguage": ["en", "he"]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://jerusalemhills.com/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://jerusalemhills.com/"
+          }
+        ]
+      }
+    ]
+  }
   </script>
 </head>
 <body>
