@@ -43,7 +43,7 @@ body {
   left: 0;
   right: 0;
   z-index: 50;
-  height: 96px;
+  height: 106px;
   overflow-x: hidden;
 }
 
@@ -60,7 +60,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 6rem;
+  height: 6.6rem;
   padding: 0.5rem 0;
 }
 
@@ -206,7 +206,7 @@ body {
 /* Date display */
 .top-date-display {
   text-align: right;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: rgb(75, 85, 99);
   line-height: 1.3;
 }
@@ -217,7 +217,7 @@ body {
 }
 
 .gregorian-date {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: rgb(107, 114, 128);
   margin-bottom: 0.35rem;
 }
@@ -262,6 +262,7 @@ body {
   display: inline-block;
   width: 2.8em;
   text-align: center;
+  font-size: 0.85rem;
 }
 
 .clock-sep {
@@ -391,11 +392,11 @@ body {
 
 @media (max-width: 768px) {
   .header {
-    height: 80px;
+    height: 88px;
   }
 
   .header-content {
-    height: 80px;
+    height: 88px;
   }
 
   .logo img {
@@ -468,12 +469,12 @@ body {
 
 /* Main content - adjust for fixed header */
 main {
-  margin-top: 96px;
+  margin-top: 106px;
 }
 
 @media (max-width: 768px) {
   main {
-    margin-top: 80px;
+    margin-top: 88px;
   }
 }
 

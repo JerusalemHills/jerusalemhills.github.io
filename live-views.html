@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics 4 -->
+    <script src="/js/analytics.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Views of Israel - Jerusalem Hills</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Live webcams and real-time views of Israel - Western Wall, Tel Aviv beaches, Jerusalem Old City, emergency alerts and more">
+    <meta name="keywords" content="Israel live webcams, Western Wall live, Tel Aviv beach cam, Jerusalem live, Israel emergency alerts, real-time views">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="/styles-new.css">
+
+    <style>
+        :root {
+            --primary-color: #87CEEB;
+            --text-accent: #2C3E50;
+            --text-dark: rgb(17, 24, 39);
+            --text-medium: rgb(75, 85, 99);
+            --bg-gray: rgb(243, 244, 246);
+            --emergency-red: #DC2626;
+            --emergency-orange: #F59E0B;
+            --success-green: #10B981;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: white;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #F0E68C);
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: var(--text-accent);
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-accent);
+            font-size: 18px;
+            margin: 0;
+        }
+
+        /* Emergency Alerts Section */
+        .emergency-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--emergency-red);
+        }
+
+        .alert-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .alert-status.safe {
+            background: #D1FAE5;
+            color: var(--success-green);
+            border-left: 4px solid var(--success-green);
+        }
+
+        .alert-status.warning {
+            background: #FEF3C7;
+            color: var(--emergency-orange);
+            border-left: 4px solid var(--emergency-orange);
+        }
+
+        .alert-status.danger {
+            background: #FEE2E2;
+            color: var(--emergency-red);
+            border-left: 4px solid var(--emergency-red);
+        }
+
+        .alert-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .alert-indicator.safe { background: var(--success-green); }
+        .alert-indicator.warning { background: var(--emergency-orange); }
+        .alert-indicator.danger { background: var(--emergency-red); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .alert-details {
+            background: var(--bg-gray);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* Webcam Grid */
+        .webcam-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .webcam-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .webcam-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .webcam-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), #6BB6D6);
+            color: var(--text-accent);
+        }
+
+        .webcam-header h3 {
+            margin: 0 0 8px 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .webcam-header p {
+            margin: 0;
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        .webcam-content {
+            padding: 20px;
+        }
+
+        .webcam-frame {
+            width: 100%;
+            height: 250px;
+            border: none;
+            border-radius: 8px;
+            background: var(--bg-gray);
+            margin-bottom: 15px;
+        }
+
+        .webcam-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .webcam-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            background: var(--primary-color);
+            color: var(--text-accent);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .webcam-link:hover {
+            background: #6BB6D6;
+            transform: translateY(-1px);
+        }
+
+        .disclaimer {
+            background: #FFF9E6;
+            border: 1px solid #FFD700;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            font-size: 14px;
+            color: var(--text-medium);
+        }
+
+        .back-link {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--text-accent);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            background: #6BB6D6;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .webcam-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px 12px;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .webcam-frame {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔴 Live Views of Israel</h1>
+        <p>Real-time webcams and emergency alerts from the Holy Land</p>
+    </div>
+
+    <div class="container">
+        <!-- Emergency Alerts Section -->
+        <div class="emergency-section">
+            <h2 style="margin-top: 0; color: var(--emergency-red);">🚨 Emergency Alert Status</h2>
+            
+            <div id="alert-status" class="alert-status safe">
+                <div class="alert-indicator safe"></div>
+                <span id="alert-text">Loading emergency alert status...</span>
+                <span id="alert-time" style="margin-left: auto; font-size: 12px; opacity: 0.7;"></span>
+            </div>
+
+            <div id="alert-details" class="alert-details">
+                <div id="alert-content"></div>
+            </div>
+
+            <p style="font-size: 12px; color: var(--text-medium); margin-bottom: 0;">
+                <strong>Source:</strong> Pikud HaOref (Home Front Command) • Updates every 30 seconds
+                <br><strong>Disclaimer:</strong> This is not official - always follow official Home Front Command instructions
+            </p>
+        </div>
+
+        <!-- Webcam Grid -->
+        <div class="webcam-grid">
+            <!-- Western Wall -->
+            <div class="webcam-card">
+                <div class="webcam-header">
+                    <h3>🕯️ Western Wall (Kotel)</h3>
+                    <p>Live from the holiest site in Judaism, Jerusalem Old City</p>
+                </div>
+                <div class="webcam-content">
+                    <iframe 
+                        class="webcam-frame"
+                        src="https://www.skylinewebcams.com/en/webcam/israel/jerusalem-district/jerusalem/western-wall.html"
+                        title="Western Wall Live Webcam"
+                        loading="lazy">
+                    </iframe>
+                    <div class="webcam-links">
+                        <a href="https://www.skylinewebcams.com/en/webcam/israel/jerusalem-district/jerusalem/western-wall.html" target="_blank" class="webcam-link">
+                            📹 SkylineWebcams
+                        </a>
+                        <a href="https://www.earthcam.com/world/israel/jerusalem/" target="_blank" class="webcam-link">
+                            🌍 EarthCam
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tel Aviv Beach -->
+            <div class="webcam-card">
+                <div class="webcam-header">
+                    <h3>🏖️ Tel Aviv Gordon Beach</h3>
+                    <p>Mediterranean coastline and Tel Aviv Marina</p>
+                </div>
+                <div class="webcam-content">
+                    <iframe 
+                        class="webcam-frame"
+                        src="https://www.skylinewebcams.com/en/webcam/israel/tel-aviv/tel-aviv/tel-aviv.html"
+                        title="Tel Aviv Beach Live Webcam"
+                        loading="lazy">
+                    </iframe>
+                    <div class="webcam-links">
+                        <a href="https://www.skylinewebcams.com/en/webcam/israel/tel-aviv/tel-aviv/tel-aviv.html" target="_blank" class="webcam-link">
+                            📹 Tel Aviv Live
+                        </a>
+                        <a href="https://www.webcamtaxi.com/en/israel/tel-aviv/marina-beachfront.html" target="_blank" class="webcam-link">
+                            🚢 Marina View
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Temple Mount -->
+            <div class="webcam-card">
+                <div class="webcam-header">
+                    <h3>🕌 Temple Mount</h3>
+                    <p>Live view of Haram al-Sharif and surrounding Old City</p>
+                </div>
+                <div class="webcam-content">
+                    <iframe 
+                        class="webcam-frame"
+                        src="https://www.skylinewebcams.com/en/webcam/israel/jerusalem-district/jerusalem/temple-mount.html"
+                        title="Temple Mount Live Webcam"
+                        loading="lazy">
+                    </iframe>
+                    <div class="webcam-links">
+                        <a href="https://www.skylinewebcams.com/en/webcam/israel/jerusalem-district/jerusalem/temple-mount.html" target="_blank" class="webcam-link">
+                            📹 Temple Mount
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jerusalem 360° -->
+            <div class="webcam-card">
+                <div class="webcam-header">
+                    <h3>🌅 Jerusalem 360° Panorama</h3>
+                    <p>Complete view of Jerusalem from Inbal Hotel rooftop</p>
+                </div>
+                <div class="webcam-content">
+                    <iframe 
+                        class="webcam-frame"
+                        src="https://www.inbalhotel.com/jerusalem-live-camera-old-city-view/"
+                        title="Jerusalem 360 Panorama"
+                        loading="lazy">
+                    </iframe>
+                    <div class="webcam-links">
+                        <a href="https://www.inbalhotel.com/jerusalem-live-camera-old-city-view/" target="_blank" class="webcam-link">
+                            🔄 360° View
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            <strong>📋 Legal Disclaimer:</strong> All webcam streams are provided by third-party services (SkylineWebcams, EarthCam, etc.) and are subject to their respective terms of service. Jerusalem Hills does not own or control these streams. Emergency alert information is for educational purposes only and should not replace official emergency notifications. Always follow official Home Front Command instructions during emergencies.
+        </div>
+
+        <a href="/" class="back-link">← Back to Jerusalem Hills Home</a>
+    </div>
+
+    <!-- Emergency Alert Script -->
+    <script>
+        (function() {
+            'use strict';
+
+            const OREF_API = 'https://www.oref.org.il/WarningMessages/alert/alerts.json';
+            const CORS_PROXY = 'https://api.allorigins.win/raw?url='; // CORS proxy
+            
+            let alertCheckInterval;
+            let lastUpdateTime = new Date();
+
+            // DOM elements
+            const alertStatus = document.getElementById('alert-status');
+            const alertText = document.getElementById('alert-text');
+            const alertTime = document.getElementById('alert-time');
+            const alertDetails = document.getElementById('alert-details');
+            const alertContent = document.getElementById('alert-content');
+
+            // Check alerts function
+            async function checkAlerts() {
+                try {
+                    const response = await fetch(CORS_PROXY + encodeURIComponent(OREF_API), {
+                        headers: {
+                            'Referer': 'https://www.oref.org.il/',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+
+                    const alerts = await response.json();
+                    lastUpdateTime = new Date();
+                    
+                    updateAlertDisplay(alerts);
+                    updateTimestamp();
+                    
+                } catch (error) {
+                    console.error('Alert check failed:', error);
+                    showError();
+                }
+            }
+
+            // Update alert display
+            function updateAlertDisplay(alerts) {
+                if (!alerts || alerts.length === 0) {
+                    // No active alerts
+                    alertStatus.className = 'alert-status safe';
+                    alertText.textContent = '✅ All Clear - No Active Alerts';
+                    alertDetails.style.display = 'none';
+                } else {
+                    // Active alerts
+                    alertStatus.className = 'alert-status danger';
+                    alertText.textContent = `🚨 ${alerts.length} Active Alert${alerts.length > 1 ? 's' : ''}`;
+                    
+                    // Show alert details
+                    let detailsHTML = '<h4>Active Alerts:</h4><ul>';
+                    alerts.forEach(alert => {
+                        detailsHTML += `<li><strong>${alert.data || alert.alertDate}</strong> - ${alert.title || 'Alert Zone'}</li>`;
+                    });
+                    detailsHTML += '</ul>';
+                    
+                    alertContent.innerHTML = detailsHTML;
+                    alertDetails.style.display = 'block';
+                    
+                    // Optional: Browser notification for serious alerts
+                    if (Notification.permission === 'granted') {
+                        new Notification('🚨 Israel Emergency Alert', {
+                            body: `${alerts.length} active alert${alerts.length > 1 ? 's' : ''} detected`,
+                            icon: '/img/favicon.ico'
+                        });
+                    }
+                }
+            }
+
+            // Show error state
+            function showError() {
+                alertStatus.className = 'alert-status warning';
+                alertText.textContent = '⚠️ Alert System Unavailable';
+                alertDetails.style.display = 'none';
+                updateTimestamp();
+            }
+
+            // Update timestamp
+            function updateTimestamp() {
+                const timeStr = lastUpdateTime.toLocaleTimeString('en-US', {
+                    hour12: false,
+                    timeZone: 'Asia/Jerusalem'
+                });
+                alertTime.textContent = `Last updated: ${timeStr} Jerusalem time`;
+            }
+
+            // Request notification permission
+            function requestNotificationPermission() {
+                if ('Notification' in window && Notification.permission === 'default') {
+                    Notification.requestPermission();
+                }
+            }
+
+            // Initialize alert system
+            function initAlertSystem() {
+                // Request notification permission
+                requestNotificationPermission();
+                
+                // Initial check
+                checkAlerts();
+                
+                // Set up interval (every 30 seconds)
+                alertCheckInterval = setInterval(checkAlerts, 30000);
+                
+                // Update timestamp every second
+                setInterval(updateTimestamp, 1000);
+            }
+
+            // Cleanup on page unload
+            window.addEventListener('beforeunload', () => {
+                if (alertCheckInterval) {
+                    clearInterval(alertCheckInterval);
+                }
+            });
+
+            // Start the alert system when page loads
+            document.addEventListener('DOMContentLoaded', initAlertSystem);
+
+            // Handle visibility change (pause when tab not active)
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    if (alertCheckInterval) {
+                        clearInterval(alertCheckInterval);
+                    }
+                } else {
+                    initAlertSystem();
+                }
+            });
+
+        })();
+    </script>
+</body>
+</html>
