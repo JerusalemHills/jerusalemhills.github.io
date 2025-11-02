@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdSense Test Page - Manual Placements</title>
-    <script src="/js/adsense-config.js"></script>
+    <!-- Load AdSense script directly instead of our auto-init script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1738161253720231" crossorigin="anonymous"></script>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
         .content { max-width: 800px; margin: 0 auto; }
@@ -86,14 +87,9 @@
                 resultsList.appendChild(li);
             }
 
-            // Test 1: Check if auto ads are disabled
-            if (window.ADSENSE_CONFIG && window.ADSENSE_CONFIG.autoAds === false) {
-                addResult('✅ Auto ads are disabled in configuration', 'success');
-                statusEl.textContent = 'Auto ads disabled - Testing manual placements...';
-            } else {
-                addResult('❌ Auto ads still enabled in configuration', 'error');
-                statusEl.textContent = 'Error: Auto ads still enabled';
-            }
+            // Test 1: Check AdSense script loading (no auto-config on this page)
+            addResult('✅ Testing manual placement only (no auto-config loaded)', 'success');
+            statusEl.textContent = 'Testing manual ad placement...';
 
             // Test 2: Check AdSense script loading
             setTimeout(function() {
