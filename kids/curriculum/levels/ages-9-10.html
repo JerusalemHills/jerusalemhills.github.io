@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ages 9-10 Curriculum Overview - Jerusalem Hills Kids</title>
+    
+    <link rel="stylesheet" href="../curriculum.css">
+    <link rel="stylesheet" href="../../assets/css/kids.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .level-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .age-overview {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .milestone-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .milestone-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .milestone-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .milestone-card.math { border-left-color: #4CAF50; }
+        .milestone-card.literacy { border-left-color: #2196F3; }
+        .milestone-card.science { border-left-color: #9C27B0; }
+        .milestone-card.social { border-left-color: #FF9800; }
+        .milestone-card.arts { border-left-color: #E91E63; }
+        .milestone-card.practical { border-left-color: #607D8B; }
+        .milestone-card.computer { border-left-color: #00BCD4; }
+
+        .milestone-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2C3E50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .milestone-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .milestone-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .milestone-list li::before {
+            content: "⭐";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+
+        .development-stage {
+            background: linear-gradient(135deg, #e8f5e8, #d4f4d4);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #4CAF50;
+        }
+
+        .stage-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2E7D32;
+            margin-bottom: 15px;
+        }
+
+        .learning-approach {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #FF9800;
+        }
+
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .approach-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #FF9800;
+        }
+
+        .sample-activities {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #2196F3;
+        }
+
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .parent-guide {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #9C27B0;
+        }
+
+        .guide-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tip-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #9C27B0;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .critical-thinking {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #FFC107;
+        }
+
+        .thinking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .thinking-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #FFC107;
+        }
+
+        @media (max-width: 768px) {
+            .milestone-grid,
+            .approach-grid,
+            .activity-grid,
+            .guide-tips,
+            .thinking-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="curriculum-container">
+        <div class="level-header">
+            <h1>🎓 Ages 9-10: Critical Thinkers</h1>
+            <p>Intermediate Years • Grade 3-4 Equivalent</p>
+            <p>Developing analytical skills and independent learning capabilities</p>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="ages-7-8.html" class="nav-button">
+                ←️ Ages 7-8
+            </a>
+            <a href="../index.html" class="nav-button">
+                📚 Curriculum Home
+            </a>
+            <a href="ages-11-12.html" class="nav-button">
+                Ages 11-12 ➡️
+            </a>
+        </div>
+
+        <div class="age-overview">
+            <h2>🧠 Developmental Stage Overview</h2>
+            
+            <div class="development-stage">
+                <div class="stage-title">🌟 Cognitive Maturation (Ages 9-10)</div>
+                <p><strong>Key Characteristics:</strong> Children develop abstract thinking, can handle complex multi-step problems, show increased independence, and begin to specialize in areas of interest and strength.</p>
+                
+                <ul style="margin-top: 15px; line-height: 1.6;">
+                    <li><strong>Attention Span:</strong> 25-40 minutes for engaging activities</li>
+                    <li><strong>Learning Style:</strong> Abstract thinking with concrete applications</li>
+                    <li><strong>Social Development:</strong> Leadership skills and complex peer relationships</li>
+                    <li><strong>Independence:</strong> Self-directed learning and project management</li>
+                    <li><strong>Specialization:</strong> Developing strengths and interests in specific areas</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="age-overview">
+            <h2>🎯 Core Learning Milestones</h2>
+            
+            <div class="milestone-grid">
+                <div class="milestone-card math">
+                    <div class="milestone-title">
+                        🔢 Advanced Mathematical Concepts
+                    </div>
+                    <ul class="milestone-list">
+                        <li>Master multiplication and division facts</li>
+                        <li>Understand place value to thousands</li>
+                        <li>Work with fractions and decimals</li>
+                        <li>Solve multi-step word problems</li>
+                        <li>Understand area and perimeter</li>
+                        <li>Use graphs and data analysis</li>
+                        <li>Apply mathematical reasoning</li>
+                        <li>Estimate and check for reasonableness</li>
+                        <li>Introduction to algebraic thinking</li>
+                    </ul>
+                </div>
+
+                <div class="milestone-card literacy">
+                    <div class="milestone-title">
+                        📖 Advanced Communication Skills
+                    </div>
+                    <ul class="milestone-list">
+                        <li>Read complex novels with comprehension</li>
+                        <li>Write detailed narratives and essays</li>
+                        <li>Use advanced vocabulary and grammar</li>
+                        <li>Research using multiple sources</li>
+                        <li>Analyze literature for themes and meaning</li>
+                        <li>Present ideas clearly to audiences</li>
+                        <li>Edit and revise writing effectively</li>
+                        <li>Use technology for writing and research</li>
+                        <li>Develop personal writing voice</li>
+                    </ul>
+                </div>
+
+                <div class="milestone-card science">
+                    <div class="milestone-title">
+                        🔬 Scientific Investigation & Analysis
+                    </div>
+                    <ul class="milestone-list">
+                        <li>Design and conduct controlled experiments</li>
+                        <li>Understand ecosystems and food chains</li>
+                        <li>Study human body systems in detail</li>
+                        <li>Explore chemistry through safe experiments</li>
+                        <li>Learn about energy and forces</li>
+                        <li>Investigate earth science and geology</li>
+                        <li>Use scientific tools and measurement</li>
+                        <li>Analyze data and draw conclusions</li>
+                        <li>Communicate scientific findings</li>
+                    </ul>
+                </div>
+
+                <div class="milestone-card computer">
+                    <div class="milestone-title">
+                        💻 Computer Science Foundations
+                    </div>
+                    <ul class="milestone-list">
+                        <li>Understand how computers process information</li>
+                        <li>Learn basic programming concepts (loops, variables)</li>
+                        <li>Create simple programs and animations</li>
+                        <li>Practice digital citizenship and online safety</li>
+                        <li>Use technology tools for learning projects</li>
+                        <li>Understand algorithms and problem-solving</li>
+                        <li>Explore robotics and automation</li>
+                        <li>Learn about networks and communication</li>
+                        <li>Develop troubleshooting skills</li>
+                    </ul>
+                </div>
+
+                <div class="milestone-card social">
+                    <div class="milestone-title">
+                        🌍 Global Understanding & History
+                    </div>
+                    <ul class="milestone-list">
+                        <li>Study ancient civilizations and cultures</li>
+                        <li>Understand geographic regions and features</li>
+                        <li>Learn about government and civic responsibilities</li>
+                        <li>Explore economic concepts and systems</li>
+                        <li>Analyze historical cause and effect</li>
+                        <li>Compare different cultures and perspectives</li>
+                        <li>Understand current events and global issues</li>
+                        <li>Practice democratic participation</li>
+                        <li>Develop cultural competency</li>
+                    </ul>
+                </div>
+
+                <div class="milestone-card arts">
+                    <div class="milestone-title">
+                        🎨 Advanced Creative Expression
+                    </div>
+                    <ul class="milestone-list">
+                        <li>Master various artistic techniques and media</li>
+                        <li>Study art history and cultural movements</li>
+                        <li>Compose and perform music</li>
+                        <li>Write and perform dramatic works</li>
+                        <li>Integrate arts with academic subjects</li>
+                        <li>Critique and analyze artistic works</li>
+                        <li>Use digital tools for creative expression</li>
+                        <li>Collaborate on large artistic projects</li>
+                        <li>Develop personal artistic style</li>
+                    </ul>
+                </div>
+
+                <div class="milestone-card practical">
+                    <div class="milestone-title">
+                        🛠️ Leadership & Life Management
+                    </div>
+                    <ul class="milestone-list">
+                        <li>Take leadership roles in groups</li>
+                        <li>Manage complex projects independently</li>
+                        <li>Demonstrate advanced problem-solving</li>
+                        <li>Show empathy and social awareness</li>
+                        <li>Practice conflict mediation</li>
+                        <li>Mentor younger students</li>
+                        <li>Organize time and materials effectively</li>
+                        <li>Make ethical decisions</li>
+                        <li>Set and work toward long-term goals</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="critical-thinking">
+            <h2>🧩 Critical Thinking Development</h2>
+            <p>At this stage, children develop sophisticated thinking skills that prepare them for complex academic work.</p>
+            
+            <div class="thinking-grid">
+                <div class="thinking-card">
+                    <h3>🔍 Analysis Skills</h3>
+                    <p>Breaking down complex problems into components, identifying patterns, and understanding relationships between ideas.</p>
+                </div>
+
+                <div class="thinking-card">
+                    <h3>💡 Creative Problem-Solving</h3>
+                    <p>Generating multiple solutions, thinking outside conventional approaches, and combining ideas in new ways.</p>
+                </div>
+
+                <div class="thinking-card">
+                    <h3>⚖️ Evaluation & Judgment</h3>
+                    <p>Comparing options, weighing evidence, making informed decisions, and justifying conclusions.</p>
+                </div>
+
+                <div class="thinking-card">
+                    <h3>🔄 Systems Thinking</h3>
+                    <p>Understanding how parts work together, seeing cause and effect relationships, and predicting outcomes.</p>
+                </div>
+
+                <div class="thinking-card">
+                    <h3>📊 Research & Investigation</h3>
+                    <p>Formulating questions, gathering information from multiple sources, and synthesizing findings.</p>
+                </div>
+
+                <div class="thinking-card">
+                    <h3>💬 Communication & Reasoning</h3>
+                    <p>Expressing ideas clearly, supporting arguments with evidence, and listening to different perspectives.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="learning-approach">
+            <h2>🎯 Age-Appropriate Learning Approaches</h2>
+            <p>Children ages 9-10 thrive with challenging, project-based learning that allows for specialization and independence.</p>
+            
+            <div class="approach-grid">
+                <div class="approach-card">
+                    <h3>📋 Project-Based Learning</h3>
+                    <p>Extended investigations that integrate multiple subjects and result in real-world products or solutions.</p>
+                </div>
+
+                <div class="approach-card">
+                    <h3>🔬 Inquiry-Driven Exploration</h3>
+                    <p>Student-generated questions leading to research, experimentation, and discovery.</p>
+                </div>
+
+                <div class="approach-card">
+                    <h3>👥 Collaborative Learning</h3>
+                    <p>Complex group projects with defined roles, shared responsibility, and peer teaching.</p>
+                </div>
+
+                <div class="approach-card">
+                    <h3>🎭 Authentic Assessment</h3>
+                    <p>Real-world applications, portfolios, presentations, and performance-based evaluation.</p>
+                </div>
+
+                <div class="approach-card">
+                    <h3>🌟 Differentiated Instruction</h3>
+                    <p>Tailored learning experiences that meet individual needs, interests, and learning styles.</p>
+                </div>
+
+                <div class="approach-card">
+                    <h3>💻 Technology Integration</h3>
+                    <p>Digital tools for research, creation, collaboration, and skill development.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-activities">
+            <h2>🎯 Sample Learning Activities</h2>
+            <p>Complex, engaging activities that challenge students while building 21st-century skills.</p>
+            
+            <div class="activity-grid">
+                <div class="activity-card">
+                    <div class="activity-icon">🏛️</div>
+                    <h3>Ancient Civilization Study</h3>
+                    <p>Research, build models, and present about historical civilizations with connections to modern life.</p>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-icon">🔬</div>
+                    <h3>Scientific Research Projects</h3>
+                    <p>Design experiments, collect data, and present findings on student-chosen scientific questions.</p>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-icon">📚</div>
+                    <h3>Literature Circles</h3>
+                    <p>Student-led discussions of novels with different roles and deep analysis of themes.</p>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-icon">💻</div>
+                    <h3>Coding Projects</h3>
+                    <p>Create games, animations, or applications while learning programming concepts.</p>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-icon">📊</div>
+                    <h3>Data Analysis Projects</h3>
+                    <p>Collect, analyze, and present data about school or community issues.</p>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-icon">🎭</div>
+                    <h3>Performance Integration</h3>
+                    <p>Create and perform plays, musicals, or presentations that demonstrate learning.</p>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-icon">🌱</div>
+                    <h3>Community Service Learning</h3>
+                    <p>Address real community needs while applying academic skills and concepts.</p>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-icon">🗺️</div>
+                    <h3>Geographic Expeditions</h3>
+                    <p>Virtual or local field studies exploring geography, culture, and environmental issues.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="parent-guide">
+            <h2>👨‍👩‍👧‍👦 Parent & Educator Guide</h2>
+            <p>Supporting 9-10 year olds requires encouraging independence while providing appropriate challenges and guidance.</p>
+            
+            <div class="guide-tips">
+                <div class="tip-card">
+                    <h3>🎯 Challenge & Support</h3>
+                    <ul>
+                        <li>Provide appropriately challenging work</li>
+                        <li>Support through frustration and mistakes</li>
+                        <li>Encourage risk-taking in learning</li>
+                        <li>Celebrate growth and effort</li>
+                    </ul>
+                </div>
+
+                <div class="tip-card">
+                    <h3>🌟 Independence Building</h3>
+                    <ul>
+                        <li>Gradually increase responsibility</li>
+                        <li>Teach self-advocacy skills</li>
+                        <li>Support goal-setting and planning</li>
+                        <li>Encourage self-reflection</li>
+                    </ul>
+                </div>
+
+                <div class="tip-card">
+                    <h3>💻 Digital Citizenship</h3>
+                    <ul>
+                        <li>Teach online safety and ethics</li>
+                        <li>Model appropriate technology use</li>
+                        <li>Balance screen time with other activities</li>
+                        <li>Supervise and guide internet research</li>
+                    </ul>
+                </div>
+
+                <div class="tip-card">
+                    <h3>🤝 Social Development</h3>
+                    <ul>
+                        <li>Encourage leadership opportunities</li>
+                        <li>Support friendship navigation</li>
+                        <li>Teach conflict resolution</li>
+                        <li>Foster empathy and perspective-taking</li>
+                    </ul>
+                </div>
+
+                <div class="tip-card">
+                    <h3>📊 Academic Monitoring</h3>
+                    <ul>
+                        <li>Regular progress check-ins</li>
+                        <li>Support study skills development</li>
+                        <li>Help organize long-term projects</li>
+                        <li>Communicate with teachers regularly</li>
+                    </ul>
+                </div>
+
+                <div class="tip-card">
+                    <h3>🌍 Global Awareness</h3>
+                    <ul>
+                        <li>Discuss current events age-appropriately</li>
+                        <li>Explore different cultures and perspectives</li>
+                        <li>Encourage community involvement</li>
+                        <li>Foster global citizenship</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="age-overview">
+            <h2>🚀 Preparing for Ages 11-12</h2>
+            <p>Building toward adolescent learning with increased complexity, independence, and specialization.</p>
+            
+            <div class="development-stage">
+                <div class="stage-title">🎯 Readiness Indicators</div>
+                <ul style="line-height: 1.8; margin-top: 15px;">
+                    <li><strong>Academic:</strong> Complex problem-solving and abstract thinking skills</li>
+                    <li><strong>Independence:</strong> Self-directed learning and project management</li>
+                    <li><strong>Social:</strong> Leadership, collaboration, and conflict resolution skills</li>
+                    <li><strong>Emotional:</strong> Self-awareness, resilience, and emotional regulation</li>
+                    <li><strong>Critical Thinking:</strong> Analysis, evaluation, and creative problem-solving</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="ages-7-8.html" class="nav-button">
+                ←️ Ages 7-8
+            </a>
+            <a href="../index.html" class="nav-button">
+                📚 Curriculum Home
+            </a>
+            <a href="ages-11-12.html" class="nav-button">
+                Ages 11-12 ➡️
+            </a>
+        </div>
+    </div>
+</body>
+</html>
