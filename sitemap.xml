@@ -113,9 +113,33 @@
   </url>
   <url>
     <loc>https://jerusalemhills.com/kids/games/history-map.html</loc>
-    <lastmod>2025-10-31</lastmod>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jerusalemhills.com/kids/games/investment-portfolio.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jerusalemhills.com/kids/games/work-savings.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jerusalemhills.com/kids/curriculum/subjects/computer-science.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jerusalemhills.com/kids/curriculum/subjects/health-wellness.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- Games -->
