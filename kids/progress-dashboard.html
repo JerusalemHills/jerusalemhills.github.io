@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Learning Progress - Jerusalem Hills Kids</title>
+    
+    <link rel="stylesheet" href="assets/css/kids.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Badge & Achievement System -->
+    <script src="assets/js/badge-system.js"></script>
+    
+    <style>
+        /* Progress Dashboard Specific Styles */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .character-sheet {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            color: #333;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .character-header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .character-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+            border: 4px solid #FF6B6B;
+        }
+
+        .character-info h1 {
+            font-size: 2.5rem;
+            color: #2C3E50;
+            margin-bottom: 10px;
+        }
+
+        .character-level {
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .character-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .skill-trees {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .skill-tree {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            color: #333;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-tree-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .skill-tree-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .skill-progress {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .skill-level-bar {
+            flex-grow: 1;
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-level-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            transition: width 0.3s ease;
+        }
+
+        .skill-nodes {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .skill-node {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .skill-node.unlocked {
+            background: linear-gradient(135deg, #e8f5e8, #d4f4d4);
+            border-color: #4CAF50;
+        }
+
+        .skill-node.locked {
+            opacity: 0.6;
+            filter: grayscale(50%);
+        }
+
+        .skill-node-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .skill-node.unlocked .skill-node-icon {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+
+        .skill-node-info h4 {
+            margin-bottom: 5px;
+            color: #2C3E50;
+        }
+
+        .skill-node-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .achievement-showcase {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            color: #333;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .achievement-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .achievement-item.earned {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-color: #FF6B6B;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .achievement-item.locked {
+            opacity: 0.5;
+            filter: grayscale(70%);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .achievement-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .achievement-points {
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        .progress-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .summary-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .summary-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .summary-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .character-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .character-avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 3rem;
+            }
+
+            .character-info h1 {
+                font-size: 2rem;
+            }
+
+            .skill-trees {
+                grid-template-columns: 1fr;
+            }
+
+            .character-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <a href="index.html" class="back-button">
+            ←️ Back to Games
+        </a>
+
+        <!-- Character Sheet -->
+        <div class="character-sheet">
+            <div class="character-header">
+                <div class="character-avatar" id="character-avatar">
+                    🧙‍♂️
+                </div>
+                <div class="character-info">
+                    <h1 id="character-name">Young Scholar</h1>
+                    <div class="character-level" id="character-level">Level 1 Explorer</div>
+                    <p>Keep learning to unlock new achievements and level up!</p>
+                </div>
+            </div>
+            
+            <div class="character-stats" id="character-stats">
+                <!-- Stats will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Progress Summary -->
+        <div class="progress-summary">
+            <div class="summary-card">
+                <div class="summary-icon">🏆</div>
+                <div class="summary-title">Badges Earned</div>
+                <div class="summary-value" id="total-badges">0</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">⭐</div>
+                <div class="summary-title">Total Points</div>
+                <div class="summary-value" id="total-points">0</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">🎮</div>
+                <div class="summary-title">Games Played</div>
+                <div class="summary-value" id="games-played">0</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">📚</div>
+                <div class="summary-title">Subjects Explored</div>
+                <div class="summary-value" id="subjects-explored">0</div>
+            </div>
+        </div>
+
+        <!-- Skill Trees -->
+        <div class="skill-trees" id="skill-trees">
+            <!-- Skill trees will be populated by JavaScript -->
+        </div>
+
+        <!-- Achievement Showcase -->
+        <div class="achievement-showcase">
+            <h2>🏆 Achievement Gallery</h2>
+            <p>Collect badges by playing games and learning new things!</p>
+            <div class="achievement-grid" id="achievement-grid">
+                <!-- Achievements will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Progress Dashboard Controller
+        class ProgressDashboard {
+            constructor() {
+                this.badgeSystem = null;
+                this.init();
+            }
+
+            init() {
+                // Wait for badge system to load
+                if (window.badgeSystem) {
+                    this.badgeSystem = window.badgeSystem;
+                    this.renderDashboard();
+                } else {
+                    setTimeout(() => this.init(), 100);
+                }
+            }
+
+            renderDashboard() {
+                this.updateCharacterInfo();
+                this.renderStats();
+                this.renderSkillTrees();
+                this.renderAchievements();
+                this.updateSummary();
+            }
+
+            updateCharacterInfo() {
+                const totalPoints = this.badgeSystem.getTotalPoints();
+                const level = this.calculateLevel(totalPoints);
+                const badges = this.badgeSystem.achievements.length;
+
+                document.getElementById('character-level').textContent = `Level ${level.level} ${level.title}`;
+                
+                // Update avatar based on level
+                const avatars = ['🧙‍♂️', '🎓', '👑', '🌟', '🏆'];
+                const avatarIndex = Math.min(Math.floor(level.level / 5), avatars.length - 1);
+                document.getElementById('character-avatar').textContent = avatars[avatarIndex];
+
+                // Update name based on achievements
+                const names = ['Young Scholar', 'Eager Learner', 'Knowledge Seeker', 'Wisdom Walker', 'Master Scholar'];
+                const nameIndex = Math.min(Math.floor(badges / 5), names.length - 1);
+                document.getElementById('character-name').textContent = names[nameIndex];
+            }
+
+            calculateLevel(points) {
+                const level = Math.floor(points / 50) + 1;
+                const titles = [
+                    'Explorer', 'Apprentice', 'Scholar', 'Expert', 'Master',
+                    'Grandmaster', 'Legend', 'Champion', 'Hero', 'Sage'
+                ];
+                const titleIndex = Math.min(Math.floor(level / 2), titles.length - 1);
+                return { level, title: titles[titleIndex] };
+            }
+
+            renderStats() {
+                const stats = this.calculateStats();
+                const statsContainer = document.getElementById('character-stats');
+                
+                statsContainer.innerHTML = Object.entries(stats).map(([key, value]) => `
+                    <div class="stat-card">
+                        <div class="stat-number">${value.value}</div>
+                        <div class="stat-label">${value.label}</div>
+                    </div>
+                `).join('');
+            }
+
+            calculateStats() {
+                const badges = this.badgeSystem.badges;
+                const achievements = this.badgeSystem.achievements;
+                
+                let mathBadges = 0, langBadges = 0, scienceBadges = 0, geoBadges = 0;
+                
+                achievements.forEach(ach => {
+                    if (ach.id.startsWith('math_')) mathBadges++;
+                    if (ach.id.startsWith('lang_')) langBadges++;
+                    if (ach.id.startsWith('sci_')) scienceBadges++;
+                    if (ach.id.startsWith('geo_')) geoBadges++;
+                });
+
+                return {
+                    math: { value: mathBadges, label: 'Math Skills' },
+                    language: { value: langBadges, label: 'Language Skills' },
+                    science: { value: scienceBadges, label: 'Science Knowledge' },
+                    geography: { value: geoBadges, label: 'World Explorer' },
+                    total: { value: achievements.length, label: 'Total Badges' },
+                    points: { value: this.badgeSystem.getTotalPoints(), label: 'Experience Points' }
+                };
+            }
+
+            renderSkillTrees() {
+                const skillTreesContainer = document.getElementById('skill-trees');
+                const subjects = ['math', 'language', 'science', 'geography', 'memory', 'financial'];
+                
+                skillTreesContainer.innerHTML = subjects.map(subject => {
+                    const subjectData = this.badgeSystem.badges[subject];
+                    if (!subjectData) return '';
+                    
+                    const badges = Object.values(subjectData.badges);
+                    const unlockedCount = badges.filter(b => b.unlocked).length;
+                    const progressPercent = (unlockedCount / badges.length) * 100;
+                    
+                    return `
+                        <div class="skill-tree">
+                            <div class="skill-tree-header">
+                                <h3 class="skill-tree-title" style="color: ${subjectData.color}">
+                                    ${subjectData.name}
+                                </h3>
+                                <div class="skill-progress">
+                                    <div class="skill-level-bar">
+                                        <div class="skill-level-fill" style="width: ${progressPercent}%"></div>
+                                    </div>
+                                    <span>${unlockedCount}/${badges.length}</span>
+                                </div>
+                            </div>
+                            <div class="skill-nodes">
+                                ${badges.map(badge => `
+                                    <div class="skill-node ${badge.unlocked ? 'unlocked' : 'locked'}">
+                                        <div class="skill-node-icon">${badge.icon}</div>
+                                        <div class="skill-node-info">
+                                            <h4>${badge.name}</h4>
+                                            <div class="skill-node-description">${badge.description}</div>
+                                            ${badge.target ? `<div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Progress: ${badge.progress || 0}/${badge.target}</div>` : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            renderAchievements() {
+                const achievementGrid = document.getElementById('achievement-grid');
+                const allBadges = [];
+                
+                Object.values(this.badgeSystem.badges).forEach(subject => {
+                    Object.values(subject.badges).forEach(badge => {
+                        allBadges.push(badge);
+                    });
+                });
+                
+                achievementGrid.innerHTML = allBadges.map(badge => `
+                    <div class="achievement-item ${badge.unlocked ? 'earned' : 'locked'}" title="${badge.description}">
+                        <div class="achievement-icon">${badge.icon}</div>
+                        <div class="achievement-name">${badge.name}</div>
+                        <div class="achievement-points">${badge.points} pts</div>
+                    </div>
+                `).join('');
+            }
+
+            updateSummary() {
+                const badges = this.badgeSystem.achievements.length;
+                const points = this.badgeSystem.getTotalPoints();
+                const gamesPlayed = this.estimateGamesPlayed();
+                const subjects = this.countActiveSubjects();
+                
+                document.getElementById('total-badges').textContent = badges;
+                document.getElementById('total-points').textContent = points;
+                document.getElementById('games-played').textContent = gamesPlayed;
+                document.getElementById('subjects-explored').textContent = subjects;
+            }
+
+            estimateGamesPlayed() {
+                // Estimate based on achievements
+                return Math.max(this.badgeSystem.achievements.length * 2, 0);
+            }
+
+            countActiveSubjects() {
+                const subjects = new Set();
+                this.badgeSystem.achievements.forEach(ach => {
+                    const subject = ach.id.split('_')[0];
+                    subjects.add(subject);
+                });
+                return subjects.size;
+            }
+        }
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            new ProgressDashboard();
+        });
+    </script>
+</body>
+</html>

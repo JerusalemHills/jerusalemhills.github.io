@@ -44,9 +44,25 @@
     <meta name="apple-mobile-web-app-title" content="Kids Zone">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Kids Zone">
+    
+    <!-- Mobile Performance Optimizations -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="theme-color" content="#ffcc00">
+    
+    <!-- Preload critical resources for mobile -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" as="style">
+    <link rel="preload" href="assets/css/kids.css" as="style">
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     <link rel="stylesheet" href="assets/css/kids.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Badge & Achievement System -->
+    <script src="assets/js/badge-system.js"></script>
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -77,6 +93,7 @@
         </div>
         <nav class="kids-nav">
             <a href="#games" class="nav-button">Games</a>
+            <a href="progress-dashboard.html" class="nav-button">🏆 My Progress</a>
             <a href="about.html" class="nav-button">About</a>
             <a href="educational-disclaimer.html" class="nav-button">📚 Educational Info</a>
         </nav>
@@ -341,6 +358,91 @@
         </section>
     </main>
 
+    <!-- For Parents & Teachers Section -->
+    <section class="parents-teachers-section">
+        <div class="parents-container">
+            <h2 class="parents-title">👨‍👩‍👧‍👦 For Parents & Teachers</h2>
+            <div class="parents-content">
+                <div class="safety-features">
+                    <h3>🛡️ Safety & Privacy First</h3>
+                    <ul class="safety-list">
+                        <li>✅ <strong>No Ads</strong> - Completely ad-free experience</li>
+                        <li>✅ <strong>No Data Collection</strong> - We don't collect personal information</li>
+                        <li>✅ <strong>No Sign-ups</strong> - Play immediately, no accounts required</li>
+                        <li>✅ <strong>Offline Capable</strong> - Install as PWA for offline play</li>
+                        <li>✅ <strong>COPPA Compliant</strong> - Designed with child privacy in mind</li>
+                        <li>✅ <strong>External Link Warnings</strong> - Clear markers for any outside links</li>
+                    </ul>
+                </div>
+                
+                <div class="educational-goals">
+                    <h3>🎯 Educational Philosophy</h3>
+                    <div class="education-grid">
+                        <div class="education-card">
+                            <h4>📚 Curriculum-Aligned</h4>
+                            <p>Games support Common Core, Montessori, and IB PYP learning objectives</p>
+                        </div>
+                        <div class="education-card">
+                            <h4>🧠 Cognitive Development</h4>
+                            <p>Progressive difficulty builds problem-solving and critical thinking skills</p>
+                        </div>
+                        <div class="education-card">
+                            <h4>🎨 Cultural Learning</h4>
+                            <p>Optional Jerusalem heritage content respects diverse family values</p>
+                        </div>
+                        <div class="education-card">
+                            <h4>🌍 Global Perspective</h4>
+                            <p>Geography and culture games promote worldwide understanding</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="parent-resources">
+                    <h3>📋 Teacher & Parent Resources</h3>
+                    <div class="resource-links">
+                        <a href="curriculum/index.html" class="resource-link curriculum">
+                            <span class="resource-icon">📚</span>
+                            <div class="resource-info">
+                                <h4>Full Curriculum Explorer</h4>
+                                <p>Ages 5-12 complete learning framework</p>
+                            </div>
+                        </a>
+                        <a href="progress-tracking.html" class="resource-link progress">
+                            <span class="resource-icon">📊</span>
+                            <div class="resource-info">
+                                <h4>Progress Tracking Guide</h4>
+                                <p>Monitor learning without data collection</p>
+                            </div>
+                        </a>
+                        <a href="educational-disclaimer.html" class="resource-link disclaimer">
+                            <span class="resource-icon">ℹ️</span>
+                            <div class="resource-info">
+                                <h4>Educational Disclaimer</h4>
+                                <p>Community values & content approach</p>
+                            </div>
+                        </a>
+                        <a href="homeschool-support.html" class="resource-link homeschool">
+                            <span class="resource-icon">🏠</span>
+                            <div class="resource-info">
+                                <h4>Homeschool Integration</h4>
+                                <p>Weekly plans & assessment tools</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-support">
+                    <h3>💬 Questions or Feedback?</h3>
+                    <p>We welcome feedback from parents and educators. Contact us through our main site if you have suggestions for improving the educational experience.</p>
+                    <a href="../contact.html" class="contact-button" target="_blank" rel="noopener">
+                        Contact Us 
+                        <span class="external-link">🔗</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer class="kids-footer">
         <p>Jerusalem Hills Kids Zone - Safe & Educational</p>
         <p><small>Educational content provided for informational purposes with respect for every soul • <a href="educational-disclaimer.html" style="color: #FFD700; text-decoration: underline;">Community feedback welcome</a></small></p>
@@ -538,6 +640,119 @@
                 document.head.appendChild(pwaStyle);
             }
 
+        })();
+    </script>
+
+    <!-- Mobile Performance & Touch Optimization Script -->
+    <script>
+        (function() {
+            'use strict';
+            
+            // Optimize for mobile performance
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                document.body.classList.add('touch-device');
+                
+                // Add passive event listeners for better scroll performance
+                const passiveEvents = ['touchstart', 'touchmove', 'wheel'];
+                passiveEvents.forEach(event => {
+                    document.addEventListener(event, function() {}, { passive: true });
+                });
+                
+                // Debounce scroll events for performance
+                let scrollTimeout;
+                window.addEventListener('scroll', function() {
+                    if (scrollTimeout) clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(function() {
+                        // Handle scroll end if needed
+                    }, 100);
+                }, { passive: true });
+                
+                // Optimize image loading for mobile
+                if ('IntersectionObserver' in window) {
+                    const imageObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                if (img.dataset.src) {
+                                    img.src = img.dataset.src;
+                                    img.removeAttribute('data-src');
+                                    imageObserver.unobserve(img);
+                                }
+                            }
+                        });
+                    });
+                    
+                    // Observe any lazy-loaded images
+                    document.querySelectorAll('img[data-src]').forEach(img => {
+                        imageObserver.observe(img);
+                    });
+                }
+                
+                // Add touch feedback for better UX
+                const touchElements = document.querySelectorAll('.game-card, .nav-button, .play-button, .contact-button, .resource-link');
+                touchElements.forEach(element => {
+                    element.addEventListener('touchstart', function() {
+                        this.style.opacity = '0.8';
+                    }, { passive: true });
+                    
+                    element.addEventListener('touchend', function() {
+                        this.style.opacity = '';
+                    }, { passive: true });
+                    
+                    element.addEventListener('touchcancel', function() {
+                        this.style.opacity = '';
+                    }, { passive: true });
+                });
+            }
+            
+            // Reduce animations on slower devices
+            if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) {
+                document.body.classList.add('reduced-performance');
+                
+                const style = document.createElement('style');
+                style.textContent = `
+                    .reduced-performance * {
+                        transition-duration: 0.1s !important;
+                        animation-duration: 0.1s !important;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Preload critical game pages on idle
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(function() {
+                    const criticalPages = [
+                        'games/math.html',
+                        'games/hebrew-alphabet.html',
+                        'games/memory.html'
+                    ];
+                    
+                    criticalPages.forEach(page => {
+                        const link = document.createElement('link');
+                        link.rel = 'prefetch';
+                        link.href = page;
+                        document.head.appendChild(link);
+                    });
+                });
+            }
+            
+            // Monitor performance for kids games
+            if ('PerformanceObserver' in window) {
+                try {
+                    const perfObserver = new PerformanceObserver((list) => {
+                        list.getEntries().forEach((entry) => {
+                            if (entry.entryType === 'navigation') {
+                                // Log performance for optimization (client-side only)
+                                console.log('Kids Zone Load Time:', entry.loadEventEnd - entry.loadEventStart + 'ms');
+                            }
+                        });
+                    });
+                    perfObserver.observe({ entryTypes: ['navigation'] });
+                } catch (e) {
+                    // Silently handle older browsers
+                }
+            }
         })();
     </script>
 </body>
