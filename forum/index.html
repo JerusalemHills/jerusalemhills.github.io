@@ -497,6 +497,12 @@
             seriousInappropriateWords: [
                 // Spam/scam related
                 'spam', 'scam', 'fake website', 'virus download', 'malware',
+                // Hate speech/discrimination
+                'nazi', 'hitler', 'kill all', 'death to',
+                // Extreme harassment  
+                'kys', 'kill yourself', 'commit suicide',
+                // Doxxing/personal info
+                'home address', 'phone number', 'ssn', 'social security',
                 'phishing', 'click here to hack', 'free money',
                 // Only block if promoting illegal activity, not discussing
                 'how to hack', 'buy drugs', 'sell drugs', 'free hacking tools'
@@ -619,6 +625,59 @@
                 }
                 
                 return { allowed: true };
+            },
+
+            // Check for repeated characters (spam detection)
+            checkSpamPatterns: function(text) {
+                // Check for excessive repeated characters
+                if (/(.)\1{10,}/.test(text)) {
+                    return { allowed: false, reason: 'Excessive repeated characters detected' };
+                }
+                
+                // Check for excessive caps
+                const capsRatio = (text.match(/[A-Z]/g) || []).length / text.length;
+                if (text.length > 20 && capsRatio > 0.7) {
+                    return { allowed: false, reason: 'Excessive use of capital letters' };
+                }
+                
+                // Check for excessive punctuation
+                const punctRatio = (text.match(/[!?.,;:]/g) || []).length / text.length;
+                if (text.length > 20 && punctRatio > 0.4) {
+                    return { allowed: false, reason: 'Excessive punctuation detected' };
+                }
+                
+                return { allowed: true };
+            },
+
+            // Enhanced content validation
+            validatePost: function(title, message, username) {
+                // Check all content pieces
+                const titleCheck = this.checkContent(title);
+                if (!titleCheck.allowed) return { allowed: false, reason: 'Title: ' + titleCheck.reason };
+                
+                const messageCheck = this.checkContent(message);
+                if (!messageCheck.allowed) return { allowed: false, reason: 'Message: ' + messageCheck.reason };
+                
+                const usernameCheck = this.checkContent(username);
+                if (!usernameCheck.allowed) return { allowed: false, reason: 'Username: ' + usernameCheck.reason };
+                
+                // Check spam patterns
+                const titleSpam = this.checkSpamPatterns(title);
+                if (!titleSpam.allowed) return titleSpam;
+                
+                const messageSpam = this.checkSpamPatterns(message);
+                if (!messageSpam.allowed) return messageSpam;
+                
+                // Check links in message
+                const linkCheck = this.validateLinks(message);
+                if (!linkCheck.allowed) return linkCheck;
+                
+                return { 
+                    allowed: true, 
+                    cleanTitle: titleCheck.cleanText,
+                    cleanMessage: messageCheck.cleanText,
+                    cleanUsername: usernameCheck.cleanText
+                };
             }
         };
 
@@ -643,27 +702,19 @@
                 return;
             }
 
-            const titleCheck = contentFilter.checkContent(title);
-            if (!titleCheck.allowed) {
-                alert('Title: ' + titleCheck.reason);
+            // Enhanced validation using new method
+            const validation = contentFilter.validatePost(title, message, username);
+            if (!validation.allowed) {
+                alert(validation.reason);
                 return;
             }
 
-            const messageCheck = contentFilter.checkContent(message);
-            if (!messageCheck.allowed) {
-                alert('Message: ' + messageCheck.reason);
-                return;
-            }
+            // Use cleaned content from validation (profanity replaced, spam checked)
+            const cleanTitle = validation.cleanTitle;
+            const cleanMessage = validation.cleanMessage;
+            const cleanUsername = validation.cleanUsername;
 
-            // Use cleaned versions of title and message (with profanity replaced)
-            const cleanTitle = titleCheck.cleanText;
-            const cleanMessage = messageCheck.cleanText;
-
-            const linkCheck = contentFilter.validateLinks(message);
-            if (!linkCheck.allowed) {
-                alert(linkCheck.reason);
-                return;
-            }
+            // Link validation is now included in validatePost method
 
             // No data persistence - anonymous posting only
 
