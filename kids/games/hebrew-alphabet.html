@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hebrew Alphabet Adventure - Learn Hebrew Letters | Jerusalem Hills Kids</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn Hebrew letters with Hebrew Alphabet Adventure! Interactive Hebrew learning game for kids. Practice Hebrew alphabet, pronunciation, and basic words.">
+    <meta name="keywords" content="Hebrew alphabet, Hebrew letters, learn Hebrew, Hebrew for kids, Jewish education, Hebrew language, aleph bet">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/kids/games/hebrew-alphabet.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Hebrew Alphabet Adventure - Learn Hebrew Letters">
+    <meta property="og:description" content="Learn Hebrew letters with Hebrew Alphabet Adventure! Interactive Hebrew learning game for kids.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jerusalemhills.com/kids/games/hebrew-alphabet.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" href="../assets/css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Noto+Sans+Hebrew:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Sound Manager -->
+    <script src="../assets/js/sound-manager.js"></script>
+    
+    <style>
+        .game-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hebrew-subtitle {
+            font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+            font-size: 1.5rem;
+            direction: rtl;
+            margin: 10px 0;
+            color: #FFD700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .learning-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            color: #333;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .learning-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .alphabet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .letter-card {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+            position: relative;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .letter-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border-color: #4ECDC4;
+        }
+
+        .letter-card.learned {
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            color: white;
+            border-color: #2E7D32;
+        }
+
+        .letter-card.current {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333;
+            border-color: #FF6B00;
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+        }
+
+        .hebrew-letter {
+            font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            direction: rtl;
+        }
+
+        .letter-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .letter-sound {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .learning-area {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .learning-area.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .letter-display {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .big-hebrew-letter {
+            font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+            font-size: 8rem;
+            font-weight: 700;
+            color: #667eea;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            direction: rtl;
+        }
+
+        .letter-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-title {
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .hebrew-text {
+            font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+            direction: rtl;
+            font-size: 1.2rem;
+            margin: 5px 0;
+        }
+
+        .practice-area {
+            background: linear-gradient(135deg, #E3F2FD, #F3E5F5);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+        }
+
+        .practice-question {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .practice-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .practice-btn {
+            background: white;
+            color: #333;
+            border: 2px solid #667eea;
+            padding: 15px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .practice-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .practice-btn.correct {
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            color: white;
+            border-color: #2E7D32;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .practice-btn.incorrect {
+            background: linear-gradient(135deg, #FF6B6B, #FF8A80);
+            color: white;
+            border-color: #D32F2F;
+            animation: incorrectShake 0.6s ease;
+        }
+
+        .practice-btn.disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .hebrew-practice-letter {
+            font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+            font-size: 2rem;
+            direction: rtl;
+        }
+
+        .word-examples {
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #FFD700;
+        }
+
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .word-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .hebrew-word {
+            font-family: 'Noto Sans Hebrew', Arial, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            direction: rtl;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .word-translation {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .game-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .game-btn.secondary {
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            color: #333;
+        }
+
+        .result-message {
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .result-correct {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(139, 195, 74, 0.9));
+            color: white;
+            animation: bounceIn 0.6s ease;
+        }
+
+        .result-incorrect {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.9), rgba(255, 107, 107, 0.9));
+            color: white;
+            animation: shake 0.6s ease;
+        }
+
+        .cultural-note {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .progress-tracker {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ECDC4, #44A08D);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 15px;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 2rem;
+            }
+            
+            .big-hebrew-letter {
+                font-size: 6rem;
+            }
+            
+            .alphabet-grid {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            }
+            
+            .hebrew-letter {
+                font-size: 2rem;
+            }
+            
+            .learning-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .learning-modes {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .game-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .game-btn {
+                width: 200px;
+            }
+            
+            .letter-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1 class="game-title">🔤 Hebrew Alphabet Adventure</h1>
+            <div class="hebrew-subtitle">הרפתקת האלף-בית העברי</div>
+            <p>Learn the beautiful Hebrew alphabet through interactive games and cultural stories!</p>
+            <div class="game-nav">
+                <a href="../index.html" class="nav-btn">Home</a>
+                <a href="israel-map.html" class="nav-btn">Israel Map</a>
+                <a href="solar-system.html" class="nav-btn">Space</a>
+                <a href="math.html" class="nav-btn">Math Games</a>
+            </div>
+        </header>
+
+        <main>
+            <div class="learning-modes">
+                <h3 style="width: 100%; text-align: center; margin-bottom: 15px;">Choose Your Learning Adventure:</h3>
+                <button class="mode-btn active" data-mode="alphabet">Learn Letters 📚</button>
+                <button class="mode-btn" data-mode="practice">Practice Quiz 🎯</button>
+                <button class="mode-btn" data-mode="words">Hebrew Words 📖</button>
+                <button class="mode-btn" data-mode="culture">Stories & Culture 🏛️</button>
+            </div>
+
+            <div class="learning-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="lettersLearned">0</div>
+                    <div class="stat-label">Letters Learned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="practiceScore">0</div>
+                    <div class="stat-label">Practice Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="wordsKnown">0</div>
+                    <div class="stat-label">Words Known</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="hebrewLevel">Beginner</div>
+                    <div class="stat-label">Hebrew Level</div>
+                </div>
+            </div>
+
+            <div class="progress-tracker">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Start your Hebrew journey!</div>
+            </div>
+
+            <!-- Alphabet Learning Mode -->
+            <div class="alphabet-grid" id="alphabetMode">
+                <!-- Hebrew letters will be populated by JavaScript -->
+            </div>
+
+            <!-- Letter Detail View -->
+            <div class="learning-area" id="letterDetail">
+                <div class="letter-display">
+                    <div class="big-hebrew-letter" id="currentLetter">א</div>
+                    <h2 id="currentLetterName">Aleph</h2>
+                    <p id="currentLetterSound">"silent" or "ah"</p>
+                </div>
+
+                <div class="letter-info" id="letterInfo">
+                    <!-- Letter information cards will be populated by JavaScript -->
+                </div>
+
+                <div class="word-examples">
+                    <h4>📝 Words that start with this letter:</h4>
+                    <div class="word-grid" id="wordExamples">
+                        <!-- Word examples will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="cultural-note" id="culturalNote">
+                    <!-- Cultural information will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Practice Quiz Mode -->
+            <div class="learning-area" id="practiceMode">
+                <div class="practice-area">
+                    <div class="practice-question" id="practiceQuestion">Can you identify this Hebrew letter?</div>
+                    <div class="letter-display">
+                        <div class="big-hebrew-letter" id="practiceLetterDisplay">א</div>
+                    </div>
+                    <div class="practice-options" id="practiceOptions">
+                        <!-- Practice options will be populated by JavaScript -->
+                    </div>
+                    <div class="result-message" id="practiceResult"></div>
+                </div>
+            </div>
+
+            <!-- Hebrew Words Mode -->
+            <div class="learning-area" id="wordsMode">
+                <h3 style="text-align: center; margin-bottom: 20px;">🌟 Essential Hebrew Words</h3>
+                <div class="word-grid" id="essentialWords">
+                    <!-- Essential words will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Culture & Stories Mode -->
+            <div class="learning-area" id="cultureMode">
+                <h3 style="text-align: center; margin-bottom: 20px;">🏛️ Hebrew Culture & Stories</h3>
+                <div id="cultureContent">
+                    <!-- Culture content will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <button class="game-btn" id="prevLetterBtn" style="display: none;">← Previous Letter</button>
+                <button class="game-btn" id="nextLetterBtn" style="display: none;">Next Letter →</button>
+                <button class="game-btn secondary" id="hearPronunciationBtn" style="display: none;">🔊 Hear Pronunciation</button>
+                <button class="game-btn secondary" id="nextPracticeBtn" style="display: none;">Next Question</button>
+                <button class="game-btn secondary" id="resetProgressBtn">Reset Progress</button>
+            </div>
+        </main>
+
+        <footer style="text-align: center; margin-top: 40px; opacity: 0.8;">
+            <p>&copy; 2025 Jerusalem Hills Kids - Safe & Educational</p>
+            <p><a href="../index.html" style="color: #FFD700;">Back to Kids Zone</a></p>
+        </footer>
+    </div>
+
+    <script>
+        class HebrewAlphabetAdventure {
+            constructor() {
+                this.currentMode = 'alphabet';
+                this.currentLetterIndex = 0;
+                this.lettersLearned = new Set();
+                this.practiceScore = 0;
+                this.wordsKnown = new Set();
+                this.currentPracticeIndex = 0;
+                this.practiceQuestions = [];
+                
+                this.hebrewAlphabet = [
+                    {
+                        letter: 'א',
+                        name: 'Aleph',
+                        sound: 'silent or "ah"',
+                        numerical: 1,
+                        description: 'The first letter of the Hebrew alphabet, representing the beginning and unity.',
+                        words: [
+                            { hebrew: 'אבא', translation: 'Abba (Father)', transliteration: 'ah-ba' },
+                            { hebrew: 'אמא', translation: 'Ima (Mother)', transliteration: 'ee-ma' },
+                            { hebrew: 'אדום', translation: 'Adom (Red)', transliteration: 'ah-dom' }
+                        ],
+                        culturalNote: 'Aleph represents the divine and the beginning of all creation in Jewish mysticism.'
+                    },
+                    {
+                        letter: 'ב',
+                        name: 'Bet',
+                        sound: '"b" or "v"',
+                        numerical: 2,
+                        description: 'Second letter, means "house" and represents dwelling and blessing.',
+                        words: [
+                            { hebrew: 'בית', translation: 'Bayit (House)', transliteration: 'bah-yeet' },
+                            { hebrew: 'ברוך', translation: 'Baruch (Blessed)', transliteration: 'bah-ruch' },
+                            { hebrew: 'בן', translation: 'Ben (Son)', transliteration: 'ben' }
+                        ],
+                        culturalNote: 'The Torah begins with the letter Bet in the word "בראשית" (Bereshit - In the beginning).'
+                    },
+                    {
+                        letter: 'ג',
+                        name: 'Gimel',
+                        sound: '"g"',
+                        numerical: 3,
+                        description: 'Third letter, represents a camel and symbolizes journey and giving.',
+                        words: [
+                            { hebrew: 'גמל', translation: 'Gamal (Camel)', transliteration: 'gah-mal' },
+                            { hebrew: 'גדול', translation: 'Gadol (Big)', transliteration: 'gah-dol' },
+                            { hebrew: 'גן', translation: 'Gan (Garden)', transliteration: 'gan' }
+                        ],
+                        culturalNote: 'Gimel appears on the dreidel (spinning top) used during Hanukkah!'
+                    },
+                    {
+                        letter: 'ד',
+                        name: 'Dalet',
+                        sound: '"d"',
+                        numerical: 4,
+                        description: 'Fourth letter, means "door" and represents entry and opportunity.',
+                        words: [
+                            { hebrew: 'דלת', translation: 'Delet (Door)', transliteration: 'deh-let' },
+                            { hebrew: 'דב', translation: 'Dov (Bear)', transliteration: 'dov' },
+                            { hebrew: 'דג', translation: 'Dag (Fish)', transliteration: 'dag' }
+                        ],
+                        culturalNote: 'The door represents welcoming guests, a very important value in Jewish tradition.'
+                    },
+                    {
+                        letter: 'ה',
+                        name: 'Heh',
+                        sound: '"h"',
+                        numerical: 5,
+                        description: 'Fifth letter, represents breath and divine inspiration.',
+                        words: [
+                            { hebrew: 'הר', translation: 'Har (Mountain)', transliteration: 'har' },
+                            { hebrew: 'הלל', translation: 'Hillel (Praise)', transliteration: 'hee-lel' },
+                            { hebrew: 'היום', translation: 'Hayom (Today)', transliteration: 'ha-yom' }
+                        ],
+                        culturalNote: 'Heh appears twice in the name of God (יהוה) and represents divine breath.'
+                    },
+                    {
+                        letter: 'ו',
+                        name: 'Vav',
+                        sound: '"v" or "oo"',
+                        numerical: 6,
+                        description: 'Sixth letter, means "hook" and represents connection.',
+                        words: [
+                            { hebrew: 'ורד', translation: 'Vered (Rose)', transliteration: 'veh-red' },
+                            { hebrew: 'ואהבת', translation: 'V\'ahavta (And you shall love)', transliteration: 'v\'ah-hav-ta' },
+                            { hebrew: 'ובא', translation: 'U\'va (And came)', transliteration: 'oo-va' }
+                        ],
+                        culturalNote: 'Vav often means "and" in Hebrew, connecting words and ideas together.'
+                    },
+                    {
+                        letter: 'ז',
+                        name: 'Zayin',
+                        sound: '"z"',
+                        numerical: 7,
+                        description: 'Seventh letter, means "weapon" but represents spiritual strength.',
+                        words: [
+                            { hebrew: 'זמן', translation: 'Zman (Time)', transliteration: 'z\'man' },
+                            { hebrew: 'זהב', translation: 'Zahav (Gold)', transliteration: 'zah-hav' },
+                            { hebrew: 'זבוב', translation: 'Zvoov (Fly)', transliteration: 'z\'voov' }
+                        ],
+                        culturalNote: 'The number seven (שבע) is very sacred in Judaism - think Shabbat!'
+                    },
+                    {
+                        letter: 'ח',
+                        name: 'Chet',
+                        sound: '"ch" (like in Bach)',
+                        numerical: 8,
+                        description: 'Eighth letter, represents life and new beginnings.',
+                        words: [
+                            { hebrew: 'חיים', translation: 'Chaim (Life)', transliteration: 'chah-yeem' },
+                            { hebrew: 'חלה', translation: 'Challah (Braided bread)', transliteration: 'chah-lah' },
+                            { hebrew: 'חכם', translation: 'Chacham (Wise)', transliteration: 'chah-cham' }
+                        ],
+                        culturalNote: 'חי (chai) means "life" and is why 18 is considered a lucky number!'
+                    },
+                    {
+                        letter: 'ט',
+                        name: 'Tet',
+                        sound: '"t"',
+                        numerical: 9,
+                        description: 'Ninth letter, represents goodness and completion.',
+                        words: [
+                            { hebrew: 'טוב', translation: 'Tov (Good)', transliteration: 'tov' },
+                            { hebrew: 'טלה', translation: 'Taleh (Lamb)', transliteration: 'tah-leh' },
+                            { hebrew: 'טבע', translation: 'Teva (Nature)', transliteration: 'teh-va' }
+                        ],
+                        culturalNote: 'טוב (tov) means good - God saw that creation was "very good" (טוב מאד)!'
+                    },
+                    {
+                        letter: 'י',
+                        name: 'Yud',
+                        sound: '"y"',
+                        numerical: 10,
+                        description: 'Tenth letter, represents divine spark and creativity.',
+                        words: [
+                            { hebrew: 'יד', translation: 'Yad (Hand)', transliteration: 'yad' },
+                            { hebrew: 'ילד', translation: 'Yeled (Boy/Child)', transliteration: 'yeh-led' },
+                            { hebrew: 'ירושלים', translation: 'Yerushalayim (Jerusalem)', transliteration: 'ye-ru-sha-lah-yeem' }
+                        ],
+                        culturalNote: 'Yud is the smallest letter but begins the name of God. Small things can be very powerful!'
+                    }
+                ];
+
+                this.essentialWords = [
+                    { hebrew: 'שלום', translation: 'Shalom (Peace/Hello)', category: 'Greetings' },
+                    { hebrew: 'תודה', translation: 'Toda (Thank you)', category: 'Greetings' },
+                    { hebrew: 'אהבה', translation: 'Ahava (Love)', category: 'Emotions' },
+                    { hebrew: 'משפחה', translation: 'Mishpacha (Family)', category: 'Family' },
+                    { hebrew: 'חברים', translation: 'Chaverim (Friends)', category: 'People' },
+                    { hebrew: 'ספר', translation: 'Sefer (Book)', category: 'Learning' },
+                    { hebrew: 'מים', translation: 'Mayim (Water)', category: 'Nature' },
+                    { hebrew: 'שמש', translation: 'Shemesh (Sun)', category: 'Nature' },
+                    { hebrew: 'לב', translation: 'Lev (Heart)', category: 'Body' },
+                    { hebrew: 'אור', translation: 'Or (Light)', category: 'Nature' }
+                ];
+
+                this.culturalStories = [
+                    {
+                        title: 'The Story of Hebrew Letters',
+                        content: 'Long ago, the Hebrew letters were given to the Jewish people as a gift. Each letter has its own personality and power. The ancient rabbis taught that God used these very letters to create the world!'
+                    },
+                    {
+                        title: 'Why Hebrew Reads Right to Left',
+                        content: 'Hebrew reads from right to left because the right side represents strength and blessing in Jewish tradition. When you open a Hebrew book, you start from what English speakers would call the "back"!'
+                    },
+                    {
+                        title: 'The Magic of Hebrew Numbers',
+                        content: 'Every Hebrew letter is also a number! Aleph=1, Bet=2, Gimel=3, and so on. This creates a special code called "gematria" where words with the same number value are considered connected.'
+                    },
+                    {
+                        title: 'Hebrew Around the World',
+                        content: 'Hebrew was spoken 3,000 years ago, then became mainly a religious language, and was revived as a spoken language in Israel about 150 years ago. Today, millions of people speak Hebrew every day!'
+                    }
+                ];
+
+                this.init();
+            }
+
+            init() {
+                this.loadProgress();
+                this.setupEventListeners();
+                this.renderAlphabet();
+                this.showMode('alphabet');
+                this.updateDisplay();
+                console.log('🔤 Hebrew Alphabet Adventure initialized!');
+            }
+
+            loadProgress() {
+                try {
+                    const saved = localStorage.getItem('hebrew-learning-progress');
+                    if (saved) {
+                        const data = JSON.parse(saved);
+                        this.lettersLearned = new Set(data.lettersLearned || []);
+                        this.practiceScore = data.practiceScore || 0;
+                        this.wordsKnown = new Set(data.wordsKnown || []);
+                    }
+                } catch (error) {
+                    console.warn('Could not load Hebrew learning progress:', error);
+                }
+            }
+
+            saveProgress() {
+                try {
+                    const data = {
+                        lettersLearned: Array.from(this.lettersLearned),
+                        practiceScore: this.practiceScore,
+                        wordsKnown: Array.from(this.wordsKnown),
+                        timestamp: new Date().toISOString()
+                    };
+                    localStorage.setItem('hebrew-learning-progress', JSON.stringify(data));
+                } catch (error) {
+                    console.warn('Could not save Hebrew learning progress:', error);
+                }
+            }
+
+            setupEventListeners() {
+                // Mode buttons
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.setMode(e.target.dataset.mode);
+                    });
+                });
+
+                // Game controls
+                document.getElementById('prevLetterBtn').addEventListener('click', () => this.previousLetter());
+                document.getElementById('nextLetterBtn').addEventListener('click', () => this.nextLetter());
+                document.getElementById('hearPronunciationBtn').addEventListener('click', () => this.playPronunciation());
+                document.getElementById('nextPracticeBtn').addEventListener('click', () => this.nextPracticeQuestion());
+                document.getElementById('resetProgressBtn').addEventListener('click', () => this.resetProgress());
+            }
+
+            setMode(mode) {
+                this.currentMode = mode;
+                
+                // Update mode buttons
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+
+                // Show appropriate interface
+                this.showMode(mode);
+
+                // Play sound
+                if (window.soundManager) {
+                    window.soundManager.playUISound('click');
+                }
+            }
+
+            showMode(mode) {
+                // Hide all mode-specific elements
+                document.getElementById('alphabetMode').style.display = 'none';
+                document.querySelectorAll('.learning-area').forEach(area => {
+                    area.classList.remove('active');
+                });
+                
+                // Hide all control buttons first
+                document.getElementById('prevLetterBtn').style.display = 'none';
+                document.getElementById('nextLetterBtn').style.display = 'none';
+                document.getElementById('hearPronunciationBtn').style.display = 'none';
+                document.getElementById('nextPracticeBtn').style.display = 'none';
+
+                switch (mode) {
+                    case 'alphabet':
+                        document.getElementById('alphabetMode').style.display = 'grid';
+                        break;
+                    case 'practice':
+                        document.getElementById('practiceMode').classList.add('active');
+                        document.getElementById('nextPracticeBtn').style.display = 'inline-block';
+                        this.startPracticeQuiz();
+                        break;
+                    case 'words':
+                        document.getElementById('wordsMode').classList.add('active');
+                        this.renderEssentialWords();
+                        break;
+                    case 'culture':
+                        document.getElementById('cultureMode').classList.add('active');
+                        this.renderCultureContent();
+                        break;
+                }
+            }
+
+            renderAlphabet() {
+                const container = document.getElementById('alphabetMode');
+                container.innerHTML = '';
+
+                this.hebrewAlphabet.forEach((letterData, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'letter-card';
+                    
+                    if (this.lettersLearned.has(index)) {
+                        card.classList.add('learned');
+                    }
+                    
+                    if (index === this.currentLetterIndex) {
+                        card.classList.add('current');
+                    }
+
+                    card.innerHTML = `
+                        <div class="hebrew-letter">${letterData.letter}</div>
+                        <div class="letter-name">${letterData.name}</div>
+                        <div class="letter-sound">${letterData.sound}</div>
+                    `;
+
+                    card.addEventListener('click', () => this.selectLetter(index));
+                    container.appendChild(card);
+                });
+            }
+
+            selectLetter(index) {
+                this.currentLetterIndex = index;
+                this.lettersLearned.add(index);
+                this.renderLetterDetail();
+                this.renderAlphabet();
+                this.updateDisplay();
+                this.saveProgress();
+
+                // Play learning sound
+                if (window.soundManager) {
+                    window.soundManager.playGameSound('correct');
+                }
+            }
+
+            renderLetterDetail() {
+                const letterData = this.hebrewAlphabet[this.currentLetterIndex];
+                
+                // Update main letter display
+                document.getElementById('currentLetter').textContent = letterData.letter;
+                document.getElementById('currentLetterName').textContent = letterData.name;
+                document.getElementById('currentLetterSound').textContent = letterData.sound;
+
+                // Create letter information cards
+                const letterInfo = document.getElementById('letterInfo');
+                letterInfo.innerHTML = `
+                    <div class="info-card">
+                        <div class="info-title">Hebrew Letter</div>
+                        <div class="hebrew-text">${letterData.letter}</div>
+                        <p><strong>Name:</strong> ${letterData.name}</p>
+                        <p><strong>Sound:</strong> ${letterData.sound}</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-title">Numerical Value</div>
+                        <div style="font-size: 2rem; color: #667eea;">${letterData.numerical}</div>
+                        <p>In Hebrew, every letter has a number value!</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-title">Description</div>
+                        <p>${letterData.description}</p>
+                    </div>
+                `;
+
+                // Render word examples
+                const wordExamples = document.getElementById('wordExamples');
+                wordExamples.innerHTML = letterData.words.map(word => `
+                    <div class="word-card">
+                        <div class="hebrew-word">${word.hebrew}</div>
+                        <div class="word-translation">${word.translation}</div>
+                        <div style="font-size: 0.8rem; color: #999;">${word.transliteration}</div>
+                    </div>
+                `).join('');
+
+                // Show cultural note
+                document.getElementById('culturalNote').innerHTML = `
+                    <h4>🌟 Cultural Note</h4>
+                    <p>${letterData.culturalNote}</p>
+                `;
+
+                // Show detail view and navigation
+                document.getElementById('letterDetail').classList.add('active');
+                document.getElementById('alphabetMode').style.display = 'none';
+                document.getElementById('prevLetterBtn').style.display = this.currentLetterIndex > 0 ? 'inline-block' : 'none';
+                document.getElementById('nextLetterBtn').style.display = this.currentLetterIndex < this.hebrewAlphabet.length - 1 ? 'inline-block' : 'none';
+                document.getElementById('hearPronunciationBtn').style.display = 'inline-block';
+            }
+
+            previousLetter() {
+                if (this.currentLetterIndex > 0) {
+                    this.selectLetter(this.currentLetterIndex - 1);
+                }
+            }
+
+            nextLetter() {
+                if (this.currentLetterIndex < this.hebrewAlphabet.length - 1) {
+                    this.selectLetter(this.currentLetterIndex + 1);
+                }
+            }
+
+            playPronunciation() {
+                // Simulate pronunciation sound
+                if (window.soundManager) {
+                    window.soundManager.play('chime');
+                }
+
+                // Show pronunciation guide
+                const letterData = this.hebrewAlphabet[this.currentLetterIndex];
+                const resultMessage = document.createElement('div');
+                resultMessage.className = 'result-message result-correct';
+                resultMessage.innerHTML = `
+                    🔊 Pronunciation: ${letterData.name}<br>
+                    <small>Sound: ${letterData.sound}</small>
+                `;
+                resultMessage.style.display = 'block';
+                
+                document.getElementById('letterDetail').appendChild(resultMessage);
+                
+                setTimeout(() => {
+                    resultMessage.remove();
+                }, 3000);
+            }
+
+            startPracticeQuiz() {
+                this.currentPracticeIndex = 0;
+                this.generatePracticeQuestions();
+                this.showPracticeQuestion();
+            }
+
+            generatePracticeQuestions() {
+                const learnedLetters = Array.from(this.lettersLearned);
+                if (learnedLetters.length < 3) {
+                    // If less than 3 letters learned, use first 4 letters
+                    this.practiceQuestions = this.hebrewAlphabet.slice(0, 4);
+                } else {
+                    // Use learned letters
+                    this.practiceQuestions = learnedLetters.map(index => this.hebrewAlphabet[index]);
+                }
+                
+                // Shuffle questions
+                this.practiceQuestions = this.practiceQuestions.sort(() => Math.random() - 0.5);
+            }
+
+            showPracticeQuestion() {
+                if (this.currentPracticeIndex >= this.practiceQuestions.length) {
+                    this.endPracticeQuiz();
+                    return;
+                }
+
+                const questionData = this.practiceQuestions[this.currentPracticeIndex];
+                document.getElementById('practiceLetterDisplay').textContent = questionData.letter;
+                
+                // Generate answer options
+                const correctAnswer = questionData.name;
+                const wrongAnswers = this.hebrewAlphabet
+                    .filter(letter => letter.name !== correctAnswer)
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 3)
+                    .map(letter => letter.name);
+
+                const allAnswers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
+                
+                const optionsContainer = document.getElementById('practiceOptions');
+                optionsContainer.innerHTML = '';
+
+                allAnswers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.className = 'practice-btn';
+                    button.textContent = answer;
+                    button.addEventListener('click', () => this.selectPracticeAnswer(answer, correctAnswer));
+                    optionsContainer.appendChild(button);
+                });
+
+                document.getElementById('practiceResult').style.display = 'none';
+            }
+
+            selectPracticeAnswer(selectedAnswer, correctAnswer) {
+                const isCorrect = selectedAnswer === correctAnswer;
+                const resultMessage = document.getElementById('practiceResult');
+
+                // Disable all buttons
+                document.querySelectorAll('.practice-btn').forEach(btn => {
+                    btn.classList.add('disabled');
+                    if (btn.textContent === correctAnswer) {
+                        btn.classList.add('correct');
+                    } else if (btn.textContent === selectedAnswer && !isCorrect) {
+                        btn.classList.add('incorrect');
+                    }
+                });
+
+                if (isCorrect) {
+                    this.practiceScore++;
+                    resultMessage.textContent = `🌟 Excellent! That's ${correctAnswer}!`;
+                    resultMessage.className = 'result-message result-correct';
+                    
+                    if (window.soundManager) {
+                        window.soundManager.createEducationalFeedback(true, 'normal');
+                    }
+                } else {
+                    resultMessage.textContent = `❌ That's ${correctAnswer}. Try to remember!`;
+                    resultMessage.className = 'result-message result-incorrect';
+                    
+                    if (window.soundManager) {
+                        window.soundManager.createEducationalFeedback(false);
+                    }
+                }
+
+                resultMessage.style.display = 'block';
+                this.currentPracticeIndex++;
+                this.updateDisplay();
+                this.saveProgress();
+
+                // Auto-advance after 2 seconds
+                setTimeout(() => {
+                    this.nextPracticeQuestion();
+                }, 2000);
+            }
+
+            nextPracticeQuestion() {
+                this.showPracticeQuestion();
+            }
+
+            endPracticeQuiz() {
+                const accuracy = this.practiceQuestions.length > 0 ? 
+                    Math.round((this.practiceScore / this.practiceQuestions.length) * 100) : 0;
+                
+                document.getElementById('practiceQuestion').innerHTML = `
+                    🎉 Practice Complete!<br>
+                    <div style="font-size: 1.2rem; margin-top: 15px;">
+                        Score: ${this.practiceScore}/${this.practiceQuestions.length}<br>
+                        ${accuracy >= 80 ? 'Excellent Hebrew knowledge! 🌟' :
+                          accuracy >= 60 ? 'Good work! Keep practicing! 📚' :
+                          'Keep learning! Practice makes perfect! 💪'}
+                    </div>
+                `;
+
+                document.getElementById('practiceOptions').innerHTML = `
+                    <button class="practice-btn" onclick="window.hebrewAdventure.startPracticeQuiz()">
+                        🔄 Practice Again
+                    </button>
+                `;
+
+                document.getElementById('practiceResult').style.display = 'none';
+                
+                if (window.soundManager && accuracy >= 70) {
+                    window.soundManager.celebrate();
+                }
+            }
+
+            renderEssentialWords() {
+                const container = document.getElementById('essentialWords');
+                const categorizedWords = {};
+
+                // Group words by category
+                this.essentialWords.forEach(word => {
+                    if (!categorizedWords[word.category]) {
+                        categorizedWords[word.category] = [];
+                    }
+                    categorizedWords[word.category].push(word);
+                });
+
+                let html = '';
+                Object.entries(categorizedWords).forEach(([category, words]) => {
+                    html += `
+                        <div style="grid-column: 1 / -1; margin: 20px 0;">
+                            <h4 style="color: #667eea; margin-bottom: 15px;">${category}</h4>
+                        </div>
+                    `;
+                    
+                    words.forEach(word => {
+                        html += `
+                            <div class="word-card" style="cursor: pointer;" onclick="window.hebrewAdventure.learnWord('${word.hebrew}')">
+                                <div class="hebrew-word">${word.hebrew}</div>
+                                <div class="word-translation">${word.translation}</div>
+                            </div>
+                        `;
+                    });
+                });
+
+                container.innerHTML = html;
+            }
+
+            learnWord(hebrew) {
+                this.wordsKnown.add(hebrew);
+                this.updateDisplay();
+                this.saveProgress();
+
+                if (window.soundManager) {
+                    window.soundManager.play('success');
+                }
+
+                // Visual feedback
+                const wordCard = event.target.closest('.word-card');
+                if (wordCard) {
+                    wordCard.style.background = 'linear-gradient(135deg, #4CAF50, #66BB6A)';
+                    wordCard.style.color = 'white';
+                    setTimeout(() => {
+                        wordCard.style.background = '';
+                        wordCard.style.color = '';
+                    }, 1000);
+                }
+            }
+
+            renderCultureContent() {
+                const container = document.getElementById('cultureContent');
+                
+                let html = this.culturalStories.map(story => `
+                    <div class="cultural-note">
+                        <h4>${story.title}</h4>
+                        <p>${story.content}</p>
+                    </div>
+                `).join('');
+
+                html += `
+                    <div class="cultural-note">
+                        <h4>🎵 Hebrew Songs & Prayers</h4>
+                        <p>Hebrew is the language of many beautiful songs and prayers. "Hatikvah" is Israel's national anthem, and "Shema" is one of the most important prayers in Judaism.</p>
+                    </div>
+                    
+                    <div class="cultural-note">
+                        <h4>🌍 Hebrew Today</h4>
+                        <p>Modern Hebrew is spoken by over 9 million people worldwide! It's the official language of Israel alongside Arabic, and children there grow up speaking Hebrew every day.</p>
+                    </div>
+                `;
+
+                container.innerHTML = html;
+            }
+
+            resetProgress() {
+                if (confirm('Are you sure you want to reset all your Hebrew learning progress? This cannot be undone.')) {
+                    this.lettersLearned.clear();
+                    this.practiceScore = 0;
+                    this.wordsKnown.clear();
+                    this.currentLetterIndex = 0;
+                    
+                    localStorage.removeItem('hebrew-learning-progress');
+                    
+                    this.renderAlphabet();
+                    this.updateDisplay();
+                    
+                    if (window.soundManager) {
+                        window.soundManager.play('swoosh');
+                    }
+                }
+            }
+
+            getHebrewLevel() {
+                const totalProgress = this.lettersLearned.size + Math.floor(this.practiceScore / 5) + this.wordsKnown.size;
+                
+                if (totalProgress >= 30) return 'Expert 🎓';
+                if (totalProgress >= 20) return 'Advanced 🌟';
+                if (totalProgress >= 15) return 'Intermediate 📚';
+                if (totalProgress >= 10) return 'Novice 🌱';
+                if (totalProgress >= 5) return 'Student 📖';
+                return 'Beginner 🔤';
+            }
+
+            updateDisplay() {
+                document.getElementById('lettersLearned').textContent = this.lettersLearned.size;
+                document.getElementById('practiceScore').textContent = this.practiceScore;
+                document.getElementById('wordsKnown').textContent = this.wordsKnown.size;
+                document.getElementById('hebrewLevel').textContent = this.getHebrewLevel();
+
+                // Update progress bar
+                const totalLetters = this.hebrewAlphabet.length;
+                const progress = (this.lettersLearned.size / totalLetters) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+                
+                if (this.lettersLearned.size === totalLetters) {
+                    document.getElementById('progressText').textContent = 'Congratulations! You\'ve learned the entire Hebrew alphabet! 🎉';
+                } else if (this.lettersLearned.size > 0) {
+                    document.getElementById('progressText').textContent = 
+                        `${this.lettersLearned.size} of ${totalLetters} letters learned (${Math.round(progress)}%)`;
+                } else {
+                    document.getElementById('progressText').textContent = 'Start your Hebrew journey!';
+                }
+            }
+        }
+
+        // Initialize the game when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.hebrewAdventure = new HebrewAlphabetAdventure();
+            console.log('🔤 Hebrew Alphabet Adventure game loaded successfully!');
+        });
+    </script>
+</body>
+</html>
