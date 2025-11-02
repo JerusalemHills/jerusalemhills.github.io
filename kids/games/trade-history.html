@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade History Adventure - Jerusalem Hills Kids</title>
+    
+    <link rel="stylesheet" href="../assets/css/kids.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Badge System -->
+    <script src="../assets/js/badge-system.js"></script>
+    
+    <style>
+        .trade-game-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            color: #333;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            transform: translateX(-50%);
+        }
+
+        .timeline-era {
+            position: relative;
+            margin-bottom: 50px;
+            opacity: 0.3;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .timeline-era.active {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        .timeline-era.completed {
+            opacity: 1;
+        }
+
+        .timeline-era:nth-child(odd) .era-content {
+            margin-left: 0;
+            margin-right: 55%;
+            text-align: right;
+        }
+
+        .timeline-era:nth-child(even) .era-content {
+            margin-left: 55%;
+            margin-right: 0;
+            text-align: left;
+        }
+
+        .era-marker {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        .timeline-era.completed .era-marker {
+            background: #4CAF50;
+        }
+
+        .timeline-era.active .era-marker {
+            background: #FF6B6B;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.2); }
+        }
+
+        .era-content {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-era.active .era-content {
+            border-color: #FF6B6B;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .era-title {
+            font-size: 1.5rem;
+            color: #2C3E50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .era-period {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .era-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .trade-simulation {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .trade-challenge {
+            background: linear-gradient(135deg, #e8f5e8, #d4f4d4);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #4CAF50;
+        }
+
+        .challenge-question {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2C3E50;
+        }
+
+        .challenge-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .challenge-option {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .challenge-option:hover {
+            border-color: #667eea;
+            background: #f0f7ff;
+        }
+
+        .challenge-option.correct {
+            border-color: #4CAF50;
+            background: #e8f5e8;
+        }
+
+        .challenge-option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .era-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            font-size: 2rem;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            height: 12px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .game-button {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .game-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .game-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #95E1D3, #F093FB);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .completion-celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 4px solid #FF6B6B;
+            display: none;
+        }
+
+        .celebration-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-era:nth-child(odd) .era-content,
+            .timeline-era:nth-child(even) .era-content {
+                margin-left: 60px;
+                margin-right: 0;
+                text-align: left;
+            }
+
+            .era-marker {
+                left: 30px;
+            }
+
+            .game-header h1 {
+                font-size: 2rem;
+            }
+
+            .era-icons {
+                font-size: 1.5rem;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="trade-game-container">
+        <a href="../index.html" class="back-button">
+            ←️ Back to Games
+        </a>
+
+        <div class="game-header">
+            <h1>⚖️ Trade History Adventure</h1>
+            <p>Journey through time to discover how money evolved from barter to banking!</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="overall-progress" style="width: 0%"></div>
+            </div>
+            <div id="progress-text">Era 1 of 6: Ancient Barter</div>
+        </div>
+
+        <div class="timeline-container">
+            <div class="timeline" id="timeline">
+                <!-- Timeline eras will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="game-controls">
+            <button class="game-button" id="prev-btn" onclick="tradeGame.previousEra()" disabled>
+                ⬅️ Previous Era
+            </button>
+            <button class="game-button" id="next-btn" onclick="tradeGame.nextEra()" disabled>
+                Next Era ➡️
+            </button>
+            <button class="game-button" id="restart-btn" onclick="tradeGame.restart()">
+                🔄 Restart Journey
+            </button>
+        </div>
+    </div>
+
+    <!-- Completion Celebration -->
+    <div class="completion-celebration" id="completion-modal">
+        <div class="celebration-icon">🎉</div>
+        <h2>Congratulations, Trade Master!</h2>
+        <p>You've mastered the evolution of money and trade!</p>
+        <p>From bartering vegetables to digital banking - what an incredible journey!</p>
+        <button class="game-button" onclick="tradeGame.closeCompletion()">
+            Continue Exploring! 🚀
+        </button>
+    </div>
+
+    <script>
+        class TradeHistoryGame {
+            constructor() {
+                this.currentEra = 0;
+                this.completedChallenges = new Set();
+                this.totalEras = 6;
+                this.eras = this.getEraData();
+                this.init();
+            }
+
+            init() {
+                this.renderTimeline();
+                this.activateEra(0);
+                this.updateProgress();
+            }
+
+            getEraData() {
+                return [
+                    {
+                        id: 'barter',
+                        title: 'Ancient Barter System',
+                        period: '10,000 BCE - 3000 BCE',
+                        icons: ['🥕', '🐄', '🌾', '🏺'],
+                        description: 'Before money existed, people traded goods directly with each other. If you had extra grain, you could trade it for pottery or livestock. This was called bartering.',
+                        simulation: {
+                            title: 'Try Bartering!',
+                            content: 'You are a farmer with 10 bags of grain. The potter wants 3 bags for a water jug. The shepherd wants 5 bags for a goat. What trades will you make?'
+                        },
+                        challenge: {
+                            question: 'What was the biggest problem with bartering?',
+                            options: [
+                                'People were too greedy',
+                                'It was hard to find someone who wanted what you had AND had what you wanted',
+                                'There were no markets',
+                                'People didn\'t understand math'
+                            ],
+                            correct: 1,
+                            explanation: 'This problem is called the "double coincidence of wants" - both people need to want what the other person has!'
+                        },
+                        funFact: 'Some Pacific islands still use traditional bartering for certain goods today!'
+                    },
+                    {
+                        id: 'commodity',
+                        title: 'Commodity Money',
+                        period: '3000 BCE - 1000 BCE',
+                        icons: ['🐚', '🧂', '🥩', '🌾'],
+                        description: 'People began using valuable items that everyone wanted as money. Salt, cattle, grain, and shells became the first "money" because they had value to everyone.',
+                        simulation: {
+                            title: 'Commodity Trading',
+                            content: 'You\'re a merchant in ancient times. You have salt (valuable for preserving food). How many pots would you trade it for? Salt was so valuable that Roman soldiers were sometimes paid in salt!'
+                        },
+                        challenge: {
+                            question: 'Why did salt make good commodity money?',
+                            options: [
+                                'It was pretty',
+                                'Everyone needed it to preserve food, it was durable, and could be divided',
+                                'It was easy to counterfeit',
+                                'Only rich people used it'
+                            ],
+                            correct: 1,
+                            explanation: 'Good money needs to be valuable to everyone, durable (won\'t spoil), and divisible into smaller amounts!'
+                        },
+                        funFact: 'The word "salary" comes from the Latin word for salt because Roman soldiers were paid in salt!'
+                    },
+                    {
+                        id: 'metal',
+                        title: 'Metal Money & Coins',
+                        period: '1000 BCE - 500 CE',
+                        icons: ['🪙', '⚱️', '⚖️', '👑'],
+                        description: 'Metals like gold and silver became popular money because they were rare, durable, and beautiful. The first coins were made around 650 BCE in ancient Turkey, making trade much easier!',
+                        simulation: {
+                            title: 'Minting Coins',
+                            content: 'You\'re a coin maker in ancient Greece. You have 10 ounces of silver. Each coin needs 0.5 ounces. How many coins can you make? Each coin is worth one day\'s wages!'
+                        },
+                        challenge: {
+                            question: 'What made coins better than chunks of metal?',
+                            options: [
+                                'They were shinier',
+                                'They had a guaranteed weight and purity stamped by the government',
+                                'They were easier to lose',
+                                'Only kings could use them'
+                            ],
+                            correct: 1,
+                            explanation: 'Coins had official stamps showing their weight and purity, so people didn\'t need to weigh and test every piece of metal!'
+                        },
+                        funFact: 'The first coins had pictures of gods and rulers to prevent counterfeiting - it was a serious crime to fake the king\'s image!'
+                    },
+                    {
+                        id: 'paper',
+                        title: 'Paper Money',
+                        period: '800 CE - 1600 CE',
+                        icons: ['📜', '🏦', '🛡️', '📝'],
+                        description: 'China invented paper money around 800 CE. Instead of carrying heavy coins, people could use lightweight paper backed by the government\'s promise to exchange it for gold or silver.',
+                        simulation: {
+                            title: 'Banking Innovation',
+                            content: 'You\'re a Chinese merchant with 100 gold coins (very heavy!). The bank offers paper notes worth the same amount. Would you trade? You can travel much faster without heavy coins!'
+                        },
+                        challenge: {
+                            question: 'What made people trust paper money?',
+                            options: [
+                                'Paper was more valuable than gold',
+                                'Everyone liked the pretty colors',
+                                'The government promised to exchange it for gold or silver anytime',
+                                'It was easier to hide'
+                            ],
+                            correct: 2,
+                            explanation: 'Paper money only works when people trust that they can exchange it for something valuable - that\'s why government backing was crucial!'
+                        },
+                        funFact: 'Marco Polo was amazed by Chinese paper money and wrote about it in his travel journals, introducing the idea to Europe!'
+                    },
+                    {
+                        id: 'banking',
+                        title: 'Modern Banking',
+                        period: '1600 CE - 1900 CE',
+                        icons: ['🏛️', '💰', '📊', '🗝️'],
+                        description: 'Banks became powerful institutions that could create money by making loans. They kept only some gold/silver in vaults and lent out the rest, creating more money than actually existed in coins!',
+                        simulation: {
+                            title: 'Bank Management',
+                            content: 'Your bank has 1000 gold coins deposited. You keep 100 for withdrawals and lend 900 to borrowers. Now your depositors think they have 1000 coins, borrowers have 900 coins - that\'s 1900 total from 1000!'
+                        },
+                        challenge: {
+                            question: 'How do banks create money?',
+                            options: [
+                                'They print it in secret',
+                                'They steal it from other banks',
+                                'They lend out more money than they actually have in deposits',
+                                'They find gold in the basement'
+                            ],
+                            correct: 2,
+                            explanation: 'This is called fractional reserve banking - banks only keep a fraction of deposits and lend the rest, effectively creating new money!'
+                        },
+                        funFact: 'The Medici family in Italy became incredibly wealthy by pioneering modern banking techniques in the 1400s!'
+                    },
+                    {
+                        id: 'central',
+                        title: 'Central Banking Era',
+                        period: '1900 CE - Present',
+                        icons: ['🏦', '💳', '💻', '🌐'],
+                        description: 'Central banks like the Federal Reserve control money supply. Money is no longer backed by gold - it\'s "fiat" money backed only by government authority. Digital payments and cryptocurrencies are the newest evolution!',
+                        simulation: {
+                            title: 'Digital Economy',
+                            content: 'Today you can send money anywhere in the world instantly with a phone! You have $100 in your digital wallet. You buy a game for $20, send $30 to a friend, and save $50. All without touching physical money!'
+                        },
+                        challenge: {
+                            question: 'What backs modern money today?',
+                            options: [
+                                'Gold stored in government vaults',
+                                'The government\'s authority and people\'s trust in it',
+                                'Silver coins',
+                                'Nothing - it has no value'
+                            ],
+                            correct: 1,
+                            explanation: 'Modern "fiat" money is backed by government authority and our collective agreement that it has value - it\'s a system based on trust!'
+                        },
+                        funFact: 'Bitcoin, created in 2009, was the first digital currency that doesn\'t need banks or governments - it uses mathematical algorithms instead!'
+                    }
+                ];
+            }
+
+            renderTimeline() {
+                const timeline = document.getElementById('timeline');
+                timeline.innerHTML = this.eras.map((era, index) => `
+                    <div class="timeline-era" id="era-${index}" onclick="tradeGame.selectEra(${index})">
+                        <div class="era-marker"></div>
+                        <div class="era-content">
+                            <div class="era-title">${era.title}</div>
+                            <div class="era-period">${era.period}</div>
+                            <div class="era-icons">
+                                ${era.icons.map(icon => `<span>${icon}</span>`).join('')}
+                            </div>
+                            <div class="era-description">${era.description}</div>
+                            
+                            <div class="trade-simulation">
+                                <h4>🎮 ${era.simulation.title}</h4>
+                                <p>${era.simulation.content}</p>
+                            </div>
+                            
+                            <div class="trade-challenge" id="challenge-${index}">
+                                <div class="challenge-question">${era.challenge.question}</div>
+                                <div class="challenge-options">
+                                    ${era.challenge.options.map((option, optIndex) => `
+                                        <div class="challenge-option" onclick="tradeGame.answerChallenge(${index}, ${optIndex})">
+                                            ${option}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div class="challenge-explanation" id="explanation-${index}" style="display: none; margin-top: 15px; padding: 15px; background: #e3f2fd; border-radius: 8px; font-weight: 600;">
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 15px; padding: 15px; background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-radius: 8px; border-left: 5px solid #FF9800;">
+                                <strong>💡 Fun Fact:</strong> ${era.funFact}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            selectEra(index) {
+                if (index <= this.completedChallenges.size) {
+                    this.activateEra(index);
+                }
+            }
+
+            activateEra(index) {
+                // Remove active class from all eras
+                document.querySelectorAll('.timeline-era').forEach((era, i) => {
+                    era.classList.remove('active');
+                    if (this.completedChallenges.has(i)) {
+                        era.classList.add('completed');
+                    }
+                });
+
+                // Activate current era
+                const currentEraElement = document.getElementById(`era-${index}`);
+                if (currentEraElement) {
+                    currentEraElement.classList.add('active');
+                    currentEraElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+
+                this.currentEra = index;
+                this.updateProgress();
+                this.updateButtons();
+            }
+
+            answerChallenge(eraIndex, answerIndex) {
+                const era = this.eras[eraIndex];
+                const options = document.querySelectorAll(`#challenge-${eraIndex} .challenge-option`);
+                const explanation = document.getElementById(`explanation-${eraIndex}`);
+
+                // Disable all options
+                options.forEach(option => option.style.pointerEvents = 'none');
+
+                if (answerIndex === era.challenge.correct) {
+                    options[answerIndex].classList.add('correct');
+                    this.completedChallenges.add(eraIndex);
+                    
+                    // Track achievement
+                    if (window.BadgeSystem) {
+                        BadgeSystem.trackProgress('financial', 'game_completed', 1);
+                    }
+                    
+                    this.celebrateCorrectAnswer();
+                } else {
+                    options[answerIndex].classList.add('incorrect');
+                    options[era.challenge.correct].classList.add('correct');
+                }
+
+                explanation.textContent = era.challenge.explanation;
+                explanation.style.display = 'block';
+
+                setTimeout(() => {
+                    if (answerIndex === era.challenge.correct && eraIndex < this.totalEras - 1) {
+                        this.nextEra();
+                    } else if (eraIndex === this.totalEras - 1 && answerIndex === era.challenge.correct) {
+                        this.showCompletion();
+                    }
+                }, 2000);
+            }
+
+            celebrateCorrectAnswer() {
+                // Create floating success message
+                const success = document.createElement('div');
+                success.innerHTML = '🎉 Excellent! Moving to next era...';
+                success.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #4CAF50, #45a049);
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 25px;
+                    font-weight: 600;
+                    z-index: 1000;
+                    animation: slideIn 0.5s ease;
+                `;
+                document.body.appendChild(success);
+
+                setTimeout(() => success.remove(), 3000);
+            }
+
+            nextEra() {
+                if (this.currentEra < this.totalEras - 1) {
+                    this.activateEra(this.currentEra + 1);
+                }
+            }
+
+            previousEra() {
+                if (this.currentEra > 0) {
+                    this.activateEra(this.currentEra - 1);
+                }
+            }
+
+            updateProgress() {
+                const progress = ((this.completedChallenges.size) / this.totalEras) * 100;
+                document.getElementById('overall-progress').style.width = progress + '%';
+                
+                const progressText = document.getElementById('progress-text');
+                if (this.completedChallenges.size === this.totalEras) {
+                    progressText.textContent = 'Journey Complete! 🎉';
+                } else {
+                    progressText.textContent = `Era ${this.currentEra + 1} of ${this.totalEras}: ${this.eras[this.currentEra].title}`;
+                }
+            }
+
+            updateButtons() {
+                const prevBtn = document.getElementById('prev-btn');
+                const nextBtn = document.getElementById('next-btn');
+
+                prevBtn.disabled = this.currentEra === 0;
+                nextBtn.disabled = this.currentEra === this.totalEras - 1 || !this.completedChallenges.has(this.currentEra);
+            }
+
+            showCompletion() {
+                document.getElementById('completion-modal').style.display = 'block';
+                
+                // Track achievement
+                if (window.BadgeSystem) {
+                    BadgeSystem.trackProgress('financial', 'trading_master', 1);
+                }
+            }
+
+            closeCompletion() {
+                document.getElementById('completion-modal').style.display = 'none';
+            }
+
+            restart() {
+                this.currentEra = 0;
+                this.completedChallenges.clear();
+                
+                // Reset all challenges
+                document.querySelectorAll('.challenge-option').forEach(option => {
+                    option.classList.remove('correct', 'incorrect');
+                    option.style.pointerEvents = 'auto';
+                });
+                
+                document.querySelectorAll('.challenge-explanation').forEach(exp => {
+                    exp.style.display = 'none';
+                });
+
+                this.activateEra(0);
+            }
+        }
+
+        // Initialize game when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            window.tradeGame = new TradeHistoryGame();
+        });
+    </script>
+</body>
+</html>
