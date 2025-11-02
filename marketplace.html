@@ -338,22 +338,73 @@
             height: 20px;
         }
 
-        /* Filter Bar */
+        /* Enhanced Filter Bar */
         .filter-bar {
             background: white;
             border-bottom: 1px solid #eee;
             padding: 1.5rem 2rem;
             position: sticky;
-            top: 73px;
+            top: 96px;
             z-index: 50;
         }
 
         .filter-container {
             max-width: var(--max-width);
             margin: 0 auto;
-            display: flex;
-            gap: 1rem;
+            display: grid;
+            grid-template-columns: 1fr auto auto auto;
+            gap: 2rem;
             align-items: center;
+        }
+
+        /* Search Section */
+        .search-section {
+            min-width: 280px;
+        }
+
+        .search-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-search-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .product-search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 1px var(--primary-color);
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 0.75rem;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .clear-search:hover {
+            background: var(--bg-gray);
+            color: var(--text-dark);
+        }
+
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            gap: 0.5rem;
             flex-wrap: wrap;
         }
 
@@ -367,6 +418,7 @@
             cursor: pointer;
             transition: all 0.3s;
             color: var(--text-dark);
+            white-space: nowrap;
         }
 
         .filter-btn:hover {
@@ -378,6 +430,77 @@
             background: var(--primary-color);
             border-color: var(--primary-color);
             color: white;
+        }
+
+        /* Sort Section */
+        .sort-section {
+            min-width: 160px;
+        }
+
+        .sort-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .sort-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 1px var(--primary-color);
+        }
+
+        /* Results Counter */
+        .results-counter {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Mobile Responsive for Filter Bar */
+        @media (max-width: 1024px) {
+            .filter-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .search-section,
+            .category-filters,
+            .sort-section {
+                width: 100%;
+                justify-self: stretch;
+            }
+
+            .category-filters {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .filter-bar {
+                padding: 1rem;
+            }
+
+            .category-filters {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                -webkit-overflow-scrolling: touch;
+                justify-content: flex-start;
+                padding-bottom: 0.5rem;
+            }
+
+            .filter-btn {
+                flex-shrink: 0;
+            }
+
+            .search-section {
+                min-width: auto;
+            }
         }
 
         /* Products Grid */
@@ -424,7 +547,22 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
+            transition: transform 0.5s, opacity 0.3s ease;
+        }
+
+        .product-image.lazy {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
         }
 
         .product-card:hover .product-image {
@@ -614,6 +752,60 @@
             border: 0;
         }
 
+        /* No Results Styling */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .no-results h3 {
+            color: var(--text-medium);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .no-results p {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .reset-filters-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .reset-filters-btn:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Search Highlight */
+        .search-highlight {
+            background: var(--accent-color);
+            padding: 0.1rem 0.2rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        /* Loading State Enhancement */
+        .products-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            grid-column: 1 / -1;
+        }
+
         /* Toast Notification */
         .toast {
             position: fixed;
@@ -677,15 +869,44 @@
         </div>
     </section>
 
-    <!-- Filter Bar -->
+    <!-- Enhanced Search & Filter Bar -->
     <div class="filter-bar">
         <div class="filter-container">
-            <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
-            <button class="filter-btn" onclick="filterProducts('pottery')">Pottery</button>
-            <button class="filter-btn" onclick="filterProducts('judaica')">Judaica</button>
-            <button class="filter-btn" onclick="filterProducts('olive-wood')">Olive Wood</button>
-            <button class="filter-btn" onclick="filterProducts('dead-sea')">Dead Sea</button>
-            <button class="filter-btn" onclick="filterProducts('jewelry')">Jewelry</button>
+            <!-- Search Input -->
+            <div class="search-section">
+                <div class="search-input-container">
+                    <input type="text" 
+                           id="product-search" 
+                           class="product-search-input" 
+                           placeholder="Search products..." 
+                           autocomplete="off">
+                    <button class="clear-search" id="clear-search" style="display: none;">×</button>
+                </div>
+            </div>
+            
+            <!-- Category Filters -->
+            <div class="category-filters">
+                <button class="filter-btn active" data-category="all">All Products</button>
+                <button class="filter-btn" data-category="pottery">Pottery</button>
+                <button class="filter-btn" data-category="judaica">Judaica</button>
+                <button class="filter-btn" data-category="olive-wood">Olive Wood</button>
+                <button class="filter-btn" data-category="dead-sea">Dead Sea</button>
+                <button class="filter-btn" data-category="jewelry">Jewelry</button>
+            </div>
+            
+            <!-- Sort Options -->
+            <div class="sort-section">
+                <select id="sort-select" class="sort-select">
+                    <option value="name-asc">Name A-Z</option>
+                    <option value="name-desc">Name Z-A</option>
+                    <option value="price-asc">Price Low to High</option>
+                    <option value="price-desc">Price High to Low</option>
+                    <option value="category">Category</option>
+                </select>
+            </div>
+            
+            <!-- Results Counter -->
+            <div class="results-counter" id="results-counter"></div>
         </div>
     </div>
 
@@ -693,7 +914,10 @@
     <main class="products-section">
         <div id="products-grid" class="products-grid">
             <!-- Products will be loaded here -->
-            <div class="loading-spinner"></div>
+            <div class="products-loading">
+                <div class="loading-spinner"></div>
+                <p style="margin-left: 1rem; color: var(--text-medium);">Loading products...</p>
+            </div>
         </div>
     </main>
 
@@ -836,53 +1060,262 @@
             }
         ];
 
-        // Display products with improved UI
-        function displayProducts(filter = 'all') {
-            const container = document.getElementById('products-grid');
-            const filteredProducts = filter === 'all'
-                ? products
-                : products.filter(p => p.category === filter);
+        // Enhanced Product Filtering and Search System
+        class ProductManager {
+            constructor() {
+                this.products = products;
+                this.currentFilter = 'all';
+                this.currentSort = 'name-asc';
+                this.searchQuery = '';
+                this.filteredProducts = [...this.products];
+                this.init();
+            }
 
-            container.innerHTML = filteredProducts.map(product => `
-                <article class="product-card" data-category="${product.category}">
-                    <div class="product-image-container">
-                        <img src="${product.image}"
-                             alt="${product.name}"
-                             class="product-image"
-                             loading="lazy"
-                             onerror="this.src='https://via.placeholder.com/400x400/E8DCC4/6B7F47?text=Image+Coming+Soon'">
-                        ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
-                    </div>
-                    <div class="product-details">
-                        <span class="product-category">${product.categoryName}</span>
-                        <h3 class="product-name">${product.name}</h3>
-                        <p class="product-description">${product.description}</p>
-                        <div class="product-footer">
-                            <div class="product-price">
-                                <span class="currency">$</span>${(product.price / 100).toFixed(0)}
-                            </div>
-                            <button class="buy-button"
-                                    onclick="handlePurchase('${product.id}')"
-                                    ${!product.inStock ? 'disabled' : ''}>
-                                ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
+            init() {
+                this.setupEventListeners();
+                this.updateDisplay();
+            }
+
+            setupEventListeners() {
+                // Search input
+                const searchInput = document.getElementById('product-search');
+                const clearSearch = document.getElementById('clear-search');
+                
+                searchInput.addEventListener('input', (e) => {
+                    this.searchQuery = e.target.value.trim().toLowerCase();
+                    this.toggleClearButton();
+                    this.applyFiltersAndSort();
+                });
+
+                clearSearch.addEventListener('click', () => {
+                    searchInput.value = '';
+                    this.searchQuery = '';
+                    this.toggleClearButton();
+                    this.applyFiltersAndSort();
+                });
+
+                // Category filters
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.currentFilter = e.target.dataset.category;
+                        this.updateActiveFilter(e.target);
+                        this.applyFiltersAndSort();
+                    });
+                });
+
+                // Sort dropdown
+                document.getElementById('sort-select').addEventListener('change', (e) => {
+                    this.currentSort = e.target.value;
+                    this.applyFiltersAndSort();
+                });
+            }
+
+            toggleClearButton() {
+                const clearBtn = document.getElementById('clear-search');
+                clearBtn.style.display = this.searchQuery ? 'block' : 'none';
+            }
+
+            updateActiveFilter(activeBtn) {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                activeBtn.classList.add('active');
+            }
+
+            searchProducts() {
+                if (!this.searchQuery) return [...this.products];
+                
+                return this.products.filter(product => {
+                    const searchFields = [
+                        product.name,
+                        product.description,
+                        product.categoryName,
+                        product.badge || ''
+                    ].join(' ').toLowerCase();
+                    
+                    return searchFields.includes(this.searchQuery);
+                });
+            }
+
+            highlightSearchTerms(text) {
+                if (!this.searchQuery) return text;
+                
+                const regex = new RegExp(`(${this.searchQuery})`, 'gi');
+                return text.replace(regex, '<span class="search-highlight">$1</span>');
+            }
+
+            filterByCategory(products) {
+                if (this.currentFilter === 'all') return products;
+                return products.filter(p => p.category === this.currentFilter);
+            }
+
+            sortProducts(products) {
+                const sorted = [...products];
+                
+                switch (this.currentSort) {
+                    case 'name-asc':
+                        return sorted.sort((a, b) => a.name.localeCompare(b.name));
+                    case 'name-desc':
+                        return sorted.sort((a, b) => b.name.localeCompare(a.name));
+                    case 'price-asc':
+                        return sorted.sort((a, b) => a.price - b.price);
+                    case 'price-desc':
+                        return sorted.sort((a, b) => b.price - a.price);
+                    case 'category':
+                        return sorted.sort((a, b) => a.categoryName.localeCompare(b.categoryName));
+                    default:
+                        return sorted;
+                }
+            }
+
+            applyFiltersAndSort() {
+                let filtered = this.searchProducts();
+                filtered = this.filterByCategory(filtered);
+                this.filteredProducts = this.sortProducts(filtered);
+                this.updateDisplay();
+            }
+
+            updateResultsCounter() {
+                const counter = document.getElementById('results-counter');
+                const total = this.products.length;
+                const showing = this.filteredProducts.length;
+                
+                if (this.searchQuery || this.currentFilter !== 'all') {
+                    counter.textContent = `Showing ${showing} of ${total} products`;
+                } else {
+                    counter.textContent = `${total} products`;
+                }
+            }
+
+            displayProducts() {
+                const container = document.getElementById('products-grid');
+                
+                if (this.filteredProducts.length === 0) {
+                    container.innerHTML = `
+                        <div class="no-results">
+                            <h3>No products found</h3>
+                            <p>Try adjusting your search terms or filters to find what you're looking for.</p>
+                            <button class="reset-filters-btn" onclick="productManager.reset()">
+                                Clear All Filters
                             </button>
                         </div>
-                    </div>
-                </article>
-            `).join('');
+                    `;
+                    return;
+                }
+
+                container.innerHTML = this.filteredProducts.map(product => `
+                    <article class="product-card" data-category="${product.category}">
+                        <div class="product-image-container">
+                            <img data-src="${product.image}"
+                                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='100%25' height='100%25' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23999' font-size='18'%3ELoading...%3C/text%3E%3C/svg%3E"
+                                 alt="${product.name}"
+                                 class="product-image lazy"
+                                 loading="lazy"
+                                 onerror="this.src='https://via.placeholder.com/400x400/E8DCC4/6B7F47?text=Image+Coming+Soon'">
+                            ${product.badge ? `<span class="product-badge">${this.highlightSearchTerms(product.badge)}</span>` : ''}
+                        </div>
+                        <div class="product-details">
+                            <span class="product-category">${this.highlightSearchTerms(product.categoryName)}</span>
+                            <h3 class="product-name">${this.highlightSearchTerms(product.name)}</h3>
+                            <p class="product-description">${this.highlightSearchTerms(product.description)}</p>
+                            <div class="product-footer">
+                                <div class="product-price">
+                                    <span class="currency">$</span>${(product.price / 100).toFixed(0)}
+                                </div>
+                                <button class="buy-button"
+                                        onclick="handlePurchase('${product.id}')"
+                                        ${!product.inStock ? 'disabled' : ''}>
+                                    ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                `).join('');
+
+                // Reinitialize lazy loading for new images
+                this.initializeLazyLoading();
+            }
+
+            updateDisplay() {
+                this.displayProducts();
+                this.updateResultsCounter();
+            }
+
+            // Enhanced lazy loading for dynamically loaded images
+            initializeLazyLoading() {
+                if (!('IntersectionObserver' in window)) {
+                    // Fallback for older browsers
+                    document.querySelectorAll('img.lazy').forEach(img => {
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                    });
+                    return;
+                }
+
+                // Disconnect existing observer if it exists
+                if (this.imageObserver) {
+                    this.imageObserver.disconnect();
+                }
+
+                this.imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            
+                            // Create a new image to preload
+                            const imageLoader = new Image();
+                            imageLoader.onload = () => {
+                                // Add smooth transition
+                                img.style.opacity = '0';
+                                img.src = img.dataset.src;
+                                img.classList.remove('lazy');
+                                
+                                // Fade in the loaded image
+                                setTimeout(() => {
+                                    img.style.transition = 'opacity 0.3s ease';
+                                    img.style.opacity = '1';
+                                }, 50);
+                            };
+                            
+                            imageLoader.onerror = () => {
+                                img.src = 'https://via.placeholder.com/400x400/E8DCC4/6B7F47?text=Image+Coming+Soon';
+                                img.classList.remove('lazy');
+                            };
+                            
+                            imageLoader.src = img.dataset.src;
+                            observer.unobserve(img);
+                        }
+                    });
+                }, {
+                    rootMargin: '50px', // Start loading 50px before image enters viewport
+                    threshold: 0.1
+                });
+
+                // Observe all lazy images
+                document.querySelectorAll('img.lazy').forEach(img => {
+                    this.imageObserver.observe(img);
+                });
+            }
+
+            // Public method for external use
+            reset() {
+                document.getElementById('product-search').value = '';
+                document.getElementById('sort-select').value = 'name-asc';
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector('[data-category="all"]').classList.add('active');
+                
+                this.searchQuery = '';
+                this.currentFilter = 'all';
+                this.currentSort = 'name-asc';
+                this.toggleClearButton();
+                this.applyFiltersAndSort();
+            }
         }
 
-        // Filter products
-        function filterProducts(category) {
-            // Update active filter button
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // Display filtered products
-            displayProducts(category);
-        }
+        // Initialize the product manager
+        let productManager;
 
         // Handle purchase with improved UX
         async function handlePurchase(productId) {
@@ -945,7 +1378,8 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            displayProducts();
+            // Initialize the enhanced product management system
+            productManager = new ProductManager();
 
             // Check for URL parameters
             const urlParams = new URLSearchParams(window.location.search);
@@ -954,25 +1388,40 @@
             } else if (urlParams.has('canceled')) {
                 showToast('Purchase canceled. Your cart is waiting for you.', 'info');
             }
-        });
 
-        // Lazy load images
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.classList.remove('lazy');
-                        imageObserver.unobserve(img);
+            // Initialize header search integration
+            const headerSearch = document.querySelector('.search-input');
+            if (headerSearch) {
+                headerSearch.addEventListener('input', (e) => {
+                    const productSearch = document.getElementById('product-search');
+                    if (productSearch) {
+                        productSearch.value = e.target.value;
+                        productManager.searchQuery = e.target.value.trim().toLowerCase();
+                        productManager.toggleClearButton();
+                        productManager.applyFiltersAndSort();
                     }
                 });
-            });
+            }
+        });
 
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                imageObserver.observe(img);
+        // Performance optimization: Preload critical images
+        function preloadCriticalImages() {
+            // Preload the first 3 product images for faster initial load
+            const criticalImages = products.slice(0, 3).map(p => p.image);
+            criticalImages.forEach(src => {
+                const link = document.createElement('link');
+                link.rel = 'preload';
+                link.as = 'image';
+                link.href = src;
+                document.head.appendChild(link);
             });
         }
+
+        // Initialize preloading
+        preloadCriticalImages();
     </script>
+
+    <!-- Accessibility Enhancements -->
+    <script src="/js/accessibility-enhancements.js"></script>
 </body>
 </html>
