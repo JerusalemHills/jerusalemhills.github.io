@@ -20,6 +20,9 @@
     <!-- Google Analytics -->
     <script src="/js/analytics.js"></script>
     
+    <!-- Game Progression System -->
+    <script src="/js/game-progression.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -688,9 +691,29 @@
             gameComplete() {
                 clearInterval(this.timer);
                 const finalTime = document.getElementById('timer').textContent;
+                const timeSeconds = Math.floor((Date.now() - this.startTime) / 1000);
+                
                 document.getElementById('finalTime').textContent = finalTime;
                 document.getElementById('finalMistakes').textContent = this.mistakes;
                 document.getElementById('victory').style.display = 'block';
+                
+                // Calculate score based on difficulty, time, and mistakes
+                const difficultyMultiplier = {
+                    easy: 100,
+                    medium: 200,
+                    hard: 400,
+                    expert: 800
+                };
+                
+                const baseScore = difficultyMultiplier[this.difficulty] || 100;
+                const timeBonus = Math.max(0, 600 - timeSeconds); // Bonus for completing under 10 minutes
+                const mistakePenalty = this.mistakes * 50;
+                const finalScore = Math.max(1, baseScore + timeBonus - mistakePenalty);
+                
+                // Report to progression system
+                if (window.reportGameCompletion) {
+                    window.reportGameCompletion('sudoku', this.difficulty, finalScore, timeSeconds, this.mistakes);
+                }
                 
                 // Track completion event
                 if (window.gtag) {
@@ -698,7 +721,8 @@
                         game_name: 'Sudoku',
                         difficulty: this.difficulty,
                         completion_time: finalTime,
-                        mistakes: this.mistakes
+                        mistakes: this.mistakes,
+                        score: finalScore
                     });
                 }
             }

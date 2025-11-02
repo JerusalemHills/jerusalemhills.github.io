@@ -20,6 +20,9 @@
     <!-- Google Analytics -->
     <script src="/js/analytics.js"></script>
     
+    <!-- Game Progression System -->
+    <script src="/js/game-progression.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -476,16 +479,36 @@
             gameComplete() {
                 clearInterval(this.timer);
                 const finalTime = document.getElementById('timer').textContent;
+                const timeSeconds = Math.floor((Date.now() - this.startTime) / 1000);
+                
                 document.getElementById('finalTime').textContent = finalTime;
                 document.getElementById('finalMoves').textContent = this.moves;
                 document.getElementById('victory').style.display = 'block';
+                
+                // Calculate score based on moves and time
+                const baseScore = 1000;
+                const timeBonus = Math.max(0, 300 - timeSeconds); // Bonus for completing under 5 minutes
+                const moveBonus = Math.max(0, (50 - this.moves) * 10); // Bonus for fewer moves
+                const finalScore = Math.max(1, baseScore + timeBonus + moveBonus);
+                
+                // Determine difficulty based on performance (for progression system)
+                let difficulty = 'easy';
+                if (timeSeconds < 120 && this.moves < 30) difficulty = 'hard';
+                else if (timeSeconds < 180 && this.moves < 40) difficulty = 'medium';
+                
+                // Report to progression system
+                if (window.reportGameCompletion) {
+                    window.reportGameCompletion('jerusalem-memory', difficulty, finalScore, timeSeconds, 0);
+                }
                 
                 // Track completion event
                 if (window.gtag) {
                     gtag('event', 'game_complete', {
                         game_name: 'Jerusalem Memory Match',
                         completion_time: finalTime,
-                        total_moves: this.moves
+                        total_moves: this.moves,
+                        score: finalScore,
+                        difficulty: difficulty
                     });
                 }
             }
