@@ -151,7 +151,7 @@
                 document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 difficulty = btn.dataset.level;
-                soundManager.play('select');
+                soundManager.play('click');
             });
         });
 
@@ -189,7 +189,7 @@
         }
 
         document.getElementById('start').onclick = () => {
-            soundManager.play('start');
+            soundManager.play('chime');
             score = 0;
             streak = 0;
             questionsAnswered = 0;
@@ -227,7 +227,7 @@
                 
                 soundManager.play('correct');
                 if (score % 5 === 0 && score > 0) {
-                    soundManager.play('milestone');
+                    soundManager.play('achievement');
                 }
                 
                 const encouragement = streak >= 5 ? "Amazing streak! 🌟" : 
@@ -258,7 +258,7 @@
 
             setTimeout(() => {
                 if (userAnswer === answer) {
-                    soundManager.play('next');
+                    soundManager.play('pop');
                     newQuestion();
                 }
             }, userAnswer === answer ? 1500 : 3000);

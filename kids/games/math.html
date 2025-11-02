@@ -56,6 +56,10 @@
         </div>
     </header>
 
+    <div class="screen-time-reminder">
+        <p>🕐 Remember: Take breaks every 20 minutes and ask a grown-up for permission!</p>
+    </div>
+
     <main>
         <div id="question">Press Start to Begin!</div>
         <input id="answer" type="number" placeholder="Your answer">
@@ -90,7 +94,7 @@
         }
 
         document.getElementById('start').onclick = () => {
-            soundManager.play('start'); // Play start sound
+            soundManager.play('chime'); // Play start sound
             score = 0;
             s.textContent = `Score: ${score}`;
             newQuestion();
@@ -119,7 +123,7 @@
                 score++;
                 soundManager.play('correct'); // Play correct sound
                 if (score % 5 === 0 && score > 0) {
-                    soundManager.play('milestone'); // Play milestone sound every 5 points
+                    soundManager.play('achievement'); // Play milestone sound every 5 points
                 }
                 r.textContent = "✅ Correct! Great job!";
                 r.style.color = "#4CAF50";
@@ -131,7 +135,7 @@
             s.textContent = `Score: ${score}`;
 
             setTimeout(() => {
-                soundManager.play('next'); // Play next question sound
+                soundManager.play('pop'); // Play next question sound
                 newQuestion();
             }, 1500);
         }

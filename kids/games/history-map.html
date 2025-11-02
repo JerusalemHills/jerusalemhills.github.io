@@ -1166,14 +1166,14 @@
         function init() {
             updateDisplay();
             setupEventListeners();
-            soundManager.play('start');
+            soundManager.play('chime');
         }
 
         function setupEventListeners() {
             slider.addEventListener('input', (e) => {
                 currentPeriod = parseInt(e.target.value);
                 updateDisplay();
-                soundManager.play('select');
+                soundManager.play('click');
             });
 
             prevBtn.addEventListener('click', () => {
@@ -1181,7 +1181,7 @@
                     currentPeriod--;
                     slider.value = currentPeriod;
                     updateDisplay();
-                    soundManager.play('select');
+                    soundManager.play('click');
                 }
             });
 
@@ -1190,7 +1190,7 @@
                     currentPeriod++;
                     slider.value = currentPeriod;
                     updateDisplay();
-                    soundManager.play('select');
+                    soundManager.play('click');
                 }
             });
 
@@ -1418,11 +1418,11 @@
                 clearInterval(playInterval);
                 isPlaying = false;
                 playBtn.textContent = '▶️ Auto Play';
-                soundManager.play('stop');
+                soundManager.play('swoosh');
             } else {
                 isPlaying = true;
                 playBtn.textContent = '⏸️ Pause';
-                soundManager.play('start');
+                soundManager.play('chime');
                 
                 playInterval = setInterval(() => {
                     if (currentPeriod < historicalPeriods.length - 1) {
@@ -1440,7 +1440,7 @@
             quizSection.style.display = 'block';
             currentQuizQuestion = Math.floor(Math.random() * quizQuestions.length);
             displayQuizQuestion();
-            soundManager.play('start');
+            soundManager.play('chime');
             
             // Scroll to quiz
             quizSection.scrollIntoView({ behavior: 'smooth' });

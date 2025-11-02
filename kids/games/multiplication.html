@@ -252,7 +252,7 @@
                     document.getElementById('tableSelect').style.display = 'grid';
                 }
                 
-                soundManager.play('select');
+                soundManager.play('click');
                 updateProgressDisplay();
             });
         });
@@ -263,7 +263,7 @@
                 document.querySelectorAll('.table-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 selectedTable = parseInt(btn.dataset.table);
-                soundManager.play('select');
+                soundManager.play('click');
             });
         });
 
@@ -340,7 +340,7 @@
         }
 
         document.getElementById('start').onclick = () => {
-            soundManager.play('start');
+            soundManager.play('chime');
             score = 0;
             questionsAnswered = 0;
             updateScoreDisplay();
@@ -383,7 +383,7 @@
                 soundManager.play('correct');
                 
                 if (score % 5 === 0 && score > 0) {
-                    soundManager.play('milestone');
+                    soundManager.play('achievement');
                     showAchievement("Great job! Keep going! 🌟");
                 }
                 
@@ -405,7 +405,7 @@
                 }, 1500);
             } else {
                 setTimeout(() => {
-                    soundManager.play('next');
+                    soundManager.play('pop');
                     newQuestion();
                 }, 1500);
             }

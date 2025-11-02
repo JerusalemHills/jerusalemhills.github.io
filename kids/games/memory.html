@@ -56,6 +56,10 @@
         </div>
     </header>
 
+    <div class="screen-time-reminder">
+        <p>🕐 Remember: Take breaks every 20 minutes and ask a grown-up for permission!</p>
+    </div>
+
     <main>
         <div class="grid" id="grid"></div>
         <div id="message">Click cards to find matching pairs!</div>
@@ -74,7 +78,7 @@
         let first = null, second = null, lock = false, matches = 0;
 
         function initGame() {
-            soundManager.play('start'); // Play start sound
+            soundManager.play('chime'); // Play start sound
             // Reset game state
             matches = 0;
             first = null;
@@ -107,7 +111,7 @@
             }
 
             // Show the emoji
-            soundManager.play('flip'); // Play flip sound
+            soundManager.play('pop'); // Play flip sound
             this.textContent = this.dataset.emoji;
 
             if (!first) {
@@ -123,7 +127,7 @@
             setTimeout(() => {
                 if (first.dataset.emoji === second.dataset.emoji) {
                     // Match found!
-                    soundManager.play('match'); // Play match sound
+                    soundManager.play('success'); // Play match sound
                     first.style.visibility = 'hidden';
                     second.style.visibility = 'hidden';
                     matches++;
@@ -131,13 +135,13 @@
                     document.getElementById('score').textContent = `Matches: ${matches} / ${emojis.length}`;
 
                     if (matches === emojis.length) {
-                        soundManager.play('victory'); // Play victory sound
+                        soundManager.play('achievement'); // Play victory sound
                         document.getElementById('message').textContent = "🎉 You matched all pairs! Great job!";
                         document.getElementById('message').style.color = "#4CAF50";
                     }
                 } else {
                     // No match - hide cards again
-                    soundManager.play('no-match'); // Play no-match sound
+                    soundManager.play('swoosh'); // Play no-match sound
                     first.textContent = "";
                     second.textContent = "";
                 }

@@ -56,6 +56,10 @@
         </div>
     </header>
 
+    <div class="screen-time-reminder">
+        <p>🕐 Remember: Take breaks every 20 minutes and ask a grown-up for permission!</p>
+    </div>
+
     <main>
         <p id="scrambled">Loading...</p>
         <input id="guess" placeholder="Type the word" autocomplete="off">
@@ -102,7 +106,7 @@
 
         document.getElementById('check').onclick = checkAnswer;
         document.getElementById('skip').onclick = () => {
-            soundManager.play('skip'); // Play skip sound
+            soundManager.play('swoosh'); // Play skip sound
             newWord();
         };
 
@@ -129,19 +133,24 @@
                 res.style.color = "#4CAF50";
                 scoreDisplay.textContent = `Score: ${score}`;
                 setTimeout(() => {
-                    soundManager.play('next'); // Play next word sound
+                    soundManager.play('chime'); // Play next word sound
                     newWord();
                 }, 1500);
             } else {
                 soundManager.play('incorrect'); // Play incorrect sound
-                setTimeout(() => soundManager.play('hint'), 300); // Play hint sound after error
+                setTimeout(() => soundManager.play('pop'), 300); // Play hint sound after error
                 res.textContent = `❌ Try again! Hint: starts with "${current[0]}"`;
                 res.style.color = "#ff6f61";
             }
         }
 
         // Initialize game
-        window.onload = newWord;
+        window.onload = () => {
+            // Wait for sound manager to load
+            setTimeout(() => {
+                newWord();
+            }, 100);
+        };
     </script>
 </body>
 </html>
