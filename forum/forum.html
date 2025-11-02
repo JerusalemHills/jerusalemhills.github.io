@@ -12,8 +12,8 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=/forum/">
     <title>Redirecting to Forum - Jerusalem Hills</title>
+    <meta name="description" content="Redirecting to Jerusalem Hills community forum. Join discussions about Jerusalem's heritage, culture, and connect with the community."
 
     <style>
         body {
@@ -78,5 +78,12 @@
         <p>You will be automatically redirected to the community forum.</p>
         <a href="/forum/">Click here if not redirected</a>
     </div>
+    
+    <script>
+        // Redirect after 2 seconds - more SEO friendly than meta refresh
+        setTimeout(function() {
+            window.location.href = '/forum/';
+        }, 2000);
+    </script>
 </body>
 </html>
