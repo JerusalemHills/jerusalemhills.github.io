@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jerusalem Memory Match - Find the Pairs | Jerusalem Hills Games</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Test your memory with beautiful Jerusalem landmarks! Match pairs of iconic sites like the Western Wall, Dome of the Rock, and more in this educational memory game.">
+    <meta name="keywords" content="Jerusalem memory game, memory match, Jerusalem landmarks, brain training, educational games, pattern matching">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/games/jerusalem-memory/jerusalem-memory.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Jerusalem Memory Match - Educational Memory Game">
+    <meta property="og:description" content="Match pairs of beautiful Jerusalem landmarks in this educational memory game featuring the Western Wall, Dome of the Rock, and more iconic sites.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jerusalemhills.com/games/jerusalem-memory/jerusalem-memory.html">
+    
+    <!-- Google Analytics -->
+    <script src="/js/analytics.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        h1 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .info-item {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .card {
+            aspect-ratio: 1;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            border-radius: 12px;
+        }
+        
+        .card-content {
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .card.flipped::before {
+            opacity: 0;
+        }
+        
+        .card.flipped .card-content {
+            opacity: 1;
+        }
+        
+        .card.matched {
+            border-color: #4CAF50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+            animation: matchPulse 0.6s ease;
+        }
+        
+        .card.mismatched {
+            border-color: #f44336;
+            animation: shake 0.5s ease;
+        }
+        
+        .card:hover:not(.flipped):not(.matched) {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        @keyframes matchPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .controls {
+            margin: 20px 0;
+        }
+        
+        .btn {
+            background: linear-gradient(145deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .btn.secondary {
+            background: linear-gradient(145deg, #2196F3, #1976D2);
+        }
+        
+        .instructions {
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            color: #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .instructions h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .landmark-info {
+            background: rgba(255,255,255,0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            text-align: left;
+            color: #333;
+            display: none;
+        }
+        
+        .landmark-info.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .navigation {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        
+        .victory {
+            background: linear-gradient(145deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            display: none;
+            animation: victoryPulse 1s ease infinite alternate;
+        }
+        
+        @keyframes victoryPulse {
+            from { box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
+            to { box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6); }
+        }
+        
+        @media (max-width: 600px) {
+            .game-board {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+                padding: 15px;
+            }
+            
+            .card {
+                font-size: 2em;
+            }
+            
+            .card-content {
+                font-size: 2em;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .game-info {
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .game-board {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🕌 Jerusalem Memory Match</h1>
+        <p class="subtitle">Match pairs of beautiful Jerusalem landmarks and learn about the Holy City!</p>
+        
+        <div class="game-info">
+            <div class="info-item">
+                <span>Moves: </span><span id="moves">0</span>
+            </div>
+            <div class="info-item">
+                <span>Matches: </span><span id="matches">0</span>
+            </div>
+            <div class="info-item">
+                <span>Time: </span><span id="timer">0:00</span>
+            </div>
+        </div>
+        
+        <div class="game-board" id="gameBoard"></div>
+        
+        <div class="victory" id="victory">
+            <h2>🎉 Congratulations!</h2>
+            <p>You've successfully matched all Jerusalem landmarks!</p>
+            <p>You completed the game in <span id="finalTime"></span> with <span id="finalMoves"></span> moves.</p>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="startNewGame()">New Game</button>
+            <button class="btn secondary" onclick="toggleInstructions()">How to Play</button>
+        </div>
+        
+        <div class="instructions" id="instructions">
+            <h3>How to Play Jerusalem Memory Match:</h3>
+            <p><strong>Goal:</strong> Find and match all pairs of Jerusalem landmarks!</p>
+            <p><strong>Rules:</strong></p>
+            <ul style="text-align: left; margin: 10px 0;">
+                <li>Click on cards to flip them and reveal the landmarks</li>
+                <li>Try to remember where each landmark is located</li>
+                <li>Match two identical landmarks to keep them revealed</li>
+                <li>Complete the game by matching all pairs</li>
+                <li>Challenge yourself to complete it in fewer moves and less time!</li>
+            </ul>
+            <p><strong>Educational:</strong> Learn about famous Jerusalem sites including the Western Wall, Dome of the Rock, Tower of David, and more!</p>
+        </div>
+        
+        <div class="landmark-info" id="landmarkInfo"></div>
+        
+        <div class="navigation">
+            <a href="../index.html" class="nav-link">← Back to Games</a>
+            <a href="/kids/" class="nav-link">Kids Zone</a>
+            <a href="/" class="nav-link">Home</a>
+        </div>
+    </div>
+
+    <script>
+        class JerusalemMemoryGame {
+            constructor() {
+                this.landmarks = [
+                    { emoji: '🕌', name: 'Dome of the Rock', info: 'An Islamic shrine located on the Temple Mount in the Old City of Jerusalem. Built in 691 CE, it is one of the oldest works of Islamic architecture.' },
+                    { emoji: '🕍', name: 'Western Wall', info: 'The most sacred site in Judaism, this ancient limestone wall is a remnant of the retaining wall of the Temple Mount.' },
+                    { emoji: '🏰', name: 'Tower of David', info: 'An ancient citadel located near the Old City of Jerusalems Jaffa Gate. It houses the Museum of the History of Jerusalem.' },
+                    { emoji: '⛪', name: 'Church of the Holy Sepulchre', info: 'A church in the Christian Quarter of the Old City, believed to be the site of Jesus crucifixion, burial, and resurrection.' },
+                    { emoji: '🌟', name: 'Star of David', info: 'A symbol strongly associated with Jewish identity and Judaism, prominently featured throughout Jerusalem.' },
+                    { emoji: '📿', name: 'Prayer Beads', info: 'Used in various religious traditions found in Jerusalem, representing the citys diverse spiritual heritage.' },
+                    { emoji: '🕊️', name: 'Dove of Peace', info: 'A universal symbol of peace, particularly meaningful in Jerusalem as a city sacred to three major religions.' },
+                    { emoji: '📖', name: 'Sacred Texts', info: 'Representing the Torah, Bible, and Quran - the holy books of the three Abrahamic faiths centered in Jerusalem.' }
+                ];
+                
+                this.cards = [];
+                this.flippedCards = [];
+                this.matches = 0;
+                this.moves = 0;
+                this.startTime = null;
+                this.timer = null;
+                this.gameBoard = document.getElementById('gameBoard');
+                
+                this.init();
+            }
+            
+            init() {
+                this.createCards();
+                this.shuffleCards();
+                this.renderBoard();
+                this.startTimer();
+            }
+            
+            createCards() {
+                this.cards = [];
+                // Create pairs of each landmark
+                this.landmarks.forEach(landmark => {
+                    this.cards.push({...landmark, id: Math.random()});
+                    this.cards.push({...landmark, id: Math.random()});
+                });
+            }
+            
+            shuffleCards() {
+                for (let i = this.cards.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+                }
+            }
+            
+            renderBoard() {
+                this.gameBoard.innerHTML = '';
+                this.cards.forEach((card, index) => {
+                    const cardElement = document.createElement('div');
+                    cardElement.className = 'card';
+                    cardElement.dataset.index = index;
+                    cardElement.innerHTML = `<div class="card-content">${card.emoji}</div>`;
+                    cardElement.addEventListener('click', () => this.flipCard(index));
+                    this.gameBoard.appendChild(cardElement);
+                });
+            }
+            
+            flipCard(index) {
+                if (this.flippedCards.length >= 2) return;
+                
+                const cardElement = this.gameBoard.children[index];
+                if (cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
+                
+                cardElement.classList.add('flipped');
+                this.flippedCards.push(index);
+                
+                if (this.flippedCards.length === 2) {
+                    this.moves++;
+                    document.getElementById('moves').textContent = this.moves;
+                    
+                    setTimeout(() => this.checkMatch(), 1000);
+                }
+            }
+            
+            checkMatch() {
+                const [first, second] = this.flippedCards;
+                const firstCard = this.cards[first];
+                const secondCard = this.cards[second];
+                const firstElement = this.gameBoard.children[first];
+                const secondElement = this.gameBoard.children[second];
+                
+                if (firstCard.name === secondCard.name) {
+                    // Match found
+                    firstElement.classList.add('matched');
+                    secondElement.classList.add('matched');
+                    this.matches++;
+                    document.getElementById('matches').textContent = this.matches;
+                    
+                    // Show landmark information
+                    this.showLandmarkInfo(firstCard);
+                    
+                    if (this.matches === this.landmarks.length) {
+                        this.gameComplete();
+                    }
+                } else {
+                    // No match
+                    firstElement.classList.add('mismatched');
+                    secondElement.classList.add('mismatched');
+                    
+                    setTimeout(() => {
+                        firstElement.classList.remove('flipped', 'mismatched');
+                        secondElement.classList.remove('flipped', 'mismatched');
+                    }, 500);
+                }
+                
+                this.flippedCards = [];
+            }
+            
+            showLandmarkInfo(landmark) {
+                const infoElement = document.getElementById('landmarkInfo');
+                infoElement.innerHTML = `
+                    <h4>${landmark.emoji} ${landmark.name}</h4>
+                    <p>${landmark.info}</p>
+                `;
+                infoElement.classList.add('show');
+                
+                setTimeout(() => {
+                    infoElement.classList.remove('show');
+                }, 3000);
+            }
+            
+            startTimer() {
+                this.startTime = Date.now();
+                this.timer = setInterval(() => {
+                    const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+                    const minutes = Math.floor(elapsed / 60);
+                    const seconds = elapsed % 60;
+                    document.getElementById('timer').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+            
+            gameComplete() {
+                clearInterval(this.timer);
+                const finalTime = document.getElementById('timer').textContent;
+                document.getElementById('finalTime').textContent = finalTime;
+                document.getElementById('finalMoves').textContent = this.moves;
+                document.getElementById('victory').style.display = 'block';
+                
+                // Track completion event
+                if (window.gtag) {
+                    gtag('event', 'game_complete', {
+                        game_name: 'Jerusalem Memory Match',
+                        completion_time: finalTime,
+                        total_moves: this.moves
+                    });
+                }
+            }
+        }
+        
+        let game;
+        
+        function startNewGame() {
+            clearInterval(game?.timer);
+            document.getElementById('victory').style.display = 'none';
+            document.getElementById('landmarkInfo').classList.remove('show');
+            document.getElementById('moves').textContent = '0';
+            document.getElementById('matches').textContent = '0';
+            document.getElementById('timer').textContent = '0:00';
+            
+            game = new JerusalemMemoryGame();
+        }
+        
+        function toggleInstructions() {
+            const instructions = document.getElementById('instructions');
+            instructions.style.display = instructions.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // Initialize game when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            startNewGame();
+        });
+        
+        // Track page view
+        if (window.gtag) {
+            gtag('event', 'page_view', {
+                page_title: 'Jerusalem Memory Match Game',
+                page_location: window.location.href
+            });
+        }
+    </script>
+</body>
+</html>

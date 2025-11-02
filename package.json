@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "minify": "npm run minify:js && npm run minify:css",
-    "minify:js": "terser js/analytics.js -o js/analytics.min.js --compress --mangle",
-    "minify:css": "echo 'CSS minification: Extract inline styles to external files first'"
+    "minify:js": "terser js/analytics.js -o js/analytics.min.js --compress --mangle && terser js/adsense-config.js -o js/adsense-config.min.js --compress --mangle",
+    "minify:css": "cleancss -o styles.min.css styles.css && cleancss -o styles-new.min.css styles-new.css"
   },
   "dependencies": {
     "stripe": "^19.1.0"
