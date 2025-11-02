@@ -352,6 +352,19 @@
       </div>
     </section>
 
+    <!-- Dedicated Ad Placement: Between Games and News -->
+    <section class="ad-section" style="text-align: center; padding: 20px; background: #f9f9f9; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+      <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1738161253720231"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-npa="1"
+             data-full-width-responsive="true"></ins>
+      </div>
+    </section>
+
     <section id="news" class="grid-section">
       <h2>Latest from Jerusalem Hills</h2>
       <div class="grid news">
@@ -411,6 +424,19 @@
           <h4>Jerusalem Spice Mix</h4>
           <p class="price">₪99</p>
         </div>
+      </div>
+    </section>
+
+    <!-- Dedicated Ad Placement: After Marketplace -->
+    <section class="ad-section" style="text-align: center; padding: 20px; background: #f9f9f9; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+      <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1738161253720231"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="rectangle"
+             data-npa="1"
+             data-ad-test="on"></ins>
       </div>
     </section>
 
@@ -803,6 +829,27 @@
       // Start auto-slide after videos load
       setTimeout(startAutoSlide, 2000);
     }
+  </script>
+  <!-- Initialize Manual Ad Units -->
+  <script>
+    // Initialize manual ad units after page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Small delay to ensure AdSense script is loaded
+      setTimeout(function() {
+        const adUnits = document.querySelectorAll('.adsbygoogle');
+        adUnits.forEach(function(adUnit) {
+          if (!adUnit.hasAttribute('data-ad-status')) {
+            try {
+              (window.adsbygoogle = window.adsbygoogle || []).push({});
+              adUnit.setAttribute('data-ad-status', 'initialized');
+              console.log('AdSense: Manual ad unit initialized');
+            } catch (e) {
+              console.error('AdSense: Error initializing ad unit:', e);
+            }
+          }
+        });
+      }, 1000);
+    });
   </script>
 </body>
 </html>

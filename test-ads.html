@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdSense Test Page - Manual Placements</title>
+    <script src="/js/adsense-config.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        .content { max-width: 800px; margin: 0 auto; }
+        .ad-section { 
+            text-align: center; 
+            padding: 20px; 
+            background: #f9f9f9; 
+            border: 2px dashed #ccc; 
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .status { padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>🧪 AdSense Manual Placement Test</h1>
+        
+        <div class="status info">
+            <strong>Test Status:</strong> 
+            <span id="test-status">Initializing...</span>
+        </div>
+
+        <p>This page tests manual AdSense placements without auto ads taking over the site.</p>
+
+        <h2>Test Ad Placement 1 (Auto Format)</h2>
+        <div class="ad-section">
+            <p><strong>Ad Container Below:</strong></p>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1738161253720231"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-npa="1"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <p>Some content between ads to test proper placement...</p>
+
+        <h2>Test Ad Placement 2 (Rectangle Format)</h2>
+        <div class="ad-section">
+            <p><strong>Ad Container Below:</strong></p>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1738161253720231"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="rectangle"
+                 data-npa="1"
+                 data-ad-test="on"></ins>
+        </div>
+
+        <div id="test-results">
+            <h3>Test Results:</h3>
+            <ul id="results-list"></ul>
+        </div>
+
+        <div class="status info">
+            <strong>Instructions:</strong><br>
+            1. Check browser console for AdSense initialization messages<br>
+            2. Verify no "enable_page_level_ads" error appears<br>
+            3. Ads should appear only in designated containers<br>
+            4. No random ads should appear elsewhere on the page
+        </div>
+    </div>
+
+    <script>
+        // Test AdSense setup
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusEl = document.getElementById('test-status');
+            const resultsList = document.getElementById('results-list');
+            
+            function addResult(message, type = 'info') {
+                const li = document.createElement('li');
+                li.textContent = message;
+                li.style.color = type === 'error' ? '#721c24' : type === 'success' ? '#155724' : '#0c5460';
+                resultsList.appendChild(li);
+            }
+
+            // Test 1: Check if auto ads are disabled
+            if (window.ADSENSE_CONFIG && window.ADSENSE_CONFIG.autoAds === false) {
+                addResult('✅ Auto ads are disabled in configuration', 'success');
+                statusEl.textContent = 'Auto ads disabled - Testing manual placements...';
+            } else {
+                addResult('❌ Auto ads still enabled in configuration', 'error');
+                statusEl.textContent = 'Error: Auto ads still enabled';
+            }
+
+            // Test 2: Check AdSense script loading
+            setTimeout(function() {
+                if (window.adsbygoogle) {
+                    addResult('✅ AdSense script loaded successfully', 'success');
+                } else {
+                    addResult('❌ AdSense script not loaded', 'error');
+                }
+
+                // Test 3: Initialize manual ad units
+                const adUnits = document.querySelectorAll('.adsbygoogle');
+                addResult(`📊 Found ${adUnits.length} manual ad units`, 'info');
+                
+                adUnits.forEach(function(adUnit, index) {
+                    try {
+                        (window.adsbygoogle = window.adsbygoogle || []).push({});
+                        adUnit.setAttribute('data-ad-status', 'initialized');
+                        addResult(`✅ Ad unit ${index + 1} initialized successfully`, 'success');
+                    } catch (e) {
+                        addResult(`❌ Ad unit ${index + 1} failed: ${e.message}`, 'error');
+                    }
+                });
+
+                statusEl.textContent = 'Test completed - Check results below';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

@@ -17,7 +17,7 @@
             mobile_anchor: 'XXXXXXXXXX'         // Replace with actual slot ID
         },
         testMode: false, // Set to true for testing
-        autoAds: true   // Enable auto ads
+        autoAds: false  // Disable auto ads (use dedicated placements instead)
     };
 
     // AdSense Manager (Cookie-less Limited Ads)
