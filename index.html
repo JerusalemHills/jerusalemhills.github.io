@@ -830,26 +830,6 @@
       setTimeout(startAutoSlide, 2000);
     }
   </script>
-  <!-- Initialize Manual Ad Units -->
-  <script>
-    // Initialize manual ad units after page load
-    document.addEventListener('DOMContentLoaded', function() {
-      // Small delay to ensure AdSense script is loaded
-      setTimeout(function() {
-        const adUnits = document.querySelectorAll('.adsbygoogle');
-        adUnits.forEach(function(adUnit) {
-          if (!adUnit.hasAttribute('data-ad-status')) {
-            try {
-              (window.adsbygoogle = window.adsbygoogle || []).push({});
-              adUnit.setAttribute('data-ad-status', 'initialized');
-              console.log('AdSense: Manual ad unit initialized');
-            } catch (e) {
-              console.error('AdSense: Error initializing ad unit:', e);
-            }
-          }
-        });
-      }, 1000);
-    });
-  </script>
+  <!-- AdSense initialization handled by adsense-config.js -->
 </body>
 </html>
