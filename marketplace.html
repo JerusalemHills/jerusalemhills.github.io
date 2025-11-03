@@ -1211,7 +1211,7 @@
                                  alt="${product.name}"
                                  class="product-image lazy"
                                  loading="lazy"
-                                 onerror="this.src='https://via.placeholder.com/400x400/E8DCC4/6B7F47?text=Image+Coming+Soon'">
+                                 onerror="this.src='/img/marketplace-placeholder.svg'">
                             ${product.badge ? `<span class="product-badge">${this.highlightSearchTerms(product.badge)}</span>` : ''}
                         </div>
                         <div class="product-details">
@@ -1278,7 +1278,15 @@
                             };
                             
                             imageLoader.onerror = () => {
-                                img.src = 'https://via.placeholder.com/400x400/E8DCC4/6B7F47?text=Image+Coming+Soon';
+                                // Use category-specific placeholder if available
+                                const categoryPlaceholders = {
+                                    'olive-wood': '/img/olive-wood-placeholder.svg',
+                                    'judaica': '/img/judaica-placeholder.svg',
+                                    'dead-sea': '/img/dead-sea-placeholder.svg'
+                                };
+                                
+                                const placeholder = categoryPlaceholders[product.category] || '/img/marketplace-placeholder.svg';
+                                img.src = placeholder;
                                 img.classList.remove('lazy');
                             };
                             
