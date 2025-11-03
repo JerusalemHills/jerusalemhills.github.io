@@ -25,6 +25,8 @@
 
     <!-- Sound Manager -->
     <script src="../assets/js/sound-manager.js"></script>
+    <!-- Enhanced Sound System -->
+    <script src="../assets/js/enhanced-sound-system.js"></script>
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -78,6 +80,9 @@
 
     <script>
         let num1, num2, answer, score = 0;
+        let consecutiveCorrect = 0;
+        let currentOperation = 'addition';
+        let difficulty = 'easy';
         const q = document.getElementById('question');
         const a = document.getElementById('answer');
         const r = document.getElementById('result');
@@ -121,21 +126,70 @@
 
             if (userAnswer === answer) {
                 score++;
-                soundManager.play('correct'); // Play correct sound
-                if (score % 5 === 0 && score > 0) {
-                    soundManager.play('achievement'); // Play milestone sound every 5 points
+                consecutiveCorrect++;
+                
+                // Enhanced sound feedback based on operation and difficulty
+                if (typeof window.playMathSound !== 'undefined') {
+                    window.playMathSound(currentOperation, true, difficulty);
+                } else {
+                    soundManager.play('correct'); // Fallback
                 }
-                r.textContent = "✅ Correct! Great job!";
+                
+                // Special celebration for streaks
+                if (consecutiveCorrect >= 5) {
+                    setTimeout(() => {
+                        if (typeof window.playAchievementSound !== 'undefined') {
+                            window.playAchievementSound('math-master');
+                        } else {
+                            soundManager.celebrate();
+                        }
+                    }, 300);
+                    r.textContent = `🎉 Amazing! ${consecutiveCorrect} in a row!`;
+                } else if (consecutiveCorrect >= 3) {
+                    setTimeout(() => {
+                        if (typeof window.playAchievementSound !== 'undefined') {
+                            window.playAchievementSound('perfect-score');
+                        } else {
+                            soundManager.play('achievement');
+                        }
+                    }, 200);
+                    r.textContent = `✨ Great streak! ${consecutiveCorrect} correct!`;
+                } else {
+                    r.textContent = "✅ Correct! Great job!";
+                }
+                
+                // Milestone achievements
+                if (score % 10 === 0 && score > 0) {
+                    setTimeout(() => {
+                        if (typeof window.playAchievementSound !== 'undefined') {
+                            window.playAchievementSound('speed-demon');
+                        }
+                    }, 500);
+                }
+                
                 r.style.color = "#4CAF50";
             } else {
-                soundManager.play('incorrect'); // Play incorrect sound
+                consecutiveCorrect = 0; // Reset streak
+                
+                // Enhanced incorrect sound
+                if (typeof window.playMathSound !== 'undefined') {
+                    window.playMathSound(currentOperation, false, difficulty);
+                } else {
+                    soundManager.play('incorrect'); // Fallback
+                }
+                
                 r.textContent = `❌ Not quite! The answer is ${answer}`;
                 r.style.color = "#ff6f61";
             }
             s.textContent = `Score: ${score}`;
 
             setTimeout(() => {
-                soundManager.play('pop'); // Play next question sound
+                // Play gentle transition sound for next question
+                if (typeof window.soundManager !== 'undefined' && window.soundManager.educationalSounds) {
+                    window.soundManager.educationalSounds.counting();
+                } else {
+                    soundManager.play('pop'); // Fallback
+                }
                 newQuestion();
             }, 1500);
         }

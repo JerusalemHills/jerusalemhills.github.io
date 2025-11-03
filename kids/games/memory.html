@@ -25,6 +25,8 @@
 
     <!-- Sound Manager -->
     <script src="../assets/js/sound-manager.js"></script>
+    <!-- Enhanced Sound System -->
+    <script src="../assets/js/enhanced-sound-system.js"></script>
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -78,7 +80,13 @@
         let first = null, second = null, lock = false, matches = 0;
 
         function initGame() {
-            soundManager.play('chime'); // Play start sound
+            // Enhanced game start sound
+            if (typeof window.playMemorySound !== 'undefined') {
+                window.playMemorySound('start');
+            } else {
+                soundManager.play('chime'); // Fallback
+            }
+            
             // Reset game state
             matches = 0;
             first = null;
@@ -102,6 +110,7 @@
 
             document.getElementById('score').textContent = `Matches: 0 / ${emojis.length}`;
             document.getElementById('message').textContent = 'Click cards to find matching pairs!';
+            document.getElementById('message').style.color = "#333";
         }
 
         function handleCardClick() {
@@ -111,7 +120,12 @@
             }
 
             // Show the emoji
-            soundManager.play('pop'); // Play flip sound
+            // Enhanced card flip sound
+            if (typeof window.playMemorySound !== 'undefined') {
+                window.playMemorySound('flip');
+            } else {
+                soundManager.play('pop'); // Fallback
+            }
             this.textContent = this.dataset.emoji;
 
             if (!first) {
@@ -127,7 +141,13 @@
             setTimeout(() => {
                 if (first.dataset.emoji === second.dataset.emoji) {
                     // Match found!
-                    soundManager.play('success'); // Play match sound
+                    // Enhanced match sound with cultural elements
+                    if (typeof window.playMemorySound !== 'undefined') {
+                        window.playMemorySound('match', { isJerusalemThemed: true });
+                    } else {
+                        soundManager.play('success'); // Fallback
+                    }
+                    
                     first.style.visibility = 'hidden';
                     second.style.visibility = 'hidden';
                     matches++;
@@ -135,13 +155,32 @@
                     document.getElementById('score').textContent = `Matches: ${matches} / ${emojis.length}`;
 
                     if (matches === emojis.length) {
-                        soundManager.play('achievement'); // Play victory sound
+                        // Enhanced completion celebration
+                        if (typeof window.playMemorySound !== 'undefined') {
+                            window.playMemorySound('complete');
+                        } else {
+                            soundManager.play('achievement'); // Fallback
+                        }
+                        
+                        // Achievement sound for perfect memory
+                        setTimeout(() => {
+                            if (typeof window.playAchievementSound !== 'undefined') {
+                                window.playAchievementSound('memory-champion');
+                            }
+                        }, 500);
+                        
                         document.getElementById('message').textContent = "🎉 You matched all pairs! Great job!";
                         document.getElementById('message').style.color = "#4CAF50";
                     }
                 } else {
                     // No match - hide cards again
-                    soundManager.play('swoosh'); // Play no-match sound
+                    // Enhanced no-match sound
+                    if (typeof window.playMemorySound !== 'undefined') {
+                        window.playMemorySound('no-match');
+                    } else {
+                        soundManager.play('swoosh'); // Fallback
+                    }
+                    
                     first.textContent = "";
                     second.textContent = "";
                 }
