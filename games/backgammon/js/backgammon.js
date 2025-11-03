@@ -309,6 +309,9 @@ class BackgammonGame {
                 this.multiplayer.broadcastDiceRoll(this.dice);
             }
 
+            // Also broadcast through centralized system
+            this.broadcastDiceRollToRoom(this.dice);
+
             die1.classList.remove('rolling');
             die2.classList.remove('rolling');
 
@@ -895,6 +898,34 @@ class BackgammonGame {
 
         // Check URL for game ID (auto-join)
         this.checkAutoJoin();
+
+        // Initialize centralized multiplayer system
+        this.centralMultiplayer = new JerusalemHillsMultiplayer({
+            enableChat: true,
+            maxPlayers: 2,
+            gameTimeout: 600000 // 10 minutes
+        });
+
+        // Set up event handlers
+        this.centralMultiplayer.onGameStateUpdate = (data) => {
+            this.handleMultiplayerUpdate(data);
+        };
+
+        this.centralMultiplayer.onPlayerJoin = (player) => {
+            this.showMessage('Player Joined', `${player.name} joined the game!`);
+        };
+
+        this.centralMultiplayer.onPlayerLeave = (player) => {
+            this.showMessage('Player Left', `${player.name} left the game.`);
+        };
+
+        // Check for room ID in URL (new system)
+        const roomId = JerusalemHillsMultiplayer.checkForRoomInURL();
+        if (roomId) {
+            setTimeout(() => {
+                this.autoJoinRoom(roomId);
+            }, 1000);
+        }
     }
 
     /**
@@ -950,6 +981,141 @@ class BackgammonGame {
         linkDisplay.style.display = 'block';
 
         this.gameMode = 'online-host';
+
+        // Also create modern room
+        this.createModernRoom();
+    }
+
+    /**
+     * Create modern room with enhanced sharing
+     */
+    async createModernRoom() {
+        try {
+            const roomInfo = await this.centralMultiplayer.createRoom('backgammon', {
+                maxPlayers: 2,
+                initialState: {
+                    board: this.board,
+                    currentPlayer: this.currentPlayer,
+                    dice: this.dice
+                }
+            });
+
+            // Show enhanced sharing modal
+            this.centralMultiplayer.createShareModal(roomInfo);
+
+            // Track room creation
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'backgammon_room_created', {
+                    room_id: roomInfo.roomId,
+                    game_type: 'backgammon'
+                });
+            }
+
+        } catch (error) {
+            console.error('Failed to create modern room:', error);
+            this.showMessage('Error', 'Failed to create multiplayer room. Please try again.');
+        }
+    }
+
+    /**
+     * Auto-join room from URL
+     */
+    async autoJoinRoom(roomId) {
+        try {
+            console.log('Auto-joining room:', roomId);
+            await this.centralMultiplayer.joinRoom(roomId);
+            
+            this.gameMode = 'online-guest';
+            this.showMessage('Joined Game', 'Successfully joined multiplayer room!');
+
+            // Track join
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'backgammon_room_joined', {
+                    room_id: roomId,
+                    game_type: 'backgammon'
+                });
+            }
+
+        } catch (error) {
+            console.error('Failed to join room:', error);
+            this.showMessage('Error', 'Could not join game room. Please check the room ID.');
+        }
+    }
+
+    /**
+     * Handle multiplayer updates from centralized system
+     */
+    handleMultiplayerUpdate(data) {
+        if (!data) return;
+
+        console.log('Handling multiplayer update:', data);
+
+        // Handle different types of updates
+        if (data.type === 'move' && data.playerId !== this.centralMultiplayer.playerId) {
+            // Opponent made a move
+            this.syncGameStateFromUpdate(data);
+        } else if (data.type === 'dice_roll' && data.playerId !== this.centralMultiplayer.playerId) {
+            // Opponent rolled dice
+            this.dice = data.dice;
+            this.updateDiceDisplay();
+        } else if (data.type === 'board_sync') {
+            // Full board sync
+            this.board = data.board;
+            this.currentPlayer = data.currentPlayer;
+            this.render();
+        }
+    }
+
+    /**
+     * Sync game state from multiplayer update
+     */
+    syncGameStateFromUpdate(data) {
+        if (data.board) {
+            this.board = data.board;
+        }
+        if (data.currentPlayer) {
+            this.currentPlayer = data.currentPlayer;
+        }
+        if (data.dice) {
+            this.dice = data.dice;
+        }
+        if (data.movesRemaining) {
+            this.movesRemaining = data.movesRemaining;
+        }
+
+        // Re-render the board
+        this.render();
+        this.updateDiceDisplay();
+        this.updatePlayerIndicators();
+    }
+
+    /**
+     * Broadcast move through centralized system
+     */
+    broadcastMoveToRoom(moveData) {
+        if (this.centralMultiplayer && this.centralMultiplayer.currentRoom) {
+            this.centralMultiplayer.updateGameState({
+                type: 'move',
+                ...moveData,
+                board: this.board,
+                currentPlayer: this.currentPlayer,
+                dice: this.dice,
+                movesRemaining: this.movesRemaining
+            });
+        }
+    }
+
+    /**
+     * Broadcast dice roll through centralized system
+     */
+    broadcastDiceRollToRoom(dice) {
+        if (this.centralMultiplayer && this.centralMultiplayer.currentRoom) {
+            this.centralMultiplayer.updateGameState({
+                type: 'dice_roll',
+                dice: dice,
+                currentPlayer: this.currentPlayer
+            });
+        }
 
         this.showStatus('Hosting game... Waiting for opponent', 'info');
 
