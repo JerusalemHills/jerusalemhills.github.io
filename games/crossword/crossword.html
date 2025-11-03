@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jerusalem Crossword - Jerusalem Hills</title>
+    <meta name="description" content="Solve crossword puzzles featuring Jerusalem landmarks, history, and culture">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../css/styles.css">
+    
+    <style>
+        .crossword-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .game-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .crossword-grid {
+            display: grid;
+            grid-template-columns: repeat(15, 32px);
+            grid-template-rows: repeat(15, 32px);
+            gap: 1px;
+            background: #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            justify-self: center;
+        }
+
+        .crossword-cell {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .crossword-cell.blocked {
+            background: #333;
+            cursor: default;
+        }
+
+        .crossword-cell.highlighted {
+            background: #e3f2fd;
+        }
+
+        .crossword-cell.current {
+            background: #2196f3;
+            color: white;
+        }
+
+        .crossword-cell.correct {
+            background: #c8e6c9;
+        }
+
+        .crossword-cell input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            outline: none;
+        }
+
+        .cell-number {
+            position: absolute;
+            top: 1px;
+            left: 2px;
+            font-size: 10px;
+            color: #666;
+            line-height: 1;
+        }
+
+        .clues-container {
+            min-width: 300px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .clues-section {
+            margin-bottom: 30px;
+        }
+
+        .clues-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c5aa0;
+            border-bottom: 2px solid #e3f2fd;
+            padding-bottom: 8px;
+        }
+
+        .clue-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .clue-item:hover {
+            background: #f5f5f5;
+        }
+
+        .clue-item.active {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+
+        .clue-number {
+            font-weight: bold;
+            margin-right: 10px;
+            color: #2c5aa0;
+            min-width: 25px;
+        }
+
+        .clue-text {
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        .clue-length {
+            font-size: 0.85rem;
+            color: #666;
+            margin-left: 10px;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .control-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #2c5aa0;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e3f73;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #1e7e34;
+            transform: translateY(-2px);
+        }
+
+        .difficulty-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-btn {
+            padding: 8px 16px;
+            margin: 0 5px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .difficulty-btn.active {
+            border-color: #2c5aa0;
+            background: #2c5aa0;
+            color: white;
+        }
+
+        .completion-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: #2c5aa0;
+            margin-bottom: 20px;
+        }
+
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .modal-stat {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .modal-stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        .modal-stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .hint-panel {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .hint-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .hint-text {
+            color: #856404;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .crossword-container {
+                padding: 15px;
+            }
+
+            .game-board {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .crossword-grid {
+                grid-template-columns: repeat(15, 22px);
+                grid-template-rows: repeat(15, 22px);
+                padding: 5px;
+            }
+
+            .crossword-cell {
+                width: 22px;
+                height: 22px;
+                font-size: 12px;
+            }
+
+            .crossword-cell input {
+                font-size: 12px;
+            }
+
+            .cell-number {
+                font-size: 8px;
+            }
+
+            .clues-container {
+                min-width: auto;
+                max-height: 400px;
+            }
+
+            .game-stats {
+                gap: 15px;
+            }
+
+            .stat-item {
+                padding: 8px 15px;
+            }
+        }
+
+        .language-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid #ddd;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:first-child {
+            border-radius: 20px 0 0 20px;
+            border-right: 1px solid #ddd;
+        }
+
+        .lang-btn:last-child {
+            border-radius: 0 20px 20px 0;
+            border-left: 1px solid #ddd;
+        }
+
+        .lang-btn.active {
+            border-color: #2c5aa0;
+            background: #2c5aa0;
+            color: white;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../../index.html">🏔️ Jerusalem Hills</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../marketplace.html">Marketplace</a></li>
+                <li><a href="../index.html">Games</a></li>
+                <li><a href="../../forum.html">Community</a></li>
+                <li><a href="../../services.html">Services</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="crossword-container">
+            <div class="game-header">
+                <h1 class="game-title">Jerusalem Crossword</h1>
+                <p class="game-subtitle">Explore Jerusalem's rich history and culture through words</p>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+                <div class="game-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="completedWords">0</div>
+                        <div class="stat-label">Words Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalWords">0</div>
+                        <div class="stat-label">Total Words</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="gameTime">00:00</div>
+                        <div class="stat-label">Time</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="hintsUsed">0</div>
+                        <div class="stat-label">Hints Used</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+            </div>
+
+            <div class="language-toggle">
+                <button class="lang-btn active" data-lang="english">English</button>
+                <button class="lang-btn" data-lang="hebrew">עברית</button>
+            </div>
+
+            <div class="hint-panel" id="hintPanel">
+                <div class="hint-title">Hint</div>
+                <div class="hint-text" id="hintText"></div>
+            </div>
+
+            <div class="game-board">
+                <div class="crossword-grid" id="crosswordGrid"></div>
+                
+                <div class="clues-container">
+                    <div class="clues-section">
+                        <h3 class="clues-title">Across</h3>
+                        <div id="acrossClues"></div>
+                    </div>
+                    <div class="clues-section">
+                        <h3 class="clues-title">Down</h3>
+                        <div id="downClues"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <button class="control-btn btn-primary" id="newGameBtn">New Game</button>
+                <button class="control-btn btn-secondary" id="clearBtn">Clear</button>
+                <button class="control-btn btn-secondary" id="hintBtn">Get Hint</button>
+                <button class="control-btn btn-success" id="checkBtn">Check Answers</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Completion Modal -->
+    <div class="completion-modal" id="completionModal">
+        <div class="modal-content">
+            <h2 class="modal-title">🎉 Puzzle Completed!</h2>
+            <p>Congratulations! You've successfully completed the Jerusalem crossword puzzle!</p>
+            
+            <div class="modal-stats">
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="finalTime">--:--</div>
+                    <div class="modal-stat-label">Time</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="finalHints">0</div>
+                    <div class="modal-stat-label">Hints Used</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="finalScore">0</div>
+                    <div class="modal-stat-label">Score</div>
+                </div>
+            </div>
+            
+            <div class="game-controls">
+                <button class="control-btn btn-primary" id="playAgainBtn">Play Again</button>
+                <button class="control-btn btn-secondary" id="shareScoreBtn">Share Score</button>
+                <button class="control-btn btn-secondary" onclick="window.location.href='../index.html'">More Games</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/analytics.js"></script>
+    <script src="../../js/accessibility-enhancements.js"></script>
+    <script src="../../js/mobile-touch-controls.js"></script>
+    <script>
+        class CrosswordGame {
+            constructor() {
+                this.gridSize = 15;
+                this.currentLanguage = 'english';
+                this.currentDifficulty = 'easy';
+                this.selectedWord = null;
+                this.selectedDirection = null;
+                this.gameStartTime = null;
+                this.gameTimer = null;
+                this.hintsUsed = 0;
+                this.completedWords = new Set();
+                
+                this.initializeGame();
+                this.setupEventListeners();
+                this.startTimer();
+                
+                // Initialize accessibility and mobile controls
+                if (typeof AccessibilityEnhancer !== 'undefined') {
+                    this.accessibility = new AccessibilityEnhancer({
+                        announceGameEvents: true,
+                        announceScore: true
+                    });
+                }
+                
+                if (typeof MobileTouchControls !== 'undefined') {
+                    this.mobileControls = new MobileTouchControls({
+                        swipeThreshold: 40,
+                        doubleTapThreshold: 300
+                    });
+                }
+                
+                // Track game start
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'game_start', {
+                        game_name: 'jerusalem_crossword',
+                        difficulty: this.currentDifficulty,
+                        language: this.currentLanguage
+                    });
+                }
+            }
+
+            puzzles = {
+                easy: {
+                    english: {
+                        grid: [
+                            ['', '', '', 'W', 'E', 'S', 'T', 'E', 'R', 'N', '', '', '', '', ''],
+                            ['', '', '', 'A', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', 'L', '', 'T', 'E', 'M', 'P', 'L', 'E', '', '', '', ''],
+                            ['', '', '', 'L', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['D', 'O', 'M', 'E', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', 'J', 'E', 'R', 'U', 'S', 'A', 'L', 'E', 'M'],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                        ],
+                        words: [
+                            {
+                                word: 'WESTERN',
+                                clue: 'The ___ Wall, holiest prayer site in Judaism',
+                                hint: 'Also called the Wailing Wall',
+                                startRow: 0, startCol: 3,
+                                direction: 'across',
+                                number: 1
+                            },
+                            {
+                                word: 'TEMPLE',
+                                clue: 'Ancient Jewish house of worship on Temple Mount',
+                                hint: 'Solomon built the First ___',
+                                startRow: 2, startCol: 5,
+                                direction: 'across',
+                                number: 2
+                            },
+                            {
+                                word: 'DOME',
+                                clue: 'The ___ of the Rock, iconic golden structure',
+                                hint: 'Golden Islamic shrine',
+                                startRow: 4, startCol: 0,
+                                direction: 'across',
+                                number: 3
+                            },
+                            {
+                                word: 'JERUSALEM',
+                                clue: 'Holy city sacred to three religions',
+                                hint: 'Capital of Israel',
+                                startRow: 6, startCol: 6,
+                                direction: 'across',
+                                number: 4
+                            },
+                            {
+                                word: 'WALL',
+                                clue: 'Structure where Jews pray and place notes',
+                                hint: 'Made of ancient Jerusalem stone',
+                                startRow: 0, startCol: 3,
+                                direction: 'down',
+                                number: 1
+                            }
+                        ]
+                    },
+                    hebrew: {
+                        grid: [
+                            ['', '', '', 'מ', 'ע', 'ר', 'ב', 'י', '', '', '', '', '', '', ''],
+                            ['', '', '', 'ק', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', 'ד', '', 'מ', 'ק', 'ד', 'ש', '', '', '', '', '', ''],
+                            ['', '', '', 'ש', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['כ', 'י', 'פ', 'ה', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', 'י', 'ר', 'ו', 'ש', 'ל', 'י', 'ם', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                        ],
+                        words: [
+                            {
+                                word: 'מערבי',
+                                clue: 'הכותל ה___, מקום התפילה הקדוש ביותר ליהודים',
+                                hint: 'נקרא גם כותל המערבי',
+                                startRow: 0, startCol: 3,
+                                direction: 'across',
+                                number: 1
+                            },
+                            {
+                                word: 'מקדש',
+                                clue: 'בית המקדש העתיק בהר הבית',
+                                hint: 'שלמה בנה את הראשון',
+                                startRow: 2, startCol: 5,
+                                direction: 'across',
+                                number: 2
+                            },
+                            {
+                                word: 'כיפה',
+                                clue: '___ הסלע, המבנה הזהוב המפורסם',
+                                hint: 'מקדש איסלמי זהוב',
+                                startRow: 4, startCol: 0,
+                                direction: 'across',
+                                number: 3
+                            },
+                            {
+                                word: 'ירושלים',
+                                clue: 'עיר קדושה לשלוש הדתות',
+                                hint: 'בירת ישראל',
+                                startRow: 6, startCol: 6,
+                                direction: 'across',
+                                number: 4
+                            },
+                            {
+                                word: 'מקדש',
+                                clue: 'מקום התפילה והקרבה העתיק',
+                                hint: 'בנוי מאבן ירושלמית עתיקה',
+                                startRow: 0, startCol: 3,
+                                direction: 'down',
+                                number: 1
+                            }
+                        ]
+                    }
+                },
+                medium: {
+                    english: {
+                        grid: [
+                            ['', '', 'O', 'L', 'I', 'V', 'E', '', '', '', '', '', '', '', ''],
+                            ['', '', 'L', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', 'D', 'A', 'V', 'I', 'D', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['Q', 'U', 'A', 'R', 'T', 'E', 'R', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', 'S', 'H', 'A', 'B', 'B', 'A', 'T', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                        ],
+                        words: [
+                            {
+                                word: 'OLIVE',
+                                clue: 'Tree sacred to Jerusalem, grows on Mount of ___',
+                                hint: 'Source of holy oil',
+                                startRow: 0, startCol: 2,
+                                direction: 'across',
+                                number: 1
+                            },
+                            {
+                                word: 'DAVID',
+                                clue: 'King who made Jerusalem the capital of Israel',
+                                hint: 'Slayer of Goliath',
+                                startRow: 2, startCol: 3,
+                                direction: 'across',
+                                number: 2
+                            },
+                            {
+                                word: 'QUARTER',
+                                clue: 'Old City section, like Armenian or Jewish',
+                                hint: 'The Old City has four of these',
+                                startRow: 4, startCol: 0,
+                                direction: 'across',
+                                number: 3
+                            },
+                            {
+                                word: 'SHABBAT',
+                                clue: 'Jewish day of rest observed in Jerusalem',
+                                hint: 'Begins Friday evening',
+                                startRow: 6, startCol: 1,
+                                direction: 'across',
+                                number: 4
+                            },
+                            {
+                                word: 'OLD',
+                                clue: 'The ___ City, walled historic center',
+                                hint: 'Ancient part of Jerusalem',
+                                startRow: 0, startCol: 2,
+                                direction: 'down',
+                                number: 1
+                            }
+                        ]
+                    }
+                }
+            };
+
+            initializeGame() {
+                this.createGrid();
+                this.loadPuzzle();
+                this.renderClues();
+                this.updateStats();
+            }
+
+            createGrid() {
+                const grid = document.getElementById('crosswordGrid');
+                grid.innerHTML = '';
+                
+                for (let row = 0; row < this.gridSize; row++) {
+                    for (let col = 0; col < this.gridSize; col++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'crossword-cell';
+                        cell.dataset.row = row;
+                        cell.dataset.col = col;
+                        
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.maxLength = 1;
+                        input.addEventListener('input', (e) => this.handleInput(e, row, col));
+                        input.addEventListener('keydown', (e) => this.handleKeyDown(e, row, col));
+                        input.addEventListener('focus', () => this.handleCellFocus(row, col));
+                        
+                        cell.appendChild(input);
+                        grid.appendChild(cell);
+                    }
+                }
+            }
+
+            loadPuzzle() {
+                const puzzle = this.puzzles[this.currentDifficulty][this.currentLanguage];
+                if (!puzzle) return;
+
+                this.currentPuzzle = puzzle;
+                
+                // Clear previous state
+                this.completedWords.clear();
+                
+                // Set up grid
+                for (let row = 0; row < this.gridSize; row++) {
+                    for (let col = 0; col < this.gridSize; col++) {
+                        const cell = this.getCell(row, col);
+                        const cellData = puzzle.grid[row] && puzzle.grid[row][col];
+                        
+                        if (!cellData) {
+                            cell.classList.add('blocked');
+                            cell.querySelector('input').disabled = true;
+                        } else {
+                            cell.classList.remove('blocked');
+                            cell.querySelector('input').disabled = false;
+                            cell.querySelector('input').value = '';
+                        }
+                    }
+                }
+                
+                // Add word numbers
+                puzzle.words.forEach(word => {
+                    const cell = this.getCell(word.startRow, word.startCol);
+                    let numberSpan = cell.querySelector('.cell-number');
+                    if (!numberSpan) {
+                        numberSpan = document.createElement('span');
+                        numberSpan.className = 'cell-number';
+                        cell.appendChild(numberSpan);
+                    }
+                    numberSpan.textContent = word.number;
+                });
+            }
+
+            renderClues() {
+                const acrossClues = document.getElementById('acrossClues');
+                const downClues = document.getElementById('downClues');
+                
+                acrossClues.innerHTML = '';
+                downClues.innerHTML = '';
+                
+                if (!this.currentPuzzle) return;
+                
+                this.currentPuzzle.words.forEach(word => {
+                    const clueDiv = document.createElement('div');
+                    clueDiv.className = 'clue-item';
+                    clueDiv.dataset.wordIndex = this.currentPuzzle.words.indexOf(word);
+                    
+                    clueDiv.innerHTML = `
+                        <span class="clue-number">${word.number}</span>
+                        <span class="clue-text">${word.clue}</span>
+                        <span class="clue-length">(${word.word.length})</span>
+                    `;
+                    
+                    clueDiv.addEventListener('click', () => this.selectWord(word));
+                    
+                    if (word.direction === 'across') {
+                        acrossClues.appendChild(clueDiv);
+                    } else {
+                        downClues.appendChild(clueDiv);
+                    }
+                });
+            }
+
+            getCell(row, col) {
+                return document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+            }
+
+            handleInput(event, row, col) {
+                const input = event.target;
+                const value = input.value.toUpperCase();
+                
+                if (value && this.isValidCharacter(value)) {
+                    input.value = value;
+                    this.checkWordCompletion();
+                    this.moveToNextCell(row, col);
+                } else {
+                    input.value = '';
+                }
+                
+                this.updateStats();
+            }
+
+            isValidCharacter(char) {
+                if (this.currentLanguage === 'hebrew') {
+                    return /[\u0590-\u05FF]/.test(char);
+                } else {
+                    return /[A-Z]/.test(char);
+                }
+            }
+
+            handleKeyDown(event, row, col) {
+                switch (event.key) {
+                    case 'ArrowUp':
+                        event.preventDefault();
+                        this.moveFocus(row - 1, col);
+                        break;
+                    case 'ArrowDown':
+                        event.preventDefault();
+                        this.moveFocus(row + 1, col);
+                        break;
+                    case 'ArrowLeft':
+                        event.preventDefault();
+                        this.moveFocus(row, col - 1);
+                        break;
+                    case 'ArrowRight':
+                        event.preventDefault();
+                        this.moveFocus(row, col + 1);
+                        break;
+                    case 'Backspace':
+                        if (!event.target.value) {
+                            this.moveToPreviousCell(row, col);
+                        }
+                        break;
+                }
+            }
+
+            handleCellFocus(row, col) {
+                this.highlightCurrentWord(row, col);
+            }
+
+            moveFocus(row, col) {
+                if (row >= 0 && row < this.gridSize && col >= 0 && col < this.gridSize) {
+                    const cell = this.getCell(row, col);
+                    if (!cell.classList.contains('blocked')) {
+                        cell.querySelector('input').focus();
+                    }
+                }
+            }
+
+            moveToNextCell(row, col) {
+                if (this.selectedWord && this.selectedDirection) {
+                    const nextPos = this.getNextPosition(row, col, this.selectedDirection);
+                    if (nextPos) {
+                        this.moveFocus(nextPos.row, nextPos.col);
+                    }
+                }
+            }
+
+            moveToPreviousCell(row, col) {
+                if (this.selectedWord && this.selectedDirection) {
+                    const prevPos = this.getPreviousPosition(row, col, this.selectedDirection);
+                    if (prevPos) {
+                        this.moveFocus(prevPos.row, prevPos.col);
+                    }
+                }
+            }
+
+            getNextPosition(row, col, direction) {
+                if (direction === 'across') {
+                    return col + 1 < this.gridSize ? { row, col: col + 1 } : null;
+                } else {
+                    return row + 1 < this.gridSize ? { row: row + 1, col } : null;
+                }
+            }
+
+            getPreviousPosition(row, col, direction) {
+                if (direction === 'across') {
+                    return col - 1 >= 0 ? { row, col: col - 1 } : null;
+                } else {
+                    return row - 1 >= 0 ? { row: row - 1, col } : null;
+                }
+            }
+
+            selectWord(word) {
+                this.selectedWord = word;
+                this.selectedDirection = word.direction;
+                
+                // Update clue highlighting
+                document.querySelectorAll('.clue-item').forEach(clue => {
+                    clue.classList.remove('active');
+                });
+                
+                const clueIndex = this.currentPuzzle.words.indexOf(word);
+                const clueElement = document.querySelector(`[data-word-index="${clueIndex}"]`);
+                if (clueElement) {
+                    clueElement.classList.add('active');
+                }
+                
+                this.highlightWord(word);
+                
+                // Focus first cell of word
+                const firstCell = this.getCell(word.startRow, word.startCol);
+                firstCell.querySelector('input').focus();
+            }
+
+            highlightWord(word) {
+                // Clear previous highlighting
+                document.querySelectorAll('.crossword-cell').forEach(cell => {
+                    cell.classList.remove('highlighted', 'current');
+                });
+                
+                // Highlight selected word
+                for (let i = 0; i < word.word.length; i++) {
+                    let row, col;
+                    if (word.direction === 'across') {
+                        row = word.startRow;
+                        col = word.startCol + i;
+                    } else {
+                        row = word.startRow + i;
+                        col = word.startCol;
+                    }
+                    
+                    const cell = this.getCell(row, col);
+                    if (cell) {
+                        cell.classList.add('highlighted');
+                    }
+                }
+            }
+
+            highlightCurrentWord(row, col) {
+                // Find word at current position
+                const wordsAtPosition = this.currentPuzzle.words.filter(word => {
+                    if (word.direction === 'across') {
+                        return word.startRow === row && 
+                               col >= word.startCol && 
+                               col < word.startCol + word.word.length;
+                    } else {
+                        return word.startCol === col && 
+                               row >= word.startRow && 
+                               row < word.startRow + word.word.length;
+                    }
+                });
+                
+                if (wordsAtPosition.length > 0) {
+                    this.selectWord(wordsAtPosition[0]);
+                }
+            }
+
+            checkWordCompletion() {
+                if (!this.currentPuzzle) return;
+                
+                this.currentPuzzle.words.forEach(word => {
+                    let completed = true;
+                    let currentAnswer = '';
+                    
+                    for (let i = 0; i < word.word.length; i++) {
+                        let row, col;
+                        if (word.direction === 'across') {
+                            row = word.startRow;
+                            col = word.startCol + i;
+                        } else {
+                            row = word.startRow + i;
+                            col = word.startCol;
+                        }
+                        
+                        const cell = this.getCell(row, col);
+                        const input = cell.querySelector('input');
+                        const value = input.value.toUpperCase();
+                        currentAnswer += value;
+                        
+                        if (value !== word.word[i]) {
+                            completed = false;
+                        }
+                    }
+                    
+                    const wordKey = `${word.startRow}-${word.startCol}-${word.direction}`;
+                    
+                    if (completed && !this.completedWords.has(wordKey)) {
+                        this.completedWords.add(wordKey);
+                        this.markWordAsCorrect(word);
+                        
+                        if (this.accessibility) {
+                            this.accessibility.announceToScreenReader(`Word completed: ${word.word}`);
+                        }
+                        
+                        // Track completion
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'crossword_word_completed', {
+                                word: word.word,
+                                difficulty: this.currentDifficulty,
+                                language: this.currentLanguage
+                            });
+                        }
+                    }
+                });
+                
+                // Check if puzzle is complete
+                if (this.completedWords.size === this.currentPuzzle.words.length) {
+                    setTimeout(() => this.showCompletionModal(), 500);
+                }
+            }
+
+            markWordAsCorrect(word) {
+                for (let i = 0; i < word.word.length; i++) {
+                    let row, col;
+                    if (word.direction === 'across') {
+                        row = word.startRow;
+                        col = word.startCol + i;
+                    } else {
+                        row = word.startRow + i;
+                        col = word.startCol;
+                    }
+                    
+                    const cell = this.getCell(row, col);
+                    if (cell) {
+                        cell.classList.add('correct');
+                    }
+                }
+            }
+
+            updateStats() {
+                document.getElementById('completedWords').textContent = this.completedWords.size;
+                document.getElementById('totalWords').textContent = this.currentPuzzle ? this.currentPuzzle.words.length : 0;
+                document.getElementById('hintsUsed').textContent = this.hintsUsed;
+                
+                // Update progress bar
+                const progress = this.currentPuzzle ? (this.completedWords.size / this.currentPuzzle.words.length) * 100 : 0;
+                document.getElementById('progressFill').style.width = `${progress}%`;
+            }
+
+            startTimer() {
+                this.gameStartTime = Date.now();
+                this.gameTimer = setInterval(() => {
+                    const elapsed = Date.now() - this.gameStartTime;
+                    const minutes = Math.floor(elapsed / 60000);
+                    const seconds = Math.floor((elapsed % 60000) / 1000);
+                    document.getElementById('gameTime').textContent = 
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+
+            stopTimer() {
+                if (this.gameTimer) {
+                    clearInterval(this.gameTimer);
+                }
+            }
+
+            showHint() {
+                if (!this.selectedWord) return;
+                
+                this.hintsUsed++;
+                
+                const hintPanel = document.getElementById('hintPanel');
+                const hintText = document.getElementById('hintText');
+                
+                hintText.textContent = this.selectedWord.hint;
+                hintPanel.style.display = 'block';
+                
+                setTimeout(() => {
+                    hintPanel.style.display = 'none';
+                }, 5000);
+                
+                this.updateStats();
+                
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'crossword_hint_used', {
+                        word: this.selectedWord.word,
+                        hints_used: this.hintsUsed
+                    });
+                }
+            }
+
+            checkAnswers() {
+                if (!this.currentPuzzle) return;
+                
+                this.currentPuzzle.words.forEach(word => {
+                    let allCorrect = true;
+                    
+                    for (let i = 0; i < word.word.length; i++) {
+                        let row, col;
+                        if (word.direction === 'across') {
+                            row = word.startRow;
+                            col = word.startCol + i;
+                        } else {
+                            row = word.startRow + i;
+                            col = word.startCol;
+                        }
+                        
+                        const cell = this.getCell(row, col);
+                        const input = cell.querySelector('input');
+                        const value = input.value.toUpperCase();
+                        
+                        if (value !== word.word[i]) {
+                            allCorrect = false;
+                            cell.style.backgroundColor = '#ffebee';
+                            setTimeout(() => {
+                                cell.style.backgroundColor = '';
+                            }, 2000);
+                        }
+                    }
+                    
+                    if (allCorrect) {
+                        const wordKey = `${word.startRow}-${word.startCol}-${word.direction}`;
+                        if (!this.completedWords.has(wordKey)) {
+                            this.completedWords.add(wordKey);
+                            this.markWordAsCorrect(word);
+                        }
+                    }
+                });
+                
+                this.updateStats();
+                
+                if (this.completedWords.size === this.currentPuzzle.words.length) {
+                    setTimeout(() => this.showCompletionModal(), 500);
+                }
+            }
+
+            clearGrid() {
+                document.querySelectorAll('.crossword-cell input').forEach(input => {
+                    if (!input.disabled) {
+                        input.value = '';
+                    }
+                });
+                
+                document.querySelectorAll('.crossword-cell').forEach(cell => {
+                    cell.classList.remove('correct', 'highlighted', 'current');
+                });
+                
+                this.completedWords.clear();
+                this.updateStats();
+            }
+
+            newGame() {
+                this.stopTimer();
+                this.hintsUsed = 0;
+                this.completedWords.clear();
+                this.selectedWord = null;
+                this.selectedDirection = null;
+                
+                this.clearGrid();
+                this.loadPuzzle();
+                this.renderClues();
+                this.updateStats();
+                this.startTimer();
+                
+                document.getElementById('hintPanel').style.display = 'none';
+                document.getElementById('completionModal').style.display = 'none';
+            }
+
+            changeDifficulty(difficulty) {
+                if (this.puzzles[difficulty] && this.puzzles[difficulty][this.currentLanguage]) {
+                    this.currentDifficulty = difficulty;
+                    
+                    document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.querySelector(`[data-difficulty="${difficulty}"]`).classList.add('active');
+                    
+                    this.newGame();
+                }
+            }
+
+            changeLanguage(language) {
+                if (this.puzzles[this.currentDifficulty] && this.puzzles[this.currentDifficulty][language]) {
+                    this.currentLanguage = language;
+                    
+                    document.querySelectorAll('.lang-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.querySelector(`[data-lang="${language}"]`).classList.add('active');
+                    
+                    this.newGame();
+                }
+            }
+
+            showCompletionModal() {
+                this.stopTimer();
+                
+                const elapsed = Date.now() - this.gameStartTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                const baseScore = 1000;
+                const timeBonus = Math.max(0, 300 - Math.floor(elapsed / 1000));
+                const hintPenalty = this.hintsUsed * 50;
+                const finalScore = baseScore + timeBonus - hintPenalty;
+                
+                document.getElementById('finalTime').textContent = timeString;
+                document.getElementById('finalHints').textContent = this.hintsUsed;
+                document.getElementById('finalScore').textContent = finalScore;
+                
+                document.getElementById('completionModal').style.display = 'flex';
+                
+                if (this.accessibility) {
+                    this.accessibility.announceToScreenReader(
+                        `Puzzle completed! Time: ${timeString}, Score: ${finalScore}`
+                    );
+                }
+                
+                // Track completion
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'crossword_completed', {
+                        difficulty: this.currentDifficulty,
+                        language: this.currentLanguage,
+                        time_seconds: Math.floor(elapsed / 1000),
+                        hints_used: this.hintsUsed,
+                        score: finalScore
+                    });
+                }
+            }
+
+            shareScore() {
+                const elapsed = Date.now() - this.gameStartTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                const text = `I just completed the Jerusalem Crossword puzzle in ${timeString} with ${this.hintsUsed} hints! 🏆 Play at https://jerusalemhills.com/games/crossword/`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Jerusalem Crossword - Jerusalem Hills',
+                        text: text,
+                        url: window.location.href
+                    });
+                } else {
+                    navigator.clipboard.writeText(text).then(() => {
+                        alert('Score copied to clipboard!');
+                    });
+                }
+            }
+
+            setupEventListeners() {
+                // Game controls
+                document.getElementById('newGameBtn').addEventListener('click', () => this.newGame());
+                document.getElementById('clearBtn').addEventListener('click', () => this.clearGrid());
+                document.getElementById('hintBtn').addEventListener('click', () => this.showHint());
+                document.getElementById('checkBtn').addEventListener('click', () => this.checkAnswers());
+                
+                // Modal controls
+                document.getElementById('playAgainBtn').addEventListener('click', () => this.newGame());
+                document.getElementById('shareScoreBtn').addEventListener('click', () => this.shareScore());
+                
+                // Difficulty selection
+                document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.changeDifficulty(btn.dataset.difficulty);
+                    });
+                });
+                
+                // Language selection
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.changeLanguage(btn.dataset.lang);
+                    });
+                });
+                
+                // Close modal when clicking outside
+                document.getElementById('completionModal').addEventListener('click', (e) => {
+                    if (e.target.id === 'completionModal') {
+                        document.getElementById('completionModal').style.display = 'none';
+                    }
+                });
+                
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey || e.metaKey) {
+                        switch (e.key) {
+                            case 'n':
+                                e.preventDefault();
+                                this.newGame();
+                                break;
+                            case 'h':
+                                e.preventDefault();
+                                this.showHint();
+                                break;
+                            case 'Enter':
+                                e.preventDefault();
+                                this.checkAnswers();
+                                break;
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize game when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.crosswordGame = new CrosswordGame();
+        });
+
+        // Mobile navigation toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+
+            navToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
