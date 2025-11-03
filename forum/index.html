@@ -137,6 +137,121 @@
             font-weight: 600;
         }
 
+        /* Search Section */
+        .search-section {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            border: 2px solid var(--border-color);
+        }
+
+        .search-section h3 {
+            color: var(--text-accent);
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .search-input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .search-input-group input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .search-filters {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .search-filters select {
+            padding: 10px 14px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .search-filters select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .btn-secondary {
+            background: var(--bg-gray);
+            color: var(--text-dark);
+            border: 2px solid var(--border-color);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            transform: translateY(-1px);
+        }
+
+        .search-results {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .search-results h4 {
+            color: var(--text-accent);
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+
+        .search-highlight {
+            background: #ffeb3b;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--text-medium);
+            padding: 40px;
+            font-style: italic;
+        }
+
+        /* Mobile responsive search */
+        @media (max-width: 768px) {
+            .search-input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-filters {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .search-filters select {
+                width: 100%;
+            }
+        }
+
         /* Post Form */
         .post-form {
             background: var(--bg-gray);
@@ -373,6 +488,37 @@
                 <h3>💬 General Discussion</h3>
                 <p>Off-topic conversations and community chat</p>
                 <div class="category-stats">45 discussions • 234 messages</div>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <h3>🔍 Search Discussions</h3>
+            <div class="search-controls">
+                <div class="search-input-group">
+                    <input type="text" id="searchInput" placeholder="Search discussions by title, content, or author..." />
+                    <button type="button" id="searchBtn" class="btn">Search</button>
+                    <button type="button" id="clearSearchBtn" class="btn-secondary">Clear</button>
+                </div>
+                <div class="search-filters">
+                    <select id="searchCategory">
+                        <option value="">All Categories</option>
+                        <option value="culture">Culture & Heritage</option>
+                        <option value="marketplace">Marketplace</option>
+                        <option value="events">Local Events</option>
+                        <option value="suggestions">Website Feedback</option>
+                        <option value="general">General Discussion</option>
+                    </select>
+                    <select id="sortBy">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="most-liked">Most Liked</option>
+                    </select>
+                </div>
+            </div>
+            <div id="searchResults" class="search-results" style="display: none;">
+                <h4>Search Results:</h4>
+                <div id="searchResultsContent"></div>
             </div>
         </div>
 
@@ -897,9 +1043,181 @@
             }
         }
 
+        // Search functionality
+        let allPosts = [];
+        let currentSearchResults = [];
+
+        function initializeSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const clearSearchBtn = document.getElementById('clearSearchBtn');
+            const searchCategory = document.getElementById('searchCategory');
+            const sortBy = document.getElementById('sortBy');
+
+            // Search event listeners
+            searchBtn.addEventListener('click', performSearch);
+            clearSearchBtn.addEventListener('click', clearSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            // Filter change listeners
+            searchCategory.addEventListener('change', performSearch);
+            sortBy.addEventListener('change', sortSearchResults);
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const selectedCategory = document.getElementById('searchCategory').value;
+            const searchResults = document.getElementById('searchResults');
+            const searchResultsContent = document.getElementById('searchResultsContent');
+
+            if (!query && !selectedCategory) {
+                clearSearch();
+                return;
+            }
+
+            // Filter posts based on search criteria
+            let filteredPosts = allPosts.filter(post => {
+                const matchesQuery = !query || 
+                    post.title.toLowerCase().includes(query) ||
+                    post.message.toLowerCase().includes(query) ||
+                    post.username.toLowerCase().includes(query);
+                
+                const matchesCategory = !selectedCategory || post.category === selectedCategory;
+                
+                return matchesQuery && matchesCategory;
+            });
+
+            currentSearchResults = filteredPosts;
+            sortSearchResults();
+            
+            searchResults.style.display = 'block';
+            
+            if (filteredPosts.length === 0) {
+                searchResultsContent.innerHTML = '<div class="no-results">No discussions found matching your search criteria.</div>';
+            } else {
+                displaySearchResults(filteredPosts);
+            }
+        }
+
+        function sortSearchResults() {
+            const sortBy = document.getElementById('sortBy').value;
+            
+            let sortedResults = [...currentSearchResults];
+            
+            switch (sortBy) {
+                case 'newest':
+                    sortedResults.sort((a, b) => b.timestamp - a.timestamp);
+                    break;
+                case 'oldest':
+                    sortedResults.sort((a, b) => a.timestamp - b.timestamp);
+                    break;
+                case 'most-liked':
+                    // Since we don't have persistent likes, sort by length of content as proxy for engagement
+                    sortedResults.sort((a, b) => (b.message.length + b.title.length) - (a.message.length + a.title.length));
+                    break;
+            }
+            
+            if (sortedResults.length > 0) {
+                displaySearchResults(sortedResults);
+            }
+        }
+
+        function displaySearchResults(posts) {
+            const searchResultsContent = document.getElementById('searchResultsContent');
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            
+            const resultsHtml = posts.map(post => {
+                const timeAgo = getTimeAgo(post.timestamp);
+                const initial = post.username.charAt(0).toUpperCase();
+                const categoryName = getCategoryName(post.category);
+                
+                // Highlight search terms
+                let highlightedTitle = highlightSearchTerms(post.title, query);
+                let highlightedMessage = highlightSearchTerms(post.message, query);
+                let highlightedUsername = highlightSearchTerms(post.username, query);
+                
+                return `
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="post-avatar">${initial}</div>
+                            <div class="post-meta">
+                                <div class="post-author">${highlightedUsername}</div>
+                                <div class="post-time">${timeAgo}</div>
+                            </div>
+                            <div class="post-category">${categoryName}</div>
+                        </div>
+                        <div class="post-content">
+                            <h4 style="margin-bottom: 8px; color: var(--text-accent);">${highlightedTitle}</h4>
+                            ${highlightedMessage}
+                        </div>
+                        <div class="post-actions">
+                            <span class="post-action" onclick="likePost('${post.id}')">👍 Like</span>
+                            <span class="post-action">💬 Reply</span>
+                            <span class="post-action" onclick="flagPost('${post.id}', '${escapeHtml(post.title)}')">🚩 Flag</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            searchResultsContent.innerHTML = resultsHtml;
+        }
+
+        function highlightSearchTerms(text, query) {
+            if (!query) return escapeHtml(text);
+            
+            const escapedText = escapeHtml(text);
+            const escapedQuery = escapeHtml(query);
+            const regex = new RegExp(`(${escapedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            
+            return escapedText.replace(regex, '<span class="search-highlight">$1</span>');
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchCategory').value = '';
+            document.getElementById('sortBy').value = 'newest';
+            document.getElementById('searchResults').style.display = 'none';
+            currentSearchResults = [];
+        }
+
+        // Enhanced loadPosts function to store posts for searching
+        function loadPostsWithSearch() {
+            const postsContainer = document.getElementById('posts');
+            allPosts = []; // Reset the global posts array
+            
+            forum.get('posts').map().on(function(post, key) {
+                if (post && post.title && post.message && post.username) {
+                    // Store posts in global array for searching
+                    const existingIndex = allPosts.findIndex(p => p.id === post.id);
+                    if (existingIndex >= 0) {
+                        allPosts[existingIndex] = post;
+                    } else {
+                        allPosts.push(post);
+                    }
+                }
+            });
+            
+            // Call original loadPosts function
+            loadPosts();
+        }
+
         // Initialize
-        console.log('Initializing forum...');
-        loadPosts();
+        console.log('Initializing forum with search...');
+        loadPostsWithSearch();
+        
+        // Initialize search when DOM is ready
+        document.addEventListener('DOMContentLoaded', initializeSearch);
+        
+        // Also initialize immediately if DOM is already ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeSearch);
+        } else {
+            initializeSearch();
+        }
 
         // Connection status monitoring
         let syncCheckInterval = setInterval(() => {

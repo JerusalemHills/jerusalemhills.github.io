@@ -1,5 +1,6 @@
-// Service Worker for caching essential files for offline PWA experience
-const CACHE_NAME = 'jerusalem-hills-v3';
+// Enhanced Service Worker for comprehensive offline PWA experience
+const CACHE_NAME = 'jerusalem-hills-v4';
+const DYNAMIC_CACHE = 'jerusalem-hills-dynamic-v1';
 const urlsToCache = [
   // Core pages
   '/',
@@ -54,11 +55,13 @@ const urlsToCache = [
   '/games/',
   '/games/index.html',
   '/games/2048/2048.html',
-  '/games/2048/2048.js',
   '/games/tetris/tetris.html',
   '/games/snake/snake.html',
   '/games/backgammon/backgammon.html',
   '/games/backgammon/scripts/backgammon.js',
+  '/games/sudoku/sudoku.html',
+  '/games/jerusalem-memory/jerusalem-memory.html',
+  '/games/solitaire/solitaire.html',
   
   // Essential community pages
   '/forum/',
@@ -71,70 +74,166 @@ const urlsToCache = [
   '/marketplace.html'
 ];
 
-// Install event: cache all necessary resources
+// Install event: cache all necessary resources with enhanced strategy
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('Opened cache');
+    Promise.all([
+      // Cache essential resources
+      caches.open(CACHE_NAME).then((cache) => {
+        console.log('💾 Caching essential resources...');
         return cache.addAll(urlsToCache);
+      }),
+      // Pre-create dynamic cache for runtime caching
+      caches.open(DYNAMIC_CACHE).then((cache) => {
+        console.log('🗂️ Dynamic cache initialized');
+        return Promise.resolve();
       })
+    ])
   );
+  
+  console.log('📱 PWA Service Worker installed and ready');
 });
 
-// Activate event: remove old caches
+// Activate event: remove old caches and claim clients
 self.addEventListener('activate', (event) => {
+  const cacheWhitelist = [CACHE_NAME, DYNAMIC_CACHE];
+  
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-});
-
-// Fetch event: intercept network requests
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Cache hit - return the response from the cached version
-        if (response) {
-          return response;
-        }
-
-        // Clone the request to use it in the fetch
-        const fetchRequest = event.request.clone();
-
-        return fetch(fetchRequest).then(
-          (response) => {
-            // Check if we received a valid response
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
+    Promise.all([
+      // Clean up old caches
+      caches.keys().then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cacheName) => {
+            if (!cacheWhitelist.includes(cacheName)) {
+              console.log('🗑️ Deleting old cache:', cacheName);
+              return caches.delete(cacheName);
             }
-
-            // Clone the response to store in cache
-            const responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          }
-        ).catch(() => {
-          // If there's an error while fetching, serve the offline page if available
-          return caches.match('/offline.html'); // Note: You would need to add and create an offline.html
-        });
-      })
+          })
+        );
+      }),
+      // Take control of all pages immediately
+      self.clients.claim()
+    ])
   );
+  
+  console.log('✅ Service Worker activated and claimed clients');
 });
+
+// Enhanced fetch event with intelligent caching strategies
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  const url = new URL(request.url);
+
+  // Skip cross-origin requests and chrome-extension requests
+  if (url.origin !== location.origin && !url.href.startsWith('https://fonts.googleapis.com')) {
+    return;
+  }
+
+  // Different strategies for different content types
+  if (request.destination === 'image') {
+    event.respondWith(handleImageRequest(request));
+  } else if (url.pathname.endsWith('.css') || url.pathname.endsWith('.js')) {
+    event.respondWith(handleAssetRequest(request));
+  } else if (request.mode === 'navigate') {
+    event.respondWith(handleNavigationRequest(request));
+  } else {
+    event.respondWith(handleGenericRequest(request));
+  }
+});
+
+// Handle image requests with cache-first strategy
+async function handleImageRequest(request) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(DYNAMIC_CACHE);
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (error) {
+    // Return a fallback image if available
+    return caches.match('/img/placeholder.jpg') || 
+           new Response('', { status: 404 });
+  }
+}
+
+// Handle CSS/JS assets with cache-first strategy
+async function handleAssetRequest(request) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (error) {
+    return new Response('/* Offline - asset unavailable */', {
+      headers: { 'Content-Type': 'text/css' }
+    });
+  }
+}
+
+// Handle navigation requests with network-first, fallback to cache
+async function handleNavigationRequest(request) {
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(DYNAMIC_CACHE);
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+  } catch (error) {
+    console.log('Network failed, checking cache...');
+  }
+
+  // Try cache
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+
+  // Try to match the root path
+  const rootResponse = await caches.match('/');
+  if (rootResponse) {
+    return rootResponse;
+  }
+
+  // Fallback to offline page
+  return caches.match('/offline.html') || 
+         new Response('Offline - Page not available', {
+           status: 503,
+           headers: { 'Content-Type': 'text/plain' }
+         });
+}
+
+// Handle generic requests
+async function handleGenericRequest(request) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(DYNAMIC_CACHE);
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (error) {
+    return new Response('Offline', { status: 503 });
+  }
+}
 
 // Optional: Push Notifications for future use
 self.addEventListener('push', (event) => {
@@ -167,3 +266,58 @@ self.addEventListener('notificationclick', (event) => {
     })
   );
 });
+
+// Background sync for forum posts when offline
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'forum-post-sync') {
+    event.waitUntil(syncForumPosts());
+  }
+});
+
+async function syncForumPosts() {
+  try {
+    // Get pending posts from IndexedDB (would need to implement storage)
+    console.log('🔄 Syncing offline forum posts...');
+    
+    // This would sync any posts made while offline
+    // Implementation would depend on the forum's data structure
+    
+    return Promise.resolve();
+  } catch (error) {
+    console.error('❌ Forum sync failed:', error);
+    throw error;
+  }
+}
+
+// Message handling for communication with main thread
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+  
+  if (event.data && event.data.type === 'GET_CACHE_INFO') {
+    event.ports[0].postMessage({
+      caches: [CACHE_NAME, DYNAMIC_CACHE],
+      version: 'v4'
+    });
+  }
+});
+
+// Periodic cache cleanup utility
+async function cleanupDynamicCache() {
+  try {
+    const cache = await caches.open(DYNAMIC_CACHE);
+    const keys = await cache.keys();
+    
+    if (keys.length > 50) { // Keep dynamic cache under 50 items
+      const oldestKeys = keys.slice(0, 10);
+      await Promise.all(oldestKeys.map(key => cache.delete(key)));
+      console.log('🧹 Cleaned up dynamic cache:', oldestKeys.length, 'items removed');
+    }
+  } catch (error) {
+    console.error('❌ Cache cleanup failed:', error);
+  }
+}
+
+// Run cleanup periodically
+setInterval(cleanupDynamicCache, 60000); // Every minute

@@ -4,12 +4,12 @@
   "description": "Official community site for Jerusalem heritage, culture & authentic marketplace. Your gateway to the Holy City.",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "theme_color": "#4F46E5",
   "background_color": "#87CEEB",
+  "theme_color": "#4F46E5",
+  "orientation": "portrait-primary",
   "scope": "/",
-  "categories": ["lifestyle", "education", "shopping", "social"],
   "lang": "en",
+  "categories": ["lifestyle", "education", "shopping", "social"],
   "icons": [
     {
       "src": "/img/android-chrome-192x192.png",
@@ -18,7 +18,7 @@
       "purpose": "any maskable"
     },
     {
-      "src": "/img/android-chrome-512x512.png", 
+      "src": "/img/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -111,14 +111,6 @@
       "url": "url"
     }
   },
-  "screenshots": [
-    {
-      "src": "/img/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "narrow"
-    }
-  ],
   "prefer_related_applications": false,
   "related_applications": []
 }
