@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jerusalem Heritage Quiz - Learn About Jerusalem's History | Jerusalem Hills Kids</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover Jerusalem's rich heritage with our interactive quiz! Learn about history, landmarks, and culture. Educational quiz for kids ages 8-14. Completely free.">
+    <meta name="keywords" content="jerusalem quiz, heritage quiz, history quiz, educational game, jerusalem landmarks, cultural learning, kids education">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jerusalemhills.com/kids/games/heritage-quiz.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Jerusalem Heritage Quiz - Learn About Jerusalem's History">
+    <meta property="og:description" content="Discover Jerusalem's rich heritage with our interactive quiz! Educational and fun for kids.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jerusalemhills.com/kids/games/heritage-quiz.html">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../assets/css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Sound Manager -->
+    <script src="../assets/js/sound-manager.js"></script>
+    <!-- Enhanced Sound System -->
+    <script src="../assets/js/enhanced-sound-system.js"></script>
+
+    <!-- Custom Quiz Styles -->
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .question-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .question-number {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .answers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .answer-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .answer-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .answer-btn.correct {
+            background: rgba(76, 175, 80, 0.8);
+            border-color: #4CAF50;
+            animation: correctAnswer 0.6s ease;
+        }
+
+        .answer-btn.incorrect {
+            background: rgba(244, 67, 54, 0.8);
+            border-color: #f44336;
+            animation: incorrectAnswer 0.6s ease;
+        }
+
+        @keyframes correctAnswer {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes incorrectAnswer {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .score-board {
+            background: linear-gradient(45deg, #FF6B6B, #FFE66D);
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .heritage-fact {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .heritage-fact h3 {
+            color: #d2691e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .quiz-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .quiz-complete {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+
+        .achievement-badge {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .cultural-image {
+            width: 100%;
+            max-width: 400px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .answers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .question-text {
+                font-size: 18px;
+            }
+            
+            .answer-btn {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Game",
+      "name": "Jerusalem Heritage Quiz",
+      "description": "Interactive educational quiz about Jerusalem's rich cultural heritage and history",
+      "audience": {
+        "@type": "PeopleAudience",
+        "suggestedMinAge": 8,
+        "suggestedMaxAge": 14
+      },
+      "educationalUse": "Cultural heritage and history education",
+      "educationalLevel": "Elementary to Middle School",
+      "isAccessibleForFree": true,
+      "interactivityType": "active",
+      "learningResourceType": "quiz"
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>🏛️ Jerusalem Heritage Quiz</h1>
+        <div class="game-nav">
+            <a href="../index.html" class="nav-btn">Home</a>
+            <a href="math.html" class="nav-btn">Math Quest</a>
+            <a href="memory.html" class="nav-btn">Memory Match</a>
+        </div>
+    </header>
+
+    <div class="screen-time-reminder">
+        <p>🕐 Remember: Take breaks every 20 minutes and ask a grown-up for permission!</p>
+    </div>
+
+    <main class="quiz-container">
+        <div class="score-board">
+            <h2>🌟 Your Heritage Journey 🌟</h2>
+            <p id="score-display">Score: 0 / 0</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-bar"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="quiz-btn" id="start-quiz">🚀 Start Heritage Quest</button>
+            <button class="quiz-btn" id="next-question" style="display: none;">Next Question ➡️</button>
+            <button class="quiz-btn" id="restart-quiz" style="display: none;">🔄 Try Again</button>
+        </div>
+
+        <div id="quiz-area"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Jerusalem Hills Kids - Safe & Educational</p>
+        <p><a href="../index.html">Back to Kids Zone</a></p>
+    </footer>
+
+    <script>
+        // Jerusalem Heritage Quiz Game
+        let currentQuestion = 0;
+        let score = 0;
+        let quizStarted = false;
+        let answered = false;
+
+        // Comprehensive Jerusalem Heritage Questions
+        const heritageQuestions = [
+            {
+                question: "What is the famous Western Wall in Jerusalem also known as?",
+                answers: ["The Wailing Wall", "The Golden Wall", "The Temple Wall", "The Ancient Wall"],
+                correct: 0,
+                fact: "The Western Wall is a remaining wall of the ancient Temple and is one of the holiest sites in Judaism. People from around the world come to pray and place notes in its cracks."
+            },
+            {
+                question: "Which beautiful golden dome can be seen from far across Jerusalem?",
+                answers: ["Church of the Holy Sepulchre", "Dome of the Rock", "Tower of David", "Mount of Olives"],
+                correct: 1,
+                fact: "The Dome of the Rock, built in 691 CE, is one of Jerusalem's most recognizable landmarks. Its golden dome and beautiful Islamic architecture make it visible from many parts of the city."
+            },
+            {
+                question: "How many quarters make up Jerusalem's Old City?",
+                answers: ["Two", "Three", "Four", "Five"],
+                correct: 2,
+                fact: "The Old City has four quarters: Jewish, Christian, Muslim, and Armenian. Each quarter has its own unique character, architecture, and cultural traditions."
+            },
+            {
+                question: "What ancient language is still used in prayers at the Western Wall?",
+                answers: ["Arabic", "Hebrew", "Aramaic", "Latin"],
+                correct: 1,
+                fact: "Hebrew is the ancient language of the Jewish people and is still used in prayers today. It's also the official language of modern Israel!"
+            },
+            {
+                question: "Which hill overlooks Jerusalem and is mentioned in many religious texts?",
+                answers: ["Mount Sinai", "Mount Carmel", "Mount of Olives", "Mount Hermon"],
+                correct: 2,
+                fact: "The Mount of Olives has been important for thousands of years. It offers beautiful views of Jerusalem and has ancient olive trees that are hundreds of years old."
+            },
+            {
+                question: "What was Jerusalem called during the Roman period (130-326 CE)?",
+                answers: ["Jerusalemum", "Aelia Capitolina", "Hierosolyma", "Urusalim"],
+                correct: 1,
+                fact: "The Romans renamed Jerusalem 'Aelia Capitolina' and built a pagan temple on the Temple Mount. This period lasted almost 200 years until Christianity became accepted."
+            },
+            {
+                question: "Which market in the Old City is famous for its colorful spices and souvenirs?",
+                answers: ["Mahane Yehuda", "The Souk", "Jaffa Gate Market", "David's Market"],
+                correct: 1,
+                fact: "The Arab Souk in the Old City is a maze of narrow alleys filled with shops selling spices, fabrics, jewelry, and souvenirs. It's been a trading center for hundreds of years!"
+            },
+            {
+                question: "What special instrument is blown during Jewish holidays?",
+                answers: ["Trumpet", "Flute", "Shofar", "Drum"],
+                correct: 2,
+                fact: "The shofar is made from a ram's horn and has been blown for over 3,000 years! It's used during important Jewish holidays like Rosh Hashanah and Yom Kippur."
+            },
+            {
+                question: "Which gate is the most famous entrance to Jerusalem's Old City?",
+                answers: ["Jaffa Gate", "Damascus Gate", "Lion's Gate", "Zion Gate"],
+                correct: 0,
+                fact: "Jaffa Gate is the main entrance to the Old City and connects to Jaffa Road. It was built in 1538 and is named after the nearby port city of Jaffa."
+            },
+            {
+                question: "What ancient writing system do we find on old Jerusalem stones?",
+                answers: ["Hieroglyphics", "Hebrew script", "Cuneiform", "Latin"],
+                correct: 1,
+                fact: "Ancient Hebrew inscriptions can be found throughout Jerusalem, some dating back thousands of years. These writings tell us about the people who lived here long ago."
+            }
+        ];
+
+        // Cultural heritage facts for additional learning
+        const culturalFacts = [
+            {
+                title: "🕊️ City of Peace",
+                content: "Jerusalem's name comes from 'Yerushalayim' which means 'City of Peace' in Hebrew. Throughout history, people of different faiths have called this special city home."
+            },
+            {
+                title: "🏛️ Ancient Architecture", 
+                content: "The stones of Jerusalem are made of local limestone that turns golden in sunlight. This is why Jerusalem is sometimes called the 'Golden City'!"
+            },
+            {
+                title: "🌿 Sacred Gardens",
+                content: "The Garden of Gethsemane contains olive trees that are over 2,000 years old! These ancient trees have witnessed thousands of years of history."
+            },
+            {
+                title: "🎵 Musical Heritage",
+                content: "Jerusalem has inspired thousands of songs, poems, and stories. The phrase 'Next year in Jerusalem' has been said for over 2,000 years."
+            }
+        ];
+
+        function startQuiz() {
+            // Enhanced game start sound
+            if (typeof window.playCulturalSound !== 'undefined') {
+                window.playCulturalSound('quest-begin');
+            } else {
+                soundManager.play('chime');
+            }
+
+            quizStarted = true;
+            currentQuestion = 0;
+            score = 0;
+            updateScore();
+            updateProgress();
+            
+            document.getElementById('start-quiz').style.display = 'none';
+            document.getElementById('restart-quiz').style.display = 'none';
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            answered = false;
+            const question = heritageQuestions[currentQuestion];
+            
+            document.getElementById('quiz-area').innerHTML = `
+                <div class="question-card">
+                    <div class="question-number">Question ${currentQuestion + 1} of ${heritageQuestions.length}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="answers-grid">
+                        ${question.answers.map((answer, index) => 
+                            `<button class="answer-btn" onclick="selectAnswer(${index})">${answer}</button>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Play question sound
+            if (typeof window.playMemorySound !== 'undefined') {
+                window.playMemorySound('start');
+            }
+
+            document.getElementById('next-question').style.display = 'none';
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (answered) return;
+            answered = true;
+
+            const question = heritageQuestions[currentQuestion];
+            const isCorrect = selectedIndex === question.correct;
+            const answerButtons = document.querySelectorAll('.answer-btn');
+            
+            // Visual feedback
+            answerButtons[selectedIndex].classList.add(isCorrect ? 'correct' : 'incorrect');
+            if (!isCorrect) {
+                answerButtons[question.correct].classList.add('correct');
+            }
+
+            // Enhanced sound feedback
+            if (isCorrect) {
+                score++;
+                if (typeof window.playCulturalSound !== 'undefined') {
+                    window.playCulturalSound('heritage-correct');
+                } else {
+                    soundManager.play('success');
+                }
+            } else {
+                if (typeof window.playCulturalSound !== 'undefined') {
+                    window.playCulturalSound('heritage-incorrect');
+                } else {
+                    soundManager.play('incorrect');
+                }
+            }
+
+            // Show heritage fact
+            setTimeout(() => {
+                showHeritageFact(question.fact, isCorrect);
+                updateScore();
+                updateProgress();
+            }, 1500);
+        }
+
+        function showHeritageFact(fact, wasCorrect) {
+            const factIcon = wasCorrect ? "🌟" : "📚";
+            const factTitle = wasCorrect ? "Amazing! You're right!" : "Great question! Here's the answer:";
+            
+            const factHTML = `
+                <div class="heritage-fact">
+                    <h3>${factIcon} ${factTitle}</h3>
+                    <p>${fact}</p>
+                </div>
+            `;
+            
+            document.getElementById('quiz-area').innerHTML += factHTML;
+            
+            // Show cultural fact occasionally
+            if (Math.random() < 0.3) {
+                const randomFact = culturalFacts[Math.floor(Math.random() * culturalFacts.length)];
+                document.getElementById('quiz-area').innerHTML += `
+                    <div class="heritage-fact">
+                        <h3>${randomFact.title}</h3>
+                        <p>${randomFact.content}</p>
+                    </div>
+                `;
+            }
+
+            if (currentQuestion < heritageQuestions.length - 1) {
+                document.getElementById('next-question').style.display = 'inline-block';
+            } else {
+                setTimeout(() => showResults(), 2000);
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResults() {
+            const percentage = Math.round((score / heritageQuestions.length) * 100);
+            let achievement = "";
+            let badge = "";
+
+            if (percentage >= 90) {
+                achievement = "Jerusalem Heritage Scholar! 🏆";
+                badge = "🏆";
+                if (typeof window.playAchievementSound !== 'undefined') {
+                    window.playAchievementSound('heritage-master');
+                }
+            } else if (percentage >= 70) {
+                achievement = "Heritage Explorer! 🌟";
+                badge = "🌟";
+                if (typeof window.playAchievementSound !== 'undefined') {
+                    window.playAchievementSound('perfect-score');
+                }
+            } else if (percentage >= 50) {
+                achievement = "Cultural Discoverer! 📚";
+                badge = "📚";
+                if (typeof window.playAchievementSound !== 'undefined') {
+                    window.playAchievementSound('first-game');
+                }
+            } else {
+                achievement = "Keep Learning! 🌱";
+                badge = "🌱";
+                if (typeof window.soundManager !== 'undefined') {
+                    soundManager.play('chime');
+                }
+            }
+
+            document.getElementById('quiz-area').innerHTML = `
+                <div class="quiz-complete">
+                    <div class="achievement-badge">${badge}</div>
+                    <h2>${achievement}</h2>
+                    <h3>You got ${score} out of ${heritageQuestions.length} questions correct!</h3>
+                    <p>That's ${percentage}% - Great job learning about Jerusalem's heritage!</p>
+                    
+                    <div class="heritage-fact">
+                        <h3>🏛️ Did You Know?</h3>
+                        <p>Jerusalem is one of the oldest cities in the world, with over 4,000 years of continuous settlement. 
+                        People from many different cultures and religions have made it their home throughout history!</p>
+                    </div>
+                </div>
+            `;
+
+            // Play final celebration
+            setTimeout(() => {
+                if (typeof window.playCulturalSound !== 'undefined') {
+                    window.playCulturalSound('celebration');
+                }
+            }, 1000);
+
+            document.getElementById('restart-quiz').style.display = 'inline-block';
+            document.getElementById('next-question').style.display = 'none';
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            quizStarted = false;
+            answered = false;
+            
+            document.getElementById('quiz-area').innerHTML = '';
+            document.getElementById('start-quiz').style.display = 'inline-block';
+            document.getElementById('restart-quiz').style.display = 'none';
+            document.getElementById('next-question').style.display = 'none';
+            
+            updateScore();
+            updateProgress();
+        }
+
+        function updateScore() {
+            document.getElementById('score-display').textContent = `Score: ${score} / ${heritageQuestions.length}`;
+        }
+
+        function updateProgress() {
+            const progress = quizStarted ? ((currentQuestion + 1) / heritageQuestions.length) * 100 : 0;
+            document.getElementById('progress-bar').style.width = progress + '%';
+        }
+
+        // Event listeners
+        document.getElementById('start-quiz').onclick = startQuiz;
+        document.getElementById('next-question').onclick = nextQuestion;
+        document.getElementById('restart-quiz').onclick = restartQuiz;
+
+        // Initialize display
+        updateScore();
+        updateProgress();
+    </script>
+</body>
+</html>

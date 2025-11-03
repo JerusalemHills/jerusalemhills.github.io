@@ -55,7 +55,13 @@ class EnhancedSoundSystem extends SoundManager {
             // Celebration Sounds
             hebrewCelebration: this.createHebrewCelebrationSound(),
             culturalFestival: this.createCulturalFestivalSound(),
-            achievementFanfare: this.createAchievementFanfareSound()
+            achievementFanfare: this.createAchievementFanfareSound(),
+            
+            // Heritage Quiz Sounds
+            questBegin: this.createQuestBeginSound(),
+            heritageCorrect: this.createHeritageCorrectSound(),
+            heritageIncorrect: this.createHeritageIncorrectSound(),
+            celebration: this.createCelebrationSequence()
         };
 
         // Musical Learning Sounds
@@ -342,6 +348,66 @@ class EnhancedSoundSystem extends SoundManager {
         };
     }
 
+    // Heritage Quiz Specific Sounds
+    createQuestBeginSound() {
+        return () => {
+            // Mystical quest beginning sound
+            [330, 415, 523].forEach((freq, index) => {
+                setTimeout(() => {
+                    this.createSynthSound(freq, 0.6, 'sine', {
+                        attack: 0.3,
+                        sustain: 0.4
+                    })();
+                }, index * 200);
+            });
+        };
+    }
+
+    createHeritageCorrectSound() {
+        return () => {
+            // Cultural chime with Jerusalem theme
+            [523, 659, 784].forEach((freq, index) => {
+                setTimeout(() => {
+                    this.createSynthSound(freq, 0.5, 'triangle', {
+                        attack: 0.1,
+                        sustain: 0.3
+                    })();
+                }, index * 150);
+            });
+            // Add cultural bell after main sound
+            setTimeout(() => {
+                this.culturalSounds.bellChime();
+            }, 500);
+        };
+    }
+
+    createHeritageIncorrectSound() {
+        return () => {
+            // Gentle learning tone - not harsh
+            [330, 294, 262].forEach((freq, index) => {
+                setTimeout(() => {
+                    this.createSynthSound(freq, 0.3, 'sine', {
+                        attack: 0.1,
+                        sustain: 0.2
+                    })();
+                }, index * 100);
+            });
+        };
+    }
+
+    createCelebrationSequence() {
+        return () => {
+            // Grand celebration for quiz completion
+            this.culturalSounds.achievementFanfare();
+            setTimeout(() => {
+                this.culturalSounds.shofar();
+            }, 800);
+            setTimeout(() => {
+                this.culturalSounds.bellChime();
+            }, 1200);
+        };
+    }
+
     // Musical Learning Sounds
     createDoReMiScale() {
         return () => {
@@ -625,6 +691,9 @@ class EnhancedSoundSystem extends SoundManager {
             case 'hebrew-scholar':
                 this.languageFeedback.sentenceComplete();
                 setTimeout(() => this.culturalSounds.shofar(), 600);
+                break;
+            case 'heritage-master':
+                this.culturalSounds.celebration();
                 break;
             default:
                 this.culturalSounds.achievementFanfare();
