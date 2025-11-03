@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "minify": "npm run minify:js && npm run minify:css",
-    "minify:js": "terser js/analytics.js -o js/analytics.min.js --compress --mangle && terser js/adsense-config.js -o js/adsense-config.min.js --compress --mangle",
-    "minify:css": "cleancss -o styles.min.css styles.css && cleancss -o styles-new.min.css styles-new.css"
+    "minify:js": "terser js/analytics.js -o js/analytics.min.js --compress --mangle && terser js/adsense-config.js -o js/adsense-config.min.js --compress --mangle && terser js/accessibility-enhancements.js -o js/accessibility-enhancements.min.js --compress --mangle && terser js/mobile-touch-controls.js -o js/mobile-touch-controls.min.js --compress --mangle && terser js/main.js -o js/main.min.js --compress --mangle && terser kids/assets/js/sound-manager.js -o kids/assets/js/sound-manager.min.js --compress --mangle",
+    "minify:css": "cleancss -o styles.min.css styles.css && cleancss -o styles-new.min.css styles-new.css && cleancss -o kids/assets/css/kids.min.css kids/assets/css/kids.css && cleancss -o kids/assets/css/game.min.css kids/assets/css/game.css"
   },
   "dependencies": {
     "stripe": "^19.1.0"
