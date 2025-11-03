@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jerusalem Mahjong - Jerusalem Hills</title>
+    <meta name="description" content="Play Mahjong Solitaire with beautiful Jerusalem-themed tiles featuring local landmarks and symbols">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../css/styles.css">
+    
+    <style>
+        .mahjong-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .game-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .difficulty-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-btn {
+            padding: 8px 16px;
+            margin: 0 5px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .difficulty-btn.active {
+            border-color: #2c5aa0;
+            background: #2c5aa0;
+            color: white;
+        }
+
+        .game-board {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            min-height: 600px;
+            overflow: hidden;
+        }
+
+        .game-board::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .mahjong-board {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(17, 32px);
+            grid-template-rows: repeat(9, 40px);
+            gap: 1px;
+            justify-content: center;
+            align-content: center;
+            min-height: 500px;
+        }
+
+        .mahjong-tile {
+            width: 32px;
+            height: 40px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            user-select: none;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .mahjong-tile:hover:not(.matched):not(.blocked) {
+            transform: translateY(-3px);
+            box-shadow: 3px 5px 8px rgba(0,0,0,0.4);
+            border-color: #2c5aa0;
+        }
+
+        .mahjong-tile.selected {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+        }
+
+        .mahjong-tile.matched {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.8);
+        }
+
+        .mahjong-tile.blocked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .mahjong-tile.hint-highlight {
+            animation: hintPulse 2s infinite;
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { transform: scale(1); box-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+            50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 193, 7, 0.8); }
+        }
+
+        .tile-symbol {
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .control-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #2c5aa0;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e3f73;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #1e7e34;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+        }
+
+        .completion-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: #2c5aa0;
+            margin-bottom: 20px;
+        }
+
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .modal-stat {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .modal-stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        .modal-stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .hint-panel {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .hint-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .hint-text {
+            color: #856404;
+            line-height: 1.4;
+        }
+
+        .shuffle-warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+        }
+
+        .shuffle-warning-text {
+            color: #721c24;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .mahjong-container {
+                padding: 15px;
+            }
+
+            .mahjong-board {
+                grid-template-columns: repeat(17, 22px);
+                grid-template-rows: repeat(9, 28px);
+            }
+
+            .mahjong-tile {
+                width: 22px;
+                height: 28px;
+                font-size: 10px;
+            }
+
+            .tile-symbol {
+                font-size: 8px;
+            }
+
+            .game-stats {
+                gap: 15px;
+            }
+
+            .stat-item {
+                padding: 8px 15px;
+            }
+
+            .stat-value {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mahjong-board {
+                grid-template-columns: repeat(17, 18px);
+                grid-template-rows: repeat(9, 24px);
+            }
+
+            .mahjong-tile {
+                width: 18px;
+                height: 24px;
+                font-size: 8px;
+            }
+
+            .tile-symbol {
+                font-size: 6px;
+            }
+        }
+
+        .layer-indicator {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 8px;
+            height: 8px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            font-size: 6px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .tile-category-western {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+        }
+
+        .tile-category-temple {
+            background: linear-gradient(135deg, #8b7355 0%, #d4a574 100%);
+        }
+
+        .tile-category-dome {
+            background: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
+        }
+
+        .tile-category-quarters {
+            background: linear-gradient(135deg, #2196f3 0%, #64b5f6 100%);
+        }
+
+        .tile-category-symbols {
+            background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../../index.html">🏔️ Jerusalem Hills</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../marketplace.html">Marketplace</a></li>
+                <li><a href="../index.html">Games</a></li>
+                <li><a href="../../forum.html">Community</a></li>
+                <li><a href="../../services.html">Services</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="mahjong-container">
+            <div class="game-header">
+                <h1 class="game-title">Jerusalem Mahjong</h1>
+                <p class="game-subtitle">Match pairs of Jerusalem-themed tiles in this classic puzzle game</p>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+                <div class="game-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="tilesRemaining">0</div>
+                        <div class="stat-label">Tiles Remaining</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="pairsMatched">0</div>
+                        <div class="stat-label">Pairs Matched</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="gameTime">00:00</div>
+                        <div class="stat-label">Time</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="hintsUsed">0</div>
+                        <div class="stat-label">Hints Used</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-difficulty="easy">Easy (72 tiles)</button>
+                <button class="difficulty-btn" data-difficulty="medium">Medium (108 tiles)</button>
+                <button class="difficulty-btn" data-difficulty="hard">Hard (144 tiles)</button>
+            </div>
+
+            <div class="hint-panel" id="hintPanel">
+                <div class="hint-title">Hint</div>
+                <div class="hint-text" id="hintText"></div>
+            </div>
+
+            <div class="shuffle-warning" id="shuffleWarning">
+                <div class="shuffle-warning-text">No more moves available!</div>
+                <div class="game-controls">
+                    <button class="control-btn btn-warning" id="shuffleBtn">Shuffle Tiles</button>
+                    <button class="control-btn btn-secondary" id="newGameFromShuffleBtn">New Game</button>
+                </div>
+            </div>
+
+            <div class="game-board">
+                <div class="mahjong-board" id="mahjongBoard"></div>
+            </div>
+
+            <div class="game-controls">
+                <button class="control-btn btn-primary" id="newGameBtn">New Game</button>
+                <button class="control-btn btn-secondary" id="hintBtn">Get Hint</button>
+                <button class="control-btn btn-secondary" id="undoBtn">Undo</button>
+                <button class="control-btn btn-success" id="pauseBtn">Pause</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Completion Modal -->
+    <div class="completion-modal" id="completionModal">
+        <div class="modal-content">
+            <h2 class="modal-title">🎉 Congratulations!</h2>
+            <p>You've successfully completed the Jerusalem Mahjong puzzle!</p>
+            
+            <div class="modal-stats">
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="finalTime">--:--</div>
+                    <div class="modal-stat-label">Time</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="finalHints">0</div>
+                    <div class="modal-stat-label">Hints Used</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="finalScore">0</div>
+                    <div class="modal-stat-label">Score</div>
+                </div>
+            </div>
+            
+            <div class="game-controls">
+                <button class="control-btn btn-primary" id="playAgainBtn">Play Again</button>
+                <button class="control-btn btn-secondary" id="shareScoreBtn">Share Score</button>
+                <button class="control-btn btn-secondary" onclick="window.location.href='../index.html'">More Games</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/analytics.js"></script>
+    <script src="../../js/accessibility-enhancements.js"></script>
+    <script src="../../js/mobile-touch-controls.js"></script>
+    <script>
+        class JerusalemMahjongGame {
+            constructor() {
+                this.boardSize = 17;
+                this.currentDifficulty = 'easy';
+                this.selectedTile = null;
+                this.gameStartTime = null;
+                this.gameTimer = null;
+                this.hintsUsed = 0;
+                this.pairsMatched = 0;
+                this.gameHistory = [];
+                this.isPaused = false;
+                
+                // Jerusalem-themed tile symbols
+                this.tileCategories = {
+                    western: {
+                        symbols: ['🕯️', '📿', '✡️', '🔯'],
+                        names: ['Candle', 'Prayer Beads', 'Star of David', 'Magen David'],
+                        hints: [
+                            'Used in Jewish prayer and remembrance',
+                            'Traditional prayer accessory',
+                            'Symbol of Judaism and Israel',
+                            'Six-pointed star of Jewish identity'
+                        ]
+                    },
+                    temple: {
+                        symbols: ['🏛️', '⛪', '🕌', '🛐'],
+                        names: ['Temple', 'Church', 'Mosque', 'Place of Worship'],
+                        hints: [
+                            'Ancient Jewish temple site',
+                            'Christian place of worship',
+                            'Islamic house of prayer',
+                            'Sacred space for spiritual practice'
+                        ]
+                    },
+                    dome: {
+                        symbols: ['🕌', '⛩️', '🏛️', '🎭'],
+                        names: ['Dome of the Rock', 'Shrine', 'Ancient Architecture', 'Cultural Heritage'],
+                        hints: [
+                            'Golden dome on Temple Mount',
+                            'Sacred architectural structure',
+                            'Historical building design',
+                            'Jerusalem\'s cultural legacy'
+                        ]
+                    },
+                    quarters: {
+                        symbols: ['🏠', '🏘️', '🌆', '🗿'],
+                        names: ['Armenian Quarter', 'Jewish Quarter', 'Muslim Quarter', 'Christian Quarter'],
+                        hints: [
+                            'Traditional Armenian district',
+                            'Historic Jewish neighborhood',
+                            'Islamic residential area',
+                            'Christian community quarter'
+                        ]
+                    },
+                    symbols: {
+                        symbols: ['🌿', '🫒', '🍯', '📜'],
+                        names: ['Olive Branch', 'Olive', 'Honey', 'Torah Scroll'],
+                        hints: [
+                            'Symbol of peace from Mount of Olives',
+                            'Sacred fruit of Jerusalem',
+                            'Land of milk and honey',
+                            'Sacred Jewish scripture'
+                        ]
+                    }
+                };
+                
+                this.layouts = {
+                    easy: this.generateLayout(72),
+                    medium: this.generateLayout(108),
+                    hard: this.generateLayout(144)
+                };
+                
+                this.initializeGame();
+                this.setupEventListeners();
+                this.startTimer();
+                
+                // Initialize accessibility and mobile controls
+                if (typeof AccessibilityEnhancer !== 'undefined') {
+                    this.accessibility = new AccessibilityEnhancer({
+                        announceGameEvents: true,
+                        announceScore: true
+                    });
+                }
+                
+                if (typeof MobileTouchControls !== 'undefined') {
+                    this.mobileControls = new MobileTouchControls({
+                        tapThreshold: 15,
+                        doubleTapThreshold: 300
+                    });
+                }
+                
+                // Track game start
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'game_start', {
+                        game_name: 'jerusalem_mahjong',
+                        difficulty: this.currentDifficulty
+                    });
+                }
+            }
+
+            generateLayout(tileCount) {
+                // Create a balanced layout with multiple layers
+                const layout = [];
+                const layers = Math.ceil(tileCount / 36); // Approximate tiles per layer
+                
+                // Generate coordinates for tiles in pyramid-like structure
+                for (let layer = 0; layer < layers; layer++) {
+                    const tilesInLayer = Math.max(36 - layer * 8, 8);
+                    const startRow = Math.floor(layer / 2);
+                    const startCol = layer;
+                    
+                    for (let i = 0; i < tilesInLayer && layout.length < tileCount; i++) {
+                        const row = startRow + Math.floor(i / 6);
+                        const col = startCol + (i % 6) * 2;
+                        
+                        if (row < 9 && col < 17) {
+                            layout.push({
+                                row: row,
+                                col: col,
+                                layer: layer,
+                                id: `tile-${layout.length}`
+                            });
+                        }
+                    }
+                }
+                
+                return layout.slice(0, tileCount);
+            }
+
+            generateTileSet() {
+                const tiles = [];
+                const categories = Object.keys(this.tileCategories);
+                const tilesNeeded = this.layouts[this.currentDifficulty].length;
+                
+                // Ensure we have an even number of tiles
+                const pairsNeeded = Math.floor(tilesNeeded / 2);
+                
+                let tileIndex = 0;
+                for (let pair = 0; pair < pairsNeeded; pair++) {
+                    const category = categories[pair % categories.length];
+                    const symbolIndex = Math.floor(pair / categories.length) % this.tileCategories[category].symbols.length;
+                    const symbol = this.tileCategories[category].symbols[symbolIndex];
+                    const name = this.tileCategories[category].names[symbolIndex];
+                    const hint = this.tileCategories[category].hints[symbolIndex];
+                    
+                    // Create a pair of tiles
+                    for (let i = 0; i < 2; i++) {
+                        tiles.push({
+                            id: tileIndex++,
+                            symbol: symbol,
+                            name: name,
+                            hint: hint,
+                            category: category,
+                            matched: false
+                        });
+                    }
+                }
+                
+                // Shuffle tiles
+                for (let i = tiles.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+                }
+                
+                return tiles;
+            }
+
+            initializeGame() {
+                this.createBoard();
+                this.tiles = this.generateTileSet();
+                this.placeTiles();
+                this.updateStats();
+                this.checkAvailableMoves();
+            }
+
+            createBoard() {
+                const board = document.getElementById('mahjongBoard');
+                board.innerHTML = '';
+                
+                const layout = this.layouts[this.currentDifficulty];
+                layout.forEach(position => {
+                    const tile = document.createElement('div');
+                    tile.className = 'mahjong-tile';
+                    tile.dataset.row = position.row;
+                    tile.dataset.col = position.col;
+                    tile.dataset.layer = position.layer;
+                    tile.dataset.id = position.id;
+                    
+                    // Position the tile
+                    tile.style.gridRow = position.row + 1;
+                    tile.style.gridColumn = position.col + 1;
+                    tile.style.zIndex = position.layer + 1;
+                    
+                    // Add layer indicator for multi-layer tiles
+                    if (position.layer > 0) {
+                        const layerIndicator = document.createElement('div');
+                        layerIndicator.className = 'layer-indicator';
+                        layerIndicator.textContent = position.layer + 1;
+                        tile.appendChild(layerIndicator);
+                    }
+                    
+                    tile.addEventListener('click', () => this.handleTileClick(tile));
+                    board.appendChild(tile);
+                });
+            }
+
+            placeTiles() {
+                const boardTiles = document.querySelectorAll('.mahjong-tile');
+                boardTiles.forEach((tileElement, index) => {
+                    if (this.tiles[index]) {
+                        const tile = this.tiles[index];
+                        
+                        const symbolSpan = document.createElement('span');
+                        symbolSpan.className = 'tile-symbol';
+                        symbolSpan.textContent = tile.symbol;
+                        tileElement.appendChild(symbolSpan);
+                        
+                        tileElement.dataset.tileId = tile.id;
+                        tileElement.dataset.symbol = tile.symbol;
+                        tileElement.dataset.name = tile.name;
+                        tileElement.dataset.hint = tile.hint;
+                        tileElement.classList.add(`tile-category-${tile.category}`);
+                        
+                        // Set title for accessibility
+                        tileElement.title = `${tile.name} - ${tile.hint}`;
+                    }
+                });
+                
+                this.updateTileStates();
+            }
+
+            updateTileStates() {
+                const boardTiles = document.querySelectorAll('.mahjong-tile');
+                boardTiles.forEach(tile => {
+                    if (!tile.classList.contains('matched')) {
+                        if (this.isTileBlocked(tile)) {
+                            tile.classList.add('blocked');
+                        } else {
+                            tile.classList.remove('blocked');
+                        }
+                    }
+                });
+            }
+
+            isTileBlocked(tile) {
+                const row = parseInt(tile.dataset.row);
+                const col = parseInt(tile.dataset.col);
+                const layer = parseInt(tile.dataset.layer);
+                
+                // Check if tile is covered by a tile in a higher layer
+                const allTiles = document.querySelectorAll('.mahjong-tile:not(.matched)');
+                for (let otherTile of allTiles) {
+                    const otherRow = parseInt(otherTile.dataset.row);
+                    const otherCol = parseInt(otherTile.dataset.col);
+                    const otherLayer = parseInt(otherTile.dataset.layer);
+                    
+                    if (otherLayer > layer &&
+                        Math.abs(otherRow - row) <= 1 &&
+                        Math.abs(otherCol - col) <= 1) {
+                        return true;
+                    }
+                }
+                
+                // Check if tile is blocked by adjacent tiles on same layer
+                let leftBlocked = false, rightBlocked = false;
+                
+                for (let otherTile of allTiles) {
+                    const otherRow = parseInt(otherTile.dataset.row);
+                    const otherCol = parseInt(otherTile.dataset.col);
+                    const otherLayer = parseInt(otherTile.dataset.layer);
+                    
+                    if (otherLayer === layer && otherRow === row) {
+                        if (otherCol === col - 2) leftBlocked = true;
+                        if (otherCol === col + 2) rightBlocked = true;
+                    }
+                }
+                
+                return leftBlocked && rightBlocked;
+            }
+
+            handleTileClick(tileElement) {
+                if (this.isPaused) return;
+                if (tileElement.classList.contains('matched') || tileElement.classList.contains('blocked')) {
+                    return;
+                }
+                
+                if (this.selectedTile === null) {
+                    // Select first tile
+                    this.selectedTile = tileElement;
+                    tileElement.classList.add('selected');
+                    
+                    if (this.accessibility) {
+                        this.accessibility.announceToScreenReader(
+                            `Selected ${tileElement.dataset.name}`
+                        );
+                    }
+                } else if (this.selectedTile === tileElement) {
+                    // Deselect current tile
+                    this.selectedTile.classList.remove('selected');
+                    this.selectedTile = null;
+                } else {
+                    // Check if tiles match
+                    if (this.selectedTile.dataset.symbol === tileElement.dataset.symbol) {
+                        // Match found!
+                        this.matchTiles(this.selectedTile, tileElement);
+                    } else {
+                        // No match, select new tile
+                        this.selectedTile.classList.remove('selected');
+                        this.selectedTile = tileElement;
+                        tileElement.classList.add('selected');
+                        
+                        if (this.accessibility) {
+                            this.accessibility.announceToScreenReader(
+                                `No match. Selected ${tileElement.dataset.name}`
+                            );
+                        }
+                    }
+                }
+            }
+
+            matchTiles(tile1, tile2) {
+                // Save move for undo
+                this.gameHistory.push({
+                    type: 'match',
+                    tiles: [tile1.cloneNode(true), tile2.cloneNode(true)],
+                    tile1Id: tile1.dataset.id,
+                    tile2Id: tile2.dataset.id
+                });
+                
+                // Mark tiles as matched
+                tile1.classList.add('matched');
+                tile2.classList.add('matched');
+                tile1.classList.remove('selected');
+                tile2.classList.remove('selected');
+                
+                this.selectedTile = null;
+                this.pairsMatched++;
+                
+                // Update tile states
+                this.updateTileStates();
+                this.updateStats();
+                
+                if (this.accessibility) {
+                    this.accessibility.announceToScreenReader(
+                        `Match found! ${tile1.dataset.name} pair matched`
+                    );
+                }
+                
+                // Check for game completion
+                if (this.pairsMatched === this.layouts[this.currentDifficulty].length / 2) {
+                    setTimeout(() => this.showCompletionModal(), 500);
+                } else {
+                    // Check if moves are still available
+                    setTimeout(() => {
+                        if (!this.hasAvailableMoves()) {
+                            this.showShuffleWarning();
+                        }
+                    }, 100);
+                }
+                
+                // Track match
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'mahjong_match', {
+                        symbol: tile1.dataset.symbol,
+                        pairs_matched: this.pairsMatched
+                    });
+                }
+            }
+
+            hasAvailableMoves() {
+                const availableTiles = document.querySelectorAll('.mahjong-tile:not(.matched):not(.blocked)');
+                const symbols = {};
+                
+                // Group tiles by symbol
+                availableTiles.forEach(tile => {
+                    const symbol = tile.dataset.symbol;
+                    if (!symbols[symbol]) symbols[symbol] = [];
+                    symbols[symbol].push(tile);
+                });
+                
+                // Check if any symbol has at least 2 available tiles
+                for (let symbol in symbols) {
+                    if (symbols[symbol].length >= 2) {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+
+            checkAvailableMoves() {
+                if (!this.hasAvailableMoves() && this.pairsMatched > 0) {
+                    this.showShuffleWarning();
+                }
+            }
+
+            showShuffleWarning() {
+                document.getElementById('shuffleWarning').style.display = 'block';
+            }
+
+            hideShuffleWarning() {
+                document.getElementById('shuffleWarning').style.display = 'none';
+            }
+
+            shuffleTiles() {
+                const unmatchedTiles = document.querySelectorAll('.mahjong-tile:not(.matched)');
+                const symbols = [];
+                
+                // Collect all unmatched tile symbols
+                unmatchedTiles.forEach(tile => {
+                    symbols.push({
+                        symbol: tile.dataset.symbol,
+                        name: tile.dataset.name,
+                        hint: tile.dataset.hint,
+                        category: tile.classList.toString().match(/tile-category-(\w+)/)?.[1] || 'symbols'
+                    });
+                });
+                
+                // Shuffle symbols
+                for (let i = symbols.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [symbols[i], symbols[j]] = [symbols[j], symbols[i]];
+                }
+                
+                // Reassign symbols to tiles
+                unmatchedTiles.forEach((tile, index) => {
+                    if (symbols[index]) {
+                        const symbolData = symbols[index];
+                        const symbolSpan = tile.querySelector('.tile-symbol');
+                        symbolSpan.textContent = symbolData.symbol;
+                        
+                        tile.dataset.symbol = symbolData.symbol;
+                        tile.dataset.name = symbolData.name;
+                        tile.dataset.hint = symbolData.hint;
+                        tile.title = `${symbolData.name} - ${symbolData.hint}`;
+                        
+                        // Update category class
+                        tile.className = tile.className.replace(/tile-category-\w+/, `tile-category-${symbolData.category}`);
+                    }
+                });
+                
+                this.hideShuffleWarning();
+                this.hintsUsed++; // Shuffling counts as using help
+                this.updateStats();
+                
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'mahjong_shuffle', {
+                        pairs_matched: this.pairsMatched,
+                        hints_used: this.hintsUsed
+                    });
+                }
+            }
+
+            showHint() {
+                const availableTiles = document.querySelectorAll('.mahjong-tile:not(.matched):not(.blocked)');
+                const symbols = {};
+                
+                // Group available tiles by symbol
+                availableTiles.forEach(tile => {
+                    const symbol = tile.dataset.symbol;
+                    if (!symbols[symbol]) symbols[symbol] = [];
+                    symbols[symbol].push(tile);
+                });
+                
+                // Find a pair that can be matched
+                for (let symbol in symbols) {
+                    if (symbols[symbol].length >= 2) {
+                        const pair = symbols[symbol].slice(0, 2);
+                        
+                        // Highlight the pair
+                        pair.forEach(tile => {
+                            tile.classList.add('hint-highlight');
+                            setTimeout(() => {
+                                tile.classList.remove('hint-highlight');
+                            }, 3000);
+                        });
+                        
+                        // Show hint text
+                        const hintPanel = document.getElementById('hintPanel');
+                        const hintText = document.getElementById('hintText');
+                        hintText.textContent = `Look for the matching ${pair[0].dataset.name} tiles: ${pair[0].dataset.hint}`;
+                        hintPanel.style.display = 'block';
+                        
+                        setTimeout(() => {
+                            hintPanel.style.display = 'none';
+                        }, 5000);
+                        
+                        this.hintsUsed++;
+                        this.updateStats();
+                        
+                        if (this.accessibility) {
+                            this.accessibility.announceToScreenReader(
+                                `Hint: Match the ${pair[0].dataset.name} tiles`
+                            );
+                        }
+                        
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'mahjong_hint_used', {
+                                symbol: symbol,
+                                hints_used: this.hintsUsed
+                            });
+                        }
+                        
+                        return;
+                    }
+                }
+                
+                // No moves available
+                this.showShuffleWarning();
+            }
+
+            undoLastMove() {
+                if (this.gameHistory.length === 0) return;
+                
+                const lastMove = this.gameHistory.pop();
+                if (lastMove.type === 'match') {
+                    // Find the matched tiles and restore them
+                    const tile1 = document.querySelector(`[data-id="${lastMove.tile1Id}"]`);
+                    const tile2 = document.querySelector(`[data-id="${lastMove.tile2Id}"]`);
+                    
+                    if (tile1 && tile2) {
+                        tile1.classList.remove('matched');
+                        tile2.classList.remove('matched');
+                        this.pairsMatched--;
+                        
+                        this.updateTileStates();
+                        this.updateStats();
+                        this.hideShuffleWarning();
+                        
+                        if (this.accessibility) {
+                            this.accessibility.announceToScreenReader('Move undone');
+                        }
+                    }
+                }
+            }
+
+            updateStats() {
+                const totalTiles = this.layouts[this.currentDifficulty].length;
+                const remainingTiles = totalTiles - (this.pairsMatched * 2);
+                
+                document.getElementById('tilesRemaining').textContent = remainingTiles;
+                document.getElementById('pairsMatched').textContent = this.pairsMatched;
+                document.getElementById('hintsUsed').textContent = this.hintsUsed;
+                
+                // Update progress bar
+                const progress = (this.pairsMatched * 2 / totalTiles) * 100;
+                document.getElementById('progressFill').style.width = `${progress}%`;
+            }
+
+            startTimer() {
+                this.gameStartTime = Date.now();
+                this.gameTimer = setInterval(() => {
+                    if (!this.isPaused) {
+                        const elapsed = Date.now() - this.gameStartTime;
+                        const minutes = Math.floor(elapsed / 60000);
+                        const seconds = Math.floor((elapsed % 60000) / 1000);
+                        document.getElementById('gameTime').textContent = 
+                            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }
+                }, 1000);
+            }
+
+            stopTimer() {
+                if (this.gameTimer) {
+                    clearInterval(this.gameTimer);
+                }
+            }
+
+            pauseGame() {
+                this.isPaused = !this.isPaused;
+                const pauseBtn = document.getElementById('pauseBtn');
+                
+                if (this.isPaused) {
+                    pauseBtn.textContent = 'Resume';
+                    document.getElementById('mahjongBoard').style.filter = 'blur(10px)';
+                } else {
+                    pauseBtn.textContent = 'Pause';
+                    document.getElementById('mahjongBoard').style.filter = 'none';
+                }
+            }
+
+            changeDifficulty(difficulty) {
+                this.currentDifficulty = difficulty;
+                
+                document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-difficulty="${difficulty}"]`).classList.add('active');
+                
+                this.newGame();
+            }
+
+            newGame() {
+                this.stopTimer();
+                this.hintsUsed = 0;
+                this.pairsMatched = 0;
+                this.selectedTile = null;
+                this.gameHistory = [];
+                this.isPaused = false;
+                
+                document.getElementById('pauseBtn').textContent = 'Pause';
+                document.getElementById('mahjongBoard').style.filter = 'none';
+                this.hideShuffleWarning();
+                document.getElementById('hintPanel').style.display = 'none';
+                document.getElementById('completionModal').style.display = 'none';
+                
+                this.initializeGame();
+                this.startTimer();
+            }
+
+            showCompletionModal() {
+                this.stopTimer();
+                
+                const elapsed = Date.now() - this.gameStartTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                const baseScore = 1000;
+                const timeBonus = Math.max(0, 600 - Math.floor(elapsed / 1000));
+                const hintPenalty = this.hintsUsed * 25;
+                const difficultyMultiplier = { easy: 1, medium: 1.5, hard: 2 }[this.currentDifficulty];
+                const finalScore = Math.floor((baseScore + timeBonus - hintPenalty) * difficultyMultiplier);
+                
+                document.getElementById('finalTime').textContent = timeString;
+                document.getElementById('finalHints').textContent = this.hintsUsed;
+                document.getElementById('finalScore').textContent = finalScore;
+                
+                document.getElementById('completionModal').style.display = 'flex';
+                
+                if (this.accessibility) {
+                    this.accessibility.announceToScreenReader(
+                        `Puzzle completed! Time: ${timeString}, Score: ${finalScore}`
+                    );
+                }
+                
+                // Track completion
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'mahjong_completed', {
+                        difficulty: this.currentDifficulty,
+                        time_seconds: Math.floor(elapsed / 1000),
+                        hints_used: this.hintsUsed,
+                        score: finalScore
+                    });
+                }
+            }
+
+            shareScore() {
+                const elapsed = Date.now() - this.gameStartTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                const text = `I just completed Jerusalem Mahjong (${this.currentDifficulty}) in ${timeString} with ${this.hintsUsed} hints! 🀄 Play at https://jerusalemhills.com/games/mahjong/`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Jerusalem Mahjong - Jerusalem Hills',
+                        text: text,
+                        url: window.location.href
+                    });
+                } else {
+                    navigator.clipboard.writeText(text).then(() => {
+                        alert('Score copied to clipboard!');
+                    });
+                }
+            }
+
+            setupEventListeners() {
+                // Game controls
+                document.getElementById('newGameBtn').addEventListener('click', () => this.newGame());
+                document.getElementById('hintBtn').addEventListener('click', () => this.showHint());
+                document.getElementById('undoBtn').addEventListener('click', () => this.undoLastMove());
+                document.getElementById('pauseBtn').addEventListener('click', () => this.pauseGame());
+                
+                // Shuffle controls
+                document.getElementById('shuffleBtn').addEventListener('click', () => this.shuffleTiles());
+                document.getElementById('newGameFromShuffleBtn').addEventListener('click', () => this.newGame());
+                
+                // Modal controls
+                document.getElementById('playAgainBtn').addEventListener('click', () => this.newGame());
+                document.getElementById('shareScoreBtn').addEventListener('click', () => this.shareScore());
+                
+                // Difficulty selection
+                document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.changeDifficulty(btn.dataset.difficulty);
+                    });
+                });
+                
+                // Close modal when clicking outside
+                document.getElementById('completionModal').addEventListener('click', (e) => {
+                    if (e.target.id === 'completionModal') {
+                        document.getElementById('completionModal').style.display = 'none';
+                    }
+                });
+                
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey || e.metaKey) {
+                        switch (e.key) {
+                            case 'n':
+                                e.preventDefault();
+                                this.newGame();
+                                break;
+                            case 'h':
+                                e.preventDefault();
+                                this.showHint();
+                                break;
+                            case 'z':
+                                e.preventDefault();
+                                this.undoLastMove();
+                                break;
+                            case ' ':
+                                e.preventDefault();
+                                this.pauseGame();
+                                break;
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize game when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.mahjongGame = new JerusalemMahjongGame();
+        });
+
+        // Mobile navigation toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+
+            navToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
