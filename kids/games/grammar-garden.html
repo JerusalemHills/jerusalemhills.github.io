@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Garden | Jerusalem Hills Kids</title>
+    <meta name="description" content="Learn parts of speech and sentence structure in a fun garden! Level 2 grammar for ages 7-8.">
+    <meta name="keywords" content="grammar, parts of speech, nouns, verbs, adjectives, sentence structure, elementary language arts">
+    <link rel="icon" href="../../img/favicon.ico">
+    <script src="../assets/js/web-audio-sounds.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+            color: #2C3E50;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .game-container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .game-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .game-header h1 {
+            color: #56ab2f;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .garden-icon {
+            font-size: 3em;
+            margin: 10px 0;
+            animation: grow 2s ease-in-out infinite;
+        }
+        @keyframes grow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .score-display {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .stat {
+            background: linear-gradient(135deg, #56ab2f, #a8e063);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .game-area {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            min-height: 500px;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+        .back-btn:hover {
+            background: #56ab2f;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        /* Garden Plots */
+        .garden-plots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .plot {
+            background: linear-gradient(135deg, #fff9e6 0%, #e6f7e6 100%);
+            border: 4px solid #56ab2f;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .plot:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(86, 171, 47, 0.4);
+            border-color: #a8e063;
+        }
+        .plot.completed {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-color: #4CAF50;
+        }
+        .plot-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .plot-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #56ab2f;
+        }
+        .plot-progress {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Game Screen */
+        .game-screen {
+            display: none;
+        }
+        .game-screen.active {
+            display: block;
+        }
+
+        .question-display {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .question-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .question-text {
+            font-size: 1.8em;
+            text-align: center;
+            line-height: 1.5;
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        .question-word {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 5px 15px;
+            border-radius: 10px;
+            border-bottom: 3px solid white;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .option-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 25px;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .option-card .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .option-card:hover {
+            transform: scale(1.05);
+            border-color: #56ab2f;
+            box-shadow: 0 4px 15px rgba(86, 171, 47, 0.3);
+        }
+        .option-card.correct {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-color: #4CAF50;
+            animation: celebrate 0.5s ease;
+        }
+        .option-card.incorrect {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-color: #FF9800;
+            animation: shake 0.5s ease;
+        }
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .sentence-builder {
+            background: #f5f5f5;
+            border: 3px dashed #56ab2f;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 80px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+        .word-tile {
+            background: white;
+            border: 2px solid #56ab2f;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 1.2em;
+            cursor: move;
+            transition: all 0.3s;
+        }
+        .word-tile:hover {
+            background: #a8e063;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .feedback {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            min-height: 80px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #56ab2f, #a8e063);
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e6f7ff 0%, #fff4e6 100%);
+            border-left: 5px solid #56ab2f;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        .info-box strong {
+            color: #56ab2f;
+        }
+
+        /* Achievement modal */
+        .achievement-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-align: center;
+            transition: transform 0.3s ease;
+            max-width: 500px;
+        }
+        .achievement-modal.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .achievement-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+        .achievement-title {
+            font-size: 2em;
+            color: #56ab2f;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .game-header h1 { font-size: 2em; }
+            .question-text { font-size: 1.4em; }
+            .option-card { font-size: 1.1em; padding: 20px; min-height: 80px; }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='../index.html'">← Back</button>
+
+    <div class="game-container">
+        <div class="game-header">
+            <div class="garden-icon">🌻</div>
+            <h1>🌱 Grammar Garden</h1>
+            <p>Grow your grammar skills with fun language challenges!</p>
+        </div>
+
+        <div class="score-display">
+            <div class="stat">🌻 Flowers: <span id="flowers">0</span></div>
+            <div class="stat">📝 Correct: <span id="correct">0</span></div>
+            <div class="stat">⭐ Stars: <span id="stars">0</span></div>
+            <div class="stat">🏆 Plots: <span id="completedPlots">0</span>/5</div>
+        </div>
+
+        <!-- Garden Map -->
+        <div id="gardenMap" class="game-area">
+            <h2 style="text-align: center; color: #56ab2f; margin-bottom: 20px;">🌻 Welcome to Grammar Garden!</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 1.2em;">Choose a plot to start learning!</p>
+            <div class="garden-plots" id="plotsGrid"></div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="game-area game-screen">
+            <div class="question-display">
+                <div class="question-title" id="questionTitle"></div>
+                <div class="question-text" id="questionText"></div>
+            </div>
+
+            <div id="infoBox" class="info-box" style="display: none;"></div>
+
+            <div class="options-container" id="optionsContainer"></div>
+
+            <div class="feedback" id="feedback"></div>
+
+            <div class="action-buttons">
+                <button class="btn" id="nextBtn" onclick="nextQuestion()" style="display: none;">Next ➡️</button>
+                <button class="btn" id="backToGardenBtn" onclick="backToGarden()">Back to Garden 🌱</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="achievement-modal" id="achievementModal">
+        <div class="achievement-icon" id="achievementIcon"></div>
+        <div class="achievement-title" id="achievementTitle"></div>
+        <div id="achievementText"></div>
+        <button class="btn" onclick="closeAchievement()" style="margin-top: 20px;">Awesome! ✨</button>
+    </div>
+
+    <script>
+        // Grammar Garden Game Logic
+        let flowers = 0;
+        let correct = 0;
+        let stars = 0;
+        let currentPlot = null;
+        let currentQuestionIndex = 0;
+        let plotProgress = {};
+
+        const plots = [
+            {
+                id: 'nouns',
+                name: 'Noun Garden',
+                icon: '🌸',
+                info: '<strong>Nouns</strong> are words that name people, places, things, or ideas.',
+                questions: [
+                    { question: 'Which word is a <span class="question-word">noun</span>?', sentence: 'The happy dog ran quickly.', options: [{text: 'dog', icon: '🐕', correct: true}, {text: 'happy', icon: '😊'}, {text: 'ran', icon: '🏃'}, {text: 'quickly', icon: '⚡'}], explanation: '"Dog" is a noun because it names a thing (animal).' },
+                    { question: 'Find the <span class="question-word">noun</span> in this sentence:', sentence: 'Sarah went to the store.', options: [{text: 'Sarah', icon: '👧', correct: true}, {text: 'went', icon: '🚶'}, {text: 'to', icon: '➡️'}, {text: 'the', icon: '📄'}], explanation: '"Sarah" is a noun because it names a person.' },
+                    { question: 'Which is a <span class="question-word">noun</span>?', sentence: 'I love pizza!', options: [{text: 'I', icon: '👤'}, {text: 'love', icon: '❤️'}, {text: 'pizza', icon: '🍕', correct: true}], explanation: '"Pizza" is a noun because it names a thing (food).' },
+                    { question: 'Pick the <span class="question-word">noun</span>:', sentence: 'The school has a big playground.', options: [{text: 'school', icon: '🏫', correct: true}, {text: 'has', icon: '✋'}, {text: 'big', icon: '📏'}, {text: 'playground', icon: '🎪', correct: true}], explanation: 'Both "school" and "playground" are nouns - they name places!' },
+                    { question: 'Find the <span class="question-word">noun</span>:', sentence: 'My teacher is very kind.', options: [{text: 'My', icon: '👉'}, {text: 'teacher', icon: '👨‍🏫', correct: true}, {text: 'very', icon: '⭐'}, {text: 'kind', icon: '💝'}], explanation: '"Teacher" is a noun because it names a person.' }
+                ]
+            },
+            {
+                id: 'verbs',
+                name: 'Verb Patch',
+                icon: '🌻',
+                info: '<strong>Verbs</strong> are action words - they tell us what someone or something does.',
+                questions: [
+                    { question: 'Which word is a <span class="question-word">verb</span>?', sentence: 'The cat sleeps on the couch.', options: [{text: 'cat', icon: '🐱'}, {text: 'sleeps', icon: '😴', correct: true}, {text: 'on', icon: '⬆️'}, {text: 'couch', icon: '🛋️'}], explanation: '"Sleeps" is a verb because it shows an action.' },
+                    { question: 'Find the <span class="question-word">verb</span>:', sentence: 'Birds fly in the sky.', options: [{text: 'Birds', icon: '🐦'}, {text: 'fly', icon: '✈️', correct: true}, {text: 'in', icon: '📍'}, {text: 'sky', icon: '☁️'}], explanation: '"Fly" is a verb because it tells what the birds do.' },
+                    { question: 'Pick the <span class="question-word">verb</span>:', sentence: 'I eat breakfast every day.', options: [{text: 'I', icon: '👤'}, {text: 'eat', icon: '🍽️', correct: true}, {text: 'breakfast', icon: '🥞'}, {text: 'day', icon: '📅'}], explanation: '"Eat" is a verb because it shows an action.' },
+                    { question: 'Which is a <span class="question-word">verb</span>?', sentence: 'She reads books at the library.', options: [{text: 'She', icon: '👧'}, {text: 'reads', icon: '📖', correct: true}, {text: 'books', icon: '📚'}, {text: 'library', icon: '🏛️'}], explanation: '"Reads" is a verb because it tells what she does.' },
+                    { question: 'Find the <span class="question-word">verb</span>:', sentence: 'We play soccer after school.', options: [{text: 'We', icon: '👥'}, {text: 'play', icon: '⚽', correct: true}, {text: 'soccer', icon: '🥅'}, {text: 'school', icon: '🏫'}], explanation: '"Play" is a verb because it shows an action.' }
+                ]
+            },
+            {
+                id: 'adjectives',
+                name: 'Adjective Garden',
+                icon: '🌺',
+                info: '<strong>Adjectives</strong> are describing words - they tell us more about nouns.',
+                questions: [
+                    { question: 'Which word is an <span class="question-word">adjective</span>?', sentence: 'The big elephant is gray.', options: [{text: 'big', icon: '📏', correct: true}, {text: 'elephant', icon: '🐘'}, {text: 'is', icon: '='}, {text: 'gray', icon: '🎨', correct: true}], explanation: '"Big" and "gray" are adjectives - they describe the elephant!' },
+                    { question: 'Find the <span class="question-word">adjective</span>:', sentence: 'I saw a beautiful rainbow.', options: [{text: 'I', icon: '👤'}, {text: 'saw', icon: '👀'}, {text: 'beautiful', icon: '✨', correct: true}, {text: 'rainbow', icon: '🌈'}], explanation: '"Beautiful" is an adjective because it describes the rainbow.' },
+                    { question: 'Pick the <span class="question-word">adjective</span>:', sentence: 'The fast car zoomed by.', options: [{text: 'fast', icon: '⚡', correct: true}, {text: 'car', icon: '🚗'}, {text: 'zoomed', icon: '💨'}, {text: 'by', icon: '➡️'}], explanation: '"Fast" is an adjective because it describes the car.' },
+                    { question: 'Which is an <span class="question-word">adjective</span>?', sentence: 'She has a small puppy.', options: [{text: 'She', icon: '👧'}, {text: 'has', icon: '✋'}, {text: 'small', icon: '🤏', correct: true}, {text: 'puppy', icon: '🐕'}], explanation: '"Small" is an adjective because it describes the puppy.' },
+                    { question: 'Find the <span class="question-word">adjective</span>:', sentence: 'The cold ice cream melted.', options: [{text: 'cold', icon: '🥶', correct: true}, {text: 'ice cream', icon: '🍦'}, {text: 'melted', icon: '💧'}], explanation: '"Cold" is an adjective because it describes the ice cream.' }
+                ]
+            },
+            {
+                id: 'sentences',
+                name: 'Sentence Garden',
+                icon: '🌼',
+                info: '<strong>Sentences</strong> need a subject (who/what) and a predicate (what they do).',
+                questions: [
+                    { question: 'Is this a complete <span class="question-word">sentence</span>?', sentence: 'The dog barked loudly.', options: [{text: 'Yes, it\'s complete ✓', icon: '✅', correct: true}, {text: 'No, it\'s not complete ✗', icon: '❌'}], explanation: 'Yes! It has a subject (the dog) and a predicate (barked loudly).' },
+                    { question: 'Is this a complete <span class="question-word">sentence</span>?', sentence: 'Ran very fast.', options: [{text: 'Yes, it\'s complete ✓', icon: '✅'}, {text: 'No, it\'s not complete ✗', icon: '❌', correct: true}], explanation: 'No! It\'s missing a subject - WHO or WHAT ran fast?' },
+                    { question: 'Which part is the <span class="question-word">subject</span>?', sentence: 'The little boy jumped.', options: [{text: 'The little boy', icon: '👦', correct: true}, {text: 'jumped', icon: '🦘'}], explanation: 'The subject is "The little boy" - it tells WHO is doing the action.' },
+                    { question: 'Which part is the <span class="question-word">predicate</span>?', sentence: 'My friend plays basketball.', options: [{text: 'My friend', icon: '👫'}, {text: 'plays basketball', icon: '🏀', correct: true}], explanation: 'The predicate is "plays basketball" - it tells WHAT the friend does.' },
+                    { question: 'Is this a complete <span class="question-word">sentence</span>?', sentence: 'Under the tree.', options: [{text: 'Yes, it\'s complete ✓', icon: '✅'}, {text: 'No, it\'s not complete ✗', icon: '❌', correct: true}], explanation: 'No! It\'s missing both a subject and a verb. What is under the tree? What is it doing?' }
+                ]
+            },
+            {
+                id: 'punctuation',
+                name: 'Punctuation Plot',
+                icon: '🌷',
+                info: '<strong>Punctuation</strong> marks help us read and understand sentences correctly.',
+                questions: [
+                    { question: 'Which <span class="question-word">punctuation</span> goes here?', sentence: 'What time is it__', options: [{text: 'Period .', icon: '•'}, {text: 'Question mark ?', icon: '❓', correct: true}, {text: 'Exclamation !', icon: '❗'}], explanation: 'Use a question mark (?) when asking a question!' },
+                    { question: 'Which <span class="question-word">punctuation</span> goes here?', sentence: 'Watch out__', options: [{text: 'Period .', icon: '•'}, {text: 'Question mark ?', icon: '❓'}, {text: 'Exclamation !', icon: '❗', correct: true}], explanation: 'Use an exclamation mark (!) to show strong feeling or excitement!' },
+                    { question: 'Which <span class="question-word">punctuation</span> goes here?', sentence: 'I like apples__ oranges__ and bananas.', options: [{text: 'Commas ,', icon: '🔄', correct: true}, {text: 'Periods .', icon: '•'}, {text: 'Question marks ?', icon: '❓'}], explanation: 'Use commas (,) to separate items in a list!' },
+                    { question: 'Which <span class="question-word">punctuation</span> goes here?', sentence: 'The cat sat on the mat__', options: [{text: 'Period .', icon: '•', correct: true}, {text: 'Question mark ?', icon: '❓'}, {text: 'Exclamation !', icon: '❗'}], explanation: 'Use a period (.) at the end of a statement!' },
+                    { question: 'Which needs a <span class="question-word">capital letter</span>?', sentence: 'My name is _arah.', options: [{text: 'sarah', icon: '📝'}, {text: 'Sarah', icon: '✏️', correct: true}], explanation: 'Names always start with a capital letter!' }
+                ]
+            }
+        ];
+
+        function init() {
+            // Initialize plot progress
+            plots.forEach(plot => {
+                plotProgress[plot.id] = 0;
+            });
+            renderGardenMap();
+        }
+
+        function renderGardenMap() {
+            const grid = document.getElementById('plotsGrid');
+            grid.innerHTML = '';
+
+            plots.forEach(plot => {
+                const plotCard = document.createElement('div');
+                plotCard.className = 'plot';
+                if (plotProgress[plot.id] === plot.questions.length) {
+                    plotCard.classList.add('completed');
+                }
+                plotCard.innerHTML = `
+                    <div class="plot-icon">${plot.icon}</div>
+                    <div class="plot-name">${plot.name}</div>
+                    <div class="plot-progress">${plotProgress[plot.id]}/${plot.questions.length} complete</div>
+                `;
+                plotCard.onclick = () => enterPlot(plot);
+                grid.appendChild(plotCard);
+            });
+
+            document.getElementById('gardenMap').style.display = 'block';
+            document.getElementById('gameScreen').classList.remove('active');
+        }
+
+        function enterPlot(plot) {
+            currentPlot = plot;
+            currentQuestionIndex = 0;
+            document.getElementById('infoBox').innerHTML = plot.info;
+            document.getElementById('infoBox').style.display = 'block';
+            document.getElementById('gardenMap').style.display = 'none';
+            document.getElementById('gameScreen').classList.add('active');
+            loadQuestion();
+            window.webAudioSounds.playWhoosh();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= currentPlot.questions.length) {
+                plotComplete();
+                return;
+            }
+
+            const q = currentPlot.questions[currentQuestionIndex];
+            document.getElementById('questionTitle').innerHTML = q.question;
+            document.getElementById('questionText').innerHTML = `"${q.sentence}"`;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach(option => {
+                const card = document.createElement('div');
+                card.className = 'option-card';
+                card.innerHTML = `
+                    ${option.icon ? `<div class="icon">${option.icon}</div>` : ''}
+                    <div>${option.text}</div>
+                `;
+                card.onclick = () => checkAnswer(option, q);
+                optionsContainer.appendChild(card);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function checkAnswer(selected, question) {
+            const allCards = document.querySelectorAll('.option-card');
+            allCards.forEach(card => card.style.pointerEvents = 'none');
+
+            if (selected.correct) {
+                const selectedCard = Array.from(allCards).find(card => card.textContent.includes(selected.text));
+                selectedCard.classList.add('correct');
+
+                flowers += 10;
+                stars += 10;
+                correct++;
+                plotProgress[currentPlot.id] = Math.max(plotProgress[currentPlot.id], currentQuestionIndex + 1);
+
+                document.getElementById('feedback').innerHTML = `🌻 Excellent! ${question.explanation}`;
+                document.getElementById('feedback').style.background = 'linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)';
+                window.webAudioSounds.playCorrect();
+            } else {
+                const selectedCard = Array.from(allCards).find(card => card.textContent.includes(selected.text));
+                selectedCard.classList.add('incorrect');
+
+                // Show correct answer
+                question.options.forEach(opt => {
+                    if (opt.correct) {
+                        const correctCard = Array.from(allCards).find(card => card.textContent.includes(opt.text));
+                        if (correctCard) correctCard.classList.add('correct');
+                    }
+                });
+
+                document.getElementById('feedback').innerHTML = `💭 Not quite! ${question.explanation}`;
+                document.getElementById('feedback').style.background = 'linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%)';
+                window.webAudioSounds.playIncorrect();
+            }
+
+            updateStats();
+            document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+            window.webAudioSounds.playClick();
+        }
+
+        function plotComplete() {
+            const completedCount = Object.values(plotProgress).filter(p => p === currentPlot.questions.length).length;
+
+            showAchievement(
+                `${currentPlot.icon} ${currentPlot.name} Complete!`,
+                `You mastered all ${currentPlot.questions.length} questions! Great work!`,
+                '🌟'
+            );
+
+            window.webAudioSounds.playAchievement();
+
+            setTimeout(() => {
+                backToGarden();
+            }, 3000);
+        }
+
+        function backToGarden() {
+            renderGardenMap();
+            window.webAudioSounds.playClick();
+        }
+
+        function updateStats() {
+            document.getElementById('flowers').textContent = flowers;
+            document.getElementById('correct').textContent = correct;
+            document.getElementById('stars').textContent = stars;
+            const completedCount = Object.values(plotProgress).filter((val, idx) => val === plots[idx].questions.length).length;
+            document.getElementById('completedPlots').textContent = completedCount;
+        }
+
+        function showAchievement(title, text, icon = '🎉') {
+            document.getElementById('achievementIcon').textContent = icon;
+            document.getElementById('achievementTitle').textContent = title;
+            document.getElementById('achievementText').textContent = text;
+            document.getElementById('achievementModal').classList.add('show');
+            window.webAudioSounds.playAchievement();
+        }
+
+        function closeAchievement() {
+            document.getElementById('achievementModal').classList.remove('show');
+            window.webAudioSounds.playClick();
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>

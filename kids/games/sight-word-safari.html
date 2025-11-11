@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sight Word Safari - Learn High-Frequency Words | Jerusalem Hills Kids</title>
+    <meta name="description" content="Adventure through the safari while learning essential sight words! Perfect for ages 5-6.">
+    <link rel="icon" href="../../img/favicon.ico">
+    <script src="../assets/js/web-audio-sounds.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #FF9800 0%, #FFC107 100%);
+            color: #2C3E50;
+            min-height: 100vh;
+        }
+        .game-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .game-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .game-header h1 { color: #FF9800; font-size: 2.5em; margin-bottom: 10px; }
+        .score-display {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .stat {
+            background: linear-gradient(135deg, #FF9800, #FFC107);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .game-area {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 30px;
+            min-height: 500px;
+            text-align: center;
+        }
+        .target-word {
+            font-size: 6em;
+            color: #FF9800;
+            font-weight: bold;
+            margin: 30px 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+        }
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .word-card {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border: 4px solid #FF9800;
+            border-radius: 15px;
+            padding: 30px;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .word-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .word-card.correct {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            animation: bounce 0.6s;
+        }
+        .word-card.incorrect {
+            background: linear-gradient(135deg, #FFCDD2, #EF9A9A);
+            animation: shake 0.5s;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FF9800, #FFC107);
+            color: white;
+            margin: 20px 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .btn:hover { transform: translateY(-3px); }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            z-index: 100;
+        }
+        .back-btn:hover { background: #FF9800; color: white; }
+        @media (max-width: 768px) {
+            .target-word { font-size: 4em; }
+            .word-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='../index.html'">← Back</button>
+
+    <div class="game-container">
+        <div class="game-header">
+            <h1>🦁 Sight Word Safari</h1>
+            <p>Spot the sight words in the wild! Learn to read common words instantly.</p>
+        </div>
+
+        <div class="score-display">
+            <div class="stat">✓ Correct: <span id="correct">0</span></div>
+            <div class="stat">Round: <span id="round">1</span>/15</div>
+            <div class="stat">⭐ Stars: <span id="stars">0</span></div>
+        </div>
+
+        <div class="game-area">
+            <h2 style="color: #FF9800; font-size: 2em;">🎯 Find this word:</h2>
+            <div class="target-word" id="targetWord">the</div>
+            <div class="word-grid" id="wordGrid"></div>
+            <div id="feedback" style="font-size: 2em; margin: 20px; min-height: 50px;"></div>
+            <button class="btn" id="nextBtn" style="display: none;" onclick="nextRound()">Next Word →</button>
+        </div>
+    </div>
+
+    <script>
+        // Dolch Sight Words - Most Common Words for Early Readers
+        const sightWords = [
+            // Pre-Primer (40 words)
+            'a', 'and', 'away', 'big', 'blue', 'can', 'come', 'down', 'find', 'for',
+            'funny', 'go', 'help', 'here', 'I', 'in', 'is', 'it', 'jump', 'little',
+            'look', 'make', 'me', 'my', 'not', 'one', 'play', 'red', 'run', 'said',
+            'see', 'the', 'three', 'to', 'two', 'up', 'we', 'where', 'yellow', 'you',
+            // Primer (52 words)
+            'all', 'am', 'are', 'at', 'ate', 'be', 'black', 'brown', 'but', 'came',
+            'did', 'do', 'eat', 'four', 'get', 'good', 'have', 'he', 'into', 'like',
+            'must', 'new', 'no', 'now', 'on', 'our', 'out', 'please', 'pretty', 'ran',
+            'ride', 'saw', 'say', 'she', 'so', 'soon', 'that', 'there', 'they', 'this',
+            'too', 'under', 'want', 'was', 'well', 'went', 'what', 'white', 'who', 'will',
+            'with', 'yes'
+        ];
+
+        let currentRound = 1;
+        const totalRounds = 15;
+        let correctCount = 0;
+        let stars = 0;
+        let currentWord = '';
+
+        function init() {
+            newRound();
+        }
+
+        function newRound() {
+            // Pick random target word
+            currentWord = sightWords[Math.floor(Math.random() * sightWords.length)];
+            document.getElementById('targetWord').textContent = currentWord;
+
+            // Generate options (1 correct + 3 wrong)
+            const options = [currentWord];
+            while (options.length < 4) {
+                const randomWord = sightWords[Math.floor(Math.random() * sightWords.length)];
+                if (!options.includes(randomWord)) {
+                    options.push(randomWord);
+                }
+            }
+
+            // Shuffle options
+            options.sort(() => Math.random() - 0.5);
+
+            // Display options
+            const grid = document.getElementById('wordGrid');
+            grid.innerHTML = '';
+            options.forEach(word => {
+                const card = document.createElement('div');
+                card.className = 'word-card';
+                card.textContent = word;
+                card.onclick = () => checkAnswer(card, word === currentWord);
+                grid.appendChild(card);
+            });
+
+            // Reset UI
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('round').textContent = currentRound;
+        }
+
+        function checkAnswer(card, isCorrect) {
+            // Disable all cards
+            document.querySelectorAll('.word-card').forEach(c => {
+                c.style.pointerEvents = 'none';
+            });
+
+            const feedback = document.getElementById('feedback');
+
+            if (isCorrect) {
+                card.classList.add('correct');
+                feedback.textContent = '🎉 Perfect! You found "' + currentWord + '"!';
+                feedback.style.color = '#4CAF50';
+                correctCount++;
+                stars += 10;
+                window.webAudioSounds.playSuccess();
+            } else {
+                card.classList.add('incorrect');
+                feedback.textContent = '💡 Not quite! Look for "' + currentWord + '"';
+                feedback.style.color = '#FF5722';
+                window.webAudioSounds.playError();
+
+                // Highlight correct answer
+                setTimeout(() => {
+                    document.querySelectorAll('.word-card').forEach(c => {
+                        if (c.textContent === currentWord) {
+                            c.classList.add('correct');
+                        }
+                    });
+                }, 500);
+            }
+
+            // Update stats
+            document.getElementById('correct').textContent = correctCount;
+            document.getElementById('stars').textContent = stars;
+
+            // Show next button
+            document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+
+        function nextRound() {
+            if (currentRound >= totalRounds) {
+                endGame();
+            } else {
+                currentRound++;
+                newRound();
+            }
+        }
+
+        function endGame() {
+            const percentage = Math.round((correctCount / totalRounds) * 100);
+            document.querySelector('.game-area').innerHTML = `
+                <div style="padding: 40px;">
+                    <div style="font-size: 8em;">🏆</div>
+                    <h2 style="font-size: 3em; color: #FF9800; margin: 20px 0;">Safari Complete!</h2>
+                    <p style="font-size: 1.8em;">You recognized <strong>${correctCount}</strong> out of ${totalRounds} sight words!</p>
+                    <p style="font-size: 1.5em; color: #4CAF50; margin: 20px 0;">⭐ ${stars} Stars!</p>
+                    <button class="btn" onclick="location.reload()">🔄 Play Again</button>
+                    <button class="btn" onclick="window.location.href='../index.html'">🏠 Kids Zone</button>
+                </div>
+            `;
+            if (percentage >= 80) window.webAudioSounds.playPerfectScore();
+        }
+
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Rainbow Quest | Jerusalem Hills Kids</title>
+    <meta name="description" content="Read exciting stories and answer questions! Level 2 reading comprehension for ages 7-8.">
+    <meta name="keywords" content="reading comprehension, leveled reading, elementary reading, kids literacy">
+    <link rel="icon" href="../../img/favicon.ico">
+    <script src="../assets/js/web-audio-sounds.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            color: #2C3E50;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .game-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .game-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .game-header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .rainbow-decoration {
+            font-size: 3em;
+            margin: 10px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .score-display {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .stat {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .game-area {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            min-height: 500px;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        /* Story Display */
+        .story-container {
+            margin-bottom: 30px;
+        }
+        .story-title {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .story-text {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #2C3E50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .story-text p {
+            margin-bottom: 15px;
+        }
+
+        /* Question Section */
+        .question-section {
+            margin-top: 30px;
+            display: none;
+        }
+        .question-section.active {
+            display: block;
+        }
+        .question-text {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe6f0 100%);
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+        .answer-options {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .answer-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+        .answer-card:hover {
+            transform: translateX(10px);
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        .answer-card.correct {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-color: #4CAF50;
+            animation: celebrate 0.5s ease;
+        }
+        .answer-card.incorrect {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-color: #FF9800;
+            animation: shake 0.5s ease;
+        }
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .feedback {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            min-height: 60px;
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Level selector */
+        .level-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .level-btn {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 1em;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .level-btn:hover, .level-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Achievement modal */
+        .achievement-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .achievement-modal.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .achievement-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+        .achievement-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .game-header h1 { font-size: 2em; }
+            .story-text { font-size: 1.1em; }
+            .question-text { font-size: 1.2em; }
+            .answer-card { font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='../index.html'">← Back</button>
+
+    <div class="game-container">
+        <div class="game-header">
+            <div class="rainbow-decoration">🌈</div>
+            <h1>📖 Reading Rainbow Quest</h1>
+            <p>Read exciting stories and answer comprehension questions!</p>
+        </div>
+
+        <div class="score-display">
+            <div class="stat">Score: <span id="score">0</span></div>
+            <div class="stat">Story: <span id="storyNum">1</span>/8</div>
+            <div class="stat">⭐ Stars: <span id="stars">0</span></div>
+            <div class="stat">🏆 Correct: <span id="correct">0</span>/<span id="total">0</span></div>
+        </div>
+
+        <div class="level-selector" id="levelSelector">
+            <p style="margin-bottom: 10px; font-size: 1.1em; color: white; font-weight: bold;">Choose Your Reading Level:</p>
+            <button class="level-btn active" onclick="setLevel(1)">🌟 Level 1 (Easy)</button>
+            <button class="level-btn" onclick="setLevel(2)">🌟🌟 Level 2 (Medium)</button>
+            <button class="level-btn" onclick="setLevel(3)">🌟🌟🌟 Level 3 (Challenge)</button>
+        </div>
+
+        <div class="game-area" id="gameArea">
+            <div class="story-container" id="storyContainer">
+                <h2 class="story-title" id="storyTitle"></h2>
+                <div class="story-text" id="storyText"></div>
+                <div style="text-align: center;">
+                    <button class="btn" id="readyBtn" onclick="showQuestions()">I'm Ready for Questions! 📝</button>
+                </div>
+            </div>
+
+            <div class="question-section" id="questionSection">
+                <div class="question-text" id="questionText"></div>
+                <div class="answer-options" id="answerOptions"></div>
+                <div class="feedback" id="feedback"></div>
+                <div class="action-buttons">
+                    <button class="btn" id="nextBtn" onclick="nextQuestion()" style="display: none;">Next Question ➡️</button>
+                    <button class="btn" id="nextStoryBtn" onclick="nextStory()" style="display: none;">Next Story 🌈</button>
+                    <button class="btn" id="finishBtn" onclick="finishGame()" style="display: none;">Finish Game 🎉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="achievement-modal" id="achievementModal">
+        <div class="achievement-icon" id="achievementIcon"></div>
+        <div class="achievement-title" id="achievementTitle"></div>
+        <div id="achievementText"></div>
+        <button class="btn" onclick="closeAchievement()" style="margin-top: 20px;">Awesome! ✨</button>
+    </div>
+
+    <script>
+        // Reading Rainbow Quest Game Logic
+        let score = 0;
+        let stars = 0;
+        let currentStoryIndex = 0;
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        let totalQuestions = 0;
+        let currentLevel = 1;
+        let answeredCurrentQuestion = false;
+
+        const stories = {
+            1: [ // Level 1 (Easy) - Short, simple stories
+                {
+                    title: "The Friendly Dog",
+                    text: `<p>Lucy has a big brown dog named Max. Max loves to play in the park. Every morning, Lucy takes Max for a walk.</p>
+                    <p>One day, Max saw a little bird on the ground. The bird could not fly. Max sat down next to the bird and did not move. Lucy picked up the bird and took it home to help it get better.</p>
+                    <p>Max was a very good dog. He protected the little bird until it could fly again.</p>`,
+                    questions: [
+                        {
+                            question: "What is the dog's name?",
+                            options: ["Lucky", "Max", "Buddy", "Spot"],
+                            correct: 1
+                        },
+                        {
+                            question: "Where does Lucy take Max every morning?",
+                            options: ["To school", "To the park", "To the store", "To grandma's house"],
+                            correct: 1
+                        },
+                        {
+                            question: "What did Max find on the ground?",
+                            options: ["A ball", "A stick", "A little bird", "A toy"],
+                            correct: 2
+                        },
+                        {
+                            question: "How did Max act when he saw the bird?",
+                            options: ["He barked loudly", "He ran away", "He sat down and protected it", "He played with it"],
+                            correct: 2
+                        }
+                    ]
+                },
+                {
+                    title: "The Magic Seeds",
+                    text: `<p>Emma loved to help her grandmother in the garden. One day, Grandma gave Emma a small bag of seeds.</p>
+                    <p>"These are magic seeds," said Grandma with a smile. "If you plant them and take care of them every day, something wonderful will happen."</p>
+                    <p>Emma planted the seeds. She watered them every morning. After a few weeks, beautiful sunflowers grew! They were taller than Emma!</p>
+                    <p>Emma learned that the real magic was taking care of something with love.</p>`,
+                    questions: [
+                        {
+                            question: "Who gave Emma the seeds?",
+                            options: ["Her mother", "Her grandmother", "Her friend", "Her teacher"],
+                            correct: 1
+                        },
+                        {
+                            question: "What did Emma do every morning?",
+                            options: ["Picked flowers", "Watered the seeds", "Played games", "Read books"],
+                            correct: 1
+                        },
+                        {
+                            question: "What grew from the magic seeds?",
+                            options: ["Roses", "Daisies", "Sunflowers", "Tulips"],
+                            correct: 2
+                        }
+                    ]
+                }
+            ],
+            2: [ // Level 2 (Medium) - Longer stories with more details
+                {
+                    title: "The Lost Treasure Map",
+                    text: `<p>Jake and his sister Maya were cleaning their attic when they found an old wooden chest. Inside was a yellowed piece of paper with strange drawings on it.</p>
+                    <p>"It's a treasure map!" exclaimed Maya, her eyes sparkling with excitement. The map showed their neighborhood, with an X marked near the old oak tree in the park.</p>
+                    <p>The next morning, the siblings rushed to the park with a shovel. They dug carefully near the oak tree's roots. After an hour of digging, they heard a "clink!" Their shovel had hit something metal.</p>
+                    <p>They pulled out a rusty metal box. Inside were old coins, a pocket watch, and a note that said: "To whoever finds this: These belonged to my grandfather. May they bring you as much joy as they brought our family."</p>
+                    <p>Jake and Maya decided to donate the items to the local museum so everyone could enjoy them.</p>`,
+                    questions: [
+                        {
+                            question: "Where did Jake and Maya find the map?",
+                            options: ["In the attic", "In the basement", "In the garage", "At school"],
+                            correct: 0
+                        },
+                        {
+                            question: "What landmark did the X mark on the map?",
+                            options: ["A big rock", "An old oak tree", "A fountain", "A statue"],
+                            correct: 1
+                        },
+                        {
+                            question: "What was NOT found in the metal box?",
+                            options: ["Old coins", "A pocket watch", "A diamond ring", "A note"],
+                            correct: 2
+                        },
+                        {
+                            question: "What did Jake and Maya do with the treasure?",
+                            options: ["Kept it secret", "Sold it", "Gave it to a museum", "Buried it again"],
+                            correct: 2
+                        }
+                    ]
+                },
+                {
+                    title: "The Science Fair Project",
+                    text: `<p>Carlos wanted to do something special for the science fair. All his classmates were building volcanoes or solar systems, but Carlos wanted to be different.</p>
+                    <p>He remembered how his mom always said plants could "hear" music. Was it true? Carlos decided to find out.</p>
+                    <p>He set up an experiment with three identical plants. The first plant heard classical music for 30 minutes each day. The second heard rock music. The third plant stayed in silence.</p>
+                    <p>After three weeks, Carlos measured the plants. The classical music plant had grown the tallest! The rock music plant grew second tallest, and the silent plant grew the least.</p>
+                    <p>At the science fair, Carlos won first place. But more importantly, he learned that being curious and trying new things is what science is all about.</p>`,
+                    questions: [
+                        {
+                            question: "Why did Carlos want to do a different project?",
+                            options: ["His teacher told him to", "Everyone else was doing similar projects", "It was easier", "His mom made him"],
+                            correct: 1
+                        },
+                        {
+                            question: "How many plants did Carlos use in his experiment?",
+                            options: ["Two", "Three", "Four", "Five"],
+                            correct: 1
+                        },
+                        {
+                            question: "Which plant grew the tallest?",
+                            options: ["The silent plant", "The rock music plant", "The classical music plant", "They all grew the same"],
+                            correct: 2
+                        },
+                        {
+                            question: "What did Carlos learn from his project?",
+                            options: ["Music is loud", "Plants need water", "Being curious and trying new things is what science is about", "Science fairs are hard"],
+                            correct: 2
+                        }
+                    ]
+                }
+            ],
+            3: [ // Level 3 (Challenge) - Complex stories with deeper comprehension
+                {
+                    title: "The Mysterious Lighthouse Keeper",
+                    text: `<p>The old lighthouse stood alone on the rocky cliff, its light sweeping across the dark ocean every night. Everyone in the village knew about it, but no one had seen the lighthouse keeper in years.</p>
+                    <p>One stormy night, twelve-year-old Sophie's boat drifted too close to the rocks. She was returning from her grandfather's island when her motor died. The waves grew larger, pushing her boat toward the dangerous rocks.</p>
+                    <p>Suddenly, the lighthouse beam changed its pattern. Instead of its regular sweep, it blinked three times, then pointed steadily toward a narrow channel between the rocks. Sophie steered carefully through the channel, following the light's guidance.</p>
+                    <p>When she reached the safe harbor, Sophie looked back at the lighthouse. For just a moment, she thought she saw a figure in the lighthouse window, raising a hand in greeting. The next morning, when Sophie tried to thank the keeper, the lighthouse was locked and silent, as it had been for years.</p>
+                    <p>The villagers said it must have been her imagination, but Sophie knew better. Someone had been watching over the sea that night, keeping travelers safe even if they preferred to remain unseen.</p>`,
+                    questions: [
+                        {
+                            question: "What was unusual about the lighthouse?",
+                            options: ["It was very tall", "No one had seen the keeper in years", "It was painted red", "It was built recently"],
+                            correct: 1
+                        },
+                        {
+                            question: "Why was Sophie in danger?",
+                            options: ["She couldn't swim", "Her boat motor died near dangerous rocks", "She was lost", "The weather was too hot"],
+                            correct: 1
+                        },
+                        {
+                            question: "How did the lighthouse help Sophie?",
+                            options: ["It turned off", "It made a loud noise", "It changed its pattern to guide her through a safe channel", "It called the coast guard"],
+                            correct: 2
+                        },
+                        {
+                            question: "What can we infer about the lighthouse keeper?",
+                            options: ["They were careless", "They helped people but valued their privacy", "They had left the lighthouse", "They were afraid of storms"],
+                            correct: 1
+                        },
+                        {
+                            question: "What is the main theme of this story?",
+                            options: ["Storms are dangerous", "Sometimes help comes from unexpected places", "Lighthouses are important", "Always check your boat motor"],
+                            correct: 1
+                        }
+                    ]
+                },
+                {
+                    title: "The Time Capsule Discovery",
+                    text: `<p>When the construction crew began renovating the old elementary school, they discovered something unexpected beneath the cornerstone: a copper time capsule dated 1920.</p>
+                    <p>The principal invited all the students to the gymnasium for the opening ceremony. Inside the time capsule were letters written by students from 100 years ago, describing their hopes for the future.</p>
+                    <p>One letter caught everyone's attention. It was written by a girl named Elizabeth Chen, who dreamed of becoming a scientist. "I hope that one day," she wrote, "children of all backgrounds will have the chance to learn and discover, regardless of whether they are boys or girls, rich or poor."</p>
+                    <p>The principal revealed something remarkable: Elizabeth Chen had indeed become a scientist. She had worked on the team that developed the polio vaccine, helping to save millions of lives. Even more incredible, Elizabeth's great-granddaughter, Emily, was a student at the very same school.</p>
+                    <p>Emily stood up, tears in her eyes, holding the letter written by her great-grandmother a century before. The gymnasium erupted in applause. The students decided to create their own time capsule, adding letters about their own dreams for the year 2124.</p>`,
+                    questions: [
+                        {
+                            question: "When was the time capsule originally buried?",
+                            options: ["1820", "1920", "2020", "1950"],
+                            correct: 1
+                        },
+                        {
+                            question: "What was Elizabeth Chen's dream?",
+                            options: ["To be a teacher", "To be wealthy", "To be a scientist", "To be a principal"],
+                            correct: 2
+                        },
+                        {
+                            question: "What did Elizabeth hope for future children?",
+                            options: ["More toys", "Better schools", "Equal opportunities to learn regardless of background", "Longer recess"],
+                            correct: 2
+                        },
+                        {
+                            question: "What important work did Elizabeth do?",
+                            options: ["She built schools", "She wrote books", "She helped develop the polio vaccine", "She became a principal"],
+                            correct: 2
+                        },
+                        {
+                            question: "Why was this discovery especially meaningful for Emily?",
+                            options: ["She won a prize", "Elizabeth was her great-grandmother", "She found treasure", "She became famous"],
+                            correct: 1
+                        },
+                        {
+                            question: "What does this story suggest about dreams and goals?",
+                            options: ["They are impossible", "They can inspire future generations", "They should be kept secret", "They always come true"],
+                            correct: 1
+                        }
+                    ]
+                }
+            ]
+        };
+
+        function init() {
+            loadStory();
+        }
+
+        function setLevel(level) {
+            currentLevel = level;
+            currentStoryIndex = 0;
+            currentQuestionIndex = 0;
+            score = 0;
+            stars = 0;
+            correctAnswers = 0;
+            totalQuestions = 0;
+
+            // Update level buttons
+            document.querySelectorAll('.level-btn').forEach((btn, index) => {
+                btn.classList.toggle('active', index + 1 === level);
+            });
+
+            loadStory();
+            document.getElementById('levelSelector').style.display = 'none';
+            window.webAudioSounds.playClick();
+        }
+
+        function loadStory() {
+            const levelStories = stories[currentLevel];
+            if (currentStoryIndex >= levelStories.length) {
+                finishGame();
+                return;
+            }
+
+            const story = levelStories[currentStoryIndex];
+            document.getElementById('storyTitle').textContent = story.title;
+            document.getElementById('storyText').innerHTML = story.text;
+            document.getElementById('storyNum').textContent = currentStoryIndex + 1;
+
+            document.getElementById('storyContainer').style.display = 'block';
+            document.getElementById('questionSection').classList.remove('active');
+            document.getElementById('readyBtn').style.display = 'inline-block';
+
+            currentQuestionIndex = 0;
+            window.webAudioSounds.playWhoosh();
+        }
+
+        function showQuestions() {
+            document.getElementById('storyContainer').style.display = 'none';
+            document.getElementById('questionSection').classList.add('active');
+            loadQuestion();
+            window.webAudioSounds.playSuccess();
+        }
+
+        function loadQuestion() {
+            const story = stories[currentLevel][currentStoryIndex];
+            const question = story.questions[currentQuestionIndex];
+
+            answeredCurrentQuestion = false;
+            document.getElementById('questionText').textContent = `Question ${currentQuestionIndex + 1}: ${question.question}`;
+
+            const optionsContainer = document.getElementById('answerOptions');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const card = document.createElement('div');
+                card.className = 'answer-card';
+                card.textContent = option;
+                card.onclick = () => checkAnswer(index, question.correct, card);
+                optionsContainer.appendChild(card);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('nextStoryBtn').style.display = 'none';
+            document.getElementById('finishBtn').style.display = 'none';
+        }
+
+        function checkAnswer(selected, correct, card) {
+            if (answeredCurrentQuestion) return;
+
+            answeredCurrentQuestion = true;
+            totalQuestions++;
+            document.getElementById('total').textContent = totalQuestions;
+
+            const allCards = document.querySelectorAll('.answer-card');
+            allCards.forEach(c => c.style.pointerEvents = 'none');
+
+            if (selected === correct) {
+                card.classList.add('correct');
+                correctAnswers++;
+                score += 10;
+                stars += 10;
+                document.getElementById('score').textContent = score;
+                document.getElementById('stars').textContent = stars;
+                document.getElementById('correct').textContent = correctAnswers;
+                document.getElementById('feedback').textContent = '🎉 Excellent! That\'s correct!';
+                document.getElementById('feedback').style.background = 'linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)';
+                window.webAudioSounds.playCorrect();
+            } else {
+                card.classList.add('incorrect');
+                allCards[correct].classList.add('correct');
+                document.getElementById('feedback').textContent = `💭 Not quite! The correct answer is: ${stories[currentLevel][currentStoryIndex].questions[currentQuestionIndex].options[correct]}`;
+                document.getElementById('feedback').style.background = 'linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%)';
+                window.webAudioSounds.playIncorrect();
+            }
+
+            // Show appropriate next button
+            const story = stories[currentLevel][currentStoryIndex];
+            if (currentQuestionIndex < story.questions.length - 1) {
+                document.getElementById('nextBtn').style.display = 'inline-block';
+            } else if (currentStoryIndex < stories[currentLevel].length - 1) {
+                document.getElementById('nextStoryBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('finishBtn').style.display = 'inline-block';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+            window.webAudioSounds.playClick();
+        }
+
+        function nextStory() {
+            currentStoryIndex++;
+            loadStory();
+            window.webAudioSounds.playLevelUp();
+
+            // Achievement for completing a story
+            if ((currentStoryIndex) % 2 === 0) {
+                showAchievement('📚 Story Master!', `You've completed ${currentStoryIndex} stories!`, '🌈');
+            }
+        }
+
+        function finishGame() {
+            const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+            let message = '';
+            let icon = '';
+
+            if (percentage === 100) {
+                message = `Perfect score! You got all ${totalQuestions} questions right! You're a reading superstar! 🌟`;
+                icon = '🏆';
+                window.webAudioSounds.playPerfectScore();
+            } else if (percentage >= 80) {
+                message = `Great job! You got ${correctAnswers} out of ${totalQuestions} questions correct! That's ${percentage}%! Keep reading! 📖`;
+                icon = '⭐';
+                window.webAudioSounds.playAchievement();
+            } else if (percentage >= 60) {
+                message = `Good effort! You got ${correctAnswers} out of ${totalQuestions} questions correct. That's ${percentage}%. Practice makes perfect! 💪`;
+                icon = '👍';
+                window.webAudioSounds.playSuccess();
+            } else {
+                message = `You got ${correctAnswers} out of ${totalQuestions} questions correct. Keep practicing! Reading gets easier the more you do it! 📚`;
+                icon = '💭';
+                window.webAudioSounds.playSuccess();
+            }
+
+            showAchievement('🌈 Reading Quest Complete!', message, icon);
+
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 6000);
+        }
+
+        function showAchievement(title, text, icon = '🎉') {
+            document.getElementById('achievementIcon').textContent = icon;
+            document.getElementById('achievementTitle').textContent = title;
+            document.getElementById('achievementText').textContent = text;
+            document.getElementById('achievementModal').classList.add('show');
+            window.webAudioSounds.playAchievement();
+        }
+
+        function closeAchievement() {
+            document.getElementById('achievementModal').classList.remove('show');
+            window.webAudioSounds.playClick();
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>

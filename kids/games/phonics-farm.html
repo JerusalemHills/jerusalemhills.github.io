@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonics Farm - Learn Letter Sounds | Jerusalem Hills Kids</title>
+    <meta name="description" content="Match beginning sounds with fun farm animals! Learn phonics through interactive games for ages 5-6.">
+    <meta name="keywords" content="phonics game, letter sounds, beginning sounds, kindergarten, CVC words">
+    <link rel="icon" href="../../img/favicon.ico">
+    <script src="../assets/js/web-audio-sounds.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background: linear-gradient(135deg, #8BC34A 0%, #4CAF50 100%);
+            color: #2C3E50;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .game-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .game-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .game-header h1 {
+            color: #4CAF50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .score-display {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .stat {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .game-area {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            min-height: 500px;
+        }
+
+        .challenge-title {
+            text-align: center;
+            font-size: 2em;
+            color: #4CAF50;
+            margin-bottom: 30px;
+        }
+
+        .target-sound {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sound-letter {
+            font-size: 8em;
+            color: #FF9800;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .sound-description {
+            font-size: 1.5em;
+            color: #555;
+            margin-top: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .option-card {
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            border: 4px solid #4CAF50;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #FF9800;
+        }
+
+        .option-icon {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+
+        .option-word {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2C3E50;
+        }
+
+        .option-card.correct {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            border-color: #2E7D32;
+            animation: correctAnswer 0.6s;
+        }
+
+        .option-card.incorrect {
+            background: linear-gradient(135deg, #FFCDD2, #EF9A9A);
+            border-color: #E57373;
+            animation: shake 0.5s;
+        }
+
+        @keyframes correctAnswer {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback-message {
+            text-align: center;
+            font-size: 2em;
+            margin: 20px 0;
+            min-height: 60px;
+        }
+
+        .feedback-message.correct {
+            color: #4CAF50;
+        }
+
+        .feedback-message.incorrect {
+            color: #FF5722;
+        }
+
+        .next-btn {
+            display: block;
+            margin: 30px auto 0;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: #4CAF50;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .game-header h1 { font-size: 2em; }
+            .sound-letter { font-size: 5em; }
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='../index.html'">← Back to Kids Zone</button>
+
+    <div class="game-container">
+        <div class="game-header">
+            <h1>🐄 Phonics Farm</h1>
+            <p>Help the farmer! Match words that start with the same sound!</p>
+        </div>
+
+        <div class="score-display">
+            <div class="stat">✓ Correct: <span id="correctCount">0</span></div>
+            <div class="stat">🎯 Round: <span id="roundCount">1</span>/10</div>
+            <div class="stat">⭐ Stars: <span id="starCount">0</span></div>
+        </div>
+
+        <div class="game-area">
+            <div class="challenge-title">Find the word that starts with...</div>
+
+            <div class="target-sound">
+                <div class="sound-letter" id="targetLetter">B</div>
+                <div class="sound-description" id="soundDesc">
+                    🔊 "buh" as in <strong>ball</strong>
+                </div>
+                <button class="next-btn" style="margin: 20px auto; padding: 10px 25px; font-size: 1.1em;" onclick="playTargetSound()">
+                    🔊 Hear Sound
+                </button>
+            </div>
+
+            <div class="options-grid" id="optionsGrid"></div>
+
+            <div class="feedback-message" id="feedbackMessage"></div>
+
+            <button class="next-btn" id="nextBtn" onclick="nextRound()" style="display: none;">
+                Next Challenge →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Phonics data with beginning sounds
+        const phonicsData = {
+            'B': {
+                sound: '"buh"',
+                example: 'ball',
+                words: ['Bear', 'Ball', 'Bat', 'Bus', 'Bee', 'Book'],
+                icons: ['🐻', '⚽', '🦇', '🚌', '🐝', '📚']
+            },
+            'C': {
+                sound: '"kuh"',
+                example: 'cat',
+                words: ['Cat', 'Car', 'Cow', 'Cup', 'Cake', 'Cloud'],
+                icons: ['🐱', '🚗', '🐄', '☕', '🎂', '☁️']
+            },
+            'D': {
+                sound: '"duh"',
+                example: 'dog',
+                words: ['Dog', 'Duck', 'Deer', 'Door', 'Drum', 'Doll'],
+                icons: ['🐕', '🦆', '🦌', '🚪', '🥁', '🪆']
+            },
+            'F': {
+                sound: '"fuh"',
+                example: 'fish',
+                words: ['Fish', 'Fox', 'Frog', 'Fire', 'Flower', 'Flag'],
+                icons: ['🐠', '🦊', '🐸', '🔥', '🌸', '🚩']
+            },
+            'G': {
+                sound: '"guh"',
+                example: 'goat',
+                words: ['Goat', 'Girl', 'Gift', 'Grapes', 'Guitar', 'Gate'],
+                icons: ['🐐', '👧', '🎁', '🍇', '🎸', '🚪']
+            },
+            'H': {
+                sound: '"huh"',
+                example: 'house',
+                words: ['House', 'Horse', 'Hat', 'Heart', 'Hand', 'Hill'],
+                icons: ['🏠', '🐴', '🎩', '💛', '✋', '⛰️']
+            },
+            'L': {
+                sound: '"luh"',
+                example: 'lion',
+                words: ['Lion', 'Lamp', 'Leaf', 'Lemon', 'Lock', 'Ladder'],
+                icons: ['🦁', '💡', '🍃', '🍋', '🔒', '🪜']
+            },
+            'M': {
+                sound: '"muh"',
+                example: 'moon',
+                words: ['Moon', 'Mouse', 'Monkey', 'Milk', 'Music', 'Map'],
+                icons: ['🌙', '🐭', '🐵', '🥛', '🎵', '🗺️']
+            },
+            'P': {
+                sound: '"puh"',
+                example: 'pig',
+                words: ['Pig', 'Pizza', 'Penguin', 'Pear', 'Plane', 'Pencil'],
+                icons: ['🐷', '🍕', '🐧', '🍐', '✈️', '✏️']
+            },
+            'R': {
+                sound: '"ruh"',
+                example: 'rainbow',
+                words: ['Rainbow', 'Rabbit', 'Rose', 'Ring', 'Robot', 'Rocket'],
+                icons: ['🌈', '🐰', '🌹', '💍', '🤖', '🚀']
+            },
+            'S': {
+                sound: '"suh"',
+                example: 'sun',
+                words: ['Sun', 'Snake', 'Star', 'Seal', 'Sock', 'Spoon'],
+                icons: ['☀️', '🐍', '⭐', '🦭', '🧦', '🥄']
+            },
+            'T': {
+                sound: '"tuh"',
+                example: 'tree',
+                words: ['Tree', 'Tiger', 'Truck', 'Train', 'Turtle', 'Teeth'],
+                icons: ['🌳', '🐯', '🚚', '🚂', '🐢', '🦷']
+            }
+        };
+
+        // Game state
+        let currentRound = 1;
+        const totalRounds = 10;
+        let correctAnswers = 0;
+        let stars = 0;
+        let currentLetter = '';
+        let correctAnswer = '';
+
+        // Initialize game
+        function init() {
+            newChallenge();
+        }
+
+        function newChallenge() {
+            // Pick random letter
+            const letters = Object.keys(phonicsData);
+            currentLetter = letters[Math.floor(Math.random() * letters.length)];
+            const data = phonicsData[currentLetter];
+
+            // Display target sound
+            document.getElementById('targetLetter').textContent = currentLetter;
+            document.getElementById('soundDesc').innerHTML =
+                `🔊 ${data.sound} as in <strong>${data.example}</strong>`;
+
+            // Select correct answer
+            correctAnswer = data.words[Math.floor(Math.random() * data.words.length)];
+            const correctIndex = data.words.indexOf(correctAnswer);
+            const correctIcon = data.icons[correctIndex];
+
+            // Select 3 wrong answers from other letters
+            const wrongOptions = [];
+            while (wrongOptions.length < 3) {
+                const wrongLetter = letters[Math.floor(Math.random() * letters.length)];
+                if (wrongLetter !== currentLetter) {
+                    const wrongData = phonicsData[wrongLetter];
+                    const wrongIndex = Math.floor(Math.random() * wrongData.words.length);
+                    wrongOptions.push({
+                        word: wrongData.words[wrongIndex],
+                        icon: wrongData.icons[wrongIndex]
+                    });
+                }
+            }
+
+            // Mix correct answer with wrong options
+            const allOptions = [
+                { word: correctAnswer, icon: correctIcon, correct: true },
+                ...wrongOptions.map(opt => ({ ...opt, correct: false }))
+            ];
+
+            // Shuffle
+            allOptions.sort(() => Math.random() - 0.5);
+
+            // Display options
+            const grid = document.getElementById('optionsGrid');
+            grid.innerHTML = '';
+            allOptions.forEach(option => {
+                const card = document.createElement('div');
+                card.className = 'option-card';
+                card.innerHTML = `
+                    <div class="option-icon">${option.icon}</div>
+                    <div class="option-word">${option.word}</div>
+                `;
+                card.onclick = () => checkAnswer(card, option.correct);
+                grid.appendChild(card);
+            });
+
+            // Reset UI
+            document.getElementById('feedbackMessage').textContent = '';
+            document.getElementById('feedbackMessage').className = 'feedback-message';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('roundCount').textContent = currentRound;
+        }
+
+        function checkAnswer(card, isCorrect) {
+            // Disable all cards
+            document.querySelectorAll('.option-card').forEach(c => {
+                c.style.pointerEvents = 'none';
+            });
+
+            const feedback = document.getElementById('feedbackMessage');
+
+            if (isCorrect) {
+                card.classList.add('correct');
+                feedback.textContent = '🎉 Perfect! That word starts with ' + currentLetter + '!';
+                feedback.className = 'feedback-message correct';
+                correctAnswers++;
+                stars += 10;
+                window.webAudioSounds.playSuccess();
+
+                // Check for streak
+                if (correctAnswers % 3 === 0) {
+                    window.webAudioSounds.playAchievement();
+                }
+            } else {
+                card.classList.add('incorrect');
+                feedback.textContent = '🤔 Not quite! The correct answer is ' + correctAnswer + '!';
+                feedback.className = 'feedback-message incorrect';
+                window.webAudioSounds.playError();
+
+                // Highlight correct answer
+                setTimeout(() => {
+                    document.querySelectorAll('.option-card').forEach(c => {
+                        if (c.textContent.includes(correctAnswer)) {
+                            c.classList.add('correct');
+                        }
+                    });
+                }, 500);
+            }
+
+            // Update display
+            document.getElementById('correctCount').textContent = correctAnswers;
+            document.getElementById('starCount').textContent = stars;
+
+            // Show next button
+            document.getElementById('nextBtn').style.display = 'block';
+        }
+
+        function nextRound() {
+            if (currentRound >= totalRounds) {
+                endGame();
+            } else {
+                currentRound++;
+                newChallenge();
+            }
+        }
+
+        function playTargetSound() {
+            window.webAudioSounds.playLetterSelect();
+            // Animate letter
+            const letter = document.getElementById('targetLetter');
+            letter.style.animation = 'none';
+            setTimeout(() => {
+                letter.style.animation = 'pulse 2s infinite';
+            }, 10);
+        }
+
+        function endGame() {
+            const percentage = Math.round((correctAnswers / totalRounds) * 100);
+            const gameArea = document.querySelector('.game-area');
+            gameArea.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 8em;">🏆</div>
+                    <h2 style="font-size: 3em; color: #4CAF50; margin: 20px 0;">
+                        Great Job!
+                    </h2>
+                    <p style="font-size: 1.8em; margin: 20px 0;">
+                        You got <strong>${correctAnswers}</strong> out of ${totalRounds} correct!
+                    </p>
+                    <p style="font-size: 1.5em; color: #FF9800;">
+                        ⭐ ${stars} Stars Earned!
+                    </p>
+                    <button class="next-btn" onclick="location.reload()">
+                        🔄 Play Again
+                    </button>
+                    <button class="next-btn" style="background: linear-gradient(135deg, #667eea, #764ba2);"
+                            onclick="window.location.href='../index.html'">
+                        🏠 Back to Kids Zone
+                    </button>
+                </div>
+            `;
+
+            if (percentage >= 80) {
+                window.webAudioSounds.playPerfectScore();
+            } else {
+                window.webAudioSounds.playAchievement();
+            }
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>

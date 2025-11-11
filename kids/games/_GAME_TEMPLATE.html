@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{GAME_TITLE}} | Jerusalem Hills Kids</title>
+    <meta name="description" content="{{GAME_DESCRIPTION}}">
+    <meta name="keywords" content="{{GAME_KEYWORDS}}">
+    <link rel="icon" href="../../img/favicon.ico">
+    <script src="../assets/js/web-audio-sounds.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background: linear-gradient(135deg, {{PRIMARY_COLOR}} 0%, {{SECONDARY_COLOR}} 100%);
+            color: #2C3E50;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .game-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .game-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .game-header h1 {
+            color: {{PRIMARY_COLOR}};
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .score-display {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .stat {
+            background: linear-gradient(135deg, {{PRIMARY_COLOR}}, {{SECONDARY_COLOR}});
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .game-area {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            min-height: 500px;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, {{PRIMARY_COLOR}}, {{SECONDARY_COLOR}});
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+        .back-btn:hover {
+            background: {{PRIMARY_COLOR}};
+            color: white;
+            transform: translateX(-5px);
+        }
+        @media (max-width: 768px) {
+            .game-header h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='../index.html'">← Back</button>
+
+    <div class="game-container">
+        <div class="game-header">
+            <h1>{{GAME_ICON}} {{GAME_TITLE}}</h1>
+            <p>{{GAME_SUBTITLE}}</p>
+        </div>
+
+        <div class="score-display">
+            <div class="stat">Score: <span id="score">0</span></div>
+            <div class="stat">Round: <span id="round">1</span>/10</div>
+            <div class="stat">⭐ Stars: <span id="stars">0</span></div>
+        </div>
+
+        <div class="game-area" id="gameArea">
+            <!-- Game content goes here -->
+        </div>
+    </div>
+
+    <script>
+        // {{GAME_TITLE}} Game Logic
+        let score = 0;
+        let round = 1;
+        let stars = 0;
+
+        function init() {
+            // Initialize game
+            console.log('{{GAME_TITLE}} initialized');
+        }
+
+        function updateScore(points) {
+            score += points;
+            stars += points;
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = stars;
+        }
+
+        function nextRound() {
+            round++;
+            document.getElementById('round').textContent = round;
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
+
+<!--
+USAGE INSTRUCTIONS:
+1. Copy this file to new game name
+2. Replace all {{VARIABLES}} with actual values:
+   - {{GAME_TITLE}}: "Sight Word Safari"
+   - {{GAME_DESCRIPTION}}: "Learn high-frequency sight words..."
+   - {{GAME_KEYWORDS}}: "sight words, reading, kindergarten"
+   - {{GAME_ICON}}: "🦁" (emoji for game)
+   - {{GAME_SUBTITLE}}: "Spot sight words in the wild!"
+   - {{PRIMARY_COLOR}}: "#FF9800"
+   - {{SECONDARY_COLOR}}: "#FFC107"
+3. Add game-specific logic in JavaScript section
+4. Add game-specific HTML in game-area
+-->

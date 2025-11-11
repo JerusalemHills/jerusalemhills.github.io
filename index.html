@@ -62,6 +62,7 @@
   <script src="js/ticker.js"></script>
   <script src="js/hebrew-keyboard.js"></script>
   <script src="js/forum-preview.js"></script>
+  <script src="js/markets-carousel.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     // Load header after DOM and Lucide are ready
@@ -76,7 +77,7 @@
           }
           // Load mobile menu functionality
           const script = document.createElement('script');
-          script.src = '/js/mobile-nav.js';
+          script.src = '/js/header-mobile-menu.js';
           document.head.appendChild(script);
           // Initialize Hebrew keyboard after header is loaded
           if (typeof window.initHebrewKeyboard === 'function') {

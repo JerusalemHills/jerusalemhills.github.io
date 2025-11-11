@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Village | Jerusalem Hills Kids</title>
+    <meta name="description" content="Build your vocabulary through fun word games! Level 2 vocabulary building for ages 7-8.">
+    <meta name="keywords" content="vocabulary, word learning, definitions, context clues, elementary literacy">
+    <link rel="icon" href="../../img/favicon.ico">
+    <script src="../assets/js/web-audio-sounds.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            color: #2C3E50;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .game-container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .game-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .game-header h1 {
+            color: #43cea2;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .village-icon {
+            font-size: 3em;
+            margin: 10px 0;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .score-display {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .stat {
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .game-area {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            min-height: 500px;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+        .back-btn:hover {
+            background: #43cea2;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        /* Village Map */
+        .village-map {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .building {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border: 3px solid #185a9d;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .building:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(67, 206, 162, 0.4);
+            border-color: #43cea2;
+        }
+        .building.active {
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            color: white;
+            border-color: #43cea2;
+        }
+        .building.completed {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-color: #4CAF50;
+        }
+        .building-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .building-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .building-progress {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Game Types */
+        .game-screen {
+            display: none;
+        }
+        .game-screen.active {
+            display: block;
+        }
+
+        .word-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .target-word {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .word-context {
+            font-size: 1.3em;
+            font-style: italic;
+            line-height: 1.6;
+            margin-top: 15px;
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .option-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .option-card:hover {
+            transform: scale(1.05);
+            border-color: #43cea2;
+            box-shadow: 0 4px 15px rgba(67, 206, 162, 0.3);
+        }
+        .option-card.correct {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-color: #4CAF50;
+            animation: celebrate 0.5s ease;
+        }
+        .option-card.incorrect {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-color: #FF9800;
+            animation: shake 0.5s ease;
+        }
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            min-height: 80px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Achievement modal */
+        .achievement-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-align: center;
+            transition: transform 0.3s ease;
+            max-width: 500px;
+        }
+        .achievement-modal.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .achievement-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+        .achievement-title {
+            font-size: 2em;
+            color: #43cea2;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .game-header h1 { font-size: 2em; }
+            .target-word { font-size: 2em; }
+            .word-context { font-size: 1.1em; }
+            .option-card { font-size: 1em; min-height: 80px; }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='../index.html'">← Back</button>
+
+    <div class="game-container">
+        <div class="game-header">
+            <div class="village-icon">🏘️</div>
+            <h1>📚 Vocabulary Village</h1>
+            <p>Explore the village and learn new words through games!</p>
+        </div>
+
+        <div class="score-display">
+            <div class="stat">💰 Coins: <span id="coins">0</span></div>
+            <div class="stat">📖 Words Learned: <span id="wordsLearned">0</span>/30</div>
+            <div class="stat">⭐ Stars: <span id="stars">0</span></div>
+            <div class="stat">🔥 Streak: <span id="streak">0</span></div>
+        </div>
+
+        <!-- Village Map -->
+        <div id="villageMap" class="game-area">
+            <h2 style="text-align: center; color: #43cea2; margin-bottom: 30px;">🏘️ Welcome to Vocabulary Village!</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 1.2em;">Choose a building to start learning new words!</p>
+            <div class="village-map" id="buildingGrid"></div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="game-area game-screen">
+            <div class="word-display">
+                <div class="target-word" id="targetWord"></div>
+                <div id="wordContextArea"></div>
+            </div>
+
+            <div id="gameQuestion" style="font-size: 1.4em; text-align: center; margin-bottom: 20px; color: #185a9d; font-weight: bold;"></div>
+
+            <div class="options-grid" id="optionsGrid"></div>
+
+            <div class="feedback" id="feedback"></div>
+
+            <div class="action-buttons">
+                <button class="btn" id="nextBtn" onclick="nextWord()" style="display: none;">Next Word ➡️</button>
+                <button class="btn" id="backToVillageBtn" onclick="backToVillage()">Back to Village 🏘️</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="achievement-modal" id="achievementModal">
+        <div class="achievement-icon" id="achievementIcon"></div>
+        <div class="achievement-title" id="achievementTitle"></div>
+        <div id="achievementText"></div>
+        <button class="btn" onclick="closeAchievement()" style="margin-top: 20px;">Awesome! ✨</button>
+    </div>
+
+    <script>
+        // Vocabulary Village Game Logic
+        let coins = 0;
+        let wordsLearned = 0;
+        let stars = 0;
+        let streak = 0;
+        let currentBuilding = null;
+        let currentWordIndex = 0;
+        let buildingProgress = {};
+
+        const buildings = [
+            {
+                id: 'library',
+                name: 'Library',
+                icon: '📚',
+                category: 'Descriptive Words',
+                type: 'definition',
+                words: [
+                    { word: 'gigantic', definition: 'Extremely large; huge', context: 'The gigantic elephant towered over the other animals.', options: ['Very small', 'Extremely large', 'Very fast', 'Very colorful'] },
+                    { word: 'ancient', definition: 'Very old; from a long time ago', context: 'The ancient castle has stood for over 1000 years.', options: ['Very new', 'Very old', 'Very tall', 'Very beautiful'] },
+                    { word: 'brilliant', definition: 'Very bright or very clever', context: 'The brilliant student solved the difficult math problem.', options: ['Very dull', 'Very bright or clever', 'Very sad', 'Very quiet'] },
+                    { word: 'magnificent', definition: 'Extremely beautiful or impressive', context: 'The view from the mountain was absolutely magnificent.', options: ['Very ugly', 'Extremely beautiful', 'Very small', 'Very boring'] },
+                    { word: 'swift', definition: 'Moving very quickly; fast', context: 'The swift cheetah caught its prey in seconds.', options: ['Very slow', 'Very loud', 'Moving very quickly', 'Very heavy'] }
+                ]
+            },
+            {
+                id: 'school',
+                name: 'School House',
+                icon: '🏫',
+                category: 'Action Words',
+                type: 'definition',
+                words: [
+                    { word: 'discover', definition: 'To find something for the first time', context: 'Scientists discover new species of animals every year.', options: ['To lose something', 'To find something new', 'To hide something', 'To forget something'] },
+                    { word: 'examine', definition: 'To look at something closely and carefully', context: 'The doctor will examine your throat to see why it hurts.', options: ['To ignore', 'To look at closely', 'To throw away', 'To break'] },
+                    { word: 'construct', definition: 'To build or make something', context: 'Workers construct new buildings downtown.', options: ['To destroy', 'To build or make', 'To paint', 'To clean'] },
+                    { word: 'demonstrate', definition: 'To show how something works or is done', context: 'The teacher will demonstrate how to solve the problem.', options: ['To hide', 'To guess', 'To show how', 'To forget'] },
+                    { word: 'persuade', definition: 'To convince someone to do something', context: 'She tried to persuade her parents to let her stay up late.', options: ['To force', 'To convince', 'To confuse', 'To ignore'] }
+                ]
+            },
+            {
+                id: 'market',
+                name: 'Market Square',
+                icon: '🏪',
+                category: 'Everyday Words',
+                type: 'synonym',
+                words: [
+                    { word: 'happy', synonym: 'joyful', context: 'The child felt happy when she received the gift.', options: ['sad', 'angry', 'joyful', 'scared'], question: 'Which word means the same as' },
+                    { word: 'big', synonym: 'large', context: 'The big dog played in the yard.', options: ['tiny', 'large', 'slow', 'fast'], question: 'Which word means the same as' },
+                    { word: 'smart', synonym: 'intelligent', context: 'The smart student answered all the questions correctly.', options: ['silly', 'lazy', 'intelligent', 'quiet'], question: 'Which word means the same as' },
+                    { word: 'brave', synonym: 'courageous', context: 'The brave firefighter rescued the cat from the tree.', options: ['fearful', 'courageous', 'weak', 'mean'], question: 'Which word means the same as' },
+                    { word: 'difficult', synonym: 'challenging', context: 'The difficult puzzle took hours to complete.', options: ['easy', 'fun', 'challenging', 'boring'], question: 'Which word means the same as' }
+                ]
+            },
+            {
+                id: 'museum',
+                name: 'Museum',
+                icon: '🏛️',
+                category: 'Feeling Words',
+                type: 'definition',
+                words: [
+                    { word: 'anxious', definition: 'Worried or nervous about something', context: 'Tom felt anxious before his big test.', options: ['Very excited', 'Worried or nervous', 'Very sleepy', 'Very hungry'] },
+                    { word: 'delighted', definition: 'Very pleased and happy', context: 'Maria was delighted when she won the award.', options: ['Very sad', 'Very pleased', 'Very angry', 'Very tired'] },
+                    { word: 'exhausted', definition: 'Extremely tired', context: 'After running the race, I felt completely exhausted.', options: ['Full of energy', 'Extremely tired', 'Very happy', 'Very cold'] },
+                    { word: 'furious', definition: 'Extremely angry', context: 'Mom was furious when she saw the broken vase.', options: ['Very happy', 'Extremely angry', 'Very calm', 'Very confused'] },
+                    { word: 'astonished', definition: 'Very surprised; amazed', context: 'We were astonished by the magic trick.', options: ['Very bored', 'Very surprised', 'Very sad', 'Very sleepy'] }
+                ]
+            },
+            {
+                id: 'park',
+                name: 'Nature Park',
+                icon: '🌳',
+                category: 'Nature Words',
+                type: 'definition',
+                words: [
+                    { word: 'habitat', definition: 'The natural home of an animal or plant', context: 'The forest is the habitat of many birds and squirrels.', options: ['A type of food', 'A natural home', 'A kind of weather', 'A type of tree'] },
+                    { word: 'flourish', definition: 'To grow well and be healthy', context: 'Plants flourish when they get enough sunlight and water.', options: ['To die quickly', 'To grow well', 'To stay the same', 'To make noise'] },
+                    { word: 'migrate', definition: 'To move from one place to another with seasons', context: 'Many birds migrate south for the winter.', options: ['To stay in one place', 'To build a nest', 'To move with seasons', 'To sleep'] },
+                    { word: 'camouflage', definition: 'Colors or patterns that help hide', context: 'The chameleon uses camouflage to blend in with leaves.', options: ['Bright colors', 'Colors that help hide', 'A type of food', 'A way to move'] },
+                    { word: 'predator', definition: 'An animal that hunts other animals for food', context: 'The lion is a predator that hunts zebras.', options: ['An animal that eats plants', 'An animal that hunts others', 'A baby animal', 'A flying animal'] }
+                ]
+            },
+            {
+                id: 'theater',
+                name: 'Theater',
+                icon: '🎭',
+                category: 'Story Words',
+                type: 'context',
+                words: [
+                    { word: 'narrator', context: 'The _____ told the story while the actors performed.', options: ['person who tells the story', 'person who watches', 'person who cleans', 'person who sings'], question: 'What does "narrator" mean in this sentence?' },
+                    { word: 'character', context: 'My favorite _____ in the book is the brave knight.', options: ['person in a story', 'type of book', 'place', 'ending'], question: 'What does "character" mean in this sentence?' },
+                    { word: 'plot', context: 'The _____ of the story was exciting, with many twists and turns.', options: ['pictures', 'main events of the story', 'cover', 'title'], question: 'What does "plot" mean in this sentence?' },
+                    { word: 'setting', context: 'The _____ of the story was a magical castle in the clouds.', options: ['main character', 'ending', 'place where story happens', 'author'], question: 'What does "setting" mean in this sentence?' },
+                    { word: 'moral', context: 'The _____ of the fable was to always tell the truth.', options: ['beginning', 'lesson of the story', 'longest part', 'funniest part'], question: 'What does "moral" mean in this sentence?' }
+                ]
+            }
+        ];
+
+        function init() {
+            // Initialize building progress
+            buildings.forEach(building => {
+                buildingProgress[building.id] = 0;
+            });
+            renderVillageMap();
+        }
+
+        function renderVillageMap() {
+            const grid = document.getElementById('buildingGrid');
+            grid.innerHTML = '';
+
+            buildings.forEach(building => {
+                const buildingCard = document.createElement('div');
+                buildingCard.className = 'building';
+                if (buildingProgress[building.id] === building.words.length) {
+                    buildingCard.classList.add('completed');
+                }
+                buildingCard.innerHTML = `
+                    <div class="building-icon">${building.icon}</div>
+                    <div class="building-name">${building.name}</div>
+                    <div class="building-progress">${buildingProgress[building.id]}/${building.words.length} words</div>
+                `;
+                buildingCard.onclick = () => enterBuilding(building);
+                grid.appendChild(buildingCard);
+            });
+
+            document.getElementById('villageMap').style.display = 'block';
+            document.getElementById('gameScreen').classList.remove('active');
+        }
+
+        function enterBuilding(building) {
+            currentBuilding = building;
+            currentWordIndex = 0;
+            document.getElementById('villageMap').style.display = 'none';
+            document.getElementById('gameScreen').classList.add('active');
+            loadWord();
+            window.webAudioSounds.playWhoosh();
+        }
+
+        function loadWord() {
+            if (currentWordIndex >= currentBuilding.words.length) {
+                buildingComplete();
+                return;
+            }
+
+            const wordData = currentBuilding.words[currentWordIndex];
+            document.getElementById('targetWord').textContent = wordData.word;
+
+            // Display context based on game type
+            const contextArea = document.getElementById('wordContextArea');
+            if (wordData.context) {
+                contextArea.innerHTML = `<div class="word-context">"${wordData.context}"</div>`;
+            } else {
+                contextArea.innerHTML = '';
+            }
+
+            // Set question based on type
+            const questionText = currentBuilding.type === 'synonym'
+                ? `${wordData.question || 'Which word means the same as'} "${wordData.word}"?`
+                : currentBuilding.type === 'context'
+                ? wordData.question
+                : `What does "${wordData.word}" mean?`;
+
+            document.getElementById('gameQuestion').textContent = questionText;
+
+            // Render options
+            const optionsGrid = document.getElementById('optionsGrid');
+            optionsGrid.innerHTML = '';
+
+            const shuffledOptions = shuffleArray([...wordData.options]);
+            shuffledOptions.forEach((option, index) => {
+                const card = document.createElement('div');
+                card.className = 'option-card';
+                card.textContent = option;
+                card.onclick = () => checkAnswer(option, wordData);
+                optionsGrid.appendChild(card);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function checkAnswer(selected, wordData) {
+            const allCards = document.querySelectorAll('.option-card');
+            allCards.forEach(card => card.style.pointerEvents = 'none');
+
+            let correct = false;
+            let correctAnswer = '';
+
+            if (currentBuilding.type === 'definition') {
+                correctAnswer = wordData.definition;
+                correct = selected === wordData.definition;
+            } else if (currentBuilding.type === 'synonym') {
+                correctAnswer = wordData.synonym;
+                correct = selected === wordData.synonym;
+            } else if (currentBuilding.type === 'context') {
+                correctAnswer = wordData.options[0]; // First option is always correct for context type
+                correct = selected === correctAnswer;
+            }
+
+            allCards.forEach(card => {
+                if (card.textContent === correctAnswer) {
+                    card.classList.add('correct');
+                } else if (card.textContent === selected && !correct) {
+                    card.classList.add('incorrect');
+                }
+            });
+
+            if (correct) {
+                coins += 10;
+                stars += 10;
+                streak++;
+                buildingProgress[currentBuilding.id] = Math.max(buildingProgress[currentBuilding.id], currentWordIndex + 1);
+
+                if (buildingProgress[currentBuilding.id] === currentBuilding.words.length) {
+                    wordsLearned = Object.values(buildingProgress).reduce((sum, val) => sum + val, 0);
+                }
+
+                document.getElementById('feedback').textContent = `🎉 Perfect! "${wordData.word}" means: ${correctAnswer}`;
+                document.getElementById('feedback').style.background = 'linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)';
+                window.webAudioSounds.playCorrect();
+            } else {
+                streak = 0;
+                document.getElementById('feedback').textContent = `💭 Not quite! "${wordData.word}" means: ${correctAnswer}`;
+                document.getElementById('feedback').style.background = 'linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%)';
+                window.webAudioSounds.playIncorrect();
+            }
+
+            updateStats();
+            document.getElementById('nextBtn').style.display = 'inline-block';
+
+            // Check for streak achievements
+            if (streak === 5) {
+                showAchievement('🔥 On Fire!', 'You got 5 in a row!', '🔥');
+            } else if (streak === 10) {
+                showAchievement('⚡ Unstoppable!', 'You got 10 in a row! Amazing!', '⚡');
+            }
+        }
+
+        function nextWord() {
+            currentWordIndex++;
+            loadWord();
+            window.webAudioSounds.playClick();
+        }
+
+        function buildingComplete() {
+            wordsLearned = Object.values(buildingProgress).reduce((sum, val) => sum + val, 0);
+            updateStats();
+
+            showAchievement(
+                `${currentBuilding.icon} ${currentBuilding.name} Complete!`,
+                `You learned all ${currentBuilding.words.length} words in the ${currentBuilding.category} category!`,
+                '🎉'
+            );
+
+            window.webAudioSounds.playAchievement();
+
+            setTimeout(() => {
+                backToVillage();
+            }, 3000);
+        }
+
+        function backToVillage() {
+            renderVillageMap();
+            window.webAudioSounds.playClick();
+        }
+
+        function updateStats() {
+            document.getElementById('coins').textContent = coins;
+            document.getElementById('wordsLearned').textContent = wordsLearned;
+            document.getElementById('stars').textContent = stars;
+            document.getElementById('streak').textContent = streak;
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function showAchievement(title, text, icon = '🎉') {
+            document.getElementById('achievementIcon').textContent = icon;
+            document.getElementById('achievementTitle').textContent = title;
+            document.getElementById('achievementText').textContent = text;
+            document.getElementById('achievementModal').classList.add('show');
+            window.webAudioSounds.playAchievement();
+        }
+
+        function closeAchievement() {
+            document.getElementById('achievementModal').classList.remove('show');
+            window.webAudioSounds.playClick();
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
