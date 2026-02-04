@@ -169,15 +169,14 @@
     <h1 style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;">Jerusalem Hills - Heritage, Culture & Community Platform</h1>
     
     <section class="dashboard-hero">
-      <!-- Quick Headlines - Clean Static Display -->
+      <!-- Live News Headlines - RSS Powered -->
       <div class="quick-headlines">
-        <span class="headline-label">Latest:</span>
+        <span class="headline-label">📰 News:</span>
         <div class="headlines-rotate" id="headlines-rotate">
-          <a href="/marketplace.html" class="headline-item active">New artisans join our marketplace with authentic Jerusalem crafts</a>
-          <a href="/forum/" class="headline-item">Community forum reaches 1,000+ members worldwide</a>
-          <a href="/kids/" class="headline-item">Kids Zone expands with 26+ educational games</a>
-          <a href="/games/" class="headline-item">Play classic games: Backgammon, 2048, Tetris & more</a>
+          <span class="headline-item active headline-loading">Loading Jerusalem news...</span>
         </div>
+        <button class="headlines-nav" id="headlines-prev" title="Previous">‹</button>
+        <button class="headlines-nav" id="headlines-next" title="Next">›</button>
       </div>
 
       <!-- Markets Widgets - Separated Below -->
@@ -805,19 +804,110 @@
     </div>
   </div>
 
-  <!-- Headlines Rotation Script -->
+  <!-- Headlines RSS Script -->
   <script>
     (function() {
-      const headlines = document.querySelectorAll('.headline-item');
-      if (headlines.length === 0) return;
+      const container = document.getElementById('headlines-rotate');
+      const prevBtn = document.getElementById('headlines-prev');
+      const nextBtn = document.getElementById('headlines-next');
+      if (!container) return;
 
+      let headlines = [];
       let current = 0;
+      let autoRotate;
 
-      setInterval(() => {
-        headlines[current].classList.remove('active');
-        current = (current + 1) % headlines.length;
-        headlines[current].classList.add('active');
-      }, 5000); // Rotate every 5 seconds
+      const RSS_FEEDS = [
+        'https://www.jpost.com/rss/rssfeedsjerusalem.aspx',
+        'https://www.jpost.com/rss/rssfeedsheadlines.aspx'
+      ];
+      const PROXY = 'https://api.allorigins.win/raw?url=';
+
+      // Fallback headlines if RSS fails
+      const FALLBACK = [
+        { title: 'Explore Jerusalem Hills marketplace for authentic crafts', link: '/marketplace.html' },
+        { title: 'Join our community forum - 1,000+ members worldwide', link: '/forum/' },
+        { title: 'Kids Zone: 26+ safe educational games for children', link: '/kids/' },
+        { title: 'Play classic games: Backgammon, 2048, Tetris & more', link: '/games/' }
+      ];
+
+      function render() {
+        if (headlines.length === 0) return;
+        container.innerHTML = headlines.map((h, i) =>
+          `<a href="${h.link}" class="headline-item ${i === 0 ? 'active' : ''}" target="${h.link.startsWith('/') ? '_self' : '_blank'}" rel="noopener">${h.title}</a>`
+        ).join('');
+      }
+
+      function rotate(dir = 1) {
+        const items = container.querySelectorAll('.headline-item');
+        if (items.length === 0) return;
+        items[current].classList.remove('active');
+        current = (current + dir + items.length) % items.length;
+        items[current].classList.add('active');
+      }
+
+      function startAuto() {
+        stopAuto();
+        autoRotate = setInterval(() => rotate(1), 6000);
+      }
+
+      function stopAuto() {
+        if (autoRotate) clearInterval(autoRotate);
+      }
+
+      // Navigation buttons
+      prevBtn?.addEventListener('click', () => { rotate(-1); startAuto(); });
+      nextBtn?.addEventListener('click', () => { rotate(1); startAuto(); });
+
+      // Pause on hover
+      container.addEventListener('mouseenter', stopAuto);
+      container.addEventListener('mouseleave', startAuto);
+
+      // Fetch RSS feeds
+      async function fetchNews() {
+        try {
+          const results = await Promise.allSettled(
+            RSS_FEEDS.map(url =>
+              fetch(PROXY + encodeURIComponent(url), { signal: AbortSignal.timeout(8000) })
+                .then(r => r.text())
+            )
+          );
+
+          const parser = new DOMParser();
+          let items = [];
+
+          results.forEach(result => {
+            if (result.status === 'fulfilled') {
+              const xml = parser.parseFromString(result.value, 'text/xml');
+              const entries = xml.querySelectorAll('item');
+              entries.forEach(item => {
+                const title = item.querySelector('title')?.textContent?.trim();
+                const link = item.querySelector('link')?.textContent?.trim();
+                if (title && link) items.push({ title, link });
+              });
+            }
+          });
+
+          // Dedupe and limit
+          const seen = new Set();
+          headlines = items.filter(h => {
+            if (seen.has(h.title)) return false;
+            seen.add(h.title);
+            return true;
+          }).slice(0, 15);
+
+          if (headlines.length === 0) headlines = FALLBACK;
+        } catch (e) {
+          console.warn('RSS fetch failed:', e);
+          headlines = FALLBACK;
+        }
+
+        render();
+        startAuto();
+      }
+
+      fetchNews();
+      // Refresh every 15 minutes
+      setInterval(fetchNews, 15 * 60 * 1000);
     })();
   </script>
 
