@@ -1,12 +1,12 @@
 // Enhanced Service Worker for comprehensive offline PWA experience
-const CACHE_NAME = 'jerusalem-hills-v4';
-const DYNAMIC_CACHE = 'jerusalem-hills-dynamic-v1';
+const CACHE_NAME = 'jerusalem-hills-v5';
+const DYNAMIC_CACHE = 'jerusalem-hills-dynamic-v2';
 const urlsToCache = [
   // Core pages
   '/',
   '/index.html',
   '/offline.html',
-  
+
   // Styles and core scripts
   '/styles-new.css',
   '/styles.css',
@@ -16,7 +16,7 @@ const urlsToCache = [
   '/js/mobile-nav.js',
   '/js/load-header.js',
   '/components/header.html',
-  
+
   // PWA assets
   '/img/1.svg',
   '/img/logo.jpg',
@@ -27,31 +27,108 @@ const urlsToCache = [
   '/img/android-chrome-192x192.png',
   '/img/android-chrome-512x512.png',
   '/img/site.webmanifest',
-  
-  // Kids Zone - Educational games for offline play
+
+  // ========================================
+  // KIDS ZONE - Complete offline experience
+  // ========================================
+
+  // Kids Zone Core
   '/kids/',
   '/kids/index.html',
-  '/kids/assets/css/kids.css',
-  '/kids/assets/css/game.css',
+  '/kids/about.html',
+  '/kids/manifest.json',
   '/kids/educational-disclaimer.html',
-  
-  // Math games
+  '/kids/progress-dashboard.html',
+  '/kids/progress-tracking.html',
+
+  // Kids Zone CSS
+  '/kids/assets/css/kids.css',
+  '/kids/assets/css/kids.min.css',
+  '/kids/assets/css/game.css',
+  '/kids/assets/css/game.min.css',
+
+  // Kids Zone JS - Sound & Badge Systems
+  '/kids/assets/js/sound-manager.js',
+  '/kids/assets/js/sound-manager.min.js',
+  '/kids/assets/js/enhanced-sound-system.js',
+  '/kids/assets/js/enhanced-sound-system.min.js',
+  '/kids/assets/js/web-audio-sounds.js',
+  '/kids/assets/js/badge-system.js',
+
+  // Kids Zone Images
+  '/kids/assets/images/kids-logo.png',
+  '/kids/assets/images/jh.png',
+  '/kids/assets/images/jh.svg',
+
+  // ========================================
+  // Math Games
+  // ========================================
   '/kids/games/math.html',
-  '/kids/games/subtraction.html', 
+  '/kids/games/subtraction.html',
   '/kids/games/multiplication.html',
-  '/kids/assets/js/math-game.js',
-  '/kids/assets/js/subtraction-game.js',
-  '/kids/assets/js/multiplication-game.js',
-  
-  // Educational games
+  '/kids/games/division.html',
+
+  // ========================================
+  // Financial Literacy Games
+  // ========================================
+  '/kids/games/trade-history.html',
+  '/kids/games/banking-simulation.html',
+  '/kids/games/money-flow.html',
+  '/kids/games/investment-portfolio.html',
+  '/kids/games/work-savings.html',
+  '/kids/games/financial-empire/index.html',
+  '/kids/games/financial-empire/game.js',
+  '/kids/games/financial-empire/style.css',
+
+  // ========================================
+  // Language & Literacy Games
+  // ========================================
   '/kids/games/words.html',
+  '/kids/games/hebrew-alphabet.html',
+  '/kids/games/letter-land.html',
+  '/kids/games/phonics-farm.html',
+  '/kids/games/sight-word-safari.html',
+  '/kids/games/rhyme-time-castle.html',
+  '/kids/games/grammar-garden.html',
+  '/kids/games/vocabulary-village.html',
+  '/kids/games/reading-rainbow-quest.html',
+
+  // ========================================
+  // Science & Nature Games
+  // ========================================
+  '/kids/games/nature-detective.html',
+  '/kids/games/solar-system.html',
+
+  // ========================================
+  // Geography & World Studies Games
+  // ========================================
+  '/kids/games/heritage-quiz.html',
+  '/kids/games/israel-map.html',
+  '/kids/games/world-capitals.html',
+
+  // ========================================
+  // Brain Training Games
+  // ========================================
   '/kids/games/memory.html',
   '/kids/games/history-map.html',
-  '/kids/assets/js/word-game.js',
-  '/kids/assets/js/memory-game.js',
-  '/kids/assets/js/sound-manager.js',
-  
-  // Classic games for offline entertainment
+
+  // ========================================
+  // Curriculum Pages
+  // ========================================
+  '/kids/curriculum/index.html',
+  '/kids/curriculum/curriculum.js',
+  '/kids/curriculum/curriculum.css',
+  '/kids/curriculum/levels/ages-5-6.html',
+  '/kids/curriculum/levels/ages-7-8.html',
+  '/kids/curriculum/levels/ages-9-10.html',
+  '/kids/curriculum/levels/ages-11-12.html',
+  '/kids/curriculum/subjects/math.html',
+  '/kids/curriculum/subjects/computer-science.html',
+  '/kids/curriculum/subjects/health-wellness.html',
+
+  // ========================================
+  // Classic Games for offline entertainment
+  // ========================================
   '/games/',
   '/games/index.html',
   '/games/2048/2048.html',
@@ -62,14 +139,16 @@ const urlsToCache = [
   '/games/sudoku/sudoku.html',
   '/games/jerusalem-memory/jerusalem-memory.html',
   '/games/solitaire/solitaire.html',
-  
+
+  // ========================================
   // Essential community pages
+  // ========================================
   '/forum/',
   '/forum/index.html',
   '/forum/terms.html',
   '/disclaimer.html',
   '/contact.html',
-  
+
   // Marketplace (for browsing offline)
   '/marketplace.html'
 ];

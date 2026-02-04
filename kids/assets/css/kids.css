@@ -43,7 +43,7 @@ body {
 /* Header */
 .kids-header {
     background: linear-gradient(135deg, #ffcc00 0%, #ffb700 100%);
-    padding: 20px;
+    padding: 2vh 2vw;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     border-bottom: 4px solid #ff6f61;
 }
@@ -52,32 +52,33 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
-    margin-bottom: 15px;
+    gap: 1.5vw;
+    margin-bottom: 1.5vh;
 }
 
 .kids-logo {
-    max-width: 60px;
+    max-width: 5vw;
+    min-width: 40px;
     height: auto;
 }
 
 .kids-header h1 {
     color: #fff;
-    font-size: 2em;
+    font-size: clamp(1.5rem, 4vw, 3rem);
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
 .kids-nav {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 1.5vw;
     flex-wrap: wrap;
 }
 
 .nav-button {
     background: #fff;
     color: #ff6f61;
-    padding: 10px 20px;
+    padding: 1vh 2vw;
     border-radius: 25px;
     text-decoration: none;
     font-weight: 600;
@@ -104,39 +105,39 @@ body {
 
 /* Main Content */
 .kids-main {
-    max-width: 1200px;
+    max-width: 90vw;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 3vh 2vw;
 }
 
 .hero {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 3vh;
 }
 
 .hero h2 {
-    font-size: 2.5em;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
     color: #ff6f61;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
 }
 
 .hero p {
-    font-size: 1.3em;
+    font-size: clamp(1rem, 2.5vw, 1.8rem);
     color: #666;
 }
 
 /* Games Grid */
 .games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-bottom: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: 2vw;
+    margin-bottom: 3vh;
 }
 
 .game-card {
     background: #fff;
     border-radius: 20px;
-    padding: 30px;
+    padding: 2.5vh 2vw;
     text-align: center;
     text-decoration: none;
     color: #333;
@@ -163,39 +164,39 @@ body {
 }
 
 .game-icon {
-    font-size: 4em;
-    margin-bottom: 15px;
+    font-size: clamp(2rem, 6vmin, 5rem);
+    margin-bottom: 1.5vh;
 }
 
 .game-card h3 {
-    font-size: 1.8em;
-    margin-bottom: 10px;
+    font-size: clamp(1.2rem, 3vw, 2.2rem);
+    margin-bottom: 1vh;
     color: #ff6f61;
 }
 
 .game-card p {
     color: #666;
-    font-size: 1.1em;
+    font-size: clamp(0.9rem, 2vw, 1.4rem);
 }
 
 /* Coming Soon Section */
 .coming-soon {
     text-align: center;
     background: #fff;
-    padding: 30px;
+    padding: 2.5vh 2vw;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .coming-soon h3 {
-    font-size: 2em;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
     color: #ffb700;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
 }
 
 .coming-soon p {
     color: #666;
-    font-size: 1.2em;
+    font-size: clamp(1rem, 2.2vw, 1.5rem);
 }
 
 /* Footer */
@@ -203,8 +204,8 @@ body {
     background: #333;
     color: #fff;
     text-align: center;
-    padding: 20px;
-    margin-top: 50px;
+    padding: 2vh 2vw;
+    margin-top: 3vh;
 }
 
 .kids-footer a {
@@ -231,29 +232,29 @@ body {
 
 /* Fun Facts Section */
 .fun-facts {
-    margin: 60px auto 40px;
+    margin: 4vh auto 3vh;
     text-align: center;
-    max-width: 1000px;
-    padding: 0 20px;
+    max-width: 80vw;
+    padding: 0 2vw;
 }
 
 .fun-facts h3 {
-    font-size: 2em;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
     color: #ff6f61;
-    margin-bottom: 30px;
+    margin-bottom: 2.5vh;
 }
 
 .fact-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: 2vh;
+    margin-top: 2vh;
 }
 
 .fact-card {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 25px 20px;
+    padding: 2.5vh 2vw;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
     transition: transform 0.3s ease;
@@ -264,47 +265,47 @@ body {
 }
 
 .fact-card p {
-    font-size: 1.1em;
+    font-size: clamp(0.95rem, 2vw, 1.4rem);
     line-height: 1.6;
     margin: 0;
 }
 
 /* Enhanced Game Categories */
 .game-category {
-    margin-bottom: 40px;
+    margin-bottom: 3vh;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 20px;
-    padding: 30px;
+    padding: 2.5vh 2vw;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
 }
 
 .category-title {
-    font-size: 1.8rem;
+    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
     color: #ff6f61;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 2vh;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .category-games {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: 1.5vw;
 }
 
 /* Enhanced Game Cards */
 .game-card.enhanced {
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
     border-radius: 20px;
-    padding: 25px;
+    padding: 2vh 1.5vw;
     text-decoration: none;
     color: inherit;
     position: relative;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: 3px solid transparent;
-    min-height: 250px;
+    min-height: 18vh;
     display: flex;
     flex-direction: column;
 }
@@ -328,12 +329,12 @@ body {
 .game-icon-wrapper {
     position: relative;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 1.5vh;
 }
 
 .game-icon {
-    font-size: 3.5rem;
-    margin-bottom: 10px;
+    font-size: clamp(2rem, 5vmin, 4rem);
+    margin-bottom: 1vh;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
     transition: all 0.3s ease;
 }
@@ -344,11 +345,11 @@ body {
 
 .game-badge {
     position: absolute;
-    top: -5px;
-    right: -5px;
-    padding: 5px 10px;
+    top: -0.5vh;
+    right: -0.5vw;
+    padding: 0.5vh 1vw;
     border-radius: 12px;
-    font-size: 0.7rem;
+    font-size: clamp(0.6rem, 1.2vw, 0.9rem);
     font-weight: 700;
     color: white;
     text-transform: uppercase;
@@ -371,37 +372,37 @@ body {
 .game-content {
     flex-grow: 1;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 1.5vh;
 }
 
 .game-content h4 {
-    font-size: 1.4rem;
+    font-size: clamp(1rem, 2.5vw, 1.8rem);
     color: #2c3e50;
-    margin-bottom: 8px;
+    margin-bottom: 0.8vh;
     font-weight: 700;
 }
 
 .game-content p {
     color: #666;
-    font-size: 0.95rem;
-    margin-bottom: 12px;
+    font-size: clamp(0.8rem, 1.8vw, 1.2rem);
+    margin-bottom: 1.2vh;
     line-height: 1.4;
 }
 
 .game-features {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 0.8vw;
     flex-wrap: wrap;
-    margin-bottom: 15px;
+    margin-bottom: 1.5vh;
 }
 
 .feature {
     background: linear-gradient(135deg, #e3f2fd, #bbdefb);
     color: #1565c0;
-    padding: 4px 8px;
+    padding: 0.4vh 0.8vw;
     border-radius: 12px;
-    font-size: 0.75rem;
+    font-size: clamp(0.65rem, 1.4vw, 0.95rem);
     font-weight: 600;
     border: 1px solid #90caf9;
 }
@@ -410,12 +411,12 @@ body {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     border: none;
-    padding: 12px 24px;
+    padding: 1.2vh 2.4vw;
     border-radius: 25px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 1.8vw, 1.1rem);
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
@@ -504,37 +505,37 @@ body {
 .curriculum-card.enhanced {
     background: rgba(255, 255, 255, 0.95);
     color: #333;
-    max-width: 600px;
-    min-height: 200px;
+    max-width: 50vw;
+    min-height: 15vh;
     text-align: center;
 }
 
 .curriculum-icon {
-    font-size: 4rem;
-    margin-bottom: 15px;
+    font-size: clamp(2.5rem, 6vmin, 5rem);
+    margin-bottom: 1.5vh;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 }
 
 .curriculum-content h4 {
-    font-size: 1.6rem;
+    font-size: clamp(1.2rem, 3vw, 2rem);
     color: #2c3e50;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
 }
 
 .curriculum-highlights {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 0.8vw;
     flex-wrap: wrap;
-    margin: 15px 0;
+    margin: 1.5vh 0;
 }
 
 .highlight {
     background: linear-gradient(135deg, #FFD700, #FFA500);
     color: #333;
-    padding: 6px 12px;
+    padding: 0.6vh 1.2vw;
     border-radius: 15px;
-    font-size: 0.8rem;
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
     font-weight: 600;
     box-shadow: 0 2px 6px rgba(255, 215, 0, 0.3);
 }
@@ -543,12 +544,12 @@ body {
     background: linear-gradient(135deg, #4CAF50, #45a049);
     color: white;
     border: none;
-    padding: 15px 30px;
+    padding: 1.5vh 3vw;
     border-radius: 25px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1.3rem);
     box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
@@ -563,8 +564,8 @@ body {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
     border-radius: 20px;
-    padding: 40px 30px;
-    margin: 40px auto;
+    padding: 3vh 2.5vw;
+    margin: 3vh auto;
 }
 
 .fun-facts h3 {
@@ -582,33 +583,33 @@ body {
 .parents-teachers-section {
     background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
     color: white;
-    padding: 60px 20px;
-    margin-top: 40px;
+    padding: 4vh 2vw;
+    margin-top: 3vh;
 }
 
 .parents-container {
-    max-width: 1200px;
+    max-width: 90vw;
     margin: 0 auto;
 }
 
 .parents-title {
     text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 40px;
+    font-size: clamp(1.8rem, 4.5vw, 3rem);
+    margin-bottom: 3vh;
     color: #FFD700;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .parents-content {
     display: grid;
-    gap: 40px;
+    gap: 3vh;
 }
 
 /* Safety Features */
 .safety-features h3 {
-    font-size: 1.8rem;
+    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
     color: #4ECDC4;
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
     text-align: center;
 }
 
@@ -616,17 +617,17 @@ body {
     list-style: none;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 15px;
-    max-width: 800px;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: 1.5vh;
+    max-width: 70vw;
     margin: 0 auto;
 }
 
 .safety-list li {
     background: rgba(255, 255, 255, 0.1);
-    padding: 15px 20px;
+    padding: 1.5vh 2vw;
     border-radius: 12px;
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 2vw, 1.4rem);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease;
@@ -639,22 +640,22 @@ body {
 
 /* Educational Goals */
 .educational-goals h3 {
-    font-size: 1.8rem;
+    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
     color: #FF6B6B;
-    margin-bottom: 25px;
+    margin-bottom: 2.5vh;
     text-align: center;
 }
 
 .education-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: 2vh;
 }
 
 .education-card {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    padding: 25px;
+    padding: 2.5vh 2vw;
     text-align: center;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -669,31 +670,31 @@ body {
 
 /* Screen Time Guidance Styles */
 .screen-time-guidance {
-    margin-bottom: 40px;
+    margin-bottom: 3vh;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    padding: 30px;
+    padding: 2.5vh 2vw;
     border-left: 5px solid #FF6B6B;
 }
 
 .screen-time-guidance h3 {
     color: #FFD700;
-    font-size: 1.8rem;
-    margin-bottom: 25px;
+    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
+    margin-bottom: 2.5vh;
     text-align: center;
 }
 
 .screen-time-recommendations {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-bottom: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: 2vh;
+    margin-bottom: 2.5vh;
 }
 
 .recommendation-card {
     background: rgba(255, 255, 255, 0.15);
     border-radius: 12px;
-    padding: 25px;
+    padding: 2.5vh 2vw;
     border: 2px solid transparent;
     transition: all 0.3s ease;
 }
@@ -710,8 +711,8 @@ body {
 
 .recommendation-card h4 {
     color: #FFD700;
-    font-size: 1.3rem;
-    margin-bottom: 15px;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    margin-bottom: 1.5vh;
     text-align: center;
 }
 
@@ -721,8 +722,8 @@ body {
 }
 
 .recommendation-card li {
-    margin-bottom: 10px;
-    padding-left: 20px;
+    margin-bottom: 1vh;
+    padding-left: 2vw;
     position: relative;
     line-height: 1.5;
 }
@@ -739,42 +740,42 @@ body {
     background: rgba(255, 215, 0, 0.1);
     border: 2px solid #FFD700;
     border-radius: 12px;
-    padding: 20px;
+    padding: 2vh 2vw;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 2vh;
 }
 
 .parental-note p {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 2vw, 1.4rem);
     line-height: 1.6;
 }
 
 .education-card h4 {
-    font-size: 1.3rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
     color: #FFD700;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
 }
 
 .education-card p {
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 1.8vw, 1.2rem);
     line-height: 1.5;
     color: #E8E8E8;
 }
 
 /* Parent Resources */
 .parent-resources h3 {
-    font-size: 1.8rem;
+    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
     color: #95E1D3;
-    margin-bottom: 25px;
+    margin-bottom: 2.5vh;
     text-align: center;
 }
 
 .resource-links {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    max-width: 1000px;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: 2vh;
+    max-width: 80vw;
     margin: 0 auto;
 }
 
@@ -782,14 +783,14 @@ body {
     display: flex;
     align-items: center;
     background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
+    padding: 2vh 2vw;
     border-radius: 15px;
     text-decoration: none;
     color: white;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
-    gap: 15px;
+    gap: 1.5vw;
 }
 
 .resource-link:hover {
@@ -799,18 +800,18 @@ body {
 }
 
 .resource-icon {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 4vmin, 3rem);
     flex-shrink: 0;
 }
 
 .resource-info h4 {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 2.2vw, 1.5rem);
     color: #FFD700;
-    margin-bottom: 5px;
+    margin-bottom: 0.5vh;
 }
 
 .resource-info p {
-    font-size: 0.95rem;
+    font-size: clamp(0.85rem, 1.8vw, 1.2rem);
     color: #E8E8E8;
     margin: 0;
 }
@@ -819,36 +820,36 @@ body {
 .contact-support {
     text-align: center;
     background: rgba(255, 255, 255, 0.1);
-    padding: 30px;
+    padding: 2.5vh 2vw;
     border-radius: 20px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .contact-support h3 {
-    font-size: 1.8rem;
+    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
     color: #FFA726;
-    margin-bottom: 15px;
+    margin-bottom: 1.5vh;
 }
 
 .contact-support p {
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 2vw, 1.4rem);
     color: #E8E8E8;
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
     line-height: 1.6;
 }
 
 .contact-button {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.8vw;
     background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
     color: white;
-    padding: 15px 30px;
+    padding: 1.5vh 3vw;
     border-radius: 25px;
     text-decoration: none;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 2vw, 1.4rem);
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
 }
@@ -870,27 +871,27 @@ body {
     .nav-button,
     .play-button,
     .contact-button {
-        min-height: 44px;
-        min-width: 44px;
-        padding: 12px 20px;
+        min-height: 5.5vh;
+        min-width: 10vw;
+        padding: 1.5vh 2.5vw;
     }
-    
+
     .game-card.enhanced {
-        padding: 20px;
-        min-height: 200px;
+        padding: 2vh 1.5vw;
+        min-height: 16vh;
     }
-    
+
     /* Reduce complex animations on mobile for performance */
     .game-card.enhanced:hover {
         transform: translateY(-5px) scale(1.01);
     }
-    
+
     /* Optimize scroll performance */
     .kids-main {
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
     }
-    
+
     /* Reduce motion for users who prefer it */
     @media (prefers-reduced-motion: reduce) {
         .game-card.enhanced,
@@ -907,22 +908,14 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .kids-header h1 {
-        font-size: 1.5em;
-    }
-
-    .hero h2 {
-        font-size: 2em;
-    }
-
     .games-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 2vh;
     }
-    
+
     .fact-cards {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 1.5vh;
     }
 
     .category-games {
@@ -930,7 +923,7 @@ body {
     }
 
     .game-card.enhanced {
-        min-height: auto;
+        min-height: 15vh;
     }
 
     .curriculum-highlights {
@@ -938,48 +931,27 @@ body {
         align-items: center;
     }
 
-    .parents-title {
-        font-size: 2rem;
-    }
-
-    .safety-list {
-        grid-template-columns: 1fr;
-    }
-
-    .education-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .resource-links {
+    .safety-list,
+    .education-grid,
+    .resource-links,
+    .screen-time-recommendations {
         grid-template-columns: 1fr;
     }
 
     .resource-link {
         flex-direction: column;
         text-align: center;
-        gap: 10px;
+        gap: 1vh;
     }
 
-    .resource-icon {
-        font-size: 2rem;
+    .kids-logo {
+        max-width: 8vw;
     }
 }
 
 @media (max-width: 480px) {
-    .game-category {
-        padding: 20px 15px;
-    }
-
-    .category-title {
-        font-size: 1.5rem;
-    }
-
-    .game-icon {
-        font-size: 3rem;
-    }
-
-    .game-content h4 {
-        font-size: 1.2rem;
+    .game-card.enhanced {
+        min-height: 14vh;
     }
 
     .game-features {
@@ -987,39 +959,15 @@ body {
         align-items: center;
     }
 
-    .parents-teachers-section {
-        padding: 40px 15px;
+    .kids-logo {
+        max-width: 12vw;
     }
 
-    .parents-title {
-        font-size: 1.8rem;
-    }
-
-    .safety-features h3,
-    .educational-goals h3,
-    .screen-time-guidance h3,
-    .parent-resources h3,
-    .contact-support h3 {
-        font-size: 1.5rem;
-    }
-    
-    .screen-time-recommendations {
-        grid-template-columns: 1fr;
-    }
-    
-    .recommendation-card {
-        padding: 20px;
-    }
-
+    .resource-link,
     .education-card,
     .safety-list li,
-    .resource-link,
+    .recommendation-card,
     .contact-support {
-        padding: 20px 15px;
-    }
-
-    .contact-button {
-        padding: 12px 20px;
-        font-size: 1rem;
+        padding: 2vh 1.5vw;
     }
 }

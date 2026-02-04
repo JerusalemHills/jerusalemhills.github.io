@@ -263,99 +263,91 @@
     </section>
 
     <section id="games" class="grid-section">
-      <h3>
-        <a href="/games/" style="text-decoration: none; color: inherit; cursor: pointer;">
-          🎮 Games & Entertainment
-        </a>
-      </h3>
+      <h3><a href="/games/">🎮 Games & Entertainment</a></h3>
       <div class="grid">
         <!-- Kids Zone - Educational Games -->
-        <div class="card" style="border-left: 4px solid #FFD700;">
-          <a href="/kids/" style="text-decoration: none; color: inherit;">
-            <div style="position: relative; overflow: hidden; border-radius: 8px 8px 0 0;">
-              <img src="img/kids-games-preview.svg" alt="Kids Zone Educational Games" onerror="this.src='img/pic01.jpg'">
-              <div style="position: absolute; top: 8px; right: 8px; background: #FFD700; color: #2C3E50; 
-                          padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">
-                Ages 5-12
-              </div>
+        <div class="game-card" style="border-left-color: #FFD700;">
+          <a href="/kids/">
+            <div class="card-image">
+              <img src="img/kids-games-preview.svg" alt="Kids Zone Educational Games" loading="lazy" onerror="this.src='img/pic01.jpg'">
+              <span class="card-badge" style="background: #FFD700; color: #2C3E50;">Ages 5-12</span>
             </div>
-            <h4 style="color: #B8860B;">🎓 Kids Zone</h4>
-            <p>Educational games for children: Math Quest, Word Builder, Memory Match, Historical Map</p>
-            <div style="margin-top: 8px; font-size: 12px; color: #666;">
-              <span style="background: #E8F5E8; padding: 2px 6px; border-radius: 4px; margin-right: 4px;">Safe</span>
-              <span style="background: #FFF3CD; padding: 2px 6px; border-radius: 4px; margin-right: 4px;">Offline PWA</span>
-              <span style="background: #E3F2FD; padding: 2px 6px; border-radius: 4px;">Ad-Free</span>
+            <div class="card-body">
+              <h4 class="card-title">🎓 Kids Zone</h4>
+              <p class="card-desc">Educational games for children: Math Quest, Word Builder, Memory Match, Historical Map</p>
+              <div class="card-tags">
+                <span class="tag tag-safe">Safe</span>
+                <span class="tag tag-offline">Offline PWA</span>
+                <span class="tag tag-adfree">Ad-Free</span>
+              </div>
             </div>
           </a>
         </div>
 
         <!-- Classic Strategy Games -->
-        <div class="card" style="border-left: 4px solid #87CEEB;">
-          <a href="/games/" style="text-decoration: none; color: inherit;">
-            <div style="position: relative; overflow: hidden; border-radius: 8px 8px 0 0;">
-              <img src="img/backgammon-preview.svg" alt="Backgammon Game" onerror="this.src='img/pic01.jpg'">
-              <div style="position: absolute; top: 8px; right: 8px; background: #87CEEB; color: #2C3E50; 
-                          padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">
-                Classic
-              </div>
+        <div class="game-card" style="border-left-color: #87CEEB;">
+          <a href="/games/">
+            <div class="card-image">
+              <img src="img/backgammon-preview.svg" alt="Backgammon Game" loading="lazy" onerror="this.src='img/pic01.jpg'">
+              <span class="card-badge" style="background: #87CEEB; color: #2C3E50;">Classic</span>
             </div>
-            <h4 style="color: #2C3E50;">🏛️ Strategy Games</h4>
-            <p>Backgammon, Chess, and timeless board games with AI opponents and multiplayer options</p>
-            <div style="margin-top: 8px; font-size: 12px; color: #666;">
-              <span style="background: #E8F5E8; padding: 2px 6px; border-radius: 4px; margin-right: 4px;">AI Opponent</span>
-              <span style="background: #FFF3CD; padding: 2px 6px; border-radius: 4px; margin-right: 4px;">2-Player</span>
-              <span style="background: #FFE6E6; padding: 2px 6px; border-radius: 4px;">Challenge</span>
+            <div class="card-body">
+              <h4 class="card-title">🏛️ Strategy Games</h4>
+              <p class="card-desc">Backgammon, Chess, and timeless board games with AI opponents and multiplayer options</p>
+              <div class="card-tags">
+                <span class="tag tag-ai">AI Opponent</span>
+                <span class="tag tag-multiplayer">2-Player</span>
+                <span class="tag tag-challenge">Challenge</span>
+              </div>
             </div>
           </a>
         </div>
 
         <!-- Puzzle & Arcade Games -->
-        <div class="card" style="border-left: 4px solid #9C27B0;">
-          <a href="/games/2048/2048.html" style="text-decoration: none; color: inherit;">
-            <div style="position: relative; overflow: hidden; border-radius: 8px 8px 0 0;">
-              <img src="img/puzzle-arcade-preview.svg" alt="Puzzle Games" onerror="this.src='img/pic01.jpg'">
-              <div style="position: absolute; top: 8px; right: 8px; background: #9C27B0; color: white; 
-                          padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">
-                Addictive
-              </div>
+        <div class="game-card" style="border-left-color: #9C27B0;">
+          <a href="/games/2048/2048.html">
+            <div class="card-image">
+              <img src="img/puzzle-arcade-preview.svg" alt="Puzzle Games" loading="lazy" onerror="this.src='img/pic01.jpg'">
+              <span class="card-badge" style="background: #9C27B0; color: white;">Addictive</span>
             </div>
-            <h4 style="color: #7B1FA2;">🧩 Puzzle & Arcade</h4>
-            <p>2048, Tetris, Snake - Brain training games and nostalgic arcade classics</p>
-            <div style="margin-top: 8px; font-size: 12px; color: #666;">
-              <span style="background: #F3E5F5; padding: 2px 6px; border-radius: 4px; margin-right: 4px;">Brain Training</span>
-              <span style="background: #E8F5E8; padding: 2px 6px; border-radius: 4px; margin-right: 4px;">High Score</span>
-              <span style="background: #FFF3CD; padding: 2px 6px; border-radius: 4px;">Quick Play</span>
+            <div class="card-body">
+              <h4 class="card-title">🧩 Puzzle & Arcade</h4>
+              <p class="card-desc">2048, Tetris, Snake - Brain training games and nostalgic arcade classics</p>
+              <div class="card-tags">
+                <span class="tag tag-brain">Brain Training</span>
+                <span class="tag tag-highscore">High Score</span>
+                <span class="tag tag-quick">Quick Play</span>
+              </div>
             </div>
           </a>
         </div>
 
         <!-- Hebrew & Cultural Games -->
-        <div class="card" style="border-left: 4px solid #FF6B35;">
-          <a href="/games/permutations/permutations.html" style="text-decoration: none; color: inherit;">
-            <div style="position: relative; overflow: hidden; border-radius: 8px 8px 0 0;">
-              <img src="img/hebrew-cultural-preview.svg" alt="Hebrew Cultural Games" onerror="this.src='img/pic01.jpg'">
-              <div style="position: absolute; top: 8px; right: 8px; background: #FF6B35; color: white; 
-                          padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">
-                עברית
-              </div>
+        <div class="game-card" style="border-left-color: #FF6B35;">
+          <a href="/games/permutations/permutations.html">
+            <div class="card-image">
+              <img src="img/hebrew-cultural-preview.svg" alt="Hebrew Cultural Games" loading="lazy" onerror="this.src='img/pic01.jpg'">
+              <span class="card-badge" style="background: #FF6B35; color: white;">עברית</span>
             </div>
-            <h4 style="color: #E65100;">🔤 Hebrew & Culture</h4>
-            <p>צירופים (Word Permutations), Torah Codes search, Jerusalem Heritage Quiz</p>
-            <div style="margin-top: 8px; font-size: 12px; color: #666;">
-              <span style="background: #FFF3E0; padding: 2px 6px; border-radius: 4px; margin-right: 4px;">Hebrew Learning</span>
-              <span style="background: #E3F2FD; padding: 2px 6px; border-radius: 4px; margin-right: 4px;">Cultural</span>
-              <span style="background: #F3E5F5; padding: 2px 6px; border-radius: 4px;">Educational</span>
+            <div class="card-body">
+              <h4 class="card-title">🔤 Hebrew & Culture</h4>
+              <p class="card-desc">צירופים (Word Permutations), Torah Codes search, Jerusalem Heritage Quiz</p>
+              <div class="card-tags">
+                <span class="tag tag-hebrew">Hebrew Learning</span>
+                <span class="tag tag-cultural">Cultural</span>
+                <span class="tag tag-educational">Educational</span>
+              </div>
             </div>
           </a>
         </div>
       </div>
-      
+
       <!-- Games Section Footer -->
-      <div style="text-align: center; margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #F0F8FF, #E6F3FF); border-radius: 8px;">
-        <p style="margin: 0; color: #2C3E50; font-weight: 600;">
-          🎯 <a href="/games/" style="color: #4F46E5; text-decoration: none;">Explore All Games</a> | 
-          📱 <span style="color: #666;">PWA Available - Play Offline</span> | 
-          👨‍👩‍👧‍👦 <a href="/kids/" style="color: #B8860B; text-decoration: none;">Safe for Kids</a>
+      <div class="games-footer">
+        <p>
+          🎯 <a href="/games/">Explore All Games</a> |
+          📱 PWA Available - Play Offline |
+          👨‍👩‍👧‍👦 <a href="/kids/">Safe for Kids</a>
         </p>
       </div>
     </section>
@@ -373,65 +365,159 @@
       </div>
     </section>
 
-    <section id="news" class="grid-section">
-      <h2>Latest from Jerusalem Hills</h2>
-      <div class="grid news">
-        <div class="featured">
-          <img src="img/Jerusalem_Old_City_market.jpg" alt="Jerusalem Old City Market">
-          <h3>Exploring Jerusalem's Ancient Markets</h3>
-          <p>
-            The Old City of Jerusalem houses some of the world's most historic marketplaces, where traders have conducted business for thousands of years. From the bustling Arab Shuk to the Jewish Quarter's artisan shops, these markets offer an authentic glimpse into Jerusalem's living history. Visitors can find everything from spices and textiles to religious artifacts and handcrafted jewelry, each item carrying the weight of centuries of tradition and craftsmanship.
-          </p>
-        </div>
-        <div class="list">
-          <div class="news-item">
-            <a href="/marketplace.html" style="text-decoration: none; color: inherit;">
-              <h4>New Artisans Join Our Marketplace</h4>
-              <p>We're excited to welcome five new artisan partners to Jerusalem Hills Marketplace, each bringing unique traditional crafts and contemporary designs to our growing collection.</p>
-            </a>
+    <!-- Enhanced News Section -->
+    <section id="news" class="news-section-enhanced">
+      <div class="section-header">
+        <h2 class="section-title">Latest from Jerusalem Hills</h2>
+        <a href="/news/" class="view-all-link">View All Articles →</a>
+      </div>
+
+      <div class="news-grid-enhanced">
+        <!-- Featured Article -->
+        <article class="featured-article">
+          <a href="/news/ancient-markets" style="text-decoration: none; color: inherit;">
+            <div class="article-image">
+              <img src="img/Jerusalem_Old_City_market.jpg" alt="Jerusalem Old City Market" loading="lazy">
+              <span class="article-category">Heritage</span>
+            </div>
+            <div class="article-content">
+              <div class="article-meta">
+                <span>📅 Feb 3, 2026</span>
+                <span>⏱️ 5 min read</span>
+                <span>👁️ 1.2K views</span>
+              </div>
+              <h3 class="article-title">Exploring Jerusalem's Ancient Markets: A Journey Through Time</h3>
+              <p class="article-excerpt">
+                The Old City of Jerusalem houses some of the world's most historic marketplaces, where traders have conducted business for thousands of years. From the bustling Arab Shuk to the Jewish Quarter's artisan shops, these markets offer an authentic glimpse into Jerusalem's living history.
+              </p>
+              <span class="read-more-btn">Continue Reading →</span>
+            </div>
+          </a>
+          <div class="share-buttons" style="padding: 0 1.75rem 1.5rem;">
+            <button class="share-btn twitter" title="Share on Twitter">𝕏</button>
+            <button class="share-btn facebook" title="Share on Facebook">f</button>
+            <button class="share-btn linkedin" title="Share on LinkedIn">in</button>
+            <button class="share-btn copy" title="Copy link">🔗</button>
           </div>
-          <div class="news-item">
-            <a href="/#discussions" style="text-decoration: none; color: inherit;">
-              <h4>Community Forum Reaches 1,000 Members</h4>
-              <p>Our discussion community has grown to over 1,000 active members worldwide, sharing insights about Jerusalem's culture, history, and contemporary life.</p>
-            </a>
-          </div>
-          <div class="news-item">
-            <a href="/kids/" target="_blank" style="text-decoration: none; color: inherit;">
-              <h4>Kids Zone Expands with New Educational Games</h4>
-              <p>We've added three new educational games to our Kids Zone, offering fun ways for children to learn math, vocabulary, and memory skills in a safe, ad-free environment.</p>
-            </a>
-          </div>
+        </article>
+
+        <!-- News List -->
+        <div class="news-list-enhanced">
+          <a href="/marketplace.html" style="text-decoration: none;">
+            <div class="news-card">
+              <span class="card-category">Marketplace</span>
+              <h4 class="card-title">New Artisans Join Our Marketplace</h4>
+              <p class="card-excerpt">Five new artisan partners bring unique traditional crafts and contemporary designs to our growing collection.</p>
+              <div class="card-footer">
+                <span class="card-date">📅 Feb 1, 2026</span>
+                <span class="card-read-time">⏱️ 3 min</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="/#discussions" style="text-decoration: none;">
+            <div class="news-card">
+              <span class="card-category">Community</span>
+              <h4 class="card-title">Community Forum Reaches 1,000 Members</h4>
+              <p class="card-excerpt">Our discussion community has grown to over 1,000 active members worldwide, sharing insights about Jerusalem.</p>
+              <div class="card-footer">
+                <span class="card-date">📅 Jan 28, 2026</span>
+                <span class="card-read-time">⏱️ 2 min</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="/kids/" style="text-decoration: none;">
+            <div class="news-card">
+              <span class="card-category">Kids Zone</span>
+              <h4 class="card-title">Kids Zone Expands with New Educational Games</h4>
+              <p class="card-excerpt">Three new educational games help children learn math, vocabulary, and memory skills in a safe environment.</p>
+              <div class="card-footer">
+                <span class="card-date">📅 Jan 25, 2026</span>
+                <span class="card-read-time">⏱️ 2 min</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="/forum/" style="text-decoration: none;">
+            <div class="news-card">
+              <span class="card-category">Events</span>
+              <h4 class="card-title">Weekly Torah Study Sessions Now Open</h4>
+              <p class="card-excerpt">Join our welcoming community for weekly virtual Torah study sessions, open to all levels and backgrounds.</p>
+              <div class="card-footer">
+                <span class="card-date">📅 Jan 20, 2026</span>
+                <span class="card-read-time">⏱️ 2 min</span>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </section>
 
+    <!-- Social Proof Stats -->
+    <div class="stats-bar">
+      <div class="stat-block">
+        <div class="stat-number">1,000+</div>
+        <div class="stat-label">Community Members</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">26+</div>
+        <div class="stat-label">Educational Games</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Artisan Products</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Countries Reached</div>
+      </div>
+    </div>
+
     <!-- Trending Products Section -->
     <section id="marketplace" class="grid-section">
-      <h2 class="section-title"><a href="/marketplace.html" style="text-decoration: none; color: inherit; cursor: pointer;">Trending in Marketplace</a></h2>
+      <h2 class="section-title"><a href="/marketplace.html">Trending in Marketplace</a></h2>
       <div class="grid">
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc31?w=400&h=400&fit=crop" alt="Jerusalem Crafts" onerror="this.src='img/pic01.jpg'">
-          <h4>Jerusalem Stone Art</h4>
-          <p class="price">₪299</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop" alt="Dead Sea Products" onerror="this.src='img/pic02.jpg'">
-          <h4>Dead Sea Minerals</h4>
-          <p class="price">₪199</p>
-        </div>
-        <div class="card">
-          <a href="/marketplace.html" style="text-decoration: none; color: inherit;">
-            <img src="/market/img/mezuzah1.jpeg" alt="Glass and Copper Mezuzah" onerror="this.src='img/pic01.jpg'">
-            <h4>Glass & Copper Mezuzah</h4>
-            <p class="price">$125</p>
+        <div class="product-card">
+          <a href="/marketplace.html">
+            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc31?w=400&h=400&fit=crop" alt="Jerusalem Crafts" loading="lazy" onerror="this.src='img/pic01.jpg'">
+            <div class="product-info">
+              <h4 class="product-name">Jerusalem Stone Art</h4>
+              <p class="product-price">₪299</p>
+            </div>
           </a>
         </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=400&fit=crop" alt="Local Spices" onerror="this.src='img/pic02.jpg'">
-          <h4>Jerusalem Spice Mix</h4>
-          <p class="price">₪99</p>
+        <div class="product-card">
+          <a href="/marketplace.html">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop" alt="Dead Sea Products" loading="lazy" onerror="this.src='img/pic02.jpg'">
+            <div class="product-info">
+              <h4 class="product-name">Dead Sea Minerals</h4>
+              <p class="product-price">₪199</p>
+            </div>
+          </a>
         </div>
+        <div class="product-card">
+          <a href="/marketplace.html">
+            <img src="/market/img/mezuzah1.jpeg" alt="Glass and Copper Mezuzah" loading="lazy" onerror="this.src='img/pic01.jpg'">
+            <div class="product-info">
+              <h4 class="product-name">Glass & Copper Mezuzah</h4>
+              <p class="product-price">$125</p>
+            </div>
+          </a>
+        </div>
+        <div class="product-card">
+          <a href="/marketplace.html">
+            <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=400&fit=crop" alt="Local Spices" loading="lazy" onerror="this.src='img/pic02.jpg'">
+            <div class="product-info">
+              <h4 class="product-name">Jerusalem Spice Mix</h4>
+              <p class="product-price">₪99</p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <!-- Marketplace CTA -->
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="/marketplace.html" class="btn-primary">Browse All Products →</a>
       </div>
     </section>
 
@@ -445,6 +531,23 @@
              data-ad-format="auto"
              data-npa="1"
              data-full-width-responsive="true"></ins>
+      </div>
+    </section>
+
+    <!-- Community Engagement Section -->
+    <section class="community-cta-section">
+      <div class="community-cta-content">
+        <h2>Join Our Jerusalem Community</h2>
+        <p>Connect with people worldwide who share a love for Jerusalem's heritage, culture, and traditions.</p>
+        <div class="cta-buttons">
+          <a href="/forum/" class="btn-primary">Join Forum Discussions →</a>
+          <a href="/kids/" class="btn-secondary">Explore Kids Zone →</a>
+        </div>
+        <div class="community-features">
+          <span>💬 Active Discussions</span>
+          <span>🎮 Free Educational Games</span>
+          <span>🛍️ Authentic Marketplace</span>
+        </div>
       </div>
     </section>
 
@@ -575,50 +678,50 @@
     </section>
 
     <!-- Full Articles Section -->
-    <article style="max-width: 900px; margin: 3rem auto; padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-      <h3 style="color: #4F46E5; font-size: 1.8em; margin-bottom: 1.5rem;">Your Guide to Shopping the Jerusalem Hills Marketplace</h3>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+    <article class="article-full">
+      <h3>Your Guide to Shopping the Jerusalem Hills Marketplace</h3>
+      <p>
         Shopping for authentic Jerusalem products has never been easier. Our carefully curated marketplace connects you directly with verified artisans and sellers who specialize in traditional and contemporary Judaica, Dead Sea wellness products, Jerusalem stone crafts, and unique gifts that capture the essence of this historic city.
       </p>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+      <p>
         When you browse our marketplace, you'll discover products organized into intuitive categories: Judaica and religious items, home décor and Jerusalem stone art, Dead Sea cosmetics and wellness products, traditional crafts and textiles, and modern designs inspired by Jerusalem's aesthetic. Each product listing includes detailed descriptions, high-quality images, and transparent pricing in both shekels and dollars.
       </p>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+      <p>
         We prioritize authenticity and quality. All sellers undergo verification to ensure they meet our standards for craftsmanship and customer service. Many of our artisans work in Jerusalem's Old City workshops, continuing traditions passed down through generations. When you purchase from Jerusalem Hills, you're not just buying a product—you're supporting local craftspeople and preserving cultural heritage.
       </p>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+      <p>
         Our secure checkout process, powered by Stripe, ensures your payment information remains protected. We offer international shipping to most countries, with tracking provided for all orders. Customer satisfaction is our priority, and our support team is available to assist with any questions about products, shipping, or returns.
       </p>
     </article>
 
-    <article style="max-width: 900px; margin: 3rem auto; padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-      <h3 style="color: #4F46E5; font-size: 1.8em; margin-bottom: 1.5rem;">Connect with Our Global Jerusalem Hills Community</h3>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+    <article class="article-full">
+      <h3>Connect with Our Global Jerusalem Hills Community</h3>
+      <p>
         The Jerusalem Hills community brings together people from around the world who share a connection to Jerusalem, whether through heritage, faith, travel, or simply appreciation for this remarkable city's history and culture. Our discussion forums provide a welcoming space for conversations ranging from travel planning and historical questions to cultural insights and personal stories.
       </p>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+      <p>
         Popular discussion topics include visitor tips for first-time Jerusalem travelers, recommendations for authentic local restaurants and hidden gems, historical deep-dives into specific sites and periods, cultural traditions and their modern observance, and language learning resources for Hebrew and Arabic. Our community members include long-time Jerusalem residents, frequent visitors, academic researchers, and those exploring their cultural roots.
       </p>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+      <p>
         Beyond forums, we offer practical resources that enhance your Jerusalem experience. Our Hebrew calendar displays both Hebrew and Gregorian dates, helping you track Jewish holidays and observances. The digital Sidur provides prayers in Hebrew with transliteration and translation. Prayer times are calculated for Jerusalem and can be customized for your location.
       </p>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+      <p>
         We also host special events including weekly Torah study sessions open to all levels, virtual tours of Jerusalem sites led by local guides, artisan showcases where craftspeople share their creative processes, and community challenges like Hebrew language learning or historical trivia. These events foster connections and deepen understanding of Jerusalem's multifaceted character.
       </p>
     </article>
 
-    <article style="max-width: 900px; margin: 3rem auto; padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-      <h3 style="color: #4F46E5; font-size: 1.8em; margin-bottom: 1.5rem;">Safe, Educational Fun in Our Kids Zone</h3>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+    <article class="article-full">
+      <h3>Safe, Educational Fun in Our Kids Zone</h3>
+      <p>
         Jerusalem Hills Kids Zone provides a completely safe, ad-free environment where children ages 5-12 can enjoy educational games designed to build essential skills while having fun. Unlike most online games, our Kids Zone contains zero advertisements, no tracking or data collection, and no external links—just pure, educational entertainment parents can trust.
       </p>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+      <p>
         Our current game collection includes Math Quest, where children practice addition and subtraction with instant feedback and scoring; Word Builder, which challenges players to unscramble words and build vocabulary; and Memory Match, a classic card-matching game that strengthens concentration and cognitive skills. Each game features cheerful, encouraging feedback and allows children to progress at their own pace without time pressure or competitive stress.
       </p>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+      <p>
         We designed the Kids Zone with COPPA (Children's Online Privacy Protection Act) compliance as a top priority. No personal information is collected or stored. Games run entirely in the browser with no data sent to external servers. There are no pop-ups, no chat features, and no ways for children to interact with strangers. Parents can feel confident letting children play independently.
       </p>
-      <p style="line-height: 1.8; color: #4a5568; margin-bottom: 1.2rem; font-size: 1.05em;">
+      <p>
         Future plans for the Kids Zone include additional math operations (multiplication and division), geography games exploring Israel and Jerusalem, reading comprehension activities, creative drawing tools, and Hebrew alphabet learning games. We welcome feedback from parents and educators about what kinds of educational content would benefit young learners most. Visit jerusalemhills.com/kids to explore our current offerings.
       </p>
     </article>

@@ -104,17 +104,6 @@
             document.getElementById('guess').focus();
         }
 
-        document.getElementById('check').onclick = checkAnswer;
-        document.getElementById('skip').onclick = () => {
-            soundManager.play('swoosh'); // Play skip sound
-            newWord();
-        };
-
-        // Allow Enter key to submit
-        document.getElementById('guess').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') checkAnswer();
-        });
-
         function checkAnswer() {
             const g = document.getElementById('guess').value.toLowerCase().trim();
             const res = document.getElementById('result');
@@ -128,29 +117,42 @@
 
             if (g === current) {
                 score++;
-                soundManager.play('correct'); // Play correct sound
+                if (window.soundManager) soundManager.play('correct'); // Play correct sound
                 res.textContent = "✅ Correct! Well done!";
                 res.style.color = "#4CAF50";
                 scoreDisplay.textContent = `Score: ${score}`;
                 setTimeout(() => {
-                    soundManager.play('chime'); // Play next word sound
+                    if (window.soundManager) soundManager.play('chime'); // Play next word sound
                     newWord();
                 }, 1500);
             } else {
-                soundManager.play('incorrect'); // Play incorrect sound
-                setTimeout(() => soundManager.play('pop'), 300); // Play hint sound after error
+                if (window.soundManager) {
+                    soundManager.play('incorrect'); // Play incorrect sound
+                    setTimeout(() => soundManager.play('pop'), 300); // Play hint sound after error
+                }
                 res.textContent = `❌ Try again! Hint: starts with "${current[0]}"`;
                 res.style.color = "#ff6f61";
             }
         }
 
-        // Initialize game
-        window.onload = () => {
-            // Wait for sound manager to load
+        // Initialize game after DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('check').onclick = checkAnswer;
+            document.getElementById('skip').onclick = () => {
+                if (window.soundManager) soundManager.play('swoosh'); // Play skip sound
+                newWord();
+            };
+
+            // Allow Enter key to submit
+            document.getElementById('guess').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') checkAnswer();
+            });
+
+            // Wait a moment for sound manager to fully initialize
             setTimeout(() => {
                 newWord();
             }, 100);
-        };
+        });
     </script>
 </body>
 </html>

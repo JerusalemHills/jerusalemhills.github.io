@@ -83,10 +83,7 @@
         let consecutiveCorrect = 0;
         let currentOperation = 'addition';
         let difficulty = 'easy';
-        const q = document.getElementById('question');
-        const a = document.getElementById('answer');
-        const r = document.getElementById('result');
-        const s = document.getElementById('score');
+        let q, a, r, s;
 
         function newQuestion() {
             num1 = Math.floor(Math.random() * 10) + 1;
@@ -98,18 +95,26 @@
             a.focus();
         }
 
-        document.getElementById('start').onclick = () => {
-            soundManager.play('chime'); // Play start sound
-            score = 0;
-            s.textContent = `Score: ${score}`;
-            newQuestion();
-        };
+        // Initialize game after DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            q = document.getElementById('question');
+            a = document.getElementById('answer');
+            r = document.getElementById('result');
+            s = document.getElementById('score');
 
-        document.getElementById('submit').onclick = checkAnswer;
+            document.getElementById('start').onclick = () => {
+                if (window.soundManager) soundManager.play('chime'); // Play start sound
+                score = 0;
+                s.textContent = `Score: ${score}`;
+                newQuestion();
+            };
 
-        // Allow Enter key to submit
-        a.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') checkAnswer();
+            document.getElementById('submit').onclick = checkAnswer;
+
+            // Allow Enter key to submit
+            a.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') checkAnswer();
+            });
         });
 
         function checkAnswer() {
@@ -127,11 +132,11 @@
             if (userAnswer === answer) {
                 score++;
                 consecutiveCorrect++;
-                
+
                 // Enhanced sound feedback based on operation and difficulty
                 if (typeof window.playMathSound !== 'undefined') {
                     window.playMathSound(currentOperation, true, difficulty);
-                } else {
+                } else if (window.soundManager) {
                     soundManager.play('correct'); // Fallback
                 }
                 
@@ -140,7 +145,7 @@
                     setTimeout(() => {
                         if (typeof window.playAchievementSound !== 'undefined') {
                             window.playAchievementSound('math-master');
-                        } else {
+                        } else if (window.soundManager && soundManager.celebrate) {
                             soundManager.celebrate();
                         }
                     }, 300);
@@ -149,7 +154,7 @@
                     setTimeout(() => {
                         if (typeof window.playAchievementSound !== 'undefined') {
                             window.playAchievementSound('perfect-score');
-                        } else {
+                        } else if (window.soundManager) {
                             soundManager.play('achievement');
                         }
                     }, 200);
@@ -166,15 +171,15 @@
                         }
                     }, 500);
                 }
-                
+
                 r.style.color = "#4CAF50";
             } else {
                 consecutiveCorrect = 0; // Reset streak
-                
+
                 // Enhanced incorrect sound
                 if (typeof window.playMathSound !== 'undefined') {
                     window.playMathSound(currentOperation, false, difficulty);
-                } else {
+                } else if (window.soundManager) {
                     soundManager.play('incorrect'); // Fallback
                 }
                 
@@ -187,7 +192,7 @@
                 // Play gentle transition sound for next question
                 if (typeof window.soundManager !== 'undefined' && window.soundManager.educationalSounds) {
                     window.soundManager.educationalSounds.counting();
-                } else {
+                } else if (window.soundManager) {
                     soundManager.play('pop'); // Fallback
                 }
                 newQuestion();
