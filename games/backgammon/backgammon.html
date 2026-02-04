@@ -478,28 +478,28 @@
 
         <div class="board-container">
             <div id="board">
-                <!-- Top Left Quadrant: Points 13-18 (black home board area) -->
+                <!-- Top Left Quadrant: Points 13-18 (black outer board) -->
                 <div class="quadrant top-left" id="quad-tl"></div>
 
                 <!-- Bar -->
                 <div class="bar">
-                    <div class="bar-section" id="bar-black"></div>
                     <div class="bar-section" id="bar-white"></div>
+                    <div class="bar-section" id="bar-black"></div>
                 </div>
 
-                <!-- Top Right Quadrant: Points 19-24 -->
+                <!-- Top Right Quadrant: Points 19-24 (black home board) -->
                 <div class="quadrant top-right" id="quad-tr"></div>
 
                 <!-- Middle strip -->
                 <div class="middle-strip"></div>
 
-                <!-- Bottom Left Quadrant: Points 12-7 -->
+                <!-- Bottom Left Quadrant: Points 12-7 (white outer board) -->
                 <div class="quadrant bottom-left" id="quad-bl"></div>
 
-                <!-- Bottom Right Quadrant: Points 6-1 (white home board area) -->
+                <!-- Bottom Right Quadrant: Points 6-1 (white home board) -->
                 <div class="quadrant bottom-right" id="quad-br"></div>
 
-                <!-- Home areas -->
+                <!-- Home/bearing off areas -->
                 <div class="home-area top" id="home-black">
                     <span class="home-count" id="black-off">0</span>
                 </div>
@@ -562,17 +562,17 @@
             // Standard backgammon setup
             const board = Array(26).fill(null).map(() => ({ white: 0, black: 0 }));
 
-            // White pieces (moving 1→24)
-            board[1] = { white: 2, black: 0 };
-            board[12] = { white: 5, black: 0 };
-            board[17] = { white: 3, black: 0 };
-            board[19] = { white: 5, black: 0 };
+            // White pieces (moving 24→1, home board is 1-6)
+            board[24] = { white: 2, black: 0 };  // Far from home
+            board[13] = { white: 5, black: 0 };
+            board[8] = { white: 3, black: 0 };
+            board[6] = { white: 5, black: 0 };   // Near home
 
-            // Black pieces (moving 24→1)
-            board[24] = { white: 0, black: 2 };
-            board[13] = { white: 0, black: 5 };
-            board[8] = { white: 0, black: 3 };
-            board[6] = { white: 0, black: 5 };
+            // Black pieces (moving 1→24, home board is 19-24)
+            board[1] = { white: 0, black: 2 };   // Far from home
+            board[12] = { white: 0, black: 5 };
+            board[17] = { white: 0, black: 3 };
+            board[19] = { white: 0, black: 5 };  // Near home
 
             return board;
         }
@@ -770,8 +770,9 @@
 
         isValidMove(from, to) {
             const player = this.currentPlayer;
-            const direction = player === 'white' ? 1 : -1;
-            const distance = player === 'white' ? (to - from) : (from - to);
+            // White moves 24→1 (decreasing), Black moves 1→24 (increasing)
+            const direction = player === 'white' ? -1 : 1;
+            const distance = player === 'white' ? (from - to) : (to - from);
 
             // Check if distance matches a die
             if (!this.movesRemaining.includes(distance) && to !== 25) return false;
@@ -779,26 +780,28 @@
             // Bearing off
             if (to === 25) {
                 if (!this.canBearOff(player)) return false;
-                const homeStart = player === 'white' ? 19 : 1;
-                const homeEnd = player === 'white' ? 24 : 6;
+                // White home is 1-6, Black home is 19-24
+                const homeStart = player === 'white' ? 1 : 19;
+                const homeEnd = player === 'white' ? 6 : 24;
 
                 if (from < Math.min(homeStart, homeEnd) || from > Math.max(homeStart, homeEnd)) {
                     return false;
                 }
 
-                const exactDist = player === 'white' ? (25 - from) : from;
+                // Distance to bear off: white bears off past 0, black bears off past 25
+                const exactDist = player === 'white' ? from : (25 - from);
                 if (this.movesRemaining.includes(exactDist)) return true;
 
                 // Can use higher die if no pieces behind
                 const maxDie = Math.max(...this.movesRemaining);
                 if (maxDie > exactDist) {
-                    // Check no pieces behind
+                    // Check no pieces behind (further from bearing off edge)
                     if (player === 'white') {
-                        for (let i = 19; i < from; i++) {
+                        for (let i = 6; i > from; i--) {
                             if (this.board[i].white > 0) return false;
                         }
                     } else {
-                        for (let i = 6; i > from; i--) {
+                        for (let i = 19; i < from; i++) {
                             if (this.board[i].black > 0) return false;
                         }
                     }
@@ -817,15 +820,17 @@
         }
 
         canBearOff(player) {
-            // All pieces must be in home board
+            // All pieces must be in home board (no pieces on bar or outside home)
             if (this.board[0][player] > 0) return false;
 
             if (player === 'white') {
-                for (let i = 1; i <= 18; i++) {
+                // White home is 1-6, check no pieces on 7-24
+                for (let i = 7; i <= 24; i++) {
                     if (this.board[i].white > 0) return false;
                 }
             } else {
-                for (let i = 7; i <= 24; i++) {
+                // Black home is 19-24, check no pieces on 1-18
+                for (let i = 1; i <= 18; i++) {
                     if (this.board[i].black > 0) return false;
                 }
             }
@@ -844,8 +849,8 @@
                 this.offCount[player]++;
                 this.playSound('move');
 
-                // Calculate die used
-                const exactDist = player === 'white' ? (25 - from) : from;
+                // Calculate die used (white bears off past 0, black past 25)
+                const exactDist = player === 'white' ? from : (25 - from);
                 const dieIndex = this.movesRemaining.indexOf(exactDist);
                 if (dieIndex !== -1) {
                     this.movesRemaining.splice(dieIndex, 1);
@@ -868,8 +873,8 @@
                 // Add to destination
                 this.board[to][player]++;
 
-                // Remove used die
-                const distance = player === 'white' ? (to - from) : (from - to);
+                // Remove used die (white moves decreasing, black moves increasing)
+                const distance = player === 'white' ? (from - to) : (to - from);
                 const dieIndex = this.movesRemaining.indexOf(distance);
                 if (dieIndex !== -1) {
                     this.movesRemaining.splice(dieIndex, 1);
@@ -920,10 +925,11 @@
             for (const die of [...new Set(this.movesRemaining)]) {
                 let to;
                 if (from === 0) {
-                    // Coming off bar
-                    to = player === 'white' ? die : (25 - die);
+                    // Coming off bar: white enters at 24-die+1 (opponent's home), black enters at die
+                    to = player === 'white' ? (25 - die) : die;
                 } else {
-                    to = player === 'white' ? from + die : from - die;
+                    // Normal moves: white moves decreasing (24→1), black moves increasing (1→24)
+                    to = player === 'white' ? (from - die) : (from + die);
                 }
 
                 if (this.isValidMove(from, to)) {
@@ -1108,9 +1114,9 @@
             msg.innerHTML = `
                 <h2>🎲 How to Play</h2>
                 <p style="text-align: left; font-size: 0.9rem;">
-                    <strong>Objective:</strong> Move all 15 checkers to your home and bear them off.<br><br>
-                    <strong>White:</strong> Moves from point 1 → 24, home is 19-24<br>
-                    <strong>Black:</strong> Moves from point 24 → 1, home is 1-6<br><br>
+                    <strong>Objective:</strong> Move all 15 checkers to your home board and bear them off.<br><br>
+                    <strong>White:</strong> Moves from 24 → 1, home board is 1-6 (bottom right)<br>
+                    <strong>Black:</strong> Moves from 1 → 24, home board is 19-24 (top right)<br><br>
                     <strong>Rules:</strong><br>
                     • Roll dice, then click a checker and a highlighted destination<br>
                     • Land on a single opponent checker to send it to the bar<br>
