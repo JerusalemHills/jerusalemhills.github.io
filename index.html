@@ -58,8 +58,6 @@
 
   <!-- External Scripts -->
   <script src="js/hebcal.js"></script>
-  <script src="js/rss-feed-config.js"></script>
-  <script src="js/ticker.js"></script>
   <script src="js/hebrew-keyboard.js"></script>
   <script src="js/forum-preview.js"></script>
   <script src="js/markets-carousel.js"></script>
@@ -171,14 +169,14 @@
     <h1 style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;">Jerusalem Hills - Heritage, Culture & Community Platform</h1>
     
     <section class="dashboard-hero">
-      <!-- Headlines Ticker - Live RSS Feed -->
-      <div class="headlines-ticker">
-        <div class="ticker-tape">
-          <div id="ticker-content">
-            <span class="ticker-item">Latest: New artisans join our marketplace</span>
-            <span class="ticker-item">Community forum reaches 1,000 members worldwide</span>
-            <span class="ticker-item">Kids Zone expands with new educational games</span>
-          </div>
+      <!-- Quick Headlines - Clean Static Display -->
+      <div class="quick-headlines">
+        <span class="headline-label">Latest:</span>
+        <div class="headlines-rotate" id="headlines-rotate">
+          <a href="/marketplace.html" class="headline-item active">New artisans join our marketplace with authentic Jerusalem crafts</a>
+          <a href="/forum/" class="headline-item">Community forum reaches 1,000+ members worldwide</a>
+          <a href="/kids/" class="headline-item">Kids Zone expands with 26+ educational games</a>
+          <a href="/games/" class="headline-item">Play classic games: Backgammon, 2048, Tetris & more</a>
         </div>
       </div>
 
@@ -806,6 +804,22 @@
       </div>
     </div>
   </div>
+
+  <!-- Headlines Rotation Script -->
+  <script>
+    (function() {
+      const headlines = document.querySelectorAll('.headline-item');
+      if (headlines.length === 0) return;
+
+      let current = 0;
+
+      setInterval(() => {
+        headlines[current].classList.remove('active');
+        current = (current + 1) % headlines.length;
+        headlines[current].classList.add('active');
+      }, 5000); // Rotate every 5 seconds
+    })();
+  </script>
 
   <!-- Main Scripts -->
   <script src="script-new.js"></script>

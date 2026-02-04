@@ -742,58 +742,74 @@ main {
   flex: 1;
 }
 
-/* Headlines Ticker - Live RSS Feed */
-.headlines-ticker {
-  overflow: hidden;
-  height: 2.5rem;
-  background: rgba(145, 217, 248, 0.15); /* Light blue from brand */
-  border: 1px solid rgba(145, 217, 248, 0.3);
-  border-radius: 8px;
-  margin: 0;
+/* Quick Headlines - Clean Rotating Display */
+.quick-headlines {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, rgba(145, 217, 248, 0.15) 0%, rgba(252, 251, 165, 0.1) 100%);
+  border: 1px solid rgba(145, 217, 248, 0.25);
+  border-radius: 10px;
+  min-height: 2.75rem;
+}
+
+.headline-label {
+  font-weight: 700;
+  color: var(--primary-dark);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  padding-right: 0.5rem;
+  border-right: 2px solid rgba(145, 217, 248, 0.4);
+}
+
+.headlines-rotate {
   position: relative;
+  flex: 1;
+  height: 1.5rem;
+  overflow: hidden;
 }
 
-.ticker-tape {
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-#ticker-content {
-  display: flex;
-  gap: 2rem;
-  white-space: nowrap;
-  will-change: transform;
-}
-
-.ticker-item {
-  display: inline-flex;
-  align-items: center;
-  padding: 0 1.5rem;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.ticker-item a {
+.headline-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
   color: var(--text);
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 0.925rem;
   font-weight: 500;
-  transition: color 0.2s;
   white-space: nowrap;
-  cursor: pointer;
-  pointer-events: auto;
-  position: relative;
-  z-index: 10;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 1.5rem;
 }
 
-.ticker-item a:hover {
-  color: var(--primary);
-  text-decoration: underline;
+.headline-item.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.ticker-item a:active {
+.headline-item:hover {
   color: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+  .quick-headlines {
+    padding: 0.6rem 1rem;
+  }
+
+  .headline-label {
+    font-size: 0.8rem;
+  }
+
+  .headline-item {
+    font-size: 0.85rem;
+  }
 }
 
 /* Markets Card with TradingView Widgets - Separate Section Below */
