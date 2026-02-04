@@ -2,67 +2,121 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Play live backgammon on Jerusalem Hills">
-    <title>Live Backgammon | Jerusalem Hills</title>
-    <link rel="stylesheet" href="css/backgammon.css">
-    <link rel="stylesheet" href="/css/theme.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Play backgammon online - Jerusalem Hills">
+    <title>Backgammon | Jerusalem Hills</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 
     <style>
-        /* Jerusalem Theme Integration */
+        :root {
+            --board-wood: #8B5A2B;
+            --board-dark: #4B2F1A;
+            --board-border: #3D2415;
+            --point-dark: #654321;
+            --point-light: #D4A574;
+            --checker-white: #F5F5F5;
+            --checker-black: #2C2C2C;
+            --gold: #D4A574;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #2C1810 0%, #4A2C17 100%);
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        /* Header */
         .game-header {
-            background: linear-gradient(135deg, #8B7355 0%, #D4A574 100%);
-            padding: 1rem;
-            text-align: center;
-            color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--gold) 0%, #8B7355 100%);
+            flex-shrink: 0;
         }
 
         .game-header h1 {
-            margin: 0;
-            font-size: 2rem;
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
-        .game-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .game-info {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        .controls {
+        .header-controls {
             display: flex;
-            gap: 10px;
+            gap: 0.5rem;
             align-items: center;
+        }
+
+        .header-btn {
+            padding: 0.4rem 0.8rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Main Game Area */
+        .game-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0.5rem;
+            min-height: 0;
+            gap: 0.5rem;
+        }
+
+        /* Controls Row */
+        .controls-row {
+            display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            margin: 20px 0;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            flex-shrink: 0;
         }
 
         .btn {
-            padding: 10px 20px;
-            background: #D4A574;
+            padding: 0.5rem 1rem;
+            background: var(--gold);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
         }
 
-        .btn:hover {
-            background: #8B7355;
+        .btn:hover:not(:disabled) {
+            background: #B8956A;
+            transform: translateY(-1px);
         }
 
         .btn:disabled {
@@ -71,285 +125,1037 @@
         }
 
         .dice-display {
-            font-size: 24px;
-            margin: 0 20px;
-            padding: 10px;
-            background: #f0f0f0;
-            border-radius: 5px;
-            min-width: 100px;
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+        }
+
+        .die {
+            font-size: 1.8rem;
+            min-width: 2rem;
             text-align: center;
+        }
+
+        .die.rolling {
+            animation: roll 0.3s ease-in-out 3;
+        }
+
+        @keyframes roll {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
         }
 
         .turn-indicator {
-            padding: 10px;
-            background: #4CAF50;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .turn-indicator.white {
+            background: var(--checker-white);
+            color: #333;
+        }
+
+        .turn-indicator.black {
+            background: var(--checker-black);
             color: white;
-            border-radius: 5px;
-            text-align: center;
-            margin: 10px 0;
         }
 
-        #backgammon-board {
-            background: #8B5A2B;
-            border: 10px solid #4B2F1A;
-            border-radius: 10px;
-            padding: 20px;
-            position: relative;
-            min-height: 500px;
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .board-half {
+        /* Board Container */
+        .board-container {
             flex: 1;
             display: flex;
-            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            min-height: 0;
+            padding: 0.25rem;
         }
 
-        .point {
-            width: 50px;
-            height: 300px;
+        /* The Board */
+        #board {
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 1.5 / 1;
+            max-height: 100%;
+            background: var(--board-wood);
+            border: 6px solid var(--board-border);
+            border-radius: 8px;
+            display: grid;
+            grid-template-columns: 1fr 40px 1fr;
+            grid-template-rows: 1fr 30px 1fr;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.2);
             position: relative;
+        }
+
+        /* Quadrants */
+        .quadrant {
+            display: flex;
+            padding: 4px;
+        }
+
+        .quadrant.top-left { grid-area: 1 / 1; flex-direction: row; }
+        .quadrant.top-right { grid-area: 1 / 3; flex-direction: row; }
+        .quadrant.bottom-left { grid-area: 3 / 1; flex-direction: row; }
+        .quadrant.bottom-right { grid-area: 3 / 3; flex-direction: row; }
+
+        /* Bar */
+        .bar {
+            grid-area: 1 / 2 / 4 / 3;
+            background: var(--board-dark);
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+
+        .bar-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        /* Middle strip for dice */
+        .middle-strip {
+            grid-area: 2 / 1 / 3 / 4;
+            background: var(--board-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Points (triangles) */
+        .point {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
             cursor: pointer;
+            padding-top: 4px;
         }
 
         .point.top {
             flex-direction: column-reverse;
+            padding-top: 0;
+            padding-bottom: 4px;
         }
 
-        .point.dark {
-            background: linear-gradient(to bottom, #654321 0%, #8B5A2B 100%);
-        }
-
-        .point.light {
-            background: linear-gradient(to bottom, #DEB887 0%, #F5DEB3 100%);
-        }
-
-        .bar {
-            width: 60px;
-            background: #4B2F1A;
-            border-left: 2px solid #2F1F0F;
-            border-right: 2px solid #2F1F0F;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .checker {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .point::before {
+            content: '';
             position: absolute;
-            transition: all 0.3s ease;
+            width: 90%;
+            height: 85%;
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+        }
+
+        .point.top::before {
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            bottom: 0;
+            top: auto;
+        }
+
+        .point.dark::before {
+            background: var(--point-dark);
+        }
+
+        .point.light::before {
+            background: var(--point-light);
+        }
+
+        .point.valid-move::before {
+            background: rgba(76, 175, 80, 0.6) !important;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.8);
+        }
+
+        .point-number {
+            position: absolute;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.5);
+            z-index: 1;
+        }
+
+        .point.top .point-number { top: 2px; }
+        .point:not(.top) .point-number { bottom: 2px; }
+
+        /* Checkers */
+        .checker {
+            width: 85%;
+            aspect-ratio: 1;
+            max-width: 40px;
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
             cursor: grab;
-            box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transition: transform 0.15s, box-shadow 0.15s;
+            flex-shrink: 0;
         }
 
         .checker.white {
-            background: radial-gradient(circle at 30% 30%, #FFFFFF, #E0E0E0);
-            border: 2px solid #CCCCCC;
+            background: radial-gradient(circle at 30% 30%, #fff, #ddd);
+            border: 2px solid #bbb;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .checker.black {
-            background: radial-gradient(circle at 30% 30%, #444444, #000000);
-            border: 2px solid #222222;
+            background: radial-gradient(circle at 30% 30%, #555, #222);
+            border: 2px solid #111;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .checker.selected {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            transform: scale(1.15);
+            box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8);
+            z-index: 10;
         }
 
-        .point.valid-move {
-            background: rgba(0, 255, 0, 0.3) !important;
+        .checker:hover:not(.selected) {
+            transform: scale(1.05);
         }
 
+        .checker-count {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.7rem;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        .checker.white .checker-count { color: #333; }
+        .checker.black .checker-count { color: #fff; }
+
+        /* Home areas */
         .home-area {
-            width: 80px;
-            background: linear-gradient(135deg, #8B7355 0%, #D4A574 100%);
-            border: 2px solid #4B2F1A;
-            border-radius: 5px;
-            padding: 10px;
+            position: absolute;
+            width: 35px;
+            height: 45%;
+            background: rgba(212, 165, 116, 0.2);
+            border: 2px dashed var(--gold);
+            border-radius: 4px;
+            right: -45px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-end;
+            padding: 4px;
+        }
+
+        .home-area.top { top: 4px; }
+        .home-area.bottom { bottom: 4px; }
+
+        .home-count {
+            font-size: 0.8rem;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* Status bar */
+        .status-bar {
+            display: flex;
             justify-content: center;
+            gap: 2rem;
+            padding: 0.4rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
         }
 
-        .home-area h3 {
-            color: white;
-            margin: 0 0 10px 0;
-            font-size: 14px;
+        /* Multiplayer toggle */
+        .mp-toggle {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
         }
 
-        .nav-back {
-            display: inline-block;
-            margin: 20px;
-            padding: 10px 20px;
-            background: #D4A574;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
+        .mp-panel {
+            display: none;
+            position: fixed;
+            bottom: 3rem;
+            right: 0.5rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            width: 280px;
+            z-index: 100;
         }
 
-        .nav-back:hover {
-            background: #8B7355;
+        .mp-panel.show {
+            display: block;
         }
 
-        @media (max-width: 768px) {
-            #backgammon-board {
-                flex-direction: column;
-                padding: 10px;
-            }
+        .mp-panel h3 {
+            margin: 0 0 0.75rem 0;
+            color: var(--board-dark);
+        }
 
-            .point {
-                width: 40px;
-                height: 200px;
-            }
+        .mp-panel input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
 
-            .checker {
-                width: 30px;
-                height: 30px;
-            }
+        .mp-panel .btn {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Game message overlay */
+        .game-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            text-align: center;
+            z-index: 1000;
+            min-width: 280px;
+        }
+
+        .game-message h2 {
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .game-message p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .game-header h1 { font-size: 1rem; }
+            .controls-row { gap: 0.5rem; flex-wrap: wrap; }
+            .btn { padding: 0.4rem 0.6rem; font-size: 0.8rem; }
+            .die { font-size: 1.4rem; }
+            .turn-indicator { font-size: 0.75rem; padding: 0.3rem 0.6rem; }
+            #board { border-width: 4px; }
+            .checker { max-width: 30px; }
+        }
+
+        @media (max-height: 500px) {
+            .game-header { padding: 0.3rem 0.5rem; }
+            .game-header h1 { font-size: 0.9rem; }
+            .controls-row { padding: 0.3rem; }
+            .status-bar { padding: 0.25rem; font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
-    <div class="game-header">
-        <a href="/" style="position: absolute; left: 20px; top: 20px;">
-            <img src="/img/1.svg" alt="Jerusalem Hills Logo" style="height: 40px;">
-        </a>
-        <h1>Jerusalem Hills Backgammon</h1>
-    </div>
+    <header class="game-header">
+        <h1>🎲 Jerusalem Hills Backgammon</h1>
+        <div class="header-controls">
+            <a href="/games/" class="header-btn">← Games</a>
+            <button class="header-btn" id="help-btn">❓</button>
+            <button class="header-btn" id="sound-btn">🔊</button>
+        </div>
+    </header>
 
-    <div class="game-container">
-        <a href="/games/" class="nav-back">← Back to Games</a>
-
-        <div class="game-info">
-            <div class="turn-indicator" id="turn-indicator">
-                White's Turn
+    <main class="game-main">
+        <div class="controls-row">
+            <button class="btn" id="new-game-btn">New Game</button>
+            <button class="btn" id="roll-btn">🎲 Roll</button>
+            <div class="dice-display">
+                <span class="die" id="die1">?</span>
+                <span class="die" id="die2">?</span>
             </div>
-
-            <div class="controls">
-                <button id="new-game-btn" class="btn">New Game</button>
-                <button id="roll-dice-btn" class="btn">Roll Dice</button>
-                <div class="dice-display" id="dice-display">🎲 🎲</div>
-                <button id="end-turn-btn" class="btn" disabled>End Turn</button>
-            </div>
-
-            <div style="text-align: center; margin-top: 10px;">
-                <small>Click a checker to select it, then click a valid point to move</small>
-            </div>
+            <div class="turn-indicator white" id="turn-indicator">White's Turn</div>
+            <button class="btn" id="end-turn-btn" disabled>End Turn</button>
         </div>
 
-        <div class="game-board-wrapper">
-            <div id="backgammon-board">
-                <!-- Board will be generated by JavaScript -->
-            </div>
-        </div>
+        <div class="board-container">
+            <div id="board">
+                <!-- Top Left Quadrant: Points 13-18 (black home board area) -->
+                <div class="quadrant top-left" id="quad-tl"></div>
 
-        <div style="text-align: center; margin-top: 20px;">
-            <p><strong>Game Status:</strong> <span id="game-status">Ready to start</span></p>
-        </div>
+                <!-- Bar -->
+                <div class="bar">
+                    <div class="bar-section" id="bar-black"></div>
+                    <div class="bar-section" id="bar-white"></div>
+                </div>
 
-        <!-- Multiplayer Controls -->
-        <div class="multiplayer-panel" id="multiplayer-panel" style="
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin: 20px 0;
-        ">
-            <h3 style="margin: 0 0 15px 0;">🌐 Online Multiplayer</h3>
+                <!-- Top Right Quadrant: Points 19-24 -->
+                <div class="quadrant top-right" id="quad-tr"></div>
 
-            <div class="game-mode-selector">
-                <label style="display: block; margin-bottom: 10px;">
-                    <input type="radio" name="gameMode" value="local" checked>
-                    Local Game (2 players on this device)
-                </label>
-                <label style="display: block; margin-bottom: 10px;">
-                    <input type="radio" name="gameMode" value="host">
-                    Host Online Game (invite a friend)
-                </label>
-                <label style="display: block;">
-                    <input type="radio" name="gameMode" value="join">
-                    Join Online Game (enter game ID)
-                </label>
-            </div>
+                <!-- Middle strip -->
+                <div class="middle-strip"></div>
 
-            <!-- Host Game UI -->
-            <div id="host-ui" style="display: none; margin-top: 15px;">
-                <button id="btn-host-game" class="btn" style="width: 100%; margin-bottom: 10px;">
-                    Create Game & Get Link
-                </button>
-                <div id="game-link-display" style="display: none;">
-                    <p style="margin: 10px 0 5px 0; font-weight: bold;">Share this link with your friend:</p>
-                    <input type="text" id="game-link-input" readonly style="
-                        width: 100%;
-                        padding: 10px;
-                        border: 1px solid #ddd;
-                        border-radius: 5px;
-                        margin-bottom: 10px;
-                        font-family: monospace;
-                    ">
-                    <button id="btn-copy-link" class="btn">📋 Copy Link</button>
-                    <p id="waiting-message" style="color: #666; font-style: italic; margin-top: 10px;">
-                        Waiting for opponent to join...
-                    </p>
+                <!-- Bottom Left Quadrant: Points 12-7 -->
+                <div class="quadrant bottom-left" id="quad-bl"></div>
+
+                <!-- Bottom Right Quadrant: Points 6-1 (white home board area) -->
+                <div class="quadrant bottom-right" id="quad-br"></div>
+
+                <!-- Home areas -->
+                <div class="home-area top" id="home-black">
+                    <span class="home-count" id="black-off">0</span>
+                </div>
+                <div class="home-area bottom" id="home-white">
+                    <span class="home-count" id="white-off">0</span>
                 </div>
             </div>
+        </div>
 
-            <!-- Join Game UI -->
-            <div id="join-ui" style="display: none; margin-top: 15px;">
-                <input type="text" id="game-id-input" placeholder="Enter Game ID or paste link" style="
-                    width: 100%;
-                    padding: 10px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                    margin-bottom: 10px;
-                ">
-                <button id="btn-join-game" class="btn" style="width: 100%;">
-                    Join Game
-                </button>
-            </div>
+        <div class="status-bar">
+            <span id="game-status">Click "New Game" to start</span>
+            <span id="moves-remaining"></span>
+        </div>
+    </main>
 
-            <!-- Connection Status -->
-            <div id="connection-status" style="
-                display: none;
-                margin-top: 15px;
-                padding: 10px;
-                border-radius: 5px;
-                text-align: center;
-            ">
-                <strong id="status-text"></strong>
-            </div>
+    <!-- Multiplayer Panel -->
+    <button class="header-btn mp-toggle" id="mp-toggle">🌐 Online</button>
+    <div class="mp-panel" id="mp-panel">
+        <h3>🌐 Online Play</h3>
+        <div id="mp-local">
+            <button class="btn" id="host-btn">Create Game</button>
+            <input type="text" id="join-input" placeholder="Enter Game ID">
+            <button class="btn" id="join-btn">Join Game</button>
+        </div>
+        <div id="mp-hosting" style="display:none;">
+            <p>Share this code:</p>
+            <input type="text" id="game-code" readonly>
+            <button class="btn" id="copy-btn">📋 Copy</button>
+            <p id="mp-status">Waiting for opponent...</p>
         </div>
     </div>
 
-    <!-- GunDB for P2P Multiplayer -->
+    <!-- GunDB -->
     <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
-    
-    <!-- Centralized Multiplayer System -->
-    <script src="/js/gundb-multiplayer.js"></script>
 
-    <!-- Mobile Touch Controls -->
-    <script src="/js/mobile-touch-controls.js"></script>
+    <script>
+    /**
+     * Jerusalem Hills Backgammon - Fullscreen Optimized
+     */
+    class Backgammon {
+        constructor() {
+            // Board state: array of 26 positions
+            // 0 = bar, 1-24 = points, 25 = off (borne off)
+            this.board = this.getInitialBoard();
+            this.currentPlayer = 'white';
+            this.dice = [0, 0];
+            this.movesRemaining = [];
+            this.selectedPoint = null;
+            this.gameStarted = false;
+            this.soundEnabled = localStorage.getItem('bg-sound') !== 'false';
 
-    <!-- Accessibility Enhancements -->
-    <script src="/js/accessibility-enhancements.js"></script>
+            this.offCount = { white: 0, black: 0 };
 
-    <!-- Multiplayer Module -->
-    <script src="js/multiplayer.js"></script>
+            this.initBoard();
+            this.bindEvents();
+            this.render();
+        }
 
-    <!-- Main Game -->
-    <script src="js/backgammon.js"></script>
+        getInitialBoard() {
+            // Standard backgammon setup
+            const board = Array(26).fill(null).map(() => ({ white: 0, black: 0 }));
+
+            // White pieces (moving 1→24)
+            board[1] = { white: 2, black: 0 };
+            board[12] = { white: 5, black: 0 };
+            board[17] = { white: 3, black: 0 };
+            board[19] = { white: 5, black: 0 };
+
+            // Black pieces (moving 24→1)
+            board[24] = { white: 0, black: 2 };
+            board[13] = { white: 0, black: 5 };
+            board[8] = { white: 0, black: 3 };
+            board[6] = { white: 0, black: 5 };
+
+            return board;
+        }
+
+        initBoard() {
+            // Create points in each quadrant
+            const quadTL = document.getElementById('quad-tl');
+            const quadTR = document.getElementById('quad-tr');
+            const quadBL = document.getElementById('quad-bl');
+            const quadBR = document.getElementById('quad-br');
+
+            // Top-left: points 13-18 (left to right)
+            for (let i = 13; i <= 18; i++) {
+                quadTL.appendChild(this.createPoint(i, true, i % 2 === 1));
+            }
+
+            // Top-right: points 19-24 (left to right)
+            for (let i = 19; i <= 24; i++) {
+                quadTR.appendChild(this.createPoint(i, true, i % 2 === 1));
+            }
+
+            // Bottom-left: points 12-7 (left to right, so 12,11,10,9,8,7)
+            for (let i = 12; i >= 7; i--) {
+                quadBL.appendChild(this.createPoint(i, false, i % 2 === 0));
+            }
+
+            // Bottom-right: points 6-1 (left to right, so 6,5,4,3,2,1)
+            for (let i = 6; i >= 1; i--) {
+                quadBR.appendChild(this.createPoint(i, false, i % 2 === 0));
+            }
+        }
+
+        createPoint(num, isTop, isDark) {
+            const point = document.createElement('div');
+            point.className = `point ${isTop ? 'top' : ''} ${isDark ? 'dark' : 'light'}`;
+            point.dataset.point = num;
+
+            const label = document.createElement('span');
+            label.className = 'point-number';
+            label.textContent = num;
+            point.appendChild(label);
+
+            return point;
+        }
+
+        bindEvents() {
+            document.getElementById('new-game-btn').addEventListener('click', () => this.newGame());
+            document.getElementById('roll-btn').addEventListener('click', () => this.rollDice());
+            document.getElementById('end-turn-btn').addEventListener('click', () => this.endTurn());
+            document.getElementById('help-btn').addEventListener('click', () => this.showHelp());
+            document.getElementById('sound-btn').addEventListener('click', () => this.toggleSound());
+
+            // Point clicks
+            document.querySelectorAll('.point').forEach(p => {
+                p.addEventListener('click', (e) => this.handlePointClick(parseInt(p.dataset.point)));
+            });
+
+            // Bar clicks
+            document.getElementById('bar-white').addEventListener('click', () => {
+                if (this.currentPlayer === 'white' && this.board[0].white > 0) {
+                    this.handlePointClick(0);
+                }
+            });
+            document.getElementById('bar-black').addEventListener('click', () => {
+                if (this.currentPlayer === 'black' && this.board[0].black > 0) {
+                    this.handlePointClick(0);
+                }
+            });
+
+            // Home area clicks for bearing off
+            document.getElementById('home-white').addEventListener('click', () => {
+                if (this.selectedPoint !== null && this.currentPlayer === 'white') {
+                    this.handlePointClick(25);
+                }
+            });
+            document.getElementById('home-black').addEventListener('click', () => {
+                if (this.selectedPoint !== null && this.currentPlayer === 'black') {
+                    this.handlePointClick(25);
+                }
+            });
+
+            // Multiplayer toggle
+            document.getElementById('mp-toggle').addEventListener('click', () => {
+                document.getElementById('mp-panel').classList.toggle('show');
+            });
+
+            // Keyboard
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'r' || e.key === 'R') this.rollDice();
+                if (e.key === 'Escape') this.deselect();
+            });
+        }
+
+        newGame() {
+            this.board = this.getInitialBoard();
+            this.currentPlayer = 'white';
+            this.dice = [0, 0];
+            this.movesRemaining = [];
+            this.selectedPoint = null;
+            this.gameStarted = true;
+            this.offCount = { white: 0, black: 0 };
+
+            document.getElementById('die1').textContent = '?';
+            document.getElementById('die2').textContent = '?';
+            document.getElementById('roll-btn').disabled = false;
+            document.getElementById('end-turn-btn').disabled = true;
+
+            this.updateStatus('White starts - Roll the dice!');
+            this.playSound('click');
+            this.render();
+        }
+
+        rollDice() {
+            if (!this.gameStarted) {
+                this.newGame();
+                return;
+            }
+            if (this.movesRemaining.length > 0) return;
+
+            const die1El = document.getElementById('die1');
+            const die2El = document.getElementById('die2');
+
+            die1El.classList.add('rolling');
+            die2El.classList.add('rolling');
+            this.playSound('dice');
+
+            setTimeout(() => {
+                this.dice[0] = Math.floor(Math.random() * 6) + 1;
+                this.dice[1] = Math.floor(Math.random() * 6) + 1;
+
+                die1El.textContent = this.getDieSymbol(this.dice[0]);
+                die2El.textContent = this.getDieSymbol(this.dice[1]);
+                die1El.classList.remove('rolling');
+                die2El.classList.remove('rolling');
+
+                // Calculate moves
+                if (this.dice[0] === this.dice[1]) {
+                    this.movesRemaining = [this.dice[0], this.dice[0], this.dice[0], this.dice[0]];
+                    this.updateStatus(`Doubles! ${this.currentPlayer} has 4 moves of ${this.dice[0]}`);
+                } else {
+                    this.movesRemaining = [...this.dice];
+                    this.updateStatus(`${this.currentPlayer}: Move ${this.dice[0]} and ${this.dice[1]}`);
+                }
+
+                document.getElementById('roll-btn').disabled = true;
+                this.updateMovesDisplay();
+
+                // Check if player can move
+                if (!this.hasAnyValidMove()) {
+                    this.updateStatus(`${this.currentPlayer} cannot move - turn passes`);
+                    setTimeout(() => this.endTurn(), 1500);
+                }
+            }, 400);
+        }
+
+        getDieSymbol(n) {
+            return ['', '⚀', '⚁', '⚂', '⚃', '⚄', '⚅'][n];
+        }
+
+        handlePointClick(point) {
+            if (!this.gameStarted || this.movesRemaining.length === 0) return;
+
+            const playerPieces = this.board[point][this.currentPlayer];
+
+            // Must move from bar first
+            if (this.board[0][this.currentPlayer] > 0 && point !== 0 && this.selectedPoint !== 0) {
+                this.updateStatus('Must move from bar first!');
+                return;
+            }
+
+            if (this.selectedPoint === null) {
+                // Selecting a piece
+                if (playerPieces > 0) {
+                    this.selectedPoint = point;
+                    this.highlightValidMoves(point);
+                    this.render();
+                }
+            } else {
+                // Moving to destination
+                if (point === this.selectedPoint) {
+                    this.deselect();
+                } else if (this.isValidMove(this.selectedPoint, point)) {
+                    this.makeMove(this.selectedPoint, point);
+                    this.deselect();
+                } else {
+                    // Try selecting different piece
+                    if (playerPieces > 0 && point !== 25) {
+                        this.selectedPoint = point;
+                        this.highlightValidMoves(point);
+                        this.render();
+                    }
+                }
+            }
+        }
+
+        isValidMove(from, to) {
+            const player = this.currentPlayer;
+            const direction = player === 'white' ? 1 : -1;
+            const distance = player === 'white' ? (to - from) : (from - to);
+
+            // Check if distance matches a die
+            if (!this.movesRemaining.includes(distance) && to !== 25) return false;
+
+            // Bearing off
+            if (to === 25) {
+                if (!this.canBearOff(player)) return false;
+                const homeStart = player === 'white' ? 19 : 1;
+                const homeEnd = player === 'white' ? 24 : 6;
+
+                if (from < Math.min(homeStart, homeEnd) || from > Math.max(homeStart, homeEnd)) {
+                    return false;
+                }
+
+                const exactDist = player === 'white' ? (25 - from) : from;
+                if (this.movesRemaining.includes(exactDist)) return true;
+
+                // Can use higher die if no pieces behind
+                const maxDie = Math.max(...this.movesRemaining);
+                if (maxDie > exactDist) {
+                    // Check no pieces behind
+                    if (player === 'white') {
+                        for (let i = 19; i < from; i++) {
+                            if (this.board[i].white > 0) return false;
+                        }
+                    } else {
+                        for (let i = 6; i > from; i--) {
+                            if (this.board[i].black > 0) return false;
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            // Normal move validation
+            if (to < 1 || to > 24) return false;
+
+            const opponent = player === 'white' ? 'black' : 'white';
+            if (this.board[to][opponent] > 1) return false; // Blocked
+
+            return true;
+        }
+
+        canBearOff(player) {
+            // All pieces must be in home board
+            if (this.board[0][player] > 0) return false;
+
+            if (player === 'white') {
+                for (let i = 1; i <= 18; i++) {
+                    if (this.board[i].white > 0) return false;
+                }
+            } else {
+                for (let i = 7; i <= 24; i++) {
+                    if (this.board[i].black > 0) return false;
+                }
+            }
+            return true;
+        }
+
+        makeMove(from, to) {
+            const player = this.currentPlayer;
+            const opponent = player === 'white' ? 'black' : 'white';
+
+            // Remove from source
+            this.board[from][player]--;
+
+            if (to === 25) {
+                // Bearing off
+                this.offCount[player]++;
+                this.playSound('move');
+
+                // Calculate die used
+                const exactDist = player === 'white' ? (25 - from) : from;
+                const dieIndex = this.movesRemaining.indexOf(exactDist);
+                if (dieIndex !== -1) {
+                    this.movesRemaining.splice(dieIndex, 1);
+                } else {
+                    // Used higher die
+                    const maxDie = Math.max(...this.movesRemaining);
+                    const maxIndex = this.movesRemaining.indexOf(maxDie);
+                    this.movesRemaining.splice(maxIndex, 1);
+                }
+            } else {
+                // Check for hit
+                if (this.board[to][opponent] === 1) {
+                    this.board[to][opponent] = 0;
+                    this.board[0][opponent]++;
+                    this.playSound('hit');
+                } else {
+                    this.playSound('move');
+                }
+
+                // Add to destination
+                this.board[to][player]++;
+
+                // Remove used die
+                const distance = player === 'white' ? (to - from) : (from - to);
+                const dieIndex = this.movesRemaining.indexOf(distance);
+                if (dieIndex !== -1) {
+                    this.movesRemaining.splice(dieIndex, 1);
+                }
+            }
+
+            this.updateMovesDisplay();
+            this.render();
+
+            // Check win
+            if (this.offCount[player] === 15) {
+                this.showWin(player);
+                return;
+            }
+
+            // Check if turn should end
+            if (this.movesRemaining.length === 0 || !this.hasAnyValidMove()) {
+                document.getElementById('end-turn-btn').disabled = false;
+                if (this.movesRemaining.length === 0) {
+                    this.updateStatus(`${player} finished moves`);
+                } else {
+                    this.updateStatus(`${player} has no valid moves`);
+                }
+            }
+        }
+
+        hasAnyValidMove() {
+            const player = this.currentPlayer;
+
+            // Check bar first
+            if (this.board[0][player] > 0) {
+                return this.getValidMovesFrom(0).length > 0;
+            }
+
+            // Check all points
+            for (let i = 1; i <= 24; i++) {
+                if (this.board[i][player] > 0) {
+                    if (this.getValidMovesFrom(i).length > 0) return true;
+                }
+            }
+            return false;
+        }
+
+        getValidMovesFrom(from) {
+            const moves = [];
+            const player = this.currentPlayer;
+
+            for (const die of [...new Set(this.movesRemaining)]) {
+                let to;
+                if (from === 0) {
+                    // Coming off bar
+                    to = player === 'white' ? die : (25 - die);
+                } else {
+                    to = player === 'white' ? from + die : from - die;
+                }
+
+                if (this.isValidMove(from, to)) {
+                    moves.push(to);
+                }
+            }
+
+            // Check bearing off
+            if (from !== 0 && this.canBearOff(player)) {
+                if (this.isValidMove(from, 25)) {
+                    moves.push(25);
+                }
+            }
+
+            return moves;
+        }
+
+        highlightValidMoves(from) {
+            document.querySelectorAll('.point').forEach(p => p.classList.remove('valid-move'));
+
+            const validMoves = this.getValidMovesFrom(from);
+            validMoves.forEach(to => {
+                if (to >= 1 && to <= 24) {
+                    document.querySelector(`[data-point="${to}"]`)?.classList.add('valid-move');
+                }
+            });
+
+            // Highlight home area if bearing off is valid
+            if (validMoves.includes(25)) {
+                const homeEl = this.currentPlayer === 'white' ?
+                    document.getElementById('home-white') :
+                    document.getElementById('home-black');
+                homeEl.style.borderColor = '#4CAF50';
+                homeEl.style.background = 'rgba(76, 175, 80, 0.3)';
+            }
+        }
+
+        deselect() {
+            this.selectedPoint = null;
+            document.querySelectorAll('.point').forEach(p => p.classList.remove('valid-move'));
+            document.getElementById('home-white').style.borderColor = '';
+            document.getElementById('home-white').style.background = '';
+            document.getElementById('home-black').style.borderColor = '';
+            document.getElementById('home-black').style.background = '';
+            this.render();
+        }
+
+        endTurn() {
+            this.currentPlayer = this.currentPlayer === 'white' ? 'black' : 'white';
+            this.movesRemaining = [];
+            this.selectedPoint = null;
+
+            document.getElementById('roll-btn').disabled = false;
+            document.getElementById('end-turn-btn').disabled = true;
+
+            const indicator = document.getElementById('turn-indicator');
+            indicator.className = `turn-indicator ${this.currentPlayer}`;
+            indicator.textContent = `${this.currentPlayer.charAt(0).toUpperCase() + this.currentPlayer.slice(1)}'s Turn`;
+
+            this.updateStatus(`${this.currentPlayer}'s turn - Roll the dice!`);
+            this.updateMovesDisplay();
+            this.render();
+        }
+
+        render() {
+            // Clear all checkers
+            document.querySelectorAll('.checker').forEach(c => c.remove());
+
+            // Render points
+            for (let i = 1; i <= 24; i++) {
+                const pointEl = document.querySelector(`[data-point="${i}"]`);
+                if (!pointEl) continue;
+
+                const whiteCount = this.board[i].white;
+                const blackCount = this.board[i].black;
+
+                this.renderCheckersOnPoint(pointEl, 'white', whiteCount, i > 12);
+                this.renderCheckersOnPoint(pointEl, 'black', blackCount, i > 12);
+
+                // Highlight selected
+                if (this.selectedPoint === i) {
+                    pointEl.style.outline = '3px solid gold';
+                } else {
+                    pointEl.style.outline = '';
+                }
+            }
+
+            // Render bar
+            this.renderBar();
+
+            // Render off counts
+            document.getElementById('white-off').textContent = this.offCount.white;
+            document.getElementById('black-off').textContent = this.offCount.black;
+        }
+
+        renderCheckersOnPoint(pointEl, color, count, isTop) {
+            if (count === 0) return;
+
+            const maxShow = 5;
+            const showCount = Math.min(count, maxShow);
+
+            for (let i = 0; i < showCount; i++) {
+                const checker = document.createElement('div');
+                checker.className = `checker ${color}`;
+
+                if (count > maxShow && i === maxShow - 1) {
+                    const countSpan = document.createElement('span');
+                    countSpan.className = 'checker-count';
+                    countSpan.textContent = count;
+                    checker.appendChild(countSpan);
+                }
+
+                if (this.selectedPoint === parseInt(pointEl.dataset.point) &&
+                    this.currentPlayer === color && i === showCount - 1) {
+                    checker.classList.add('selected');
+                }
+
+                pointEl.appendChild(checker);
+            }
+        }
+
+        renderBar() {
+            const barWhite = document.getElementById('bar-white');
+            const barBlack = document.getElementById('bar-black');
+            barWhite.innerHTML = '';
+            barBlack.innerHTML = '';
+
+            for (let i = 0; i < this.board[0].white; i++) {
+                const c = document.createElement('div');
+                c.className = 'checker white';
+                c.style.width = '30px';
+                c.style.height = '30px';
+                if (this.selectedPoint === 0 && this.currentPlayer === 'white' && i === this.board[0].white - 1) {
+                    c.classList.add('selected');
+                }
+                barWhite.appendChild(c);
+            }
+
+            for (let i = 0; i < this.board[0].black; i++) {
+                const c = document.createElement('div');
+                c.className = 'checker black';
+                c.style.width = '30px';
+                c.style.height = '30px';
+                if (this.selectedPoint === 0 && this.currentPlayer === 'black' && i === this.board[0].black - 1) {
+                    c.classList.add('selected');
+                }
+                barBlack.appendChild(c);
+            }
+        }
+
+        updateStatus(msg) {
+            document.getElementById('game-status').textContent = msg;
+        }
+
+        updateMovesDisplay() {
+            const el = document.getElementById('moves-remaining');
+            if (this.movesRemaining.length > 0) {
+                el.textContent = `Moves: ${this.movesRemaining.join(', ')}`;
+            } else {
+                el.textContent = '';
+            }
+        }
+
+        showWin(player) {
+            this.gameStarted = false;
+            this.playSound('win');
+
+            const msg = document.createElement('div');
+            msg.className = 'game-message';
+            msg.innerHTML = `
+                <h2>🏆 ${player.toUpperCase()} WINS! 🏆</h2>
+                <p>Congratulations!</p>
+                <button class="btn" onclick="this.parentElement.remove(); game.newGame();">Play Again</button>
+            `;
+            document.body.appendChild(msg);
+        }
+
+        showHelp() {
+            const msg = document.createElement('div');
+            msg.className = 'game-message';
+            msg.style.maxWidth = '400px';
+            msg.innerHTML = `
+                <h2>🎲 How to Play</h2>
+                <p style="text-align: left; font-size: 0.9rem;">
+                    <strong>Objective:</strong> Move all 15 checkers to your home and bear them off.<br><br>
+                    <strong>White:</strong> Moves from point 1 → 24, home is 19-24<br>
+                    <strong>Black:</strong> Moves from point 24 → 1, home is 1-6<br><br>
+                    <strong>Rules:</strong><br>
+                    • Roll dice, then click a checker and a highlighted destination<br>
+                    • Land on a single opponent checker to send it to the bar<br>
+                    • Checkers on bar must re-enter before other moves<br>
+                    • Bear off when all your checkers are in your home board
+                </p>
+                <button class="btn" onclick="this.parentElement.remove();">Got it!</button>
+            `;
+            document.body.appendChild(msg);
+        }
+
+        toggleSound() {
+            this.soundEnabled = !this.soundEnabled;
+            localStorage.setItem('bg-sound', this.soundEnabled);
+            document.getElementById('sound-btn').textContent = this.soundEnabled ? '🔊' : '🔇';
+        }
+
+        playSound(type) {
+            if (!this.soundEnabled) return;
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                const sounds = {
+                    click: { freq: 300, dur: 0.05 },
+                    dice: { freq: 400, dur: 0.1 },
+                    move: { freq: 500, dur: 0.08 },
+                    hit: { freq: 200, dur: 0.15 },
+                    win: { freq: 600, dur: 0.3 }
+                };
+
+                const s = sounds[type] || sounds.click;
+                osc.frequency.value = s.freq;
+                gain.gain.value = 0.1;
+                osc.start();
+                setTimeout(() => osc.stop(), s.dur * 1000);
+            } catch (e) {}
+        }
+    }
+
+    // Initialize
+    const game = new Backgammon();
+    </script>
 </body>
 </html>
