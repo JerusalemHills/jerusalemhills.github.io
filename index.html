@@ -354,14 +354,71 @@
       </div>
     </section>
 
-    <!-- 4. Live Jerusalem News - RSS powered card grid -->
-    <section id="news" class="live-news-section">
-      <div class="live-news-header">
-        <h2 class="section-title">Jerusalem News</h2>
-        <span class="live-badge">Live via Jerusalem Post</span>
+    <!-- 4. NEWS AGGREGATION - Middle East & World -->
+    <section id="news" class="news-agg">
+      <div class="news-agg-header">
+        <h2>News</h2>
+        <div class="news-agg-tabs">
+          <button class="news-tab active" data-category="all">All</button>
+          <button class="news-tab" data-category="mideast">Middle East</button>
+          <button class="news-tab" data-category="israel">Israel</button>
+          <button class="news-tab" data-category="world">World</button>
+        </div>
+        <div class="news-agg-meta">
+          <span class="news-live-dot"></span>
+          <span class="news-update-time" id="news-update-time">Updating...</span>
+        </div>
       </div>
-      <div class="live-news-grid" id="live-news-grid">
-        <div class="live-news-loading">Loading latest headlines...</div>
+
+      <!-- Hero: Featured story + Top stories sidebar -->
+      <div class="news-hero-row">
+        <div class="news-featured" id="news-featured">
+          <div class="news-featured-img-wrap">
+            <img id="news-featured-img" src="img/Jerusalem_Old_City_market.jpg" alt="Featured story">
+            <span class="news-source-badge" id="news-featured-source">Loading...</span>
+          </div>
+          <h3 id="news-featured-title">Loading latest headlines...</h3>
+          <p id="news-featured-desc">Fetching news from multiple sources across the Middle East and world...</p>
+          <span class="news-time" id="news-featured-time"></span>
+        </div>
+        <div class="news-top-stories" id="news-top-stories">
+          <h4>Top Stories</h4>
+          <div class="news-top-list" id="news-top-list">
+            <div class="news-skeleton"></div>
+            <div class="news-skeleton"></div>
+            <div class="news-skeleton"></div>
+            <div class="news-skeleton"></div>
+            <div class="news-skeleton"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category columns -->
+      <div class="news-columns" id="news-columns">
+        <div class="news-column" data-col="mideast">
+          <h4><span class="col-icon">&#127757;</span> Middle East</h4>
+          <ul class="news-col-list" id="news-col-mideast">
+            <li class="news-skeleton"></li>
+            <li class="news-skeleton"></li>
+            <li class="news-skeleton"></li>
+          </ul>
+        </div>
+        <div class="news-column" data-col="israel">
+          <h4><span class="col-icon">&#9770;</span> Israel</h4>
+          <ul class="news-col-list" id="news-col-israel">
+            <li class="news-skeleton"></li>
+            <li class="news-skeleton"></li>
+            <li class="news-skeleton"></li>
+          </ul>
+        </div>
+        <div class="news-column" data-col="world">
+          <h4><span class="col-icon">&#127758;</span> World</h4>
+          <ul class="news-col-list" id="news-col-world">
+            <li class="news-skeleton"></li>
+            <li class="news-skeleton"></li>
+            <li class="news-skeleton"></li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -597,7 +654,7 @@
         try {
           const results = await Promise.allSettled(
             RSS_FEEDS.map(url =>
-              fetch(PROXY + encodeURIComponent(url), { signal: AbortSignal.timeout(8000) })
+              fetch(PROXY + encodeURIComponent(url), { signal: AbortSignal.timeout(5000) })
                 .then(r => r.text())
             )
           );
@@ -654,77 +711,8 @@
   <script src="/js/pwa.js"></script>
   <script src="/js/pwa-update.js"></script>
 
-  <!-- Live News Grid Script - Populates card grid from RSS -->
-  <script>
-    (function() {
-      const grid = document.getElementById('live-news-grid');
-      if (!grid) return;
-
-      const RSS_FEEDS = [
-        'https://www.jpost.com/rss/rssfeedsjerusalem.aspx',
-        'https://www.jpost.com/rss/rssfeedsheadlines.aspx'
-      ];
-      const PROXY = 'https://api.allorigins.win/raw?url=';
-
-      async function fetchNewsCards() {
-        try {
-          const results = await Promise.allSettled(
-            RSS_FEEDS.map(url =>
-              fetch(PROXY + encodeURIComponent(url), { signal: AbortSignal.timeout(8000) })
-                .then(r => r.text())
-            )
-          );
-
-          const parser = new DOMParser();
-          let items = [];
-
-          results.forEach(result => {
-            if (result.status === 'fulfilled') {
-              const xml = parser.parseFromString(result.value, 'text/xml');
-              const entries = xml.querySelectorAll('item');
-              entries.forEach(item => {
-                const title = item.querySelector('title')?.textContent?.trim();
-                const link = item.querySelector('link')?.textContent?.trim();
-                const desc = item.querySelector('description')?.textContent?.trim();
-                const pubDate = item.querySelector('pubDate')?.textContent?.trim();
-                if (title && link) items.push({ title, link, desc, pubDate });
-              });
-            }
-          });
-
-          // Dedupe and limit to 8
-          const seen = new Set();
-          const headlines = items.filter(h => {
-            if (seen.has(h.title)) return false;
-            seen.add(h.title);
-            return true;
-          }).slice(0, 8);
-
-          if (headlines.length === 0) {
-            grid.innerHTML = '<p style="text-align:center; color:#666; grid-column: 1/-1;">Unable to load news. <a href="https://www.jpost.com/jerusalem" target="_blank" rel="noopener">Visit Jerusalem Post</a></p>';
-            return;
-          }
-
-          grid.innerHTML = headlines.map(h => {
-            const cleanDesc = h.desc ? h.desc.replace(/<[^>]*>/g, '').substring(0, 120) + '...' : '';
-            const dateStr = h.pubDate ? new Date(h.pubDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
-            return `<a href="${h.link}" target="_blank" rel="noopener" class="live-news-card">
-              <h4>${h.title}</h4>
-              ${cleanDesc ? `<p>${cleanDesc}</p>` : ''}
-              ${dateStr ? `<span class="live-news-date">${dateStr}</span>` : ''}
-            </a>`;
-          }).join('');
-
-        } catch (e) {
-          console.warn('News grid fetch failed:', e);
-          grid.innerHTML = '<p style="text-align:center; color:#666; grid-column: 1/-1;">Unable to load news. <a href="https://www.jpost.com/jerusalem" target="_blank" rel="noopener">Visit Jerusalem Post</a></p>';
-        }
-      }
-
-      fetchNewsCards();
-      setInterval(fetchNewsCards, 15 * 60 * 1000);
-    })();
-  </script>
+  <!-- News Aggregation Engine -->
+  <script src="js/news-aggregator.js"></script>
   <!-- AdSense initialization handled by adsense-config.js -->
 </body>
 </html>
