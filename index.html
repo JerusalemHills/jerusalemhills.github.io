@@ -164,184 +164,128 @@
 <body>
 
   <main>
-    <!-- Hidden H1 for SEO - visually hidden but accessible to screen readers and search engines -->
+    <!-- Hidden H1 for SEO -->
     <h1 style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;">Jerusalem Hills - Heritage, Culture & Community Platform</h1>
 
-    <!-- 1. Hero: Live News + Markets -->
-    <section class="dashboard-hero">
-      <!-- Live News Headlines - RSS Powered -->
-      <div class="quick-headlines">
-        <span class="headline-label">📰 News:</span>
-        <div class="headlines-rotate" id="headlines-rotate">
-          <span class="headline-item active headline-loading">Loading Jerusalem news...</span>
+    <!-- 1. Breaking News Bar -->
+    <section class="breaking-bar" id="breaking-bar">
+      <div class="breaking-bar-inner">
+        <span class="breaking-label">BREAKING</span>
+        <span class="breaking-live-dot"></span>
+        <div class="breaking-text" id="breaking-text">Loading headlines...</div>
+        <div class="breaking-controls">
+          <button class="breaking-nav" id="breaking-prev" title="Previous">&#8249;</button>
+          <span class="breaking-counter" id="breaking-counter">0/0</span>
+          <button class="breaking-nav" id="breaking-next" title="Next">&#8250;</button>
         </div>
-        <button class="headlines-nav" id="headlines-prev" title="Previous">‹</button>
-        <button class="headlines-nav" id="headlines-next" title="Next">›</button>
-      </div>
-
-      <!-- Markets Widgets -->
-      <div class="markets-widgets">
-          <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-            {
-              "symbol": "VANTAGE:SP500FT",
-              "chartOnly": false,
-              "dateRange": "1D",
-              "noTimeScale": false,
-              "colorTheme": "light",
-              "isTransparent": false,
-              "locale": "en",
-              "width": "100%",
-              "autosize": true,
-              "height": "100%"
-            }
-            </script>
-          </div>
-
-          <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-            {
-              "symbol": "CAPITALCOM:VIX",
-              "chartOnly": false,
-              "dateRange": "1M",
-              "noTimeScale": false,
-              "colorTheme": "light",
-              "isTransparent": false,
-              "locale": "en",
-              "width": "100%",
-              "autosize": true,
-              "height": "100%"
-            }
-            </script>
-          </div>
-
-          <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-            {
-              "symbol": "TVC:GOLD",
-              "chartOnly": false,
-              "dateRange": "1D",
-              "noTimeScale": false,
-              "colorTheme": "light",
-              "isTransparent": false,
-              "locale": "en",
-              "width": "100%",
-              "autosize": true,
-              "height": "100%"
-            }
-            </script>
-          </div>
-
-          <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-            {
-              "symbol": "PYTH:BRENT3!",
-              "chartOnly": false,
-              "dateRange": "1D",
-              "noTimeScale": false,
-              "colorTheme": "light",
-              "isTransparent": false,
-              "locale": "en",
-              "width": "100%",
-              "autosize": true,
-              "height": "100%"
-            }
-            </script>
-          </div>
       </div>
     </section>
 
-    <!-- 2. Games Showcase -->
-    <section id="games" class="grid-section">
-      <h3><a href="/games/">🎮 Games & Entertainment</a></h3>
-      <div class="grid">
-        <div class="game-card" style="border-left-color: #FFD700;">
-          <a href="/kids/">
-            <div class="card-image">
-              <img src="img/kids-games-preview.svg" alt="Kids Zone Educational Games" loading="lazy" onerror="this.src='img/pic01.jpg'">
-              <span class="card-badge" style="background: #FFD700; color: #2C3E50;">Ages 5-12</span>
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">🎓 Kids Zone</h4>
-              <p class="card-desc">Educational games for children: Math Quest, Word Builder, Memory Match, Historical Map</p>
-              <div class="card-tags">
-                <span class="tag tag-safe">Safe</span>
-                <span class="tag tag-offline">Offline PWA</span>
-                <span class="tag tag-adfree">Ad-Free</span>
-              </div>
-            </div>
-          </a>
+    <!-- 2. Markets Strip -->
+    <section class="markets-strip">
+      <div class="markets-strip-inner">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+          {"symbol":"VANTAGE:SP500FT","chartOnly":false,"dateRange":"1D","noTimeScale":false,"colorTheme":"light","isTransparent":true,"locale":"en","width":"100%","autosize":true,"height":"100%"}
+          </script>
         </div>
-
-        <div class="game-card" style="border-left-color: #87CEEB;">
-          <a href="/games/">
-            <div class="card-image">
-              <img src="img/backgammon-preview.svg" alt="Backgammon Game" loading="lazy" onerror="this.src='img/pic01.jpg'">
-              <span class="card-badge" style="background: #87CEEB; color: #2C3E50;">Classic</span>
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">🏛️ Strategy Games</h4>
-              <p class="card-desc">Backgammon, Chess, and timeless board games with AI opponents and multiplayer options</p>
-              <div class="card-tags">
-                <span class="tag tag-ai">AI Opponent</span>
-                <span class="tag tag-multiplayer">2-Player</span>
-                <span class="tag tag-challenge">Challenge</span>
-              </div>
-            </div>
-          </a>
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+          {"symbol":"CAPITALCOM:VIX","chartOnly":false,"dateRange":"1M","noTimeScale":false,"colorTheme":"light","isTransparent":true,"locale":"en","width":"100%","autosize":true,"height":"100%"}
+          </script>
         </div>
-
-        <div class="game-card" style="border-left-color: #9C27B0;">
-          <a href="/games/2048/2048.html">
-            <div class="card-image">
-              <img src="img/puzzle-arcade-preview.svg" alt="Puzzle Games" loading="lazy" onerror="this.src='img/pic01.jpg'">
-              <span class="card-badge" style="background: #9C27B0; color: white;">Addictive</span>
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">🧩 Puzzle & Arcade</h4>
-              <p class="card-desc">2048, Tetris, Snake - Brain training games and nostalgic arcade classics</p>
-              <div class="card-tags">
-                <span class="tag tag-brain">Brain Training</span>
-                <span class="tag tag-highscore">High Score</span>
-                <span class="tag tag-quick">Quick Play</span>
-              </div>
-            </div>
-          </a>
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+          {"symbol":"TVC:GOLD","chartOnly":false,"dateRange":"1D","noTimeScale":false,"colorTheme":"light","isTransparent":true,"locale":"en","width":"100%","autosize":true,"height":"100%"}
+          </script>
         </div>
-
-        <div class="game-card" style="border-left-color: #FF6B35;">
-          <a href="/games/permutations/permutations.html">
-            <div class="card-image">
-              <img src="img/hebrew-cultural-preview.svg" alt="Hebrew Cultural Games" loading="lazy" onerror="this.src='img/pic01.jpg'">
-              <span class="card-badge" style="background: #FF6B35; color: white;">עברית</span>
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">🔤 Hebrew & Culture</h4>
-              <p class="card-desc">צירופים (Word Permutations), Torah Codes search, Jerusalem Heritage Quiz</p>
-              <div class="card-tags">
-                <span class="tag tag-hebrew">Hebrew Learning</span>
-                <span class="tag tag-cultural">Cultural</span>
-                <span class="tag tag-educational">Educational</span>
-              </div>
-            </div>
-          </a>
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+          {"symbol":"PYTH:BRENT3!","chartOnly":false,"dateRange":"1D","noTimeScale":false,"colorTheme":"light","isTransparent":true,"locale":"en","width":"100%","autosize":true,"height":"100%"}
+          </script>
         </div>
-      </div>
-
-      <div class="games-footer">
-        <p>
-          🎯 <a href="/games/">Explore All Games</a> |
-          📱 PWA Available - Play Offline |
-          👨‍👩‍👧‍👦 <a href="/kids/">Safe for Kids</a>
-        </p>
       </div>
     </section>
 
-    <!-- 3. Ad Placement -->
+    <!-- 3. Hero News Section -->
+    <section id="news" class="news-agg">
+      <div class="news-agg-header">
+        <h2>News</h2>
+        <div class="news-agg-tabs">
+          <button class="news-tab active" data-category="all">All</button>
+          <button class="news-tab" data-category="mideast">Middle East</button>
+          <button class="news-tab" data-category="israel">Israel</button>
+          <button class="news-tab" data-category="world">World</button>
+          <button class="news-tab" data-category="business">Business</button>
+        </div>
+        <div class="news-agg-meta">
+          <span class="news-live-dot"></span>
+          <span class="news-update-time" id="news-update-time">Updating...</span>
+        </div>
+      </div>
+
+      <!-- Hero: Lead story + Sidebar -->
+      <div class="news-hero-row">
+        <div class="news-lead" id="news-lead">
+          <div class="news-lead-img-wrap">
+            <img id="news-lead-img" src="img/Jerusalem_Old_City_market.jpg" alt="Lead story">
+            <span class="news-source-badge" id="news-lead-source">Loading...</span>
+          </div>
+          <h3 id="news-lead-title">Loading latest headlines...</h3>
+          <p id="news-lead-desc">Fetching news from multiple sources across the Middle East and world...</p>
+          <span class="news-time" id="news-lead-time"></span>
+        </div>
+        <div class="news-sidebar" id="news-sidebar">
+          <h4>Top Stories</h4>
+          <div class="news-sidebar-list" id="news-sidebar-list">
+            <div class="news-skeleton"></div>
+            <div class="news-skeleton"></div>
+            <div class="news-skeleton"></div>
+            <div class="news-skeleton"></div>
+            <div class="news-skeleton"></div>
+            <div class="news-skeleton"></div>
+            <div class="news-skeleton"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Category News Grid (4 columns) -->
+      <div class="news-columns" id="news-columns">
+        <div class="news-column" data-col="mideast">
+          <h4><span class="col-border col-border-mideast"></span> Middle East</h4>
+          <ul class="news-col-list" id="news-col-mideast">
+            <li class="news-skeleton"></li><li class="news-skeleton"></li><li class="news-skeleton"></li>
+          </ul>
+        </div>
+        <div class="news-column" data-col="israel">
+          <h4><span class="col-border col-border-israel"></span> Israel</h4>
+          <ul class="news-col-list" id="news-col-israel">
+            <li class="news-skeleton"></li><li class="news-skeleton"></li><li class="news-skeleton"></li>
+          </ul>
+        </div>
+        <div class="news-column" data-col="world">
+          <h4><span class="col-border col-border-world"></span> World</h4>
+          <ul class="news-col-list" id="news-col-world">
+            <li class="news-skeleton"></li><li class="news-skeleton"></li><li class="news-skeleton"></li>
+          </ul>
+        </div>
+        <div class="news-column" data-col="business">
+          <h4><span class="col-border col-border-business"></span> Business</h4>
+          <ul class="news-col-list" id="news-col-business">
+            <li class="news-skeleton"></li><li class="news-skeleton"></li><li class="news-skeleton"></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 5. More Stories -->
+      <div class="more-stories" id="more-stories"></div>
+    </section>
+
+    <!-- 6. Ad Placement -->
     <section class="ad-section" style="text-align: center; padding: 20px; background: #f9f9f9; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
       <div class="ad-container">
         <ins class="adsbygoogle"
@@ -354,121 +298,39 @@
       </div>
     </section>
 
-    <!-- 4. NEWS AGGREGATION - Middle East & World -->
-    <section id="news" class="news-agg">
-      <div class="news-agg-header">
-        <h2>News</h2>
-        <div class="news-agg-tabs">
-          <button class="news-tab active" data-category="all">All</button>
-          <button class="news-tab" data-category="mideast">Middle East</button>
-          <button class="news-tab" data-category="israel">Israel</button>
-          <button class="news-tab" data-category="world">World</button>
-        </div>
-        <div class="news-agg-meta">
-          <span class="news-live-dot"></span>
-          <span class="news-update-time" id="news-update-time">Updating...</span>
-        </div>
-      </div>
-
-      <!-- Hero: Featured story + Top stories sidebar -->
-      <div class="news-hero-row">
-        <div class="news-featured" id="news-featured">
-          <div class="news-featured-img-wrap">
-            <img id="news-featured-img" src="img/Jerusalem_Old_City_market.jpg" alt="Featured story">
-            <span class="news-source-badge" id="news-featured-source">Loading...</span>
-          </div>
-          <h3 id="news-featured-title">Loading latest headlines...</h3>
-          <p id="news-featured-desc">Fetching news from multiple sources across the Middle East and world...</p>
-          <span class="news-time" id="news-featured-time"></span>
-        </div>
-        <div class="news-top-stories" id="news-top-stories">
-          <h4>Top Stories</h4>
-          <div class="news-top-list" id="news-top-list">
-            <div class="news-skeleton"></div>
-            <div class="news-skeleton"></div>
-            <div class="news-skeleton"></div>
-            <div class="news-skeleton"></div>
-            <div class="news-skeleton"></div>
+    <!-- 7. Secondary Content (compact) -->
+    <section class="secondary-content">
+      <div class="secondary-inner">
+        <div class="secondary-block">
+          <h3><a href="/games/">Games</a></h3>
+          <div class="secondary-grid">
+            <a href="/games/" class="secondary-card">
+              <img src="img/backgammon-preview.svg" alt="Strategy Games" loading="lazy" onerror="this.src='img/pic01.jpg'">
+              <span>Strategy Games</span>
+            </a>
+            <a href="/games/2048/2048.html" class="secondary-card">
+              <img src="img/puzzle-arcade-preview.svg" alt="Puzzle & Arcade" loading="lazy" onerror="this.src='img/pic01.jpg'">
+              <span>Puzzle & Arcade</span>
+            </a>
           </div>
         </div>
-      </div>
-
-      <!-- Category columns -->
-      <div class="news-columns" id="news-columns">
-        <div class="news-column" data-col="mideast">
-          <h4><span class="col-icon">&#127757;</span> Middle East</h4>
-          <ul class="news-col-list" id="news-col-mideast">
-            <li class="news-skeleton"></li>
-            <li class="news-skeleton"></li>
-            <li class="news-skeleton"></li>
-          </ul>
-        </div>
-        <div class="news-column" data-col="israel">
-          <h4><span class="col-icon">&#9770;</span> Israel</h4>
-          <ul class="news-col-list" id="news-col-israel">
-            <li class="news-skeleton"></li>
-            <li class="news-skeleton"></li>
-            <li class="news-skeleton"></li>
-          </ul>
-        </div>
-        <div class="news-column" data-col="world">
-          <h4><span class="col-icon">&#127758;</span> World</h4>
-          <ul class="news-col-list" id="news-col-world">
-            <li class="news-skeleton"></li>
-            <li class="news-skeleton"></li>
-            <li class="news-skeleton"></li>
-          </ul>
+        <div class="secondary-block">
+          <h3><a href="/marketplace.html">Marketplace</a></h3>
+          <div class="secondary-grid">
+            <a href="/marketplace.html" class="secondary-card">
+              <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc31?w=300&h=200&fit=crop" alt="Jerusalem Crafts" loading="lazy" onerror="this.src='img/pic01.jpg'">
+              <span>Jerusalem Crafts</span>
+            </a>
+            <a href="/marketplace.html" class="secondary-card">
+              <img src="/market/img/mezuzah1.jpeg" alt="Judaica" loading="lazy" onerror="this.src='img/pic01.jpg'">
+              <span>Judaica & Gifts</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 5. Featured Marketplace Products -->
-    <section id="marketplace" class="grid-section">
-      <h2 class="section-title"><a href="/marketplace.html">Featured in Marketplace</a></h2>
-      <div class="grid">
-        <div class="product-card">
-          <a href="/marketplace.html">
-            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc31?w=400&h=400&fit=crop" alt="Jerusalem Crafts" loading="lazy" onerror="this.src='img/pic01.jpg'">
-            <div class="product-info">
-              <h4 class="product-name">Jerusalem Stone Art</h4>
-              <p class="product-price">₪299</p>
-            </div>
-          </a>
-        </div>
-        <div class="product-card">
-          <a href="/marketplace.html">
-            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop" alt="Dead Sea Products" loading="lazy" onerror="this.src='img/pic02.jpg'">
-            <div class="product-info">
-              <h4 class="product-name">Dead Sea Minerals</h4>
-              <p class="product-price">₪199</p>
-            </div>
-          </a>
-        </div>
-        <div class="product-card">
-          <a href="/marketplace.html">
-            <img src="/market/img/mezuzah1.jpeg" alt="Glass and Copper Mezuzah" loading="lazy" onerror="this.src='img/pic01.jpg'">
-            <div class="product-info">
-              <h4 class="product-name">Glass & Copper Mezuzah</h4>
-              <p class="product-price">$125</p>
-            </div>
-          </a>
-        </div>
-        <div class="product-card">
-          <a href="/marketplace.html">
-            <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=400&fit=crop" alt="Local Spices" loading="lazy" onerror="this.src='img/pic02.jpg'">
-            <div class="product-info">
-              <h4 class="product-name">Jerusalem Spice Mix</h4>
-              <p class="product-price">₪99</p>
-            </div>
-          </a>
-        </div>
-      </div>
-      <div style="text-align: center; margin-top: 2rem;">
-        <a href="/marketplace.html" class="btn-primary">Browse All Products →</a>
-      </div>
-    </section>
-
-    <!-- 6. Kids Zone Highlight (single section) -->
+    <!-- Kids Zone Banner -->
     <section class="kids-zone-banner">
       <div class="banner-content">
         <div class="banner-icon">🎮✨</div>
@@ -482,8 +344,8 @@
       </div>
     </section>
 
-    <!-- 7. Coming Soon -->
-    <section class="coming-soon-section">
+    <!-- Coming Soon -->
+    <section class="coming-soon-section coming-soon-compact">
       <h2 class="coming-soon-title">Coming Soon</h2>
       <p class="coming-soon-subtitle">We're building more ways to connect with Jerusalem's heritage</p>
       <div class="coming-soon-grid">
@@ -590,113 +452,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Headlines RSS Script -->
-  <script>
-    (function() {
-      const container = document.getElementById('headlines-rotate');
-      const prevBtn = document.getElementById('headlines-prev');
-      const nextBtn = document.getElementById('headlines-next');
-      if (!container) return;
-
-      let headlines = [];
-      let current = 0;
-      let autoRotate;
-
-      const RSS_FEEDS = [
-        'https://www.jpost.com/rss/rssfeedsjerusalem.aspx',
-        'https://www.jpost.com/rss/rssfeedsheadlines.aspx'
-      ];
-      const PROXY = 'https://api.allorigins.win/raw?url=';
-
-      // Fallback headlines if RSS fails
-      const FALLBACK = [
-        { title: 'Explore Jerusalem Hills marketplace for authentic crafts', link: '/marketplace.html' },
-        { title: 'Join our community forum - 1,000+ members worldwide', link: '/forum/' },
-        { title: 'Kids Zone: 26+ safe educational games for children', link: '/kids/' },
-        { title: 'Play classic games: Backgammon, 2048, Tetris & more', link: '/games/' }
-      ];
-
-      function render() {
-        if (headlines.length === 0) return;
-        container.innerHTML = headlines.map((h, i) =>
-          `<a href="${h.link}" class="headline-item ${i === 0 ? 'active' : ''}" target="${h.link.startsWith('/') ? '_self' : '_blank'}" rel="noopener">${h.title}</a>`
-        ).join('');
-      }
-
-      function rotate(dir = 1) {
-        const items = container.querySelectorAll('.headline-item');
-        if (items.length === 0) return;
-        items[current].classList.remove('active');
-        current = (current + dir + items.length) % items.length;
-        items[current].classList.add('active');
-      }
-
-      function startAuto() {
-        stopAuto();
-        autoRotate = setInterval(() => rotate(1), 6000);
-      }
-
-      function stopAuto() {
-        if (autoRotate) clearInterval(autoRotate);
-      }
-
-      // Navigation buttons
-      prevBtn?.addEventListener('click', () => { rotate(-1); startAuto(); });
-      nextBtn?.addEventListener('click', () => { rotate(1); startAuto(); });
-
-      // Pause on hover
-      container.addEventListener('mouseenter', stopAuto);
-      container.addEventListener('mouseleave', startAuto);
-
-      // Fetch RSS feeds
-      async function fetchNews() {
-        try {
-          const results = await Promise.allSettled(
-            RSS_FEEDS.map(url =>
-              fetch(PROXY + encodeURIComponent(url), { signal: AbortSignal.timeout(5000) })
-                .then(r => r.text())
-            )
-          );
-
-          const parser = new DOMParser();
-          let items = [];
-
-          results.forEach(result => {
-            if (result.status === 'fulfilled') {
-              const xml = parser.parseFromString(result.value, 'text/xml');
-              const entries = xml.querySelectorAll('item');
-              entries.forEach(item => {
-                const title = item.querySelector('title')?.textContent?.trim();
-                const link = item.querySelector('link')?.textContent?.trim();
-                if (title && link) items.push({ title, link });
-              });
-            }
-          });
-
-          // Dedupe and limit
-          const seen = new Set();
-          headlines = items.filter(h => {
-            if (seen.has(h.title)) return false;
-            seen.add(h.title);
-            return true;
-          }).slice(0, 15);
-
-          if (headlines.length === 0) headlines = FALLBACK;
-        } catch (e) {
-          console.warn('RSS fetch failed:', e);
-          headlines = FALLBACK;
-        }
-
-        render();
-        startAuto();
-      }
-
-      fetchNews();
-      // Refresh every 15 minutes
-      setInterval(fetchNews, 15 * 60 * 1000);
-    })();
-  </script>
 
   <!-- Main Scripts -->
   <script src="script-new.js"></script>
