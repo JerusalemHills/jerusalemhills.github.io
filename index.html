@@ -59,7 +59,6 @@
   <!-- External Scripts -->
   <script src="js/hebcal.js"></script>
   <script src="js/hebrew-keyboard.js"></script>
-  <script src="js/forum-preview.js"></script>
   <script src="js/markets-carousel.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
@@ -167,7 +166,8 @@
   <main>
     <!-- Hidden H1 for SEO - visually hidden but accessible to screen readers and search engines -->
     <h1 style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;">Jerusalem Hills - Heritage, Culture & Community Platform</h1>
-    
+
+    <!-- 1. Hero: Live News + Markets -->
     <section class="dashboard-hero">
       <!-- Live News Headlines - RSS Powered -->
       <div class="quick-headlines">
@@ -179,9 +179,8 @@
         <button class="headlines-nav" id="headlines-next" title="Next">›</button>
       </div>
 
-      <!-- Markets Widgets - Separated Below -->
+      <!-- Markets Widgets -->
       <div class="markets-widgets">
-          <!-- TradingView Widget: S&P 500 -->
           <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
@@ -200,7 +199,6 @@
             </script>
           </div>
 
-          <!-- TradingView Widget: VIX -->
           <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
@@ -219,7 +217,6 @@
             </script>
           </div>
 
-          <!-- TradingView Widget: GOLD -->
           <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
@@ -238,7 +235,6 @@
             </script>
           </div>
 
-          <!-- TradingView Widget: BRENT OIL -->
           <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
@@ -259,10 +255,10 @@
       </div>
     </section>
 
+    <!-- 2. Games Showcase -->
     <section id="games" class="grid-section">
       <h3><a href="/games/">🎮 Games & Entertainment</a></h3>
       <div class="grid">
-        <!-- Kids Zone - Educational Games -->
         <div class="game-card" style="border-left-color: #FFD700;">
           <a href="/kids/">
             <div class="card-image">
@@ -281,7 +277,6 @@
           </a>
         </div>
 
-        <!-- Classic Strategy Games -->
         <div class="game-card" style="border-left-color: #87CEEB;">
           <a href="/games/">
             <div class="card-image">
@@ -300,7 +295,6 @@
           </a>
         </div>
 
-        <!-- Puzzle & Arcade Games -->
         <div class="game-card" style="border-left-color: #9C27B0;">
           <a href="/games/2048/2048.html">
             <div class="card-image">
@@ -319,7 +313,6 @@
           </a>
         </div>
 
-        <!-- Hebrew & Cultural Games -->
         <div class="game-card" style="border-left-color: #FF6B35;">
           <a href="/games/permutations/permutations.html">
             <div class="card-image">
@@ -339,7 +332,6 @@
         </div>
       </div>
 
-      <!-- Games Section Footer -->
       <div class="games-footer">
         <p>
           🎯 <a href="/games/">Explore All Games</a> |
@@ -349,7 +341,7 @@
       </div>
     </section>
 
-    <!-- Dedicated Ad Placement: Between Games and News -->
+    <!-- 3. Ad Placement -->
     <section class="ad-section" style="text-align: center; padding: 20px; background: #f9f9f9; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
       <div class="ad-container">
         <ins class="adsbygoogle"
@@ -362,118 +354,20 @@
       </div>
     </section>
 
-    <!-- Enhanced News Section -->
-    <section id="news" class="news-section-enhanced">
-      <div class="section-header">
-        <h2 class="section-title">Latest from Jerusalem Hills</h2>
-        <a href="/news/" class="view-all-link">View All Articles →</a>
+    <!-- 4. Live Jerusalem News - RSS powered card grid -->
+    <section id="news" class="live-news-section">
+      <div class="live-news-header">
+        <h2 class="section-title">Jerusalem News</h2>
+        <span class="live-badge">Live via Jerusalem Post</span>
       </div>
-
-      <div class="news-grid-enhanced">
-        <!-- Featured Article -->
-        <article class="featured-article">
-          <a href="/news/ancient-markets" style="text-decoration: none; color: inherit;">
-            <div class="article-image">
-              <img src="img/Jerusalem_Old_City_market.jpg" alt="Jerusalem Old City Market" loading="lazy">
-              <span class="article-category">Heritage</span>
-            </div>
-            <div class="article-content">
-              <div class="article-meta">
-                <span>📅 Feb 3, 2026</span>
-                <span>⏱️ 5 min read</span>
-                <span>👁️ 1.2K views</span>
-              </div>
-              <h3 class="article-title">Exploring Jerusalem's Ancient Markets: A Journey Through Time</h3>
-              <p class="article-excerpt">
-                The Old City of Jerusalem houses some of the world's most historic marketplaces, where traders have conducted business for thousands of years. From the bustling Arab Shuk to the Jewish Quarter's artisan shops, these markets offer an authentic glimpse into Jerusalem's living history.
-              </p>
-              <span class="read-more-btn">Continue Reading →</span>
-            </div>
-          </a>
-          <div class="share-buttons" style="padding: 0 1.75rem 1.5rem;">
-            <button class="share-btn twitter" title="Share on Twitter">𝕏</button>
-            <button class="share-btn facebook" title="Share on Facebook">f</button>
-            <button class="share-btn linkedin" title="Share on LinkedIn">in</button>
-            <button class="share-btn copy" title="Copy link">🔗</button>
-          </div>
-        </article>
-
-        <!-- News List -->
-        <div class="news-list-enhanced">
-          <a href="/marketplace.html" style="text-decoration: none;">
-            <div class="news-card">
-              <span class="card-category">Marketplace</span>
-              <h4 class="card-title">New Artisans Join Our Marketplace</h4>
-              <p class="card-excerpt">Five new artisan partners bring unique traditional crafts and contemporary designs to our growing collection.</p>
-              <div class="card-footer">
-                <span class="card-date">📅 Feb 1, 2026</span>
-                <span class="card-read-time">⏱️ 3 min</span>
-              </div>
-            </div>
-          </a>
-
-          <a href="/#discussions" style="text-decoration: none;">
-            <div class="news-card">
-              <span class="card-category">Community</span>
-              <h4 class="card-title">Community Forum Reaches 1,000 Members</h4>
-              <p class="card-excerpt">Our discussion community has grown to over 1,000 active members worldwide, sharing insights about Jerusalem.</p>
-              <div class="card-footer">
-                <span class="card-date">📅 Jan 28, 2026</span>
-                <span class="card-read-time">⏱️ 2 min</span>
-              </div>
-            </div>
-          </a>
-
-          <a href="/kids/" style="text-decoration: none;">
-            <div class="news-card">
-              <span class="card-category">Kids Zone</span>
-              <h4 class="card-title">Kids Zone Expands with New Educational Games</h4>
-              <p class="card-excerpt">Three new educational games help children learn math, vocabulary, and memory skills in a safe environment.</p>
-              <div class="card-footer">
-                <span class="card-date">📅 Jan 25, 2026</span>
-                <span class="card-read-time">⏱️ 2 min</span>
-              </div>
-            </div>
-          </a>
-
-          <a href="/forum/" style="text-decoration: none;">
-            <div class="news-card">
-              <span class="card-category">Events</span>
-              <h4 class="card-title">Weekly Torah Study Sessions Now Open</h4>
-              <p class="card-excerpt">Join our welcoming community for weekly virtual Torah study sessions, open to all levels and backgrounds.</p>
-              <div class="card-footer">
-                <span class="card-date">📅 Jan 20, 2026</span>
-                <span class="card-read-time">⏱️ 2 min</span>
-              </div>
-            </div>
-          </a>
-        </div>
+      <div class="live-news-grid" id="live-news-grid">
+        <div class="live-news-loading">Loading latest headlines...</div>
       </div>
     </section>
 
-    <!-- Social Proof Stats -->
-    <div class="stats-bar">
-      <div class="stat-block">
-        <div class="stat-number">1,000+</div>
-        <div class="stat-label">Community Members</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number">26+</div>
-        <div class="stat-label">Educational Games</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number">50+</div>
-        <div class="stat-label">Artisan Products</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number">15+</div>
-        <div class="stat-label">Countries Reached</div>
-      </div>
-    </div>
-
-    <!-- Trending Products Section -->
+    <!-- 5. Featured Marketplace Products -->
     <section id="marketplace" class="grid-section">
-      <h2 class="section-title"><a href="/marketplace.html">Trending in Marketplace</a></h2>
+      <h2 class="section-title"><a href="/marketplace.html">Featured in Marketplace</a></h2>
       <div class="grid">
         <div class="product-card">
           <a href="/marketplace.html">
@@ -512,49 +406,18 @@
           </a>
         </div>
       </div>
-      <!-- Marketplace CTA -->
       <div style="text-align: center; margin-top: 2rem;">
         <a href="/marketplace.html" class="btn-primary">Browse All Products →</a>
       </div>
     </section>
 
-    <!-- Dedicated Ad Placement: After Marketplace -->
-    <section class="ad-section" style="text-align: center; padding: 20px; background: #f9f9f9; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
-      <div class="ad-container">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1738161253720231"
-             data-ad-slot="2465249954"
-             data-ad-format="auto"
-             data-npa="1"
-             data-full-width-responsive="true"></ins>
-      </div>
-    </section>
-
-    <!-- Community Engagement Section -->
-    <section class="community-cta-section">
-      <div class="community-cta-content">
-        <h2>Join Our Jerusalem Community</h2>
-        <p>Connect with people worldwide who share a love for Jerusalem's heritage, culture, and traditions.</p>
-        <div class="cta-buttons">
-          <a href="/forum/" class="btn-primary">Join Forum Discussions →</a>
-          <a href="/kids/" class="btn-secondary">Explore Kids Zone →</a>
-        </div>
-        <div class="community-features">
-          <span>💬 Active Discussions</span>
-          <span>🎮 Free Educational Games</span>
-          <span>🛍️ Authentic Marketplace</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Kids Zone Announcement Banner -->
+    <!-- 6. Kids Zone Highlight (single section) -->
     <section class="kids-zone-banner">
       <div class="banner-content">
         <div class="banner-icon">🎮✨</div>
         <div class="banner-text">
-          <h3>New: Jerusalem Hills Kids Zone!</h3>
-          <p>Safe, educational games for children ages 5-12 • No ads • No tracking • COPPA compliant</p>
+          <h3>Jerusalem Hills Kids Zone</h3>
+          <p>26+ safe educational games for ages 5-12 • No ads • No tracking • COPPA compliant</p>
         </div>
         <div class="banner-action">
           <a href="/kids/" class="kids-zone-cta">Visit Kids Zone →</a>
@@ -562,170 +425,37 @@
       </div>
     </section>
 
-    <!-- For Families Section -->
-    <section id="families" class="grid-section">
-      <h2 class="section-title">🎓 Complete Educational Experience for Families</h2>
-      
-      <!-- Kids Zone Featured Card -->
-      <div class="card featured-card kids-spotlight">
-        <img src="/kids/assets/images/kids-logo.svg" alt="Jerusalem Hills Kids Zone" onerror="this.src='/img/pic01.jpg'">
-        <div>
-          <h4>🎮 Jerusalem Hills Kids Zone</h4>
-          <p><strong>Gamified Learning Platform:</strong> Interactive educational games covering math, literacy, science, history, and financial literacy. Transform your child's education into an engaging video game-like adventure!</p>
-          <div class="kids-features">
-            <span class="feature-tag">📚 Full Curriculum (Ages 5-12)</span>
-            <span class="feature-tag">🎯 Progress Tracking</span>
-            <span class="feature-tag">🏆 Achievement Badges</span>
-            <span class="feature-tag">💰 Financial Literacy</span>
-            <span class="feature-tag">🌍 Cultural Heritage</span>
-          </div>
-          <div style="margin-top: 15px;">
-            <a href="/kids/" class="btn-primary kids-cta">🚀 Start Learning Adventure →</a>
-            <span style="margin-left: 15px; color: #666; font-size: 0.9em;">✅ COPPA Compliant • 🚫 No Ads • 🔒 No Tracking</span>
-          </div>
+    <!-- 7. Coming Soon -->
+    <section class="coming-soon-section">
+      <h2 class="coming-soon-title">Coming Soon</h2>
+      <p class="coming-soon-subtitle">We're building more ways to connect with Jerusalem's heritage</p>
+      <div class="coming-soon-grid">
+        <a href="/forum/" class="coming-soon-card">
+          <div class="coming-soon-icon">💬</div>
+          <h4>Community Forum <span class="beta-badge">Beta</span></h4>
+          <p>Join discussions about Jerusalem heritage, travel tips, and cultural traditions</p>
+        </a>
+        <div class="coming-soon-card">
+          <div class="coming-soon-icon">📝</div>
+          <h4>Original Articles</h4>
+          <p>In-depth stories about Jerusalem's history, markets, neighborhoods, and people</p>
         </div>
-      </div>
-
-      <!-- Parent Resources -->
-      <div class="parent-resources-grid">
-        <div class="resource-card">
-          <h5>📋 For Homeschoolers</h5>
-          <p>Complete curriculum framework blending Montessori, IB PYP, Finnish education methods with gamified delivery.</p>
-          <a href="/kids/curriculum/">View Curriculum →</a>
+        <div class="coming-soon-card">
+          <div class="coming-soon-icon">🌐</div>
+          <h4>Online Multiplayer</h4>
+          <p>Play backgammon and other games with friends around the world in real time</p>
         </div>
-        <div class="resource-card">
-          <h5>👨‍👩‍👧‍👦 For Parents</h5>
-          <p>Track your child's progress, understand learning milestones, and support their educational journey with expert guidance.</p>
-          <a href="/kids/about.html">Parent Guide →</a>
-        </div>
-        <div class="resource-card">
-          <h5>🏫 For Teachers</h5>
-          <p>Classroom-ready activities, assessment tools, and educational resources aligned with international best practices.</p>
-          <a href="/kids/resources/">Teacher Resources →</a>
+        <div class="coming-soon-card">
+          <div class="coming-soon-icon">📬</div>
+          <h4>Newsletter</h4>
+          <p>Weekly updates on Jerusalem news, new games, marketplace arrivals, and more</p>
         </div>
       </div>
     </section>
-
-    <!-- Active Discussions Section -->
-    <section id="discussions" class="grid-section">
-      <h2 class="section-title">Active Discussions <small style="font-size: 0.6em; color: #666; font-weight: normal;">• Live from our forum</small></h2>
-      <div class="post">
-        <div class="post-author">Sarah M.</div>
-        <div class="post-content">What are the best places to visit during Hanukkah in Jerusalem?</div>
-        <div class="post-meta">24 replies • 2 hours ago</div>
-      </div>
-      <div class="post">
-        <div class="post-author">David K.</div>
-        <div class="post-content">Looking for authentic Jerusalem stone crafts - any recommendations?</div>
-        <div class="post-meta">15 replies • 5 hours ago</div>
-      </div>
-      <div class="post">
-        <div class="post-author">Rachel B.</div>
-        <div class="post-content">Join our weekly Torah study group - all levels welcome!</div>
-        <div class="post-meta">32 replies • 1 day ago</div>
-      </div>
-    </section>
-
-    <!-- Featured Articles Section -->
-    <section class="grid-section">
-      <h2 class="section-title">Featured Articles</h2>
-      <div class="grid featured-grid">
-        <div class="card featured-card">
-          <img src="img/Jerusalem_Old_City_market.jpg" alt="Marketplace">
-          <div>
-            <h4>New Marketplace Features</h4>
-            <p>Discover our latest AI-powered recommendations and seamless shopping experience.</p>
-          </div>
-        </div>
-        <div class="card featured-card">
-          <img src="img/David's_Tower_11.jpg" alt="Gaming">
-          <div>
-            <h4>Gaming Tournament</h4>
-            <p>Join our weekly gaming tournaments and compete for amazing prizes!</p>
-          </div>
-        </div>
-        <div class="card featured-card">
-          <img src="img/header-bg-city-wall.jpg" alt="News">
-          <div>
-            <h4>Latest Updates</h4>
-            <p>Stay updated with the latest Jerusalem news and community insights.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Latest Videos Section - YouTube Carousel -->
-    <section class="grid-section video-slider-section">
-      <h2 class="section-title">Latest Videos from Jerusalem Hills</h2>
-      <div class="slider-container">
-        <button class="slider-btn prev" onclick="slideVideos('prev')" aria-label="Previous videos">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-        <div class="slider" id="video-slider">
-          <!-- JavaScript will dynamically add YouTube iframes here -->
-        </div>
-        <button class="slider-btn next" onclick="slideVideos('next')" aria-label="Next videos">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
-      </div>
-    </section>
-
-    <!-- Full Articles Section -->
-    <article class="article-full">
-      <h3>Your Guide to Shopping the Jerusalem Hills Marketplace</h3>
-      <p>
-        Shopping for authentic Jerusalem products has never been easier. Our carefully curated marketplace connects you directly with verified artisans and sellers who specialize in traditional and contemporary Judaica, Dead Sea wellness products, Jerusalem stone crafts, and unique gifts that capture the essence of this historic city.
-      </p>
-      <p>
-        When you browse our marketplace, you'll discover products organized into intuitive categories: Judaica and religious items, home décor and Jerusalem stone art, Dead Sea cosmetics and wellness products, traditional crafts and textiles, and modern designs inspired by Jerusalem's aesthetic. Each product listing includes detailed descriptions, high-quality images, and transparent pricing in both shekels and dollars.
-      </p>
-      <p>
-        We prioritize authenticity and quality. All sellers undergo verification to ensure they meet our standards for craftsmanship and customer service. Many of our artisans work in Jerusalem's Old City workshops, continuing traditions passed down through generations. When you purchase from Jerusalem Hills, you're not just buying a product—you're supporting local craftspeople and preserving cultural heritage.
-      </p>
-      <p>
-        Our secure checkout process, powered by Stripe, ensures your payment information remains protected. We offer international shipping to most countries, with tracking provided for all orders. Customer satisfaction is our priority, and our support team is available to assist with any questions about products, shipping, or returns.
-      </p>
-    </article>
-
-    <article class="article-full">
-      <h3>Connect with Our Global Jerusalem Hills Community</h3>
-      <p>
-        The Jerusalem Hills community brings together people from around the world who share a connection to Jerusalem, whether through heritage, faith, travel, or simply appreciation for this remarkable city's history and culture. Our discussion forums provide a welcoming space for conversations ranging from travel planning and historical questions to cultural insights and personal stories.
-      </p>
-      <p>
-        Popular discussion topics include visitor tips for first-time Jerusalem travelers, recommendations for authentic local restaurants and hidden gems, historical deep-dives into specific sites and periods, cultural traditions and their modern observance, and language learning resources for Hebrew and Arabic. Our community members include long-time Jerusalem residents, frequent visitors, academic researchers, and those exploring their cultural roots.
-      </p>
-      <p>
-        Beyond forums, we offer practical resources that enhance your Jerusalem experience. Our Hebrew calendar displays both Hebrew and Gregorian dates, helping you track Jewish holidays and observances. The digital Sidur provides prayers in Hebrew with transliteration and translation. Prayer times are calculated for Jerusalem and can be customized for your location.
-      </p>
-      <p>
-        We also host special events including weekly Torah study sessions open to all levels, virtual tours of Jerusalem sites led by local guides, artisan showcases where craftspeople share their creative processes, and community challenges like Hebrew language learning or historical trivia. These events foster connections and deepen understanding of Jerusalem's multifaceted character.
-      </p>
-    </article>
-
-    <article class="article-full">
-      <h3>Safe, Educational Fun in Our Kids Zone</h3>
-      <p>
-        Jerusalem Hills Kids Zone provides a completely safe, ad-free environment where children ages 5-12 can enjoy educational games designed to build essential skills while having fun. Unlike most online games, our Kids Zone contains zero advertisements, no tracking or data collection, and no external links—just pure, educational entertainment parents can trust.
-      </p>
-      <p>
-        Our current game collection includes Math Quest, where children practice addition and subtraction with instant feedback and scoring; Word Builder, which challenges players to unscramble words and build vocabulary; and Memory Match, a classic card-matching game that strengthens concentration and cognitive skills. Each game features cheerful, encouraging feedback and allows children to progress at their own pace without time pressure or competitive stress.
-      </p>
-      <p>
-        We designed the Kids Zone with COPPA (Children's Online Privacy Protection Act) compliance as a top priority. No personal information is collected or stored. Games run entirely in the browser with no data sent to external servers. There are no pop-ups, no chat features, and no ways for children to interact with strangers. Parents can feel confident letting children play independently.
-      </p>
-      <p>
-        Future plans for the Kids Zone include additional math operations (multiplication and division), geography games exploring Israel and Jerusalem, reading comprehension activities, creative drawing tools, and Hebrew alphabet learning games. We welcome feedback from parents and educators about what kinds of educational content would benefit young learners most. Visit jerusalemhills.com/kids to explore our current offerings.
-      </p>
-    </article>
   </main>
 
   <footer>
-    <p>© 2025 Jerusalem Hills — All Rights Reserved</p>
+    <p>© 2026 Jerusalem Hills — All Rights Reserved</p>
     <p><small>Educational content for informational purposes with respect for every soul • Community feedback welcome • <a href="/disclaimer.html" style="color: #87CEEB; text-decoration: underline;">Legal Disclaimers</a></small></p>
   </footer>
 
@@ -924,131 +654,76 @@
   <script src="/js/pwa.js"></script>
   <script src="/js/pwa-update.js"></script>
 
-  <!-- YouTube Video Carousel Script -->
+  <!-- Live News Grid Script - Populates card grid from RSS -->
   <script>
-    // YouTube API Configuration
-    const YOUTUBE_API_KEY = 'AIzaSyB5_m5vWCLhVcPKlItsT62fMB_bk2YyHIs'; // Your existing Google API key
-    const PLAYLIST_ID = 'PLZkWvmItga8Uke86j0__CT5IxPACfvCFy'; // Jerusalem Hills YouTube Playlist
-    const NUM_VIDEOS = 10; // Number of videos to display
+    (function() {
+      const grid = document.getElementById('live-news-grid');
+      if (!grid) return;
 
-    let currentSlideIndex = 0;
+      const RSS_FEEDS = [
+        'https://www.jpost.com/rss/rssfeedsjerusalem.aspx',
+        'https://www.jpost.com/rss/rssfeedsheadlines.aspx'
+      ];
+      const PROXY = 'https://api.allorigins.win/raw?url=';
 
-    // Fetch YouTube playlist videos
-    async function fetchPlaylistVideos() {
-      const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${NUM_VIDEOS}&key=${YOUTUBE_API_KEY}&cache_bust=${Date.now()}`;
+      async function fetchNewsCards() {
+        try {
+          const results = await Promise.allSettled(
+            RSS_FEEDS.map(url =>
+              fetch(PROXY + encodeURIComponent(url), { signal: AbortSignal.timeout(8000) })
+                .then(r => r.text())
+            )
+          );
 
-      try {
-        const response = await fetch(url, { cache: 'no-store' });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          const parser = new DOMParser();
+          let items = [];
+
+          results.forEach(result => {
+            if (result.status === 'fulfilled') {
+              const xml = parser.parseFromString(result.value, 'text/xml');
+              const entries = xml.querySelectorAll('item');
+              entries.forEach(item => {
+                const title = item.querySelector('title')?.textContent?.trim();
+                const link = item.querySelector('link')?.textContent?.trim();
+                const desc = item.querySelector('description')?.textContent?.trim();
+                const pubDate = item.querySelector('pubDate')?.textContent?.trim();
+                if (title && link) items.push({ title, link, desc, pubDate });
+              });
+            }
+          });
+
+          // Dedupe and limit to 8
+          const seen = new Set();
+          const headlines = items.filter(h => {
+            if (seen.has(h.title)) return false;
+            seen.add(h.title);
+            return true;
+          }).slice(0, 8);
+
+          if (headlines.length === 0) {
+            grid.innerHTML = '<p style="text-align:center; color:#666; grid-column: 1/-1;">Unable to load news. <a href="https://www.jpost.com/jerusalem" target="_blank" rel="noopener">Visit Jerusalem Post</a></p>';
+            return;
+          }
+
+          grid.innerHTML = headlines.map(h => {
+            const cleanDesc = h.desc ? h.desc.replace(/<[^>]*>/g, '').substring(0, 120) + '...' : '';
+            const dateStr = h.pubDate ? new Date(h.pubDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+            return `<a href="${h.link}" target="_blank" rel="noopener" class="live-news-card">
+              <h4>${h.title}</h4>
+              ${cleanDesc ? `<p>${cleanDesc}</p>` : ''}
+              ${dateStr ? `<span class="live-news-date">${dateStr}</span>` : ''}
+            </a>`;
+          }).join('');
+
+        } catch (e) {
+          console.warn('News grid fetch failed:', e);
+          grid.innerHTML = '<p style="text-align:center; color:#666; grid-column: 1/-1;">Unable to load news. <a href="https://www.jpost.com/jerusalem" target="_blank" rel="noopener">Visit Jerusalem Post</a></p>';
         }
-        const data = await response.json();
-
-        if (data.items && data.items.length > 0) {
-          populateVideoSlider(data.items);
-        } else {
-          console.warn('No videos found in playlist');
-          showFallbackVideos();
-        }
-      } catch (error) {
-        console.error('Error fetching YouTube playlist:', error);
-        showFallbackVideos();
-      }
-    }
-
-    // Populate slider with video iframes
-    function populateVideoSlider(videos) {
-      const slider = document.getElementById('video-slider');
-      slider.innerHTML = ''; // Clear loading message
-
-      videos.forEach(video => {
-        const videoId = video.snippet.resourceId.videoId;
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://www.youtube.com/embed/${videoId}`;
-        iframe.setAttribute('frameborder', '0');
-        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-        iframe.setAttribute('allowfullscreen', '');
-        iframe.setAttribute('loading', 'lazy');
-        slider.appendChild(iframe);
-      });
-    }
-
-    // Show fallback static videos if API fails
-    function showFallbackVideos() {
-      const slider = document.getElementById('video-slider');
-      const fallbackVideoIds = ['dQw4w9WgXcQ', 'jNQXAC9IVRw', 'y6Sxv-sUYtM']; // Example video IDs
-
-      slider.innerHTML = '';
-      fallbackVideoIds.forEach(videoId => {
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://www.youtube.com/embed/${videoId}`;
-        iframe.setAttribute('frameborder', '0');
-        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-        iframe.setAttribute('allowfullscreen', '');
-        slider.appendChild(iframe);
-      });
-    }
-
-    // Slide video carousel
-    function slideVideos(direction) {
-      const slider = document.getElementById('video-slider');
-      const videos = slider.querySelectorAll('iframe');
-      const videoWidth = 400 + 24; // iframe width + gap
-      const visibleVideos = window.innerWidth <= 768 ? 1 : 3;
-      const maxIndex = Math.max(0, videos.length - visibleVideos);
-
-      if (direction === 'next') {
-        currentSlideIndex = Math.min(currentSlideIndex + 1, maxIndex);
-      } else {
-        currentSlideIndex = Math.max(currentSlideIndex - 1, 0);
       }
 
-      const translateX = -(currentSlideIndex * videoWidth);
-      slider.style.transform = `translateX(${translateX}px)`;
-    }
-
-    // Auto-slide every 5 seconds
-    let autoSlideInterval;
-    function startAutoSlide() {
-      autoSlideInterval = setInterval(() => {
-        const slider = document.getElementById('video-slider');
-        const videos = slider.querySelectorAll('iframe');
-        const visibleVideos = window.innerWidth <= 768 ? 1 : 3;
-        const maxIndex = Math.max(0, videos.length - visibleVideos);
-
-        if (currentSlideIndex >= maxIndex) {
-          currentSlideIndex = 0;
-        } else {
-          currentSlideIndex++;
-        }
-
-        const videoWidth = 400 + 24;
-        const translateX = -(currentSlideIndex * videoWidth);
-        slider.style.transform = `translateX(${translateX}px)`;
-      }, 5000);
-    }
-
-    function stopAutoSlide() {
-      if (autoSlideInterval) {
-        clearInterval(autoSlideInterval);
-      }
-    }
-
-    // Pause auto-slide on hover
-    document.addEventListener('DOMContentLoaded', () => {
-      const sliderContainer = document.querySelector('.slider-container');
-      if (sliderContainer) {
-        sliderContainer.addEventListener('mouseenter', stopAutoSlide);
-        sliderContainer.addEventListener('mouseleave', startAutoSlide);
-      }
-    });
-
-    // Initialize YouTube carousel
-    if (document.getElementById('video-slider')) {
-      fetchPlaylistVideos();
-      // Start auto-slide after videos load
-      setTimeout(startAutoSlide, 2000);
-    }
+      fetchNewsCards();
+      setInterval(fetchNewsCards, 15 * 60 * 1000);
+    })();
   </script>
   <!-- AdSense initialization handled by adsense-config.js -->
 </body>
