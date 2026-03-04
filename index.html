@@ -298,6 +298,48 @@
       </div>
     </section>
 
+    <!-- Featured: Personalized Gifts -->
+    <section class="featured-personalized">
+      <div class="featured-personalized-inner">
+        <div class="featured-personalized-header">
+          <h2>Personalized Gifts</h2>
+          <a href="/personalized/" class="featured-view-all">View all &rarr;</a>
+        </div>
+        <div class="featured-personalized-grid">
+          <a href="/personalized/star-map.html" class="featured-product">
+            <div class="featured-product-img" style="background: linear-gradient(135deg, #0d1b2a, #1b2838);">
+              <canvas id="fp-star" width="300" height="200"></canvas>
+            </div>
+            <div class="featured-product-info">
+              <h4>Custom Star Map</h4>
+              <p>The night sky from any date and place</p>
+              <span class="featured-price">From $25</span>
+            </div>
+          </a>
+          <a href="/personalized/bible-code.html" class="featured-product">
+            <div class="featured-product-img" style="background: linear-gradient(135deg, #1a1a2e, #2d1b4e);">
+              <canvas id="fp-bible" width="300" height="200"></canvas>
+            </div>
+            <div class="featured-product-info">
+              <h4>Bible Code Name Art</h4>
+              <p>Your name found in the Torah</p>
+              <span class="featured-price">From $20</span>
+            </div>
+          </a>
+          <a href="/personalized/hebrew-name.html" class="featured-product">
+            <div class="featured-product-img" style="background: linear-gradient(135deg, #1a1520, #2a1f35);">
+              <canvas id="fp-hebrew" width="300" height="200"></canvas>
+            </div>
+            <div class="featured-product-info">
+              <h4>Hebrew Name Art</h4>
+              <p>Elegant Hebrew calligraphy</p>
+              <span class="featured-price">From $18</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- 7. Secondary Content (compact) -->
     <section class="secondary-content">
       <div class="secondary-inner">
@@ -488,6 +530,46 @@
   <script src="js/news-aggregator.js"></script>
   <!-- AdSense initialization handled by adsense-config.js -->
 
+  <!-- Featured product thumbnails -->
+  <script>
+    (function () {
+      function miniStars(id) {
+        var c = document.getElementById(id); if (!c) return;
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#0d1b2a'; ctx.fillRect(0, 0, c.width, c.height);
+        for (var i = 0; i < 80; i++) {
+          ctx.beginPath();
+          ctx.arc(Math.random()*c.width, Math.random()*c.height, Math.random()*1.5+0.3, 0, Math.PI*2);
+          ctx.fillStyle = 'rgba(255,255,255,'+(0.3+Math.random()*0.7)+')';
+          ctx.fill();
+        }
+        ctx.beginPath(); ctx.arc(c.width/2, c.height/2, 55, 0, Math.PI*2);
+        ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = 1; ctx.stroke();
+      }
+      function miniBible(id) {
+        var c = document.getElementById(id); if (!c) return;
+        var ctx = c.getContext('2d');
+        var heb = '\u05d0\u05d1\u05d2\u05d3\u05d4\u05d5\u05d6\u05d7\u05d8\u05d9\u05db\u05dc\u05de\u05e0\u05e1\u05e2\u05e4\u05e6\u05e7\u05e8\u05e9\u05ea';
+        ctx.fillStyle = '#1a1a2e'; ctx.fillRect(0, 0, c.width, c.height);
+        ctx.font = '11px serif'; ctx.textAlign = 'center';
+        for (var r = 0; r < 8; r++) for (var col = 0; col < 14; col++) {
+          var hl = (r===3 && col>=4 && col<=7);
+          ctx.fillStyle = hl ? 'rgba(255,200,50,0.9)' : 'rgba(200,200,220,0.4)';
+          ctx.fillText(heb[Math.floor(Math.random()*heb.length)], col*21+12, r*22+20);
+        }
+      }
+      function miniHebrew(id) {
+        var c = document.getElementById(id); if (!c) return;
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#1a1520'; ctx.fillRect(0, 0, c.width, c.height);
+        ctx.fillStyle = '#c9a84c'; ctx.font = 'bold 48px serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('\u05e9\u05e8\u05d4', c.width/2, c.height/2);
+      }
+      miniStars('fp-star'); miniBible('fp-bible'); miniHebrew('fp-hebrew');
+    })();
+  </script>
+
   <!-- Email Capture -->
   <script>
     (function () {
@@ -538,6 +620,28 @@
   </script>
 
   <style>
+    /* Featured Personalized */
+    .featured-personalized { padding: 2rem 1.5rem; max-width: 1200px; margin: 0 auto; }
+    .featured-personalized-inner { max-width: 1200px; margin: 0 auto; }
+    .featured-personalized-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .featured-personalized-header h2 { font-size: 1.3rem; color: var(--dark, #231F20); margin: 0; }
+    .featured-view-all { font-size: 0.85rem; color: var(--primary-dark, #5AB9E8); text-decoration: none; font-weight: 600; }
+    .featured-view-all:hover { text-decoration: underline; }
+    .featured-personalized-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .featured-product {
+      text-decoration: none; color: inherit; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s;
+      background: #fff;
+    }
+    .featured-product:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+    .featured-product-img { position: relative; height: 140px; overflow: hidden; }
+    .featured-product-img canvas { width: 100%; height: 100%; object-fit: cover; }
+    .featured-product-info { padding: 0.75rem 1rem; }
+    .featured-product-info h4 { font-size: 0.95rem; margin: 0 0 0.2rem; color: var(--dark, #231F20); }
+    .featured-product-info p { font-size: 0.8rem; color: var(--text-light, #666); margin: 0 0 0.3rem; }
+    .featured-price { font-size: 0.85rem; font-weight: 600; color: var(--dark, #231F20); }
+    @media (max-width: 768px) { .featured-personalized-grid { grid-template-columns: 1fr; } }
+
     .email-capture-section {
       padding: 3rem 1.5rem;
       text-align: center;
