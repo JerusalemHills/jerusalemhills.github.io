@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/js/analytics.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personalized Gifts - Jerusalem Hills</title>
+
+  <meta name="description" content="Custom-made Jewish gifts: star maps for weddings and Bar Mitzvahs, Bible code name art, and Hebrew calligraphy prints. Digital downloads and framed prints.">
+  <meta name="keywords" content="personalized Jewish gifts, custom star map, Bible code art, Hebrew name art, Bar Mitzvah gift, Jewish wedding gift, baby naming gift, Jerusalem Hills">
+  <link rel="canonical" href="https://jerusalemhills.com/personalized/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Personalized Gifts - Jerusalem Hills">
+  <meta property="og:description" content="Custom-made Jewish gifts: star maps, Bible code name art, and Hebrew calligraphy prints.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jerusalemhills.com/personalized/">
+
+  <link rel="stylesheet" href="/styles-new.css">
+  <link rel="stylesheet" href="/personalized/css/personalized.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="personalized-page">
+    <div class="page-header">
+      <h1>Personalized Gifts</h1>
+      <p>Custom-made keepsakes for weddings, Bar & Bat Mitzvahs, baby namings, and memorials. Each piece is algorithmically generated from your unique details.</p>
+    </div>
+
+    <!-- Occasion Browsing -->
+    <div class="occasion-bar">
+      <button class="occasion-tag active" data-occasion="all">All Gifts</button>
+      <button class="occasion-tag" data-occasion="wedding">Wedding</button>
+      <button class="occasion-tag" data-occasion="bar-mitzvah">Bar / Bat Mitzvah</button>
+      <button class="occasion-tag" data-occasion="birth">Baby Naming</button>
+      <button class="occasion-tag" data-occasion="memorial">Memorial</button>
+    </div>
+
+    <!-- Product Cards -->
+    <div class="products-grid">
+
+      <!-- Star Map -->
+      <a href="/personalized/star-map.html" class="product-card" data-occasions="wedding,bar-mitzvah,birth,memorial">
+        <div class="product-card-image" style="background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 50%, #0d1b2a 100%);">
+          <div class="product-card-badge">Most Popular</div>
+          <canvas id="star-map-thumb" width="400" height="266"></canvas>
+        </div>
+        <div class="product-card-body">
+          <h3>Custom Star Map</h3>
+          <p>An accurate map of the night sky from any date and location. Perfect for weddings, births, and moments that changed everything.</p>
+          <div class="product-card-footer">
+            <div class="product-card-price">From $25 <small>digital</small></div>
+            <span class="btn-customize">Customize</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Bible Code Name Art -->
+      <a href="/personalized/bible-code.html" class="product-card" data-occasions="bar-mitzvah,birth,memorial">
+        <div class="product-card-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 50%, #1a1a2e 100%);">
+          <div class="product-card-badge">Unique</div>
+          <canvas id="bible-code-thumb" width="400" height="266"></canvas>
+        </div>
+        <div class="product-card-body">
+          <h3>Bible Code Name Art</h3>
+          <p>Your name discovered in the Torah using Equidistant Letter Sequence analysis, rendered as a beautiful matrix print.</p>
+          <div class="product-card-footer">
+            <div class="product-card-price">From $20 <small>digital</small></div>
+            <span class="btn-customize">Customize</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Hebrew Name Art -->
+      <a href="/personalized/hebrew-name.html" class="product-card" data-occasions="wedding,bar-mitzvah,birth">
+        <div class="product-card-image" style="background: linear-gradient(135deg, #1a1520 0%, #2a1f35 50%, #1a1520 100%);">
+          <div class="product-card-badge">New</div>
+          <canvas id="hebrew-name-thumb" width="400" height="266"></canvas>
+        </div>
+        <div class="product-card-body">
+          <h3>Hebrew Name Art</h3>
+          <p>Your name in elegant Hebrew calligraphy with decorative elements inspired by Jerusalem. Choose from four beautiful styles.</p>
+          <div class="product-card-footer">
+            <div class="product-card-price">From $18 <small>digital</small></div>
+            <span class="btn-customize">Customize</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+      <h2>How It Works</h2>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Customize</h3>
+          <p>Enter your details and see a live preview update in real time.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Choose Format</h3>
+          <p>Pick digital download for instant access, or a framed print shipped to your door.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Receive</h3>
+          <p>Digital orders deliver instantly. Prints are produced and shipped within 3-7 business days.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/js/main.js"></script>
+  <script>
+    // Occasion filtering
+    document.querySelectorAll('.occasion-tag').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.occasion-tag').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var occasion = btn.dataset.occasion;
+        document.querySelectorAll('.product-card').forEach(function (card) {
+          if (occasion === 'all') {
+            card.style.display = '';
+          } else {
+            var occasions = (card.dataset.occasions || '').split(',');
+            card.style.display = occasions.includes(occasion) ? '' : 'none';
+          }
+        });
+      });
+    });
+
+    // Draw placeholder thumbnails
+    (function () {
+      function drawStarThumb(id) {
+        var c = document.getElementById(id);
+        if (!c) return;
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#0d1b2a';
+        ctx.fillRect(0, 0, c.width, c.height);
+        for (var i = 0; i < 120; i++) {
+          var x = Math.random() * c.width;
+          var y = Math.random() * c.height;
+          var r = Math.random() * 2 + 0.5;
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,' + (0.4 + Math.random() * 0.6) + ')';
+          ctx.fill();
+        }
+        ctx.beginPath();
+        ctx.arc(c.width / 2, c.height / 2, 80, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.font = '14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('The Night We Met', c.width / 2, c.height - 30);
+        ctx.font = '10px sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.fillText('June 15, 2024 \u2022 Jerusalem', c.width / 2, c.height - 14);
+      }
+
+      function drawBibleCodeThumb(id) {
+        var c = document.getElementById(id);
+        if (!c) return;
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#1a1a2e';
+        ctx.fillRect(0, 0, c.width, c.height);
+        var letters = '\u05d0\u05d1\u05d2\u05d3\u05d4\u05d5\u05d6\u05d7\u05d8\u05d9\u05db\u05dc\u05de\u05e0\u05e1\u05e2\u05e4\u05e6\u05e7\u05e8\u05e9\u05ea';
+        ctx.font = '14px serif';
+        ctx.textAlign = 'center';
+        var cols = 16, rows = 10;
+        var cw = c.width / cols, ch = (c.height - 40) / rows;
+        for (var r = 0; r < rows; r++) {
+          for (var col = 0; col < cols; col++) {
+            var highlight = (r === 4 && col >= 5 && col <= 8);
+            ctx.fillStyle = highlight ? 'rgba(255,200,50,0.9)' : 'rgba(200,200,220,0.5)';
+            ctx.fillText(letters[Math.floor(Math.random() * letters.length)], col * cw + cw / 2, r * ch + ch / 2 + 30);
+          }
+        }
+        ctx.fillStyle = 'rgba(255,200,50,0.6)';
+        ctx.font = '11px sans-serif';
+        ctx.fillText('\u05d3\u05d5\u05d3 \u2014 Found in Genesis 22:4', c.width / 2, c.height - 12);
+      }
+
+      function drawHebrewNameThumb(id) {
+        var c = document.getElementById(id);
+        if (!c) return;
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#1a1520';
+        ctx.fillRect(0, 0, c.width, c.height);
+        ctx.fillStyle = '#c9a84c';
+        ctx.font = 'bold 64px serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('\u05e9\u05e8\u05d4', c.width / 2, c.height / 2 - 10);
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.font = '13px sans-serif';
+        ctx.fillText('Sarah \u2022 Princess', c.width / 2, c.height / 2 + 40);
+      }
+
+      drawStarThumb('star-map-thumb');
+      drawBibleCodeThumb('bible-code-thumb');
+      drawHebrewNameThumb('hebrew-name-thumb');
+    })();
+  </script>
+
+  <style>
+    /* Occasion bar */
+    .occasion-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .occasion-tag {
+      padding: 0.5rem 1.25rem;
+      border: 2px solid var(--border, #e0e0e0);
+      border-radius: 100px;
+      background: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text, #333);
+    }
+    .occasion-tag:hover { border-color: var(--primary, #91D9F8); }
+    .occasion-tag.active {
+      background: var(--primary, #91D9F8);
+      border-color: var(--primary, #91D9F8);
+      color: var(--dark, #231F20);
+    }
+
+    /* How it works */
+    .how-it-works {
+      text-align: center;
+      padding: 3rem 0;
+      border-top: 1px solid var(--border, #e0e0e0);
+      margin-top: 2rem;
+    }
+    .how-it-works h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      margin-bottom: 2rem;
+      color: var(--dark, #231F20);
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .step { padding: 1rem; }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary, #91D9F8);
+      color: var(--dark, #231F20);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+    }
+    .step h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
+      color: var(--dark, #231F20);
+    }
+    .step p {
+      font-size: 0.9rem;
+      color: var(--text-light, #666);
+      line-height: 1.5;
+    }
+  </style>
+</body>
+</html>

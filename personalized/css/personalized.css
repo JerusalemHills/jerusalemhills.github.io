@@ -1,0 +1,475 @@
+/* Personalized Products — Shared Styles
+   Extends site design tokens from /styles-new.css */
+
+/* ── Layout ───────────────────────────────────── */
+.personalized-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 130px 1.5rem 3rem;
+  min-height: 100vh;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.25rem;
+  color: var(--dark, #231F20);
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  color: var(--text-light, #666);
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Product Cards Grid (Landing Page) ────────── */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.product-card-image {
+  position: relative;
+  width: 100%;
+  padding-bottom: 66%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.product-card-image canvas,
+.product-card-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.25rem 0.75rem;
+  background: var(--accent, #FCFBA5);
+  color: var(--dark, #231F20);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.product-card-body {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card-body h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.375rem;
+  color: var(--dark, #231F20);
+  margin-bottom: 0.5rem;
+}
+
+.product-card-body p {
+  color: var(--text-light, #666);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.product-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.product-card-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark, #231F20);
+}
+
+.product-card-price small {
+  font-weight: 400;
+  color: var(--text-light, #666);
+  font-size: 0.8rem;
+}
+
+.btn-customize {
+  padding: 0.6rem 1.25rem;
+  background: var(--primary, #91D9F8);
+  color: var(--dark, #231F20);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+
+.btn-customize:hover {
+  background: var(--primary-dark, #5AB9E8);
+}
+
+/* ── Customizer Layout ────────────────────────── */
+.customizer-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.customizer-controls {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.customizer-preview {
+  position: sticky;
+  top: 130px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.preview-canvas-wrap {
+  position: relative;
+  width: 100%;
+  background: #1a1a2e;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.preview-canvas-wrap canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.watermark-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.watermark-overlay span {
+  font-size: 3rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.12);
+  transform: rotate(-30deg);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* ── Form Elements ────────────────────────────── */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--dark, #231F20);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--border, #e0e0e0);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  background: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary, #91D9F8);
+}
+
+.form-group .hint {
+  font-size: 0.8rem;
+  color: var(--text-light, #666);
+  margin-top: 0.25rem;
+}
+
+/* ── Style Selector ───────────────────────────── */
+.style-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+
+.style-option {
+  position: relative;
+  cursor: pointer;
+}
+
+.style-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.style-option .style-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem;
+  border: 2px solid var(--border, #e0e0e0);
+  border-radius: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.style-option input:checked + .style-swatch {
+  border-color: var(--primary, #91D9F8);
+  box-shadow: 0 0 0 3px rgba(145, 217, 248, 0.3);
+}
+
+.style-swatch-color {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  margin-bottom: 0.4rem;
+}
+
+.style-swatch-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ── Purchase Section ─────────────────────────── */
+.purchase-options {
+  margin-top: 1.5rem;
+}
+
+.purchase-options h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--dark, #231F20);
+}
+
+.purchase-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.purchase-option {
+  border: 2px solid var(--border, #e0e0e0);
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  text-align: center;
+}
+
+.purchase-option:hover {
+  border-color: var(--primary, #91D9F8);
+  background: rgba(145, 217, 248, 0.05);
+}
+
+.purchase-option.selected {
+  border-color: var(--primary, #91D9F8);
+  background: rgba(145, 217, 248, 0.1);
+}
+
+.purchase-option .option-type {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-light, #666);
+  margin-bottom: 0.25rem;
+}
+
+.purchase-option .option-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.purchase-option .option-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--dark, #231F20);
+}
+
+.purchase-option .option-detail {
+  font-size: 0.75rem;
+  color: var(--text-light, #666);
+  margin-top: 0.25rem;
+}
+
+.btn-buy {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  background: var(--primary, #91D9F8);
+  color: var(--dark, #231F20);
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-buy:hover {
+  background: var(--primary-dark, #5AB9E8);
+}
+
+.btn-buy:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ── Error / Info Messages ────────────────────── */
+.msg-info {
+  background: rgba(145, 217, 248, 0.15);
+  border-left: 4px solid var(--primary, #91D9F8);
+  padding: 0.75rem 1rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+
+.msg-error {
+  background: rgba(220, 53, 69, 0.1);
+  border-left: 4px solid #dc3545;
+  padding: 0.75rem 1rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.9rem;
+  color: #dc3545;
+  margin: 1rem 0;
+}
+
+/* ── Back Link ────────────────────────────────── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-light, #666);
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--dark, #231F20);
+}
+
+/* ── Loading Spinner ──────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--border, #e0e0e0);
+  border-top-color: var(--primary, #91D9F8);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 768px) {
+  .personalized-page {
+    padding: 110px 1rem 2rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .customizer-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .customizer-preview {
+    position: static;
+    order: -1;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .purchase-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .style-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .customizer-controls {
+    padding: 1.25rem;
+  }
+}
