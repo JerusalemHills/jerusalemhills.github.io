@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/js/analytics.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Star Map - Personalized Gifts - Jerusalem Hills</title>
+
+  <meta name="description" content="Create a custom star map of the night sky from any date and location. Perfect for weddings, Bar Mitzvahs, baby namings, and memorials. Digital and print options.">
+  <link rel="canonical" href="https://jerusalemhills.com/personalized/star-map.html">
+
+  <link rel="stylesheet" href="/styles-new.css">
+  <link rel="stylesheet" href="/personalized/css/personalized.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="personalized-page">
+    <a href="/personalized/" class="back-link">&larr; All Personalized Gifts</a>
+
+    <div class="page-header">
+      <h1>Custom Star Map</h1>
+      <p>An accurate map of the night sky from any date and location. Capture the stars from the night you met, your wedding, a birth, or any moment that matters.</p>
+    </div>
+
+    <div class="customizer-layout">
+      <!-- Controls -->
+      <div class="customizer-controls">
+        <div class="form-group">
+          <label for="map-date">Date</label>
+          <input type="date" id="map-date" value="">
+          <div class="hint">The night sky will be calculated for 9:00 PM local time on this date.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="map-location">Location</label>
+          <input type="text" id="map-location" placeholder="Enter a city name..." autocomplete="off">
+          <div id="location-results" class="location-results"></div>
+          <div class="hint">
+            <span id="location-display">Jerusalem, Israel (31.78, 35.22)</span>
+          </div>
+          <input type="hidden" id="map-lat" value="31.78">
+          <input type="hidden" id="map-lon" value="35.22">
+        </div>
+
+        <div class="form-group">
+          <label for="map-title">Title</label>
+          <input type="text" id="map-title" placeholder="The Night We Met" maxlength="60">
+        </div>
+
+        <div class="form-group">
+          <label for="map-subtitle">Subtitle</label>
+          <input type="text" id="map-subtitle" placeholder="June 15, 2024 · Jerusalem" maxlength="80">
+        </div>
+
+        <div class="form-group">
+          <label>Color Scheme</label>
+          <div class="style-options">
+            <label class="style-option">
+              <input type="radio" name="map-style" value="dark" checked>
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: linear-gradient(135deg, #0d1b2a, #1b2838);"></div>
+                <span class="style-swatch-label">Dark</span>
+              </div>
+            </label>
+            <label class="style-option">
+              <input type="radio" name="map-style" value="navy-gold">
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: linear-gradient(135deg, #0a1628, #1a2a4a); border: 1px solid #c9a84c;"></div>
+                <span class="style-swatch-label">Navy Gold</span>
+              </div>
+            </label>
+            <label class="style-option">
+              <input type="radio" name="map-style" value="light">
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: #f5f0e8; border: 1px solid #ddd;"></div>
+                <span class="style-swatch-label">Light</span>
+              </div>
+            </label>
+            <label class="style-option">
+              <input type="radio" name="map-style" value="minimal">
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: #fff; border: 1px solid #ddd;"></div>
+                <span class="style-swatch-label">Minimal</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Shape</label>
+          <div class="style-options">
+            <label class="style-option">
+              <input type="radio" name="map-shape" value="circular" checked>
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: #1a1a2e; border-radius: 50%;"></div>
+                <span class="style-swatch-label">Circular</span>
+              </div>
+            </label>
+            <label class="style-option">
+              <input type="radio" name="map-shape" value="rectangular">
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: #1a1a2e; border-radius: 4px;"></div>
+                <span class="style-swatch-label">Rectangular</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="show-constellations" checked> Show constellation lines
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="show-milkyway"> Show Milky Way
+          </label>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="customizer-preview">
+        <div class="preview-canvas-wrap">
+          <canvas id="star-map-canvas" data-aspect-ratio="0.8"></canvas>
+          <div class="watermark-overlay"><span>Preview</span></div>
+        </div>
+
+        <!-- Purchase Options -->
+        <div class="purchase-options">
+          <h3>Choose Your Format</h3>
+          <div class="purchase-grid">
+            <div class="purchase-option selected" data-method="digital" data-price="2500">
+              <input type="radio" name="fulfillment" value="digital" checked style="display:none">
+              <div class="option-type">Digital</div>
+              <div class="option-name">High-Res Download</div>
+              <div class="option-price">$25</div>
+              <div class="option-detail">PNG + PDF at 150 DPI</div>
+            </div>
+            <div class="purchase-option" data-method="physical" data-price="4500">
+              <input type="radio" name="fulfillment" value="physical" style="display:none">
+              <div class="option-type">Print</div>
+              <div class="option-name">8×10 Framed</div>
+              <div class="option-price">$45</div>
+              <div class="option-detail">Museum-quality print</div>
+            </div>
+          </div>
+
+          <div id="size-selector" style="display:none; margin-top:0.75rem;">
+            <label class="form-group" style="margin-bottom:0">
+              <select id="print-size" style="width:100%; padding:0.5rem; border:2px solid var(--border); border-radius:8px;">
+                <option value="8x10" data-price="4500">8×10" — $45</option>
+                <option value="12x16" data-price="6500">12×16" — $65</option>
+                <option value="16x20" data-price="8500">16×20" — $85</option>
+              </select>
+            </label>
+          </div>
+
+          <button class="btn-buy" id="btn-checkout">Buy Now — $25</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/main.js"></script>
+  <script src="/personalized/js/shared/preview.js"></script>
+  <script src="/personalized/js/shared/canvas-export.js"></script>
+  <script src="/personalized/js/shared/checkout.js"></script>
+  <script src="/personalized/js/star-map-generator.js"></script>
+  <script>
+    (function () {
+      // Set default date to today
+      var today = new Date();
+      var dateStr = today.toISOString().split('T')[0];
+      document.getElementById('map-date').value = dateStr;
+
+      // State
+      var state = {
+        lat: 31.78,
+        lon: 35.22,
+        fulfillment: 'digital',
+        price: 2500
+      };
+
+      // Load catalog and init preview
+      StarMapGenerator.loadCatalog().then(function () {
+        PreviewManager.init(document.getElementById('star-map-canvas'), renderMap);
+      });
+
+      function getOpts() {
+        var dateVal = document.getElementById('map-date').value;
+        var d = dateVal ? new Date(dateVal + 'T21:00:00') : new Date();
+        return {
+          date: d,
+          lat: state.lat,
+          lon: state.lon,
+          title: document.getElementById('map-title').value,
+          subtitle: document.getElementById('map-subtitle').value,
+          style: document.querySelector('input[name="map-style"]:checked').value,
+          shape: document.querySelector('input[name="map-shape"]:checked').value,
+          showConstellations: document.getElementById('show-constellations').checked,
+          showMilkyWay: document.getElementById('show-milkyway').checked
+        };
+      }
+
+      function renderMap(canvas, ctx) {
+        StarMapGenerator.render(canvas, ctx, getOpts());
+      }
+
+      // Bind all inputs to re-render
+      var inputs = document.querySelectorAll('#map-date, #map-title, #map-subtitle, #show-constellations, #show-milkyway');
+      inputs.forEach(function (el) {
+        el.addEventListener('input', function () { PreviewManager.scheduleRender(); });
+        el.addEventListener('change', function () { PreviewManager.scheduleRender(); });
+      });
+      document.querySelectorAll('input[name="map-style"], input[name="map-shape"]').forEach(function (el) {
+        el.addEventListener('change', function () { PreviewManager.render(); });
+      });
+
+      // Location search (Nominatim geocoding)
+      var locationInput = document.getElementById('map-location');
+      var locationResults = document.getElementById('location-results');
+      var locationTimer = null;
+
+      locationInput.addEventListener('input', function () {
+        clearTimeout(locationTimer);
+        var q = locationInput.value.trim();
+        if (q.length < 2) { locationResults.innerHTML = ''; return; }
+        locationTimer = setTimeout(function () {
+          fetch('https://nominatim.openstreetmap.org/search?q=' + encodeURIComponent(q) + '&format=json&limit=5')
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+              locationResults.innerHTML = '';
+              data.forEach(function (place) {
+                var div = document.createElement('div');
+                div.className = 'location-result-item';
+                div.textContent = place.display_name.split(',').slice(0, 3).join(',');
+                div.addEventListener('click', function () {
+                  state.lat = parseFloat(place.lat);
+                  state.lon = parseFloat(place.lon);
+                  document.getElementById('map-lat').value = state.lat;
+                  document.getElementById('map-lon').value = state.lon;
+                  document.getElementById('location-display').textContent =
+                    place.display_name.split(',').slice(0, 2).join(',') +
+                    ' (' + state.lat.toFixed(2) + ', ' + state.lon.toFixed(2) + ')';
+                  locationInput.value = '';
+                  locationResults.innerHTML = '';
+                  PreviewManager.render();
+                });
+                locationResults.appendChild(div);
+              });
+            })
+            .catch(function () { locationResults.innerHTML = ''; });
+        }, 400);
+      });
+
+      // Close location results on outside click
+      document.addEventListener('click', function (e) {
+        if (!locationInput.contains(e.target) && !locationResults.contains(e.target)) {
+          locationResults.innerHTML = '';
+        }
+      });
+
+      // Purchase option selection
+      PersonalizedCheckout.bindPurchaseOptions();
+      document.querySelectorAll('.purchase-option').forEach(function (opt) {
+        opt.addEventListener('click', function () {
+          state.fulfillment = opt.dataset.method;
+          state.price = parseInt(opt.dataset.price);
+          var sizeSelector = document.getElementById('size-selector');
+          if (state.fulfillment === 'physical') {
+            sizeSelector.style.display = 'block';
+            var sel = document.getElementById('print-size');
+            state.price = parseInt(sel.options[sel.selectedIndex].dataset.price);
+          } else {
+            sizeSelector.style.display = 'none';
+          }
+          updateBuyButton();
+        });
+      });
+
+      document.getElementById('print-size').addEventListener('change', function () {
+        state.price = parseInt(this.options[this.selectedIndex].dataset.price);
+        updateBuyButton();
+      });
+
+      function updateBuyButton() {
+        document.getElementById('btn-checkout').textContent =
+          'Buy Now — $' + (state.price / 100).toFixed(0);
+      }
+
+      // Checkout
+      document.getElementById('btn-checkout').addEventListener('click', function () {
+        var opts = getOpts();
+        PersonalizedCheckout.startCheckout({
+          productType: 'star-map',
+          productName: 'Custom Star Map' + (opts.title ? ' — ' + opts.title : ''),
+          amount: state.price,
+          fulfillmentMethod: state.fulfillment,
+          size: state.fulfillment === 'physical' ? document.getElementById('print-size').value : null,
+          customization: {
+            date: document.getElementById('map-date').value,
+            lat: state.lat,
+            lon: state.lon,
+            title: opts.title,
+            subtitle: opts.subtitle,
+            style: opts.style,
+            shape: opts.shape,
+            constellations: opts.showConstellations,
+            milkyWay: opts.showMilkyWay
+          }
+        });
+      });
+    })();
+  </script>
+
+  <style>
+    .location-results {
+      position: absolute;
+      z-index: 100;
+      background: #fff;
+      border: 1px solid var(--border, #e0e0e0);
+      border-radius: 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+    .location-result-item {
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .location-result-item:hover {
+      background: rgba(145, 217, 248, 0.1);
+    }
+    .location-result-item:last-child {
+      border-bottom: none;
+    }
+    .form-group {
+      position: relative;
+    }
+  </style>
+</body>
+</html>
