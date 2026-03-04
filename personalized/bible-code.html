@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/js/analytics.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bible Code Name Art - Personalized Gifts - Jerusalem Hills</title>
+
+  <meta name="description" content="Discover your name hidden in the Torah using Equidistant Letter Sequence analysis. Custom Bible code art prints and digital downloads for Bar Mitzvahs, baby namings, and gifts.">
+  <link rel="canonical" href="https://jerusalemhills.com/personalized/bible-code.html">
+
+  <link rel="stylesheet" href="/styles-new.css">
+  <link rel="stylesheet" href="/personalized/css/personalized.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="personalized-page">
+    <a href="/personalized/" class="back-link">&larr; All Personalized Gifts</a>
+
+    <div class="page-header">
+      <h1>Bible Code Name Art</h1>
+      <p>Your name discovered in the Torah using Equidistant Letter Sequence (ELS) analysis, rendered as a beautiful matrix print. A truly unique gift.</p>
+    </div>
+
+    <div class="customizer-layout">
+      <!-- Controls -->
+      <div class="customizer-controls">
+        <div class="form-group">
+          <label for="name-input">Your Name</label>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="text" id="name-input" placeholder="Enter a name..." style="flex:1" autocomplete="off">
+            <select id="name-lang" style="width:auto; padding:0.5rem 0.75rem; border:2px solid var(--border); border-radius:8px;">
+              <option value="english">English</option>
+              <option value="hebrew">עברית</option>
+            </select>
+          </div>
+          <div class="hint">Enter the name in English or Hebrew. We'll search for it in the Torah.</div>
+        </div>
+
+        <button class="btn-customize" id="btn-search" style="width:100%; padding:0.75rem; font-size:1rem; margin-bottom:1rem;">
+          Search in Torah
+        </button>
+
+        <div id="search-status" class="msg-info" style="display:none;"></div>
+        <div id="search-error" class="msg-error" style="display:none;"></div>
+
+        <div class="form-group">
+          <label>Background Color</label>
+          <div class="style-options">
+            <label class="style-option">
+              <input type="radio" name="bg-color" value="#1a1a2e" checked>
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: #1a1a2e;"></div>
+                <span class="style-swatch-label">Dark</span>
+              </div>
+            </label>
+            <label class="style-option">
+              <input type="radio" name="bg-color" value="#0a1628">
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: #0a1628;"></div>
+                <span class="style-swatch-label">Navy</span>
+              </div>
+            </label>
+            <label class="style-option">
+              <input type="radio" name="bg-color" value="#1a0a0a">
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: #1a0a0a;"></div>
+                <span class="style-swatch-label">Burgundy</span>
+              </div>
+            </label>
+            <label class="style-option">
+              <input type="radio" name="bg-color" value="#f5f0e8">
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: #f5f0e8; border: 1px solid #ddd;"></div>
+                <span class="style-swatch-label">Parchment</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="customizer-preview">
+        <div class="preview-canvas-wrap" style="background: #1a1a2e;">
+          <canvas id="bible-code-canvas" data-aspect-ratio="0.85"></canvas>
+          <div class="watermark-overlay" id="watermark"><span>Preview</span></div>
+        </div>
+
+        <!-- Purchase Options (shown after search) -->
+        <div class="purchase-options" id="purchase-section" style="display:none;">
+          <h3>Choose Your Format</h3>
+          <div class="purchase-grid">
+            <div class="purchase-option selected" data-method="digital" data-price="2000">
+              <input type="radio" name="fulfillment" value="digital" checked style="display:none">
+              <div class="option-type">Digital</div>
+              <div class="option-name">High-Res Download</div>
+              <div class="option-price">$20</div>
+              <div class="option-detail">PNG at 300 DPI</div>
+            </div>
+            <div class="purchase-option" data-method="physical" data-price="5000">
+              <input type="radio" name="fulfillment" value="physical" style="display:none">
+              <div class="option-type">Print</div>
+              <div class="option-name">Framed Print</div>
+              <div class="option-price">$50</div>
+              <div class="option-detail">Museum-quality print</div>
+            </div>
+          </div>
+          <button class="btn-buy" id="btn-checkout">Buy Now — $20</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/main.js"></script>
+  <script src="/personalized/js/shared/preview.js"></script>
+  <script src="/personalized/js/shared/canvas-export.js"></script>
+  <script src="/personalized/js/shared/checkout.js"></script>
+  <script src="/personalized/js/bible-code-generator.js"></script>
+  <script>
+    (function () {
+      var state = {
+        name: '',
+        hebrewName: '',
+        result: null,
+        fulfillment: 'digital',
+        price: 2000
+      };
+
+      // Init
+      var statusEl = document.getElementById('search-status');
+      var errorEl = document.getElementById('search-error');
+      var purchaseEl = document.getElementById('purchase-section');
+
+      statusEl.style.display = 'block';
+      statusEl.textContent = 'Loading Torah text...';
+
+      BibleCodeGenerator.init().then(function () {
+        statusEl.style.display = 'none';
+        PreviewManager.init(document.getElementById('bible-code-canvas'), renderMatrix);
+
+        // Check URL param for pre-populated term (from bible-codes.github.io cross-promo)
+        var params = new URLSearchParams(window.location.search);
+        var term = params.get('term');
+        if (term) {
+          document.getElementById('name-input').value = term;
+          // Auto-detect Hebrew
+          if (/[\u0590-\u05FF]/.test(term)) {
+            document.getElementById('name-lang').value = 'hebrew';
+          }
+          doSearch();
+        }
+      });
+
+      function renderMatrix(canvas, ctx) {
+        BibleCodeGenerator.render(canvas, ctx, {
+          name: state.name,
+          hebrewName: state.hebrewName,
+          result: state.result,
+          bgColor: document.querySelector('input[name="bg-color"]:checked').value
+        });
+      }
+
+      function doSearch() {
+        var name = document.getElementById('name-input').value.trim();
+        if (!name) return;
+
+        statusEl.style.display = 'block';
+        statusEl.textContent = 'Searching Torah for "' + name + '"...';
+        errorEl.style.display = 'none';
+        purchaseEl.style.display = 'none';
+
+        // Use setTimeout to allow UI to update
+        setTimeout(function () {
+          var searchResult = BibleCodeGenerator.search(name);
+          state.name = name;
+          state.hebrewName = searchResult.hebrewName;
+          state.result = searchResult.result;
+
+          if (state.result) {
+            statusEl.style.display = 'block';
+            statusEl.textContent = '"' + state.hebrewName + '" found in Torah at position ' +
+              state.result.position + ' with ELS skip ' + state.result.skip;
+            purchaseEl.style.display = 'block';
+            document.getElementById('watermark').querySelector('span').textContent = 'Preview';
+          } else {
+            statusEl.style.display = 'none';
+            errorEl.style.display = 'block';
+            errorEl.innerHTML = 'Unfortunately, "<strong>' + name + '</strong>" (' +
+              state.hebrewName + ') was not found in the Torah within the search range.' +
+              '<br>Tried: ' + searchResult.tried.join(', ') +
+              '<br><br>Try a shorter form, alternate spelling, or a family name.';
+            purchaseEl.style.display = 'none';
+          }
+
+          PreviewManager.render();
+        }, 50);
+      }
+
+      // Search button
+      document.getElementById('btn-search').addEventListener('click', doSearch);
+      document.getElementById('name-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') doSearch();
+      });
+
+      // Background color change
+      document.querySelectorAll('input[name="bg-color"]').forEach(function (el) {
+        el.addEventListener('change', function () {
+          document.querySelector('.preview-canvas-wrap').style.background = el.value;
+          PreviewManager.render();
+        });
+      });
+
+      // Purchase options
+      PersonalizedCheckout.bindPurchaseOptions();
+      document.querySelectorAll('.purchase-option').forEach(function (opt) {
+        opt.addEventListener('click', function () {
+          state.fulfillment = opt.dataset.method;
+          state.price = parseInt(opt.dataset.price);
+          document.getElementById('btn-checkout').textContent =
+            'Buy Now — $' + (state.price / 100).toFixed(0);
+        });
+      });
+
+      // Checkout
+      document.getElementById('btn-checkout').addEventListener('click', function () {
+        if (!state.result) return;
+        PersonalizedCheckout.startCheckout({
+          productType: 'bible-code',
+          productName: 'Bible Code Name Art — ' + state.name,
+          amount: state.price,
+          fulfillmentMethod: state.fulfillment,
+          customization: {
+            name: state.name,
+            hebrewName: state.hebrewName,
+            position: state.result.position,
+            skip: state.result.skip,
+            bgColor: document.querySelector('input[name="bg-color"]:checked').value
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/js/analytics.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hebrew Name Art - Personalized Gifts - Jerusalem Hills</title>
+
+  <meta name="description" content="Your name in elegant Hebrew calligraphy with decorative elements inspired by Jerusalem. Perfect for baby namings, Bar Mitzvahs, and Jewish gifts.">
+  <link rel="canonical" href="https://jerusalemhills.com/personalized/hebrew-name.html">
+
+  <link rel="stylesheet" href="/styles-new.css">
+  <link rel="stylesheet" href="/personalized/css/personalized.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Frank+Ruhl+Libre:wght@400;700&family=Noto+Serif+Hebrew:wght@400;700&family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="personalized-page">
+    <a href="/personalized/" class="back-link">&larr; All Personalized Gifts</a>
+
+    <div class="page-header">
+      <h1>Hebrew Name Art</h1>
+      <p>Your name rendered in elegant Hebrew calligraphy with decorative elements inspired by Jerusalem. Choose from four beautiful styles.</p>
+    </div>
+
+    <div class="customizer-layout">
+      <!-- Controls -->
+      <div class="customizer-controls">
+        <div class="form-group">
+          <label for="name-input">Your Name</label>
+          <input type="text" id="name-input" placeholder="Enter a name..." autocomplete="off">
+          <div class="hint">Enter a name in English or Hebrew. We'll render it beautifully.</div>
+        </div>
+
+        <div class="form-group">
+          <label>Style</label>
+          <div class="style-options">
+            <label class="style-option">
+              <input type="radio" name="art-style" value="classic" checked>
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: linear-gradient(135deg, #0a1628, #1a2a4a); border: 1px solid #c9a84c;"></div>
+                <span class="style-swatch-label">Classic</span>
+              </div>
+            </label>
+            <label class="style-option">
+              <input type="radio" name="art-style" value="modern">
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: #fff; border: 1px solid #ddd;"></div>
+                <span class="style-swatch-label">Modern</span>
+              </div>
+            </label>
+            <label class="style-option">
+              <input type="radio" name="art-style" value="watercolor">
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: linear-gradient(135deg, #fdf6f0, #f0e6f6);"></div>
+                <span class="style-swatch-label">Watercolor</span>
+              </div>
+            </label>
+            <label class="style-option">
+              <input type="radio" name="art-style" value="jerusalem">
+              <div class="style-swatch">
+                <div class="style-swatch-color" style="background: #f5ebe0; border: 1px solid #d4c4a8;"></div>
+                <span class="style-swatch-label">Jerusalem</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="customizer-preview">
+        <div class="preview-canvas-wrap" id="preview-wrap" style="background: #0a1628;">
+          <canvas id="name-canvas" data-aspect-ratio="0.8"></canvas>
+          <div class="watermark-overlay"><span>Preview</span></div>
+        </div>
+
+        <!-- Purchase Options -->
+        <div class="purchase-options">
+          <h3>Choose Your Format</h3>
+          <div class="purchase-grid">
+            <div class="purchase-option selected" data-method="digital" data-price="1800">
+              <input type="radio" name="fulfillment" value="digital" checked style="display:none">
+              <div class="option-type">Digital</div>
+              <div class="option-name">High-Res Download</div>
+              <div class="option-price">$18</div>
+              <div class="option-detail">PNG at 300 DPI</div>
+            </div>
+            <div class="purchase-option" data-method="physical" data-price="4000">
+              <input type="radio" name="fulfillment" value="physical" style="display:none">
+              <div class="option-type">Print</div>
+              <div class="option-name">Framed Print</div>
+              <div class="option-price">$40</div>
+              <div class="option-detail">Museum-quality print</div>
+            </div>
+          </div>
+          <button class="btn-buy" id="btn-checkout">Buy Now — $18</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/main.js"></script>
+  <script src="/personalized/js/shared/preview.js"></script>
+  <script src="/personalized/js/shared/canvas-export.js"></script>
+  <script src="/personalized/js/shared/checkout.js"></script>
+  <script src="/personalized/js/hebrew-name-generator.js"></script>
+  <script>
+    (function () {
+      var state = {
+        fulfillment: 'digital',
+        price: 1800
+      };
+
+      var STYLE_BGS = {
+        classic: '#0a1628',
+        modern: '#ffffff',
+        watercolor: '#fdf6f0',
+        jerusalem: '#f5ebe0'
+      };
+
+      HebrewNameGenerator.init().then(function () {
+        PreviewManager.init(document.getElementById('name-canvas'), renderName);
+      });
+
+      function renderName(canvas, ctx) {
+        HebrewNameGenerator.render(canvas, ctx, {
+          name: document.getElementById('name-input').value.trim(),
+          style: document.querySelector('input[name="art-style"]:checked').value
+        });
+      }
+
+      // Bind inputs
+      document.getElementById('name-input').addEventListener('input', function () {
+        PreviewManager.scheduleRender();
+      });
+
+      document.querySelectorAll('input[name="art-style"]').forEach(function (el) {
+        el.addEventListener('change', function () {
+          document.getElementById('preview-wrap').style.background = STYLE_BGS[el.value] || '#0a1628';
+          PreviewManager.render();
+        });
+      });
+
+      // Purchase options
+      PersonalizedCheckout.bindPurchaseOptions();
+      document.querySelectorAll('.purchase-option').forEach(function (opt) {
+        opt.addEventListener('click', function () {
+          state.fulfillment = opt.dataset.method;
+          state.price = parseInt(opt.dataset.price);
+          document.getElementById('btn-checkout').textContent =
+            'Buy Now — $' + (state.price / 100).toFixed(0);
+        });
+      });
+
+      // Checkout
+      document.getElementById('btn-checkout').addEventListener('click', function () {
+        var name = document.getElementById('name-input').value.trim();
+        if (!name) { alert('Please enter a name first.'); return; }
+        PersonalizedCheckout.startCheckout({
+          productType: 'hebrew-name',
+          productName: 'Hebrew Name Art — ' + name,
+          amount: state.price,
+          fulfillmentMethod: state.fulfillment,
+          customization: {
+            name: name,
+            hebrewName: HebrewNameGenerator.transliterate(name),
+            style: document.querySelector('input[name="art-style"]:checked').value
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
