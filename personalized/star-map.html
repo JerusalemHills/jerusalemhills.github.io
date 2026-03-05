@@ -133,11 +133,11 @@
         <div class="purchase-options">
           <h3>Choose Your Format</h3>
           <div class="purchase-grid">
-            <div class="purchase-option selected" data-method="digital" data-price="2500">
+            <div class="purchase-option selected" data-method="digital" data-price="99">
               <input type="radio" name="fulfillment" value="digital" checked style="display:none">
               <div class="option-type">Digital</div>
               <div class="option-name">High-Res Download</div>
-              <div class="option-price">$25</div>
+              <div class="option-price">$0.99</div>
               <div class="option-detail">PNG + PDF at 150 DPI</div>
             </div>
             <div class="purchase-option" data-method="physical" data-price="4500">
@@ -159,7 +159,7 @@
             </label>
           </div>
 
-          <button class="btn-buy" id="btn-checkout">Buy Now — $25</button>
+          <button class="btn-buy" id="btn-checkout">Buy Now — $0.99</button>
         </div>
       </div>
     </div>
@@ -182,7 +182,7 @@
         lat: 31.78,
         lon: 35.22,
         fulfillment: 'digital',
-        price: 2500
+        price: 99
       };
 
       // Load catalog and init preview
@@ -288,8 +288,9 @@
       });
 
       function updateBuyButton() {
+        var dollars = state.price / 100;
         document.getElementById('btn-checkout').textContent =
-          'Buy Now — $' + (state.price / 100).toFixed(0);
+          'Buy Now — $' + (dollars % 1 === 0 ? dollars.toFixed(0) : dollars.toFixed(2));
       }
 
       // Checkout
