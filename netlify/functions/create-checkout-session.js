@@ -40,8 +40,8 @@ exports.handler = async (event, context) => {
     // Create Stripe checkout session
     const sessionConfig = {
       mode: 'payment',
-      success_url: `${process.env.URL || 'https://jerusalemhills.com'}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.URL || 'https://jerusalemhills.com'}/cancel.html`,
+      success_url: `https://jerusalemhills.com/success.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `https://jerusalemhills.com/cancel.html`,
       shipping_address_collection: {
         allowed_countries: ['US', 'CA', 'GB', 'IL']
       },
